@@ -1,0 +1,12 @@
+{
+	"venue_id": "VFIXTUREAAA",
+	"acronym": "FIXCONF",
+	"name": "Fixture Conference on Formal Languages (not a real venue)",
+	"kind": "conference",
+	"tier": "core",
+	"first_year": 2001,
+	"last_year": 2023,
+	"successor_of": [],
+	"homepage": null,
+	"fixture": true
+}

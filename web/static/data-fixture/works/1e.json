@@ -1,0 +1,52 @@
+{
+	"WFIXTUREAAA": {
+		"work_id": "WFIXTUREAAA",
+		"title": "Fixture paper 1: closure of regular languages under a toy operation",
+		"year": 2003,
+		"work_type": "proceedings-paper",
+		"venue": {
+			"venue_id": "VFIXTUREAAA",
+			"acronym": "FIXCONF"
+		},
+		"authors": [
+			{
+				"author_id": "AFIXTUREAAA",
+				"name": "Ada Fixture",
+				"position": 1
+			},
+			{
+				"author_id": "AFIXTUREAAC",
+				"name": "Chandra Example",
+				"position": 2
+			}
+		],
+		"doi": null,
+		"links": {
+			"dblp": null,
+			"openalex": null,
+			"doi": null,
+			"open_access": null
+		},
+		"cited_by_count": 3,
+		"tags": [
+			{
+				"topic_id": "regular-languages",
+				"topic_name": "Regular languages",
+				"confidence": 0.92,
+				"rank": 1,
+				"is_primary": true,
+				"derived": false,
+				"provenance": {
+					"method": "fixture",
+					"signals": {
+						"title_phrase": 0.9,
+						"embedding": 0.71
+					},
+					"tagger_version": "fixture-0",
+					"taxonomy_version": "fixture-0"
+				}
+			}
+		],
+		"fixture": true
+	}
+}

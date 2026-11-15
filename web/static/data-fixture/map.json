@@ -1,0 +1,44 @@
+{
+	"nodes": [
+		{
+			"topic_id": "formal-languages",
+			"parent_id": null,
+			"level": 0,
+			"x": -2,
+			"y": 0.5,
+			"r": 1.4
+		},
+		{
+			"topic_id": "automata-theory",
+			"parent_id": null,
+			"level": 0,
+			"x": 2,
+			"y": -0.5,
+			"r": 1.6
+		},
+		{
+			"topic_id": "regular-languages",
+			"parent_id": "formal-languages",
+			"level": 1,
+			"x": -2.4,
+			"y": 0.9,
+			"r": 0.5
+		},
+		{
+			"topic_id": "finite-automata",
+			"parent_id": "automata-theory",
+			"level": 1,
+			"x": 1.4,
+			"y": -0.9,
+			"r": 0.6
+		},
+		{
+			"topic_id": "descriptional-complexity",
+			"parent_id": "automata-theory",
+			"level": 1,
+			"x": 2.5,
+			"y": -0.2,
+			"r": 0.45
+		}
+	]
+}

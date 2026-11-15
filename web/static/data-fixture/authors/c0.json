@@ -1,0 +1,38 @@
+{
+	"AFIXTUREAAB": {
+		"author_id": "AFIXTUREAAB",
+		"display_name": "Bo Placeholder",
+		"name_variants": [],
+		"dblp_pid": null,
+		"orcid": null,
+		"topics": [
+			{
+				"topic_id": "finite-automata",
+				"score": 2.31
+			},
+			{
+				"topic_id": "descriptional-complexity",
+				"score": 0.91
+			},
+			{
+				"topic_id": "automata-theory",
+				"score": 0.86
+			},
+			{
+				"topic_id": "formal-languages",
+				"score": 0.83
+			},
+			{
+				"topic_id": "regular-languages",
+				"score": 0.66
+			}
+		],
+		"work_ids": [
+			"WFIXTUREAAB",
+			"WFIXTUREAAE",
+			"WFIXTUREAAG",
+			"WFIXTUREAAJ"
+		],
+		"fixture": true
+	}
+}

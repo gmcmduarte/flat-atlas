@@ -1,0 +1,69 @@
+{
+	"WFIXTUREAAF": {
+		"work_id": "WFIXTUREAAF",
+		"title": "Fixture paper 6: a regular-language characterisation, sketched",
+		"year": 2013,
+		"work_type": "proceedings-paper",
+		"venue": {
+			"venue_id": "VFIXTUREAAA",
+			"acronym": "FIXCONF"
+		},
+		"authors": [
+			{
+				"author_id": "AFIXTUREAAA",
+				"name": "Ada Fixture",
+				"position": 1
+			},
+			{
+				"author_id": "AFIXTUREAAC",
+				"name": "Chandra Example",
+				"position": 2
+			}
+		],
+		"doi": null,
+		"links": {
+			"dblp": null,
+			"openalex": null,
+			"doi": null,
+			"open_access": null
+		},
+		"cited_by_count": 18,
+		"tags": [
+			{
+				"topic_id": "regular-languages",
+				"topic_name": "Regular languages",
+				"confidence": 0.87,
+				"rank": 1,
+				"is_primary": true,
+				"derived": false,
+				"provenance": {
+					"method": "fixture",
+					"signals": {
+						"title_phrase": 0.9,
+						"embedding": 0.71
+					},
+					"tagger_version": "fixture-0",
+					"taxonomy_version": "fixture-0"
+				}
+			},
+			{
+				"topic_id": "formal-languages",
+				"topic_name": "Formal languages",
+				"confidence": 0.7,
+				"rank": 2,
+				"is_primary": false,
+				"derived": false,
+				"provenance": {
+					"method": "fixture",
+					"signals": {
+						"title_phrase": 0.9,
+						"embedding": 0.71
+					},
+					"tagger_version": "fixture-0",
+					"taxonomy_version": "fixture-0"
+				}
+			}
+		],
+		"fixture": true
+	}
+}

@@ -1,0 +1,38 @@
+{
+	"AFIXTUREAAC": {
+		"author_id": "AFIXTUREAAC",
+		"display_name": "Chandra Example",
+		"name_variants": [],
+		"dblp_pid": null,
+		"orcid": null,
+		"topics": [
+			{
+				"topic_id": "regular-languages",
+				"score": 1.79
+			},
+			{
+				"topic_id": "descriptional-complexity",
+				"score": 1.58
+			},
+			{
+				"topic_id": "finite-automata",
+				"score": 0.9
+			},
+			{
+				"topic_id": "formal-languages",
+				"score": 0.7
+			},
+			{
+				"topic_id": "automata-theory",
+				"score": 0.68
+			}
+		],
+		"work_ids": [
+			"WFIXTUREAAA",
+			"WFIXTUREAAC",
+			"WFIXTUREAAF",
+			"WFIXTUREAAH"
+		],
+		"fixture": true
+	}
+}
