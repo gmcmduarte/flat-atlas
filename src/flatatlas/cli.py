@@ -1,7 +1,7 @@
 """Command-line entry point: ``flatatlas``.
 
-Each pipeline stage owns one command group. The groups are empty for now;
-later sessions register their commands on them.
+Each pipeline stage owns one command group; later sessions register their commands on it.
+Names in ``PLAIN_COMMANDS`` are single commands instead of groups.
 """
 
 from typing import Annotated
@@ -9,6 +9,9 @@ from typing import Annotated
 import typer
 
 from flatatlas import __version__
+from flatatlas.log import setup_logging
+from flatatlas.settings import load_settings
+from flatatlas.status import render_status
 
 COMMAND_GROUPS: dict[str, str] = {
     "harvest": "Fetch raw responses from the sources into the local cache.",
@@ -26,6 +29,8 @@ COMMAND_GROUPS: dict[str, str] = {
     "venues": "Inspect and validate the venue registry.",
 }
 
+PLAIN_COMMANDS = {"status"}
+
 app = typer.Typer(
     name="flatatlas",
     help="The FLAT Atlas pipeline.",
@@ -37,6 +42,7 @@ app = typer.Typer(
 groups: dict[str, typer.Typer] = {
     name: typer.Typer(name=name, help=help_text, no_args_is_help=True)
     for name, help_text in COMMAND_GROUPS.items()
+    if name not in PLAIN_COMMANDS
 }
 for _group in groups.values():
     app.add_typer(_group)
@@ -61,3 +67,14 @@ def main(
     ] = False,
 ) -> None:
     """The FLAT Atlas pipeline."""
+
+
+@app.command("status", help=COMMAND_GROUPS["status"])
+def status(
+    profile: Annotated[
+        str | None, typer.Option(help="Profile name (default: FLATATLAS_PROFILE or pilot).")
+    ] = None,
+) -> None:
+    settings = load_settings(profile=profile)
+    setup_logging(None)
+    typer.echo(render_status(settings))

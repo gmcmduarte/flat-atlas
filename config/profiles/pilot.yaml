@@ -1,0 +1,11 @@
+# Pilot stage: laptop, three venues, static site on GitHub Pages (PLAN §5.4).
+name: pilot
+data_root: ./data            # relative to the repository root; FLATATLAS_DATA_ROOT overrides
+active_venues: [dcfs, dlt, ciaa]
+concurrency: 1
+embedding_device: mps        # mps | cpu | cuda
+batch_sizes:
+  embed: 32
+  tag: 256
+bulk_loaders_enabled: false
+export_targets: [static_site]

@@ -1,0 +1,52 @@
+# Per-source access settings (PLAN §3). All HTTP goes through flatatlas.http, which reads this file.
+# Values marked "unverified" come from PLAN §3 and must be re-checked in the first session that
+# uses the source; record changes in docs/notes/sources.md.
+#
+#   requests_per_second / burst  token bucket (conservative where PLAN says unverified)
+#   batch_size                   max IDs per batched call (used by the source clients)
+#   daily_budget_usd             per UTC day; null = no budget
+#   costs                        estimated cost per call kind, in USD
+#   auth                         style: none | query | header; name = parameter/header name;
+#                                secret = field of the .env settings holding the key;
+#                                required = refuse to hit the network without it
+#   mailto_param                 query parameter that carries the contact email (polite pools)
+
+dblp:
+  base_url: https://dblp.org
+  requests_per_second: 1.0      # no published limit; PLAN says <= 1 request/s
+  burst: 1
+  batch_size: 1
+  daily_budget_usd: null
+  costs: {}
+  auth: {style: none}
+
+openalex:
+  base_url: https://api.openalex.org
+  requests_per_second: 10.0     # reported 30/s with a key; PLAN says treat as 10/s (unverified)
+  burst: 10
+  batch_size: 50                # filter=doi:a|b|... ; 50-100 per call (unverified)
+  daily_budget_usd: 1.0         # free budget, resets at midnight UTC
+  costs:
+    list: 0.0001                # $0.10 per 1,000 list/filter calls
+    singleton: 0.0              # lookups by ID or DOI are free
+    search: 0.001               # $1 per 1,000 search calls
+  auth: {style: query, name: api_key, secret: openalex_api_key, required: true}  # param name unverified
+
+semanticscholar:
+  base_url: https://api.semanticscholar.org/graph/v1
+  requests_per_second: 1.0      # key gives 1 request/s on all endpoints
+  burst: 1
+  batch_size: 100               # POST /paper/batch; PLAN says 500 from memory (unverified), so start lower
+  daily_budget_usd: null
+  costs: {}
+  auth: {style: header, name: x-api-key, secret: s2_api_key, required: false}
+
+crossref:
+  base_url: https://api.crossref.org
+  requests_per_second: 3.0      # polite pool: 10/s single record, 3/s list queries; use the lower
+  burst: 3
+  batch_size: 1
+  daily_budget_usd: null
+  costs: {}
+  auth: {style: none}
+  mailto_param: mailto
