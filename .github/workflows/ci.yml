@@ -30,6 +30,31 @@ jobs:
       - name: Tests
         run: uv run pytest
 
+  web:
+    name: Web checks
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - run: npm ci
+      - name: Type check (svelte-check)
+        run: npm run check
+      - name: Prettier and ESLint
+        run: npm run lint
+      - name: Tests
+        run: npm run test
+      - name: Build (as on Pages, under a base path)
+        run: npm run build
+        env:
+          BASE_PATH: /flat-atlas
+
   gitleaks:
     name: Secret scan (full history)
     runs-on: ubuntu-latest
