@@ -1,0 +1,69 @@
+{
+	"WFIXTUREAAJ": {
+		"work_id": "WFIXTUREAAJ",
+		"title": "Fixture paper 10: operations on words, revisited for the fixture",
+		"year": 2023,
+		"work_type": "proceedings-paper",
+		"venue": {
+			"venue_id": "VFIXTUREAAA",
+			"acronym": "FIXCONF"
+		},
+		"authors": [
+			{
+				"author_id": "AFIXTUREAAE",
+				"name": "Eun-ji Test",
+				"position": 1
+			},
+			{
+				"author_id": "AFIXTUREAAB",
+				"name": "Bo Placeholder",
+				"position": 2
+			}
+		],
+		"doi": null,
+		"links": {
+			"dblp": null,
+			"openalex": null,
+			"doi": null,
+			"open_access": null
+		},
+		"cited_by_count": 30,
+		"tags": [
+			{
+				"topic_id": "formal-languages",
+				"topic_name": "Formal languages",
+				"confidence": 0.83,
+				"rank": 1,
+				"is_primary": true,
+				"derived": false,
+				"provenance": {
+					"method": "fixture",
+					"signals": {
+						"title_phrase": 0.9,
+						"embedding": 0.71
+					},
+					"tagger_version": "fixture-0",
+					"taxonomy_version": "fixture-0"
+				}
+			},
+			{
+				"topic_id": "regular-languages",
+				"topic_name": "Regular languages",
+				"confidence": 0.66,
+				"rank": 2,
+				"is_primary": false,
+				"derived": false,
+				"provenance": {
+					"method": "fixture",
+					"signals": {
+						"title_phrase": 0.9,
+						"embedding": 0.71
+					},
+					"tagger_version": "fixture-0",
+					"taxonomy_version": "fixture-0"
+				}
+			}
+		],
+		"fixture": true
+	}
+}

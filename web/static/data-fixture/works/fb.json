@@ -1,0 +1,69 @@
+{
+	"WFIXTUREAAG": {
+		"work_id": "WFIXTUREAAG",
+		"title": "Fixture paper 7: automata over a toy alphabet",
+		"year": 2015,
+		"work_type": "proceedings-paper",
+		"venue": {
+			"venue_id": "VFIXTUREAAA",
+			"acronym": "FIXCONF"
+		},
+		"authors": [
+			{
+				"author_id": "AFIXTUREAAB",
+				"name": "Bo Placeholder",
+				"position": 1
+			},
+			{
+				"author_id": "AFIXTUREAAD",
+				"name": "Dmitri Sample",
+				"position": 2
+			}
+		],
+		"doi": null,
+		"links": {
+			"dblp": null,
+			"openalex": null,
+			"doi": null,
+			"open_access": null
+		},
+		"cited_by_count": 21,
+		"tags": [
+			{
+				"topic_id": "automata-theory",
+				"topic_name": "Automata theory",
+				"confidence": 0.86,
+				"rank": 1,
+				"is_primary": true,
+				"derived": false,
+				"provenance": {
+					"method": "fixture",
+					"signals": {
+						"title_phrase": 0.9,
+						"embedding": 0.71
+					},
+					"tagger_version": "fixture-0",
+					"taxonomy_version": "fixture-0"
+				}
+			},
+			{
+				"topic_id": "finite-automata",
+				"topic_name": "Finite automata",
+				"confidence": 0.69,
+				"rank": 2,
+				"is_primary": false,
+				"derived": false,
+				"provenance": {
+					"method": "fixture",
+					"signals": {
+						"title_phrase": 0.9,
+						"embedding": 0.71
+					},
+					"tagger_version": "fixture-0",
+					"taxonomy_version": "fixture-0"
+				}
+			}
+		],
+		"fixture": true
+	}
+}

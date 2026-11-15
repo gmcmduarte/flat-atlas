@@ -1,0 +1,38 @@
+{
+	"AFIXTUREAAD": {
+		"author_id": "AFIXTUREAAD",
+		"display_name": "Dmitri Sample",
+		"name_variants": [],
+		"dblp_pid": null,
+		"orcid": null,
+		"topics": [
+			{
+				"topic_id": "finite-automata",
+				"score": 1.43
+			},
+			{
+				"topic_id": "descriptional-complexity",
+				"score": 0.91
+			},
+			{
+				"topic_id": "formal-languages",
+				"score": 0.89
+			},
+			{
+				"topic_id": "automata-theory",
+				"score": 0.86
+			},
+			{
+				"topic_id": "regular-languages",
+				"score": 0.84
+			}
+		],
+		"work_ids": [
+			"WFIXTUREAAB",
+			"WFIXTUREAAD",
+			"WFIXTUREAAG",
+			"WFIXTUREAAI"
+		],
+		"fixture": true
+	}
+}

@@ -40,6 +40,8 @@ uvx pre-commit install       # once: run the hooks (ruff, gitleaks) on every com
 uvx pre-commit run --all-files
 ```
 
+The site in `web/` needs Node 22.17 or newer (CI uses 24): `cd web && npm ci && npm run dev`; see `web/README.md`.
+
 API keys go in `.env` (git-ignored); copy `.env.example` and fill it in. Never commit real values.
 
 ## Corrections

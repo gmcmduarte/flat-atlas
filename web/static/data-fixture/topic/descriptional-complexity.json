@@ -1,0 +1,102 @@
+{
+	"topic": {
+		"topic_id": "descriptional-complexity",
+		"name": "Descriptional complexity",
+		"description": "How large a description must be, for example the number of states of an automaton.",
+		"level": 1,
+		"paper_count": 3
+	},
+	"parents": [
+		{
+			"topic_id": "automata-theory",
+			"name": "Automata theory"
+		}
+	],
+	"children": [],
+	"edges": {
+		"related": [
+			{
+				"topic_id": "finite-automata",
+				"name": "Finite automata",
+				"edge_type": "related",
+				"direction": "both",
+				"weight": 0.55,
+				"confidence": 0.7
+			}
+		],
+		"builds-on": [
+			{
+				"topic_id": "finite-automata",
+				"name": "Finite automata",
+				"edge_type": "builds-on",
+				"direction": "out",
+				"weight": 0.6,
+				"confidence": 0.75
+			}
+		],
+		"shared-community": []
+	},
+	"top_papers": [
+		{
+			"work_id": "WFIXTUREAAB",
+			"title": "Fixture paper 2: a state-complexity bound for a toy operation",
+			"year": 2005,
+			"venue_acronym": "FIXCONF",
+			"confidence": 0.91,
+			"cited_by_count": 6
+		},
+		{
+			"work_id": "WFIXTUREAAH",
+			"title": "Fixture paper 8: descriptional measures, an example survey",
+			"year": 2018,
+			"venue_acronym": "FIXCONF",
+			"confidence": 0.85,
+			"cited_by_count": 24
+		},
+		{
+			"work_id": "WFIXTUREAAC",
+			"title": "Fixture paper 3: nondeterminism and succinctness, an illustration",
+			"year": 2007,
+			"venue_acronym": "FIXCONF",
+			"confidence": 0.73,
+			"cited_by_count": 9
+		}
+	],
+	"key_authors": [
+		{
+			"author_id": "AFIXTUREAAC",
+			"name": "Chandra Example",
+			"score": 1.58
+		},
+		{
+			"author_id": "AFIXTUREAAE",
+			"name": "Eun-ji Test",
+			"score": 1.58
+		},
+		{
+			"author_id": "AFIXTUREAAB",
+			"name": "Bo Placeholder",
+			"score": 0.91
+		},
+		{
+			"author_id": "AFIXTUREAAD",
+			"name": "Dmitri Sample",
+			"score": 0.91
+		}
+	],
+	"year_series": [
+		{
+			"year": 2005,
+			"papers": 1
+		},
+		{
+			"year": 2007,
+			"papers": 1
+		},
+		{
+			"year": 2018,
+			"papers": 1
+		}
+	],
+	"fixture": true
+}

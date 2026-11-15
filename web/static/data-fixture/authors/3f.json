@@ -1,0 +1,26 @@
+{
+	"AFIXTUREAAA": {
+		"author_id": "AFIXTUREAAA",
+		"display_name": "Ada Fixture",
+		"name_variants": [],
+		"dblp_pid": null,
+		"orcid": null,
+		"topics": [
+			{
+				"topic_id": "regular-languages",
+				"score": 2.63
+			},
+			{
+				"topic_id": "formal-languages",
+				"score": 1.59
+			}
+		],
+		"work_ids": [
+			"WFIXTUREAAA",
+			"WFIXTUREAAD",
+			"WFIXTUREAAF",
+			"WFIXTUREAAI"
+		],
+		"fixture": true
+	}
+}

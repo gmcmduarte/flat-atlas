@@ -1,0 +1,60 @@
+[
+	{
+		"topic_id": "formal-languages",
+		"name": "Formal languages",
+		"description": "Sets of finite words, and the grammars and operations used to describe and combine them.",
+		"level": 0,
+		"parents": [],
+		"children": [
+			"regular-languages",
+			"finite-automata"
+		],
+		"paper_count": 3
+	},
+	{
+		"topic_id": "automata-theory",
+		"name": "Automata theory",
+		"description": "Abstract machines that read words, and what they can and cannot recognise.",
+		"level": 0,
+		"parents": [],
+		"children": [
+			"finite-automata",
+			"descriptional-complexity"
+		],
+		"paper_count": 2
+	},
+	{
+		"topic_id": "regular-languages",
+		"name": "Regular languages",
+		"description": "The languages recognised by finite automata, with their closure properties.",
+		"level": 1,
+		"parents": [
+			"formal-languages"
+		],
+		"children": [],
+		"paper_count": 4
+	},
+	{
+		"topic_id": "finite-automata",
+		"name": "Finite automata",
+		"description": "Machines with finitely many states, deterministic or not, and their variants.",
+		"level": 1,
+		"parents": [
+			"automata-theory",
+			"formal-languages"
+		],
+		"children": [],
+		"paper_count": 4
+	},
+	{
+		"topic_id": "descriptional-complexity",
+		"name": "Descriptional complexity",
+		"description": "How large a description must be, for example the number of states of an automaton.",
+		"level": 1,
+		"parents": [
+			"automata-theory"
+		],
+		"children": [],
+		"paper_count": 3
+	}
+]

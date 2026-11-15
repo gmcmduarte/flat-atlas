@@ -5,6 +5,8 @@
 
 # local data and caches (never committed)
 data/
+# ...but not the web code that reads data (web/static/data/, the exported site data, stays ignored)
+!web/src/lib/data/
 *.duckdb
 *.duckdb.wal
 

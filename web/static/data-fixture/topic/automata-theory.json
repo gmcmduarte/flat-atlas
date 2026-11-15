@@ -1,0 +1,85 @@
+{
+	"topic": {
+		"topic_id": "automata-theory",
+		"name": "Automata theory",
+		"description": "Abstract machines that read words, and what they can and cannot recognise.",
+		"level": 0,
+		"paper_count": 2
+	},
+	"parents": [],
+	"children": [
+		{
+			"topic_id": "finite-automata",
+			"name": "Finite automata"
+		},
+		{
+			"topic_id": "descriptional-complexity",
+			"name": "Descriptional complexity"
+		}
+	],
+	"edges": {
+		"related": [
+			{
+				"topic_id": "formal-languages",
+				"name": "Formal languages",
+				"edge_type": "related",
+				"direction": "both",
+				"weight": 0.7,
+				"confidence": 0.8
+			}
+		],
+		"builds-on": [],
+		"shared-community": []
+	},
+	"top_papers": [
+		{
+			"work_id": "WFIXTUREAAG",
+			"title": "Fixture paper 7: automata over a toy alphabet",
+			"year": 2015,
+			"venue_acronym": "FIXCONF",
+			"confidence": 0.86,
+			"cited_by_count": 21
+		},
+		{
+			"work_id": "WFIXTUREAAH",
+			"title": "Fixture paper 8: descriptional measures, an example survey",
+			"year": 2018,
+			"venue_acronym": "FIXCONF",
+			"confidence": 0.68,
+			"cited_by_count": 24
+		}
+	],
+	"key_authors": [
+		{
+			"author_id": "AFIXTUREAAB",
+			"name": "Bo Placeholder",
+			"score": 0.86
+		},
+		{
+			"author_id": "AFIXTUREAAD",
+			"name": "Dmitri Sample",
+			"score": 0.86
+		},
+		{
+			"author_id": "AFIXTUREAAC",
+			"name": "Chandra Example",
+			"score": 0.68
+		},
+		{
+			"author_id": "AFIXTUREAAE",
+			"name": "Eun-ji Test",
+			"score": 0.68
+		}
+	],
+	"year_series": [
+		{
+			"year": 2015,
+			"papers": 1
+		},
+		{
+			"year": 2018,
+			"papers": 1
+		}
+	],
+	"fixture": true
+}

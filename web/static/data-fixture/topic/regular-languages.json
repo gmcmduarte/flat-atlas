@@ -1,0 +1,119 @@
+{
+	"topic": {
+		"topic_id": "regular-languages",
+		"name": "Regular languages",
+		"description": "The languages recognised by finite automata, with their closure properties.",
+		"level": 1,
+		"paper_count": 4
+	},
+	"parents": [
+		{
+			"topic_id": "formal-languages",
+			"name": "Formal languages"
+		}
+	],
+	"children": [],
+	"edges": {
+		"related": [
+			{
+				"topic_id": "finite-automata",
+				"name": "Finite automata",
+				"edge_type": "related",
+				"direction": "both",
+				"weight": 0.82,
+				"confidence": 0.9
+			}
+		],
+		"builds-on": [
+			{
+				"topic_id": "finite-automata",
+				"name": "Finite automata",
+				"edge_type": "builds-on",
+				"direction": "in",
+				"weight": 0.4,
+				"confidence": 0.65
+			}
+		],
+		"shared-community": []
+	},
+	"top_papers": [
+		{
+			"work_id": "WFIXTUREAAA",
+			"title": "Fixture paper 1: closure of regular languages under a toy operation",
+			"year": 2003,
+			"venue_acronym": "FIXCONF",
+			"confidence": 0.92,
+			"cited_by_count": 3
+		},
+		{
+			"work_id": "WFIXTUREAAF",
+			"title": "Fixture paper 6: a regular-language characterisation, sketched",
+			"year": 2013,
+			"venue_acronym": "FIXCONF",
+			"confidence": 0.87,
+			"cited_by_count": 18
+		},
+		{
+			"work_id": "WFIXTUREAAI",
+			"title": "Fixture paper 9: regular languages and a toy decision problem",
+			"year": 2020,
+			"venue_acronym": "FIXCONF",
+			"confidence": 0.84,
+			"cited_by_count": 27
+		},
+		{
+			"work_id": "WFIXTUREAAJ",
+			"title": "Fixture paper 10: operations on words, revisited for the fixture",
+			"year": 2023,
+			"venue_acronym": "FIXCONF",
+			"confidence": 0.66,
+			"cited_by_count": 30
+		}
+	],
+	"key_authors": [
+		{
+			"author_id": "AFIXTUREAAA",
+			"name": "Ada Fixture",
+			"score": 2.63
+		},
+		{
+			"author_id": "AFIXTUREAAC",
+			"name": "Chandra Example",
+			"score": 1.79
+		},
+		{
+			"author_id": "AFIXTUREAAD",
+			"name": "Dmitri Sample",
+			"score": 0.84
+		},
+		{
+			"author_id": "AFIXTUREAAE",
+			"name": "Eun-ji Test",
+			"score": 0.66
+		},
+		{
+			"author_id": "AFIXTUREAAB",
+			"name": "Bo Placeholder",
+			"score": 0.66
+		}
+	],
+	"year_series": [
+		{
+			"year": 2003,
+			"papers": 1
+		},
+		{
+			"year": 2013,
+			"papers": 1
+		},
+		{
+			"year": 2020,
+			"papers": 1
+		},
+		{
+			"year": 2023,
+			"papers": 1
+		}
+	],
+	"fixture": true
+}

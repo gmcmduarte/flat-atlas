@@ -1,0 +1,102 @@
+{
+	"topic": {
+		"topic_id": "formal-languages",
+		"name": "Formal languages",
+		"description": "Sets of finite words, and the grammars and operations used to describe and combine them.",
+		"level": 0,
+		"paper_count": 3
+	},
+	"parents": [],
+	"children": [
+		{
+			"topic_id": "regular-languages",
+			"name": "Regular languages"
+		},
+		{
+			"topic_id": "finite-automata",
+			"name": "Finite automata"
+		}
+	],
+	"edges": {
+		"related": [
+			{
+				"topic_id": "automata-theory",
+				"name": "Automata theory",
+				"edge_type": "related",
+				"direction": "both",
+				"weight": 0.7,
+				"confidence": 0.8
+			}
+		],
+		"builds-on": [],
+		"shared-community": []
+	},
+	"top_papers": [
+		{
+			"work_id": "WFIXTUREAAD",
+			"title": "Fixture paper 4: words, languages and an example theorem",
+			"year": 2009,
+			"venue_acronym": "FIXCONF",
+			"confidence": 0.89,
+			"cited_by_count": 12
+		},
+		{
+			"work_id": "WFIXTUREAAJ",
+			"title": "Fixture paper 10: operations on words, revisited for the fixture",
+			"year": 2023,
+			"venue_acronym": "FIXCONF",
+			"confidence": 0.83,
+			"cited_by_count": 30
+		},
+		{
+			"work_id": "WFIXTUREAAF",
+			"title": "Fixture paper 6: a regular-language characterisation, sketched",
+			"year": 2013,
+			"venue_acronym": "FIXCONF",
+			"confidence": 0.7,
+			"cited_by_count": 18
+		}
+	],
+	"key_authors": [
+		{
+			"author_id": "AFIXTUREAAA",
+			"name": "Ada Fixture",
+			"score": 1.59
+		},
+		{
+			"author_id": "AFIXTUREAAD",
+			"name": "Dmitri Sample",
+			"score": 0.89
+		},
+		{
+			"author_id": "AFIXTUREAAE",
+			"name": "Eun-ji Test",
+			"score": 0.83
+		},
+		{
+			"author_id": "AFIXTUREAAB",
+			"name": "Bo Placeholder",
+			"score": 0.83
+		},
+		{
+			"author_id": "AFIXTUREAAC",
+			"name": "Chandra Example",
+			"score": 0.7
+		}
+	],
+	"year_series": [
+		{
+			"year": 2009,
+			"papers": 1
+		},
+		{
+			"year": 2013,
+			"papers": 1
+		},
+		{
+			"year": 2023,
+			"papers": 1
+		}
+	],
+	"fixture": true
+}

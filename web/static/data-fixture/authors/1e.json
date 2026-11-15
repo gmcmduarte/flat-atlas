@@ -1,0 +1,38 @@
+{
+	"AFIXTUREAAE": {
+		"author_id": "AFIXTUREAAE",
+		"display_name": "Eun-ji Test",
+		"name_variants": [],
+		"dblp_pid": null,
+		"orcid": null,
+		"topics": [
+			{
+				"topic_id": "finite-automata",
+				"score": 1.78
+			},
+			{
+				"topic_id": "descriptional-complexity",
+				"score": 1.58
+			},
+			{
+				"topic_id": "formal-languages",
+				"score": 0.83
+			},
+			{
+				"topic_id": "automata-theory",
+				"score": 0.68
+			},
+			{
+				"topic_id": "regular-languages",
+				"score": 0.66
+			}
+		],
+		"work_ids": [
+			"WFIXTUREAAC",
+			"WFIXTUREAAE",
+			"WFIXTUREAAH",
+			"WFIXTUREAAJ"
+		],
+		"fixture": true
+	}
+}
