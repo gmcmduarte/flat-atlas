@@ -94,20 +94,31 @@ class Record:
     mdate: str | None
     fields: dict[str, list[str]] = field(default_factory=dict)
     xml: str | None = None  # the record as ASCII XML, non-ASCII as &#NNN; (only with ``keep_xml``)
+    # XML attributes of each value in ``fields``, same order and length: ``attrs["author"][0]`` is
+    # the attribute dict of ``fields["author"][0]`` (``{"orcid": "0000-..."}``, ``{"type": "oa"}``).
+    attrs: dict[str, list[dict[str, str]]] = field(default_factory=dict)
 
     def first(self, name: str) -> str | None:
         values = self.fields.get(name)
         return values[0] if values else None
 
+    def with_attrs(self, name: str) -> list[tuple[str, dict[str, str]]]:
+        """``(text, attributes)`` for every value of a child tag, in order."""
+        values = self.fields.get(name, [])
+        attributes = self.attrs.get(name) or [{} for _ in values]
+        return list(zip(values, attributes, strict=True))
+
 
 def _record_from(elem: ET.Element, keep_xml: bool) -> Record:
     fields: dict[str, list[str]] = defaultdict(list)
+    attrs: dict[str, list[dict[str, str]]] = defaultdict(list)
     for child in elem:
         text = "".join(child.itertext()).strip()
         if text:
             fields[child.tag].append(text)
+            attrs[child.tag].append(dict(child.attrib))
     xml = ET.tostring(elem, encoding="us-ascii").decode("ascii") if keep_xml else None
-    return Record(elem.tag, elem.get("key", ""), elem.get("mdate"), dict(fields), xml)
+    return Record(elem.tag, elem.get("key", ""), elem.get("mdate"), dict(fields), xml, dict(attrs))
 
 
 def iter_records(

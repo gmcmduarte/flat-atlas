@@ -56,6 +56,20 @@ class Verified(BaseModel):
     openalex: date | None = None  # openalex_source_ids
 
 
+class ExtraEdition(BaseModel):
+    """An edition DBLP keeps outside the venue's stream (DCFS 2009 and 2010 are CoRR records).
+
+    ``key`` is the DBLP key of its ``proceedings`` record; its papers are the records whose
+    ``crossref`` is that key. ``year`` is the year of the meeting (the key has none to read).
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    key: str = Field(pattern=r"^[A-Za-z0-9_-]+(/[A-Za-z0-9_.-]+)+$")
+    year: int = Field(ge=1900, le=2100)
+    note: str = ""
+
+
 class Venue(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
@@ -70,6 +84,11 @@ class Venue(BaseModel):
     publisher: str | None = None
     first_year: int | None = Field(None, ge=1900, le=2100)
     last_year: int | None = Field(None, ge=1900, le=2100)
+    # Editions of this venue that DBLP files outside ``dblp_stream`` (see ExtraEdition).
+    extra_editions: list[ExtraEdition] = []
+    # DBLP keys inside the stream (and year range) that are not editions of this venue, e.g. a
+    # different meeting's proceedings that DBLP files here. Their papers are left out.
+    excluded_editions: list[str] = []
     successor_of: list[VenueId] = []
     special_issue_of: VenueId | None = None
     expected_topics: list[str] = []  # topic slugs; checked once the taxonomy exists (P1-06)
@@ -148,6 +167,19 @@ def find_problems(venues: list[Venue]) -> list[str]:
             problems.append(f"{venue.id}: special_issue_of names unknown venue")
         if venue.first_year and venue.last_year and venue.last_year < venue.first_year:
             problems.append(f"{venue.id}: last_year {venue.last_year} < first_year")
+        if (venue.extra_editions or venue.excluded_editions) and not venue.dblp_stream:
+            problems.append(f"{venue.id}: extra/excluded editions need a dblp_stream")
+        extra_keys = [e.key for e in venue.extra_editions]
+        for key in sorted({k for k in extra_keys if extra_keys.count(k) > 1}):
+            problems.append(f"{venue.id}: extra edition {key!r} is listed twice")
+        for key in extra_keys:
+            if venue.dblp_stream and key.startswith(venue.dblp_stream + "/"):
+                problems.append(f"{venue.id}: extra edition {key!r} is already in its own stream")
+        for key in venue.excluded_editions:
+            if venue.dblp_stream and not key.startswith(venue.dblp_stream + "/"):
+                problems.append(
+                    f"{venue.id}: excluded edition {key!r} is not in {venue.dblp_stream}"
+                )
         if venue.verified.dblp and not venue.dblp_stream:
             problems.append(f"{venue.id}: verified.dblp is set but dblp_stream is empty")
         if venue.verified.openalex and not venue.openalex_source_ids:

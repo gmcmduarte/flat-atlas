@@ -10,6 +10,9 @@
 #                            DBLP XML dump (the DBLP API is behind a bot challenge, D-49)
 #                  openalex  openalex_source_ids
 #                Evidence: docs/notes/venues-pilot.md.
+# extra_editions     editions DBLP keeps outside the venue's stream (key of the proceedings record, year of
+#                    the meeting). Their papers are the records whose crossref is that key.
+# excluded_editions  keys inside the stream that are not editions of the venue; their papers are left out.
 # openalex_source_ids  OpenAlex files LNCS proceedings under the book series (S106296714), not the
 #                conference, so these lists are short and DBLP defines membership (PLAN §8.4).
 
@@ -22,6 +25,7 @@
   openalex_source_ids: [S4306418189]
   publisher: Springer
   first_year: 1993
+  excluded_editions: [conf/dlt/2000]   # another meeting's proceedings (Kyoto), see notes
   successor_of: []
   verified: {dblp: 2026-11-15, openalex: 2026-11-15}
   notes: >
@@ -87,6 +91,9 @@
   openalex_source_ids: [S4306507593, S4306418178]
   publisher: Springer
   first_year: 2002                 # 4th workshop, London ON; 27th is DCFS 2026
+  extra_editions:                  # EPTCS volumes 3 and 31, filed in DBLP under CoRR (D-51)
+    - {key: journals/corr/abs-0907-5257, year: 2009, note: "11th workshop, Magdeburg; EPTCS 3"}
+    - {key: journals/corr/abs-1008-1270, year: 2010, note: "12th workshop, Saskatoon; EPTCS 31"}
   successor_of: [dcagrs]
   verified: {dblp: 2026-11-15, openalex: 2026-11-15}
   notes: >

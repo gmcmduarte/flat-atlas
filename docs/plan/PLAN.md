@@ -322,6 +322,8 @@ The pilot three (DLT, CIAA, DCFS) and their predecessors were verified against t
 
 **DBLP does not always have one stream per venue name.** CIAA and its predecessor WIA share the stream `conf/wia`; DCFS and its predecessor DCAGRS share `conf/dcfs`. `venues.yaml` therefore lets two venues share a stream when their `first_year`/`last_year` ranges do not overlap (D-50). An edition is a `<proceedings>` record or a `crossref` key cited by papers (every pilot edition has a record; the second rule is a safeguard).
 
+Two more `venues.yaml` fields handle DBLP's filing (D-51): `extra_editions` lists editions DBLP keeps outside the stream (DCFS 2009 and 2010 are EPTCS volumes under `journals/corr`), and `excluded_editions` lists keys inside the stream that are another meeting's volumes (`conf/dlt/2000`).
+
 ### 7.1 Core venues (Tier A)
 | Venue | Notes to verify |
 |---|---|
