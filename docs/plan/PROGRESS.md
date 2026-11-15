@@ -1,16 +1,16 @@
 # Progress
 
 ## Current state (keep this section under 30 lines)
-- **Phase:** 0 (P0-00 open; P0-04 built, in review), 1 started (P1-01 done)
-- **Last merged session:** P1-01 (PR #4); P0-04 is in review (see its entry)
-- **Next:** Guilherme enables Pages (Settings > Pages > Source = "GitHub Actions") and merges the P0-04 PR, then checks the public URL (the last two "Done when" lines of P0-04); finishes the rest of `sessions/P0-00-manual-setup.md`; then `P1-02` (OpenAlex + Crossref, long job)
-- **Live site:** none yet (deploys when the P0-04 PR is merged and Pages is enabled)
+- **Phase:** 0 (P0-00 open; P0-04 done), 1 started (P1-01 done)
+- **Last merged session:** P0-04 (PR #5)
+- **Next:** Guilherme finishes the rest of `sessions/P0-00-manual-setup.md`; then `P1-02` (OpenAlex + Crossref, long job)
+- **Live site:** https://gmcmduarte.github.io/flat-atlas/ (fixture data only; redeploys on every push to `main`)
 - **Latest release:** none
 - **Known problems:** the DBLP API is behind a bot challenge (HTTP 202, Anubis); DBLP data comes from the dump Guilherme downloads by hand (D-49). Refreshing it is manual. After a new dump, run `venues scan-dump` and then `parse dblp` again.
-- **Waiting on Guilherme:** the rest of P0-00 (branch protection, secret scanning, Pages source, tmux, pre-commit install; S2 key is set in `.env`); review of the P0-04 PR
+- **Waiting on Guilherme:** the rest of P0-00 (branch protection, secret scanning, tmux, pre-commit install; S2 key is set in `.env`)
 
 ## Checklist
-**Phase 0** — [ ] P0-00 · [x] P0-01 · [x] P0-02 · [x] P0-03 · [x] P0-04 (built; Pages URL unchecked until merge)
+**Phase 0** — [ ] P0-00 · [x] P0-01 · [x] P0-02 · [x] P0-03 · [x] P0-04
 **Phase 1** — [x] P1-01 · [ ] P1-02 · [ ] P1-03 · [ ] P1-04 · [ ] P1-05 · [ ] P1-06 · [ ] P1-07 · [ ] P1-08 · [ ] P1-09 · [ ] P1-10 · [ ] P1-11 · [ ] P1-12 · [ ] G1
 **Phase 2** — [ ] P2-01 · [ ] P2-02 · [ ] P2-03 · [ ] P2-04 · [ ] G2
 **Phase 3** — [ ] P3-00 · [ ] P3-01 · [ ] P3-02 · [ ] P3-03 · [ ] P3-04 · [ ] P3-05 · [ ] G3
@@ -25,9 +25,9 @@
 - **Not built (out of scope):** map, real search, paper/author/venue pages, styling beyond a plain readable default, edge-type or sort switches. `search()` matches topic names only; `getMap()` just returns the fixture layout.
 - **Surprises:** (1) SvelteKit 3 changed several things the plan assumed: config is in `vite.config.ts`, `$env/*` is replaced by `src/env.ts` + `$app/env/public`, `base` is no longer exported from `$app/paths` (it is relative while rendering on the server, so use `resolve()`). (2) The `.gitignore` rule `data/` also hid `web/src/lib/data/`; fixed with a negation. (3) The `sv` default for component tests is Vitest browser mode with Playwright, which needs a Chromium download (installed browsers did not match); replaced with jsdom (D-55). (4) Only the home page and topic pages are prerendered, so a deep link to a non-prerendered URL is the one that goes through `404.html`; there is no valid such route yet, so that path was tested with an unknown topic and a trailing-slash URL. (5) The data-folder `entries()` reads `static/<dir>/topics.json` from disk at build time.
 - **Done when (evidence):**
-  - Public Pages URL shows the home page and a fixture topic page: **not yet checked**. It needs Pages enabled with source "GitHub Actions" and the PR merged to `main`; `pages.yml` runs on that push. Checked locally instead: a built site (`BASE_PATH=/flat-atlas`) served under `/flat-atlas/` by a small server that imitates Pages (clean URLs, `404.html` with status 404 for anything else) showed `/` (two top-level topics with subtopic names) and `/topic/finite-automata` (breadcrumbs for both parents, edge panels, papers with confidence, authors, sparkline).
-  - Reloading a deep link works: **pass locally** (same imitation of Pages): `/topic/nope` returned 404 with the app shell and a "No topic" error page; `/topic/finite-automata/` (not a prerendered file) went through `404.html`, rendered the topic and then client-side navigation to another topic worked. Not yet confirmed on real Pages.
-  - CI runs the web checks: **pending the PR run** (`web` job: `npm ci`, check, lint, test, build with a base path).
+  - Public Pages URL shows the home page and a fixture topic page: **pass** (checked after the merge, 2026-11-15): `https://gmcmduarte.github.io/flat-atlas/` answers 200 and shows the home page; `/topic/finite-automata` answers 200 with title "Finite automata · The FLAT Atlas"; `/data-fixture/topics.json` answers 200. Before the merge it was also checked locally with a server imitating Pages.
+  - Reloading a deep link works: **pass** on real Pages: `/topic/finite-automata/` (no such file) and `/topic/nope` answer HTTP 404 with the app's `404.html`; in the browser the first rendered the topic (4 papers) and normalised the URL, the second shows the "No topic" error page. Same result locally before the merge.
+  - CI runs the web checks: **pass**: the `web` job (`npm ci`, check, lint, test, build with a base path) succeeded on the PR and on `main`, next to Lint and test and the secret scan; the Pages workflow also succeeded.
   - Local run in `web/`: `npm run check` 0 errors, 0 warnings; `npm run lint` clean; `npm test` 11 passed; `npm run build` with and without `BASE_PATH` succeeds.
 - **Hand-off to the next sessions (P1-02, P1-09, P1-10, P1-11):**
   - Run `npm ci` once in `web/`; Node 22.17 or newer. `npm run dev` serves the fixture at `/`.
