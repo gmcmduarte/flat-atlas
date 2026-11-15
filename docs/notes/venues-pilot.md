@@ -65,7 +65,7 @@ attempted. DBLP data comes from the official dump instead, downloaded by hand.
 - **DCFS gaps.** No 2009 and 2010 in `conf/dcfs`: the 11th and 12th workshops appear in DBLP only
   as CoRR records (`journals/corr/abs-0907-5257` and `abs-1008-1270`, titles "Proceedings
   Eleventh/Twelfth ... DCFS"). No 2024 edition (23rd in 2023, 26th in 2025). Papers of the two
-  CoRR volumes are outside the stream; whether to add them is an open point for P1-01.
+  CoRR volumes are outside the stream; they were added in P1-01 (D-51, below).
 - **FDSR**: PLAN says DCFS took its name after merging with FDSR. DBLP has no FDSR stream or
   record, so this cannot be confirmed and no FDSR entry was made.
 - **DLT** matches the plan (since 1993, LNCS), with details: the first editions (1993, 1995,
@@ -115,3 +115,30 @@ Open points for P1-02 (not decided here):
   `openalex_source_ids` once DOI joining works; harmless for now.
 - OpenAlex lists "DCFS" as a *journal*; `kind` in `venues.yaml` is the Atlas's own and stays
   `conference`.
+
+## P1-01: what the parse showed (2026-11-15, same dump, MD5 `4316d8f5`)
+
+- **DCFS 2009 and 2010 are in** (D-51). The two CoRR records are EPTCS volumes 3 and 31
+  (`<series>EPTCS</series>`, DOIs `10.4204/EPTCS.3` and `.31`). Their papers are CoRR
+  `inproceedings` records (`<booktitle>DCFS</booktitle>`, `<crossref>` = the volume key, DOIs
+  `10.4204/EPTCS.3.12` plus an arXiv DOI), 18 papers in 2009 and 21 in 2010. Other CoRR records
+  that mention "Descriptional Complexity" (for example `abs-0907-4180`) do not cite the volume and
+  are not DCFS papers. `venues.yaml` lists the two keys under `dcfs.extra_editions`.
+- **`conf/dlt/2000` is excluded** (`dlt.excluded_editions`): 36 papers of the Kyoto colloquium,
+  not DLT. DLT therefore has 30 editions, 1,025 papers.
+- **Person records.** Every one of the 1,977 author names printed on a pilot paper (homonyms as
+  `Name 0001` included) is listed in exactly one `<www key="homepages/...">` record, so the PID is
+  looked up by exact name and nothing is guessed (D-52). The PID is the key after `homepages/`
+  (`58/4730-1` for Bo Cui 0001; `y/ShengYu` for older people). Person records come after the papers
+  in the dump. 838 of the 1,933 authors have an ORCID (from the person record's `orcid.org` link,
+  else from `<author orcid=...>` on a paper); for 2 people the two sources disagree (Axel Legay,
+  Joel D. Day): the person record wins.
+- **Front matter.** None of the 2,339 papers is flagged. DBLP does not list prefaces or author
+  indexes as papers in these streams (the per-edition counts equal the stream index, which counts
+  every record that cites the edition). Titles with "(Extended Abstract)" or "(Invited Paper)"
+  have pages and are papers. The rules in `config/dblp_parse.yaml` stay for other streams.
+- **DOIs.** None for DCFS 2001 to 2008 (host-university proceedings), DLT 1993 to 1997 (World
+  Scientific and an Aristotle University volume), and 3 of 20 papers of CIAA 2017; all other
+  editions have DOIs for every paper. Per venue and decade: see the PROGRESS entry.
+- **Editions.** 85 in `stg_dblp_edition`: DLT 30, WIA 4, CIAA 26, DCAGRS 1, DCFS 24 (22 in the
+  stream + 2 extra). Every one has a proceedings record; none has zero papers.

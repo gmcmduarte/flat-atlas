@@ -63,7 +63,7 @@ def test_entities_from_a_file_that_is_not_the_dtd_are_refused(tmp_path: Path) ->
 def test_sample_records_are_read_with_fields() -> None:
     records = list(iter_records(SAMPLE, DTD))
     kinds = {r.tag for r in records}
-    assert kinds == {"proceedings", "inproceedings", "article"}
+    assert kinds == {"proceedings", "inproceedings", "article", "www"}
     dlt = next(r for r in records if r.key == "conf/dlt/2019")
     assert dlt.tag == "proceedings"
     assert dlt.first("publisher") == "Springer"
@@ -73,6 +73,11 @@ def test_sample_records_are_read_with_fields() -> None:
     paper = next(r for r in records if r.key == "conf/dlt/Massazza19")
     assert paper.first("crossref") == "conf/dlt/2019"
     assert paper.fields["author"] == ["Paolo Massazza"]
+    # attributes of child elements travel with the values (ORCIDs sit on <author orcid=...>)
+    with_orcid = next(r for r in records if r.key == "conf/wia/TakahashiAN19")
+    assert ("Keisuke Nakano 0001", {"orcid": "0000-0003-1955-4225"}) in with_orcid.with_attrs(
+        "author"
+    )
 
 
 def test_key_filter_limits_what_is_returned() -> None:
@@ -146,7 +151,7 @@ def test_stream_and_edition_year_come_from_the_key() -> None:
 
 def test_index_lists_editions_by_conference_year(index: dict) -> None:
     dlt = {e["key"]: e for e in index["streams"]["conf/dlt"]["editions"]}
-    assert set(dlt) == {"conf/dlt/2019", "conf/dlt/2000"}
+    assert set(dlt) == {"conf/dlt/2019", "conf/dlt/2000", "conf/dlt/1993"}
     assert dlt["conf/dlt/2019"]["n_papers"] == 3
     assert dlt["conf/dlt/2019"]["publisher"] == "Springer"
     # Published in 2003 but a 2000 edition; DBLP files it in the DLT stream.

@@ -1,17 +1,17 @@
 # Progress
 
 ## Current state (keep this section under 30 lines)
-- **Phase:** 0 (in progress)
-- **Last merged session:** P0-02 (PR #2); P0-03 is in review (PR #3)
-- **Next:** review and merge the P0-03 PR, finish `sessions/P0-00-manual-setup.md` (Guilherme), then `P0-04`; P1-01 now parses the DBLP dump (prompt rewritten)
+- **Phase:** 0 (P0-00 and P0-04 open), 1 started (P1-01 done)
+- **Last merged session:** P0-03 (PR #3); P1-01 is in review (see the P1-01 entry for the PR)
+- **Next:** review and merge the P1-01 PR; Guilherme finishes `sessions/P0-00-manual-setup.md`; then `P0-04` (web skeleton) and `P1-02` (OpenAlex + Crossref, long job) can go in either order
 - **Live site:** none yet
 - **Latest release:** none
-- **Known problems:** the DBLP API is behind a bot challenge (HTTP 202, Anubis); DBLP data comes from the dump Guilherme downloads by hand (D-49). Refreshing it is manual.
-- **Waiting on Guilherme:** the rest of P0-00 (branch protection, secret scanning, Pages source, tmux, pre-commit install; S2 key is set in `.env`); review of the P0-03 PR
+- **Known problems:** the DBLP API is behind a bot challenge (HTTP 202, Anubis); DBLP data comes from the dump Guilherme downloads by hand (D-49). Refreshing it is manual. After a new dump, run `venues scan-dump` and then `parse dblp` again.
+- **Waiting on Guilherme:** the rest of P0-00 (branch protection, secret scanning, Pages source, tmux, pre-commit install; S2 key is set in `.env`); review of the P1-01 PR
 
 ## Checklist
 **Phase 0** — [ ] P0-00 · [x] P0-01 · [x] P0-02 · [x] P0-03 · [ ] P0-04
-**Phase 1** — [ ] P1-01 · [ ] P1-02 · [ ] P1-03 · [ ] P1-04 · [ ] P1-05 · [ ] P1-06 · [ ] P1-07 · [ ] P1-08 · [ ] P1-09 · [ ] P1-10 · [ ] P1-11 · [ ] P1-12 · [ ] G1
+**Phase 1** — [x] P1-01 · [ ] P1-02 · [ ] P1-03 · [ ] P1-04 · [ ] P1-05 · [ ] P1-06 · [ ] P1-07 · [ ] P1-08 · [ ] P1-09 · [ ] P1-10 · [ ] P1-11 · [ ] P1-12 · [ ] G1
 **Phase 2** — [ ] P2-01 · [ ] P2-02 · [ ] P2-03 · [ ] P2-04 · [ ] G2
 **Phase 3** — [ ] P3-00 · [ ] P3-01 · [ ] P3-02 · [ ] P3-03 · [ ] P3-04 · [ ] P3-05 · [ ] G3
 **Phase 4** — [ ] P4-01 · [ ] P4-02 · [ ] P4-03 · [ ] P4-04 · [ ] P4-05 · [ ] G4
@@ -19,6 +19,23 @@
 **Phase 6** — [ ] P6-01 · [ ] P6-02 · [ ] P6-03 · [ ] G6
 
 ## Log (newest first)
+
+### 2026-11-15 — P1-01 DBLP parse from the dump (branch `s/P1-01-dblp`)
+- **Built:** `sources/dblp.py` (`parse_dump`, `select_venues`, `compare_with_index`, `doi_share`, `write_tables`, title cleaning and normalisation, front-matter rules), `flatatlas parse dblp [--venue X] [--dump-dir PATH] [--profile P]`, `config/dblp_parse.yaml` (front-matter rules as data), `Record.attrs` / `Record.with_attrs` in `dblp_dump.py` (attributes such as `orcid=`), `extra_editions` and `excluded_editions` in `venues.py` and `venues.yaml`, tables `stg_dblp_edition`, `stg_dblp_paper`, `stg_dblp_authorship`, `stg_dblp_author` (DuckDB + Parquet in `data/warehouse/staging/`). The fixture was rebuilt from the real dump (`make_sample.py`: 30 records of 9 editions, 39 real person records, a homonym case, papers without DOI, the two CoRR volumes). 40 new tests, 146 in total. Decisions D-51 to D-53; PLAN §7 and `docs/notes/venues-pilot.md` updated.
+- **Not built:** front matter flagging found nothing to flag in these streams (see below), so that rule set is only tested on synthetic titles. Person-record links other than ORCID (zbMATH, Wikidata, Scholar, affiliation notes) are not stored. Incremental parse and the all-venues load stay in P4-01.
+- **Surprises:** (1) **The two DCFS CoRR volumes link to their papers through `crossref`** exactly like conference volumes, so adding them (Guilherme's decision, D-51) needed only a config list and reading the `journals/corr` stream (about 650,000 records, read and dropped). (2) **Person records come after all papers** in the dump, and every one of the 1,977 names printed on a pilot paper, homonym suffixes included, is listed in exactly one person record: PIDs are exact lookups, none guessed. (3) `conf/dlt/2000` (36 papers, another meeting) is now excluded in config, so DLT has 30 editions and 1,025 papers, and `venues show dlt` (which reads the P0-03 index) still counts 31 editions. (4) No prefaces, front matter or author indexes appear as papers in these streams; the parse counts equal the stream index in all 83 indexed editions. (5) The two ORCID disagreements (Axel Legay, Joel D. Day) between the person record and a paper's `author orcid=`; the person record wins. (6) A full pass takes 2 minutes (`--venue dlt` too: the whole dump is read either way).
+- **Done when (evidence):**
+  - Every edition of DCFS, DLT, CIAA and predecessors in `stg_dblp_edition`: **pass**, 85 rows: DLT 30 (1993 to 2026), WIA 4, CIAA 26, DCAGRS 1, DCFS 24 (22 in `conf/dcfs`, plus 2009 and 2010 from CoRR). All have a proceedings record and papers.
+  - Per-edition paper counts match DBLP: **pass** against the dump's own counts (stream index): 83 of 83 indexed editions match, 0 differ; the 2 extra editions are outside the index (18 and 21 papers, checked by hand against the EPTCS volume records). Differences explained: `conf/dlt/2000` is excluded on purpose (36 papers). I did not compare with the live DBLP table-of-contents pages (blocked, D-49); they are generated from the same data.
+  - DOI share per venue and decade: **pass**: ciaa 2000s 100%, 2010s 99% (3 of 269), 2020s 100%; dcagrs 2000s 0% (19); dcfs 2000s 10% (18 of 180: 2001 to 2008 have none; 2009 has), 2010s 100%, 2020s 100%; dlt 1990s 19% (31 of 162; 1999 has, 1993 to 1997 do not), 2000s to 2020s 100%; wia 1990s 100%. All other-than-100% cells are pre-Springer volumes without DOIs.
+  - 10 random rows of `stg_dblp_paper` with authors: **pass**, shown in the session (seeded query `ORDER BY hash(dblp_key || 'p1-01')`).
+- **Numbers (dump MD5 `4316d8f5`, 2026-11-15):** 85 editions, 2,339 papers (0 front matter), 5,150 authorships, 1,933 authors (838 with ORCID), 0 names without PID, 0 ambiguous, 2 ORCID conflicts; newest record 2026-11-07. Run log: `ops_run_log` stage `parse-dblp` holds the MD5, file date and counts.
+- **Checks:** `uv run pytest` 146 passed; `uv run ruff check .` and `ruff format --check .` clean; `uv run flatatlas venues check` passes with the two known OpenAlex warnings.
+- **Hand-off to P1-02:**
+  - Read DOIs from `stg_dblp_paper.doi` (publisher DOI, lower-case; `dois` has all, arXiv DOIs included). 2,024 of 2,339 papers have one; the 315 without are the pre-Springer volumes listed above (DCFS 2001 to 2008, DCAGRS, DLT 1993 to 1997, 3 of CIAA 2017) and are the ones that need the title-search fallback.
+  - Join keys: `stg_dblp_paper.dblp_key`, `edition_key`, `venue_id`; authors by `stg_dblp_author.pid`. `stg_dblp_authorship.pid` is never null today; if a later dump has a null, it is counted in `ops_run_log`.
+  - The tables hold the venues of the last run; re-run `flatatlas parse dblp` (about 2 minutes, no network) after any dump or `venues.yaml` change. Do not run it while another job holds the DuckDB write lock.
+  - OpenAlex facts from P0-03 still apply: source IDs are only a hint; DOI joining is the route.
 
 ### 2026-11-15 — P0-03 Venue registry and ID registry (branch `s/P0-03-venue-registry`)
 - **Built:** `venues.py` (pydantic model; loader that reports every problem at once: duplicate ids, unknown successors, cycles, bad tier/kind/ID formats, `verified` consistency, shared-stream year ranges; venue facts model; profile cross-check), `flatatlas venues check | show <id> | scan-dump`, `ids.py` (deterministic IDs, `IdRegistry` with `merged_into`, `resolve`, Parquet persistence), `dblp_dump.py` (streaming reader for the DBLP XML dump, stream index), `config/venues.yaml` (DLT, WIA, CIAA, DCAGRS, DCFS, all verified against DBLP and, where a source exists, OpenAlex), `config/venue_facts.yaml` (empty structure), `docs/notes/venues-pilot.md`, `docs/notes/sources.md`, real DBLP fixtures in `tests/fixtures/dblp/` (20 records plus `make_sample.py`). 106 offline tests in total (62 new). Decisions D-46 to D-50. PLAN §3, §7, §7.1 and §17 corrected; P1-01 and P4-01 prompts and their ROADMAP rows rewritten for the dump route.
@@ -67,4 +84,5 @@
 - Wikidata / ROR enrichment for institutions.
 - A short dataset paper describing the Atlas.
 - `SourceClient`: report an HTTP 202 HTML body (bot challenge) as "blocked by bot protection" instead of a bare `HTTP 202`.
+- Person records carry more links (zbMATH, Wikidata, Google Scholar, affiliation notes): a source of author IDs for P1-04 and of affiliations for authors OpenAlex cannot place.
 - Ask DBLP (dblp@dagstuhl.de) whether an identified polite client could be allow-listed for the API; the dump makes this optional.

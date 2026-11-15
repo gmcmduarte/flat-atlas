@@ -11,6 +11,7 @@ import typer
 import yaml
 
 from flatatlas import __version__
+from flatatlas.db import connect, run_log
 from flatatlas.dblp_dump import (
     DTD_FILE,
     DUMP_FILE,
@@ -24,6 +25,7 @@ from flatatlas.dblp_dump import (
 )
 from flatatlas.log import setup_logging
 from flatatlas.settings import load_settings
+from flatatlas.sources import dblp as dblp_parse
 from flatatlas.status import render_status
 from flatatlas.venues import (
     VenueConfigError,
@@ -205,3 +207,108 @@ def venues_scan_dump(
             f"  {stream}: {summary['n_editions']} editions, {info['n_records']} records, "
             f"{summary['first_year']} to {summary['last_year']}"
         )
+
+
+@groups["parse"].command("dblp")
+def parse_dblp(
+    venue: Annotated[
+        str | None, typer.Option(help="Parse one venue (and its predecessors), e.g. dlt.")
+    ] = None,
+    dump_dir: Annotated[
+        Path | None,
+        typer.Option(help="Folder with dblp.xml.gz and dblp.dtd (default: <data>/raw/dblp-dump)."),
+    ] = None,
+    profile: Annotated[
+        str | None, typer.Option(help="Profile name (default: FLATATLAS_PROFILE or pilot).")
+    ] = None,
+) -> None:
+    """Parse the DBLP dump into the stg_dblp_* tables (no network; a few minutes)."""
+    settings = load_settings(profile=profile)
+    setup_logging(settings.paths.logs)
+    try:
+        registry = load_venues()
+        venues = dblp_parse.select_venues(registry, settings.profile.active_venues, venue)
+    except VenueConfigError as exc:
+        for problem in exc.problems:
+            typer.echo(f"error: {problem}", err=True)
+        raise typer.Exit(1) from None
+    except (KeyError, ValueError) as exc:
+        typer.echo(f"error: {exc.args[0]}", err=True)
+        raise typer.Exit(1) from None
+
+    folder = dump_dir or settings.paths.raw / "dblp-dump"
+    dump, dtd = folder / DUMP_FILE, folder / DTD_FILE
+    for needed in (dump, dtd):
+        if not needed.exists():
+            typer.echo(f"error: {needed} not found; see docs/notes/venues-pilot.md", err=True)
+            raise typer.Exit(1)
+    typer.echo(f"venues: {', '.join(v.id for v in venues)}")
+
+    con = connect(settings.paths)
+    try:
+        with run_log(con, "parse-dblp") as run:
+            md5 = verify_checksum(dump)
+            facts = dblp_parse.dump_facts(dump, md5)
+            run.counts.update(facts)
+            run.counts["venues"] = ",".join(v.id for v in venues)
+            typer.echo(f"{dump.name}: MD5 {md5} (file date {facts['dump_file_date']})")
+            parsed = dblp_parse.parse_dump(
+                dump,
+                dtd,
+                venues,
+                dblp_parse.load_rules(),
+                progress=lambda n: typer.echo(f"  {n:,} records read", err=True),
+            )
+            run.counts.update(parsed.stats)
+            run.counts["newest_mdate"] = parsed.notes["newest_mdate"]
+            dblp_parse.write_tables(con, settings.paths, parsed)
+    except DumpError as exc:
+        typer.echo(f"error: {exc}", err=True)
+        raise typer.Exit(1) from None
+    finally:
+        con.close()
+
+    index = read_index(folder / INDEX_FILE)
+    stale = index is not None and index.get("dump_md5") != md5
+    checks = dblp_parse.compare_with_index(parsed, None if stale else index, venues)
+    typer.echo(_parse_report(parsed, checks, stale, index is None))
+
+
+def _parse_report(parsed, checks: list[dict], stale: bool, no_index: bool) -> str:
+    s = parsed.stats
+    lines = [
+        "",
+        f"editions {s['editions']}, papers {s['papers']} "
+        f"({s['papers_front_matter']} flagged front matter), "
+        f"authorships {s['authorships']}, authors {s['authors']}",
+        f"left out: {s['papers_excluded']} papers of {s['editions_excluded']} excluded edition(s); "
+        f"{s['papers_unassigned']} papers and {s['editions_unassigned']} editions outside every "
+        f"venue's year range; {s['papers_without_edition']} papers without crossref",
+        f"names without a PID: {s['names_without_pid']} "
+        f"({s['authorships_without_pid']} authorships); ambiguous names: {s['names_ambiguous']}; "
+        f"ORCID conflicts: {s['orcid_conflicts']}; "
+        f"second pass over the dump: {'yes' if parsed.notes['second_pass'] else 'no'}",
+    ]
+    if stale or no_index:
+        why = "was built from another dump" if stale else "does not exist"
+        lines.append(f"count check skipped: stream_index.json {why} (run `venues scan-dump`)")
+    else:
+        differs = [c for c in checks if c["status"] == "differs"]
+        n_ok = sum(c["status"] == "ok" for c in checks)
+        n_other = sum(c["status"] == "not indexed" for c in checks)
+        lines.append(
+            f"count check against the stream index: {n_ok} editions match, "
+            f"{len(differs)} differ, {n_other} not in the index (extra editions)"
+        )
+        lines.extend(
+            f"  DIFFERS {c['edition_key']} ({c['venue_id']} {c['year']}): "
+            f"parsed {c['parsed']}, index {c['indexed']}"
+            for c in differs
+        )
+    lines.append("DOI share per venue and decade (front matter left out):")
+    lines.extend(
+        f"  {r['venue_id']:<7} {r['decade']}s  {r['with_doi']:>4}/{r['papers']:<4} "
+        f"{r['share']:>5.0%}"
+        for r in dblp_parse.doi_share(parsed)
+    )
+    return "\n".join(lines)

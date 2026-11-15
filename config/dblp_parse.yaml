@@ -1,0 +1,45 @@
+# Rules for the DBLP parse stage (flatatlas parse dblp). Config, not code (P1-01).
+#
+# A record is flagged is_front_matter when its normalised title (lowercase, no accents, no
+# trailing period) equals one of `front_matter_titles`, or matches one of `front_matter_patterns`
+# (regular expressions, searched in the normalised title). Flagged records stay in
+# stg_dblp_paper; later stages decide what to do with them (PLAN §6).
+#
+# `front_matter_if_no_pages` only flag a record when DBLP gives it no page range: an
+# 'Invited talk' with pages is a paper, an 'Invited talk abstract' without pages is not.
+
+front_matter_titles:
+  - front matter
+  - back matter
+  - preface
+  - foreword
+  - introduction
+  - editorial
+  - table of contents
+  - contents
+  - author index
+  - index
+  - organization
+  - organizers
+  - program committee
+  - list of authors
+  - list of referees
+  - list of reviewers
+  - sponsors
+  - acknowledgements
+  - acknowledgments
+
+front_matter_patterns:
+  - '^preface\b'
+  - '^foreword\b'
+  - '^front matter\b'
+  - '^author index$'
+  - '^(list of )?(external )?(referees|reviewers)\b'
+  - '^program committee\b'
+  - '^proceedings of\b'
+
+front_matter_if_no_pages:
+  - '^invited (talk|lecture|paper|tutorial)s?\b'
+  - 'abstracts?$'
+  - '^abstracts? of\b'
+  - '^tutorial\b'
