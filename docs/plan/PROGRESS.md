@@ -2,15 +2,15 @@
 
 ## Current state (keep this section under 30 lines)
 - **Phase:** 0 (in progress)
-- **Last merged session:** none yet (P0-01 is in a PR, waiting for review)
-- **Next:** finish `sessions/P0-00-manual-setup.md` (Guilherme), merge P0-01, then `P0-02`
+- **Last merged session:** P0-01 (PR #1)
+- **Next:** review and merge the P0-02 PR, finish `sessions/P0-00-manual-setup.md` (Guilherme), then `P0-03`
 - **Live site:** none yet
 - **Latest release:** none
 - **Known problems:** none
-- **Waiting on Guilherme:** the rest of P0-00 (branch protection, secret scanning, Pages source, API keys, `.env`, tmux, pre-commit install); review of the P0-01 PR
+- **Waiting on Guilherme:** the rest of P0-00 (branch protection, secret scanning, Pages source, tmux, pre-commit install; `.env` with the OpenAlex key and contact email now exists; S2 key still empty); review of the P0-02 PR
 
 ## Checklist
-**Phase 0** — [ ] P0-00 · [x] P0-01 · [ ] P0-02 · [ ] P0-03 · [ ] P0-04
+**Phase 0** — [ ] P0-00 · [x] P0-01 · [x] P0-02 · [ ] P0-03 · [ ] P0-04
 **Phase 1** — [ ] P1-01 · [ ] P1-02 · [ ] P1-03 · [ ] P1-04 · [ ] P1-05 · [ ] P1-06 · [ ] P1-07 · [ ] P1-08 · [ ] P1-09 · [ ] P1-10 · [ ] P1-11 · [ ] P1-12 · [ ] G1
 **Phase 2** — [ ] P2-01 · [ ] P2-02 · [ ] P2-03 · [ ] P2-04 · [ ] G2
 **Phase 3** — [ ] P3-00 · [ ] P3-01 · [ ] P3-02 · [ ] P3-03 · [ ] P3-04 · [ ] P3-05 · [ ] G3
@@ -19,6 +19,17 @@
 **Phase 6** — [ ] P6-01 · [ ] P6-02 · [ ] P6-03 · [ ] G6
 
 ## Log (newest first)
+
+### 2026-11-15 — P0-02 Harvest core (branch `s/P0-02-harvest-core`)
+- **Built:** `settings.py` (`.env` + profile + `config/sources.yaml`, data-root paths), `http.py` (`SourceClient`: gzip-JSON disk cache, token bucket, retry/back-off with `Retry-After`, budget guard, keys kept out of logs, errors and cache), `budget.py` (daily ledger), `harvest.py` (`paged()` with resume), `db.py` (DuckDB connection, `ops_*` tables, atomic Parquet writes, `run_log`), `log.py` (redacting logging to stderr and `data/logs/`, `Progress` with ETA), `status.py` and the `flatatlas status` command. Config: `config/sources.yaml`, `config/profiles/pilot.yaml`, `server.yaml`. 44 offline tests (all of the prompt's list, plus a mutation check that the key test fails if httpx logs the URL). Decisions D-39 to D-45.
+- **Not built:** real source clients (DBLP, OpenAlex, S2, Crossref: P0-03 onwards); async or concurrent fetching; DuckDB views over the Parquet files. `Progress` (logging with ETA) is built and tested but no stage uses it yet.
+- **Surprises:** Before the session `.env.example` (tracked) had been filled with real values; nothing had been committed, so it was restored to empty placeholders and the values live in the git-ignored `.env`. gitleaks flagged the fake keys in the tests (marked `# gitleaks:allow`). DuckDB refuses a read-only second connection even inside one process (`ConnectionException`), so `status` handles both that and the cross-process `IOException`. `tenacity` and `rapidfuzz` were already dependencies from P0-01; `tenacity` is unused.
+- **Hand-off to P0-03:**
+  - Get a client with `SourceClient("dblp", load_settings())`; use `.get(path, params, cost=...)` and read `.data`. Use `cost="singleton"` for OpenAlex lookups by ID or DOI (free) and the default `"list"` for filter calls. In tests use the `settings` fixture (real config, temp data root, fake keys) and `httpx_mock`; `FakeClock` in `tests/helpers.py` avoids real sleeping.
+  - `SourceClient.request` returns `Response(status, data, fetched_at, from_cache, url)`; `data` is None for a cached 404/410.
+  - Fixtures for P0-03 must come from real DBLP responses: run `flatatlas`-side code once with real network, then trim the cached gz JSON from `data/raw/dblp/`.
+  - Open the warehouse with `db.connect(settings.paths)`; wrap stages in `db.run_log(con, "stage")`; page through cursors with `harvest.paged(...)`. A long job holds the DuckDB write lock, so `flatatlas status` reports "locked" while one runs.
+  - Verify in the first live session: the OpenAlex key parameter (`api_key`), DBLP rate behaviour, S2 batch size. Record results in `docs/notes/sources.md`.
 
 ### 2026-11-15 — P0-01 Project scaffold, tooling and CI (branch `s/P0-01-scaffold`)
 - **Built:** `pyproject.toml` (uv, Python pinned to 3.12 in `.python-version`, `uv.lock` committed), package `src/flatatlas/` with the Typer CLI (`--version` and 13 empty command groups), smoke tests in `tests/unit/test_cli.py`, the folder skeleton from PLAN §16 with `.gitkeep` files, `.env.example`, `.pre-commit-config.yaml` (ruff lint + format, gitleaks, end-of-file, whitespace, YAML/TOML, large files), `.github/workflows/ci.yml` (uv sync, ruff, pytest; gitleaks over the full history), `LICENSE` (MIT), README status line and "Development" section. Guilherme's answers to Q1–Q9 are in `OPEN-QUESTIONS.md`; decisions D-35 to D-38 are in `DECISIONS.md`.

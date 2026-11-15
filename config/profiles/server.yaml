@@ -1,0 +1,11 @@
+# Server stage (PLAN §2.2, §5.4). Values are placeholders until the server is known (P3-00).
+name: server
+data_root: /srv/flatatlas/data
+active_venues: all           # every venue in config/venues.yaml
+concurrency: 4
+embedding_device: cuda
+batch_sizes:
+  embed: 128
+  tag: 1024
+bulk_loaders_enabled: true
+export_targets: [static_site, postgres]
