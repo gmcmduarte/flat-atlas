@@ -1,6 +1,6 @@
-# P2-02 — Scope rule for broad venues (Fable)
+# P2-02 — Scope rule for broad venues (Opus)
 
-**Tool:** Claude Code · **Model:** **Fable** · **Branch:** `s/P2-02-scope-rule` · **Depends on:** P2-01
+**Tool:** Claude Code · **Model:** **Opus** · **Branch:** `s/P2-02-scope-rule` · **Depends on:** P2-01
 
 You are working on The FLAT Atlas. You have no memory of earlier sessions. Everything you need is in the repo.
 

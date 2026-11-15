@@ -3,7 +3,7 @@
 39 build sessions in 7 phases, plus 2 manual checklists and 6 gate reviews.
 Each session is one model session of work (about 1–3 hours of your attention including review). Each has a ready-to-paste prompt in `sessions/<id>-*.md`.
 
-Legend: **CC** = Claude Code (desktop app or terminal). **S** = Sonnet, **F** = Fable. 👤 = needs you for more than plan/diff review. ⏳ = includes a long job you launch.
+Legend: **CC** = Claude Code (desktop app or terminal). **S** = Sonnet, **O** = Opus. 👤 = needs you for more than plan/diff review. ⏳ = includes a long job you launch.
 
 | Phase | Goal | Sessions | Where it runs |
 |---|---|---|---|
@@ -42,7 +42,7 @@ Order rule: sessions run in order inside a phase. Phase 2 and the first four ses
 | P1-03 | Semantic Scholar enrichment + embeddings (S2 vectors, local SPECTER2 fallback) | CC / S ⏳ | Every pilot work has a 768-d vector with its source recorded; local and S2 vectors for a 50-paper sample have mean cosine ≥ 0.9 (or the difference is explained and recorded); abstracts merged by priority into `local_abstract` |
 | P1-04 | Entity resolution + core tables + data-quality tests | CC / S | `core_*` tables as in PLAN §4; conference/journal merges produced with confidence; authors anchored on DBLP PIDs; `tests/data_quality` pass; a report lists 30 sampled merges and all uncertain cases |
 | P1-05 | Taxonomy tooling: seeds import, phrase mining, clustering, hierarchy candidates, `taxonomy check` | CC / S | `flatatlas taxonomy mine` and `propose` produce a proposal YAML + review document from the pilot corpus, deterministic with a fixed seed; `taxonomy check` rejects cycles, unknown parents, duplicate aliases |
-| P1-06 | 👤 **Taxonomy v1 + anchors**: Fable drafts `topics.yaml` and `anchors.yaml` from the proposals; you review (2–4 h) | CC / **F** | `taxonomy/topics.yaml` passes `taxonomy check`; 15–25 level-0 topics; every topic has a description, ≥ 3 phrases, ≥ 1 parent or level 0; ≥ 80 anchors, each resolved to a DOI or DBLP key; your review is committed with `reviewed: true` |
+| P1-06 | 👤 **Taxonomy v1 + anchors**: Opus drafts `topics.yaml` and `anchors.yaml` from the proposals; you review (2–4 h) | CC / **O** | `taxonomy/topics.yaml` passes `taxonomy check`; 15–25 level-0 topics; every topic has a description, ≥ 3 phrases, ≥ 1 parent or level 0; ≥ 80 anchors, each resolved to a DOI or DBLP key; your review is committed with `reviewed: true` |
 | P1-07 | Tagger v1: per-topic artefacts, lexical, embedding and source signals, fusion, provenance | CC / S | `tag_work_topic` filled with confidence + provenance; anchors in corpus ≥ 80 % before propagation; unit tests for each signal and for fusion; runtime for the pilot < 10 minutes on the Mac |
 | P1-08 | Propagation + evaluation harness + spot-check report | CC / S | All PLAN §9.6 checks implemented; hard thresholds met (anchors ≥ 90 %, coverage ≥ 85 %, stability ≥ 95 %) or the misses are explained with a fix list; `reports/eval-*.html` readable in 15 minutes |
 | P1-09 | Aggregates, topic edges, map layout, release build, static export | CC / S | Four edge types computed and stored separately; `releases/v…/` with manifest and checksums; `export static` writes the JSON layout of PLAN §11.2 under 30 MB; JSON validated against generated TypeScript types |
@@ -50,7 +50,7 @@ Order rule: sessions run in order inside a phase. Phase 2 and the first four ses
 | P1-11 | Site: topic map with semantic zoom | CC / S | Home shows 15–25 bubbles sized by volume; click expands children in place; edge-type toggle; ≤ 150 nodes drawn; 60 fps pan/zoom on the M1; list view alternative; no console errors |
 | P1-12 | Suggest-a-change issue forms, About/Sources/Methods/Cite pages, polish, public launch of the pilot | CC / S | Each entity page opens a pre-filled GitHub issue; source attributions (including "Semantic Scholar") in the footer; README points to the live site; pilot release tagged `v0.1.0` on GitHub |
 
-**Gate G1 (Fable + you):** full gate of WORKFLOW §5. Extra question: is tagging on titles alone good enough, or does Phase 2 need the optional LLM or more abstract sources? Output: go/no-go for widening, tagger fix list, roadmap edits.
+**Gate G1 (Opus + you):** full gate of WORKFLOW §5. Extra question: is tagging on titles alone good enough, or does Phase 2 need the optional LLM or more abstract sources? Output: go/no-go for widening, tagger fix list, roadmap edits.
 
 ---
 
@@ -59,7 +59,7 @@ Order rule: sessions run in order inside a phase. Phase 2 and the first four ses
 | ID | Session | Tool / model | Acceptance criteria |
 |---|---|---|---|
 | P2-01 | Remaining core venues by config only (NCMA, AFL, LATA, WORDS, CAI, MCU, RP, UCNC, JALC, IJFCS, RAIRO-ITA + the Tier A additions you approved) | CC / S ⏳ | Venues added with **no code change** outside bug fixes (each fix has a test); venue histories verified and noted; full pipeline re-run; evaluation thresholds still met; taxonomy proposals for new areas generated |
-| P2-02 | 👤 Scope rule: implement PLAN §6, tune on hold-out tests, trial on two broad venues (MFCS + Information and Computation) | CC / **F** | `scope_status` for all works; hold-out recall of Tier A ≥ 90 %; background false-positive rate ≤ 5 %; borderline report reviewed by you (20 minutes); thresholds recorded in `config/scope.yaml` and DECISIONS |
+| P2-02 | 👤 Scope rule: implement PLAN §6, tune on hold-out tests, trial on two broad venues (MFCS + Information and Computation) | CC / **O** | `scope_status` for all works; hold-out recall of Tier A ≥ 90 %; background false-positive rate ≤ 5 %; borderline report reviewed by you (20 minutes); thresholds recorded in `config/scope.yaml` and DECISIONS |
 | P2-03 | Venue analytics pipeline: all metrics of PLAN §15.1, `venue_facts.yaml` with sources, CORE import | CC / S | `agg_venue_year` and `agg_venue_overlap` filled; each metric has a coverage figure; acceptance rates only where a source URL exists; tests on a fixture venue with hand-computed expected values |
 | P2-04 | Venue analytics UI: venue page + compare view + CSV download | CC / S | `/venue/[id]` and `/venues` show all metrics side by side with sources and coverage; no composite score anywhere; compare works for 2–5 venues; charts readable on mobile |
 
@@ -88,9 +88,9 @@ Order rule: sessions run in order inside a phase. Phase 2 and the first four ses
 |---|---|---|---|
 | P4-01 | Bulk loaders + orchestrator: DBLP XML dump parser, large-batch OpenAlex/S2 paths, `flatatlas run` with per-stage state, `flatatlas status` | CC / S | DBLP dump parsed in streaming mode within 4 GB RAM; results equal the API path on the pilot venues; an interrupted `run` resumes at the failed stage; status shows progress and ETA |
 | P4-02 | ⏳ Full harvest: all Tier A and Tier B venues, stub collection, two expansion rounds; scope report | CC / S | All configured venues harvested; scope applied; counts per venue and status in `reports/scope-full.md`; raw cache size and API spend recorded; no source blocked us (no sustained 429s) |
-| P4-03 | Entity resolution at scale: authors outside DBLP, version merging quality, venue successions | CC / **F** | Merge precision ≥ 95 % on a 100-pair sample judged by Fable with reasons; no two DBLP PIDs merged; provisional authors flagged; uncertain-case report produced |
-| P4-04 | 👤 Taxonomy v2 on the full corpus: proposals for new areas (ω-automata, weighted, natural computing, inference, trees/graphs/pictures), your review (2–3 h) | CC / **F** | `topics.yaml` v2 with 400–900 topics, still 15–25 at level 0; reviewed fields untouched unless you changed them; anchors extended to ≥ 150 covering every level-0 topic |
-| P4-05 | Tagger v2 (weak supervision), incremental mode, scheduled refresh, first full release | CC / **F** ⏳ | v2 adopted only if it beats v1 on anchors and coherence (comparison recorded); `tag --incremental` tags 1,000 new works in < 5 minutes; weekly timer runs end to end; release `v1.0.0` live on the server |
+| P4-03 | Entity resolution at scale: authors outside DBLP, version merging quality, venue successions | CC / **O** | Merge precision ≥ 95 % on a 100-pair sample judged by Opus with reasons; no two DBLP PIDs merged; provisional authors flagged; uncertain-case report produced |
+| P4-04 | 👤 Taxonomy v2 on the full corpus: proposals for new areas (ω-automata, weighted, natural computing, inference, trees/graphs/pictures), your review (2–3 h) | CC / **O** | `topics.yaml` v2 with 400–900 topics, still 15–25 at level 0; reviewed fields untouched unless you changed them; anchors extended to ≥ 150 covering every level-0 topic |
+| P4-05 | Tagger v2 (weak supervision), incremental mode, scheduled refresh, first full release | CC / **O** ⏳ | v2 adopted only if it beats v1 on anchors and coherence (comparison recorded); `tag --incremental` tags 1,000 new works in < 5 minutes; weekly timer runs end to end; release `v1.0.0` live on the server |
 
 **Gate G4:** full data-quality and tagging gate on the whole field; you read spot checks for your own areas; performance of site and API at full size; decide the feature order of Phase 5.
 

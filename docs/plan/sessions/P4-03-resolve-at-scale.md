@@ -1,6 +1,6 @@
-# P4-03 — Entity resolution at scale (Fable)
+# P4-03 — Entity resolution at scale (Opus)
 
-**Tool:** Claude Code · **Model:** **Fable** · **Branch:** `s/P4-03-resolve-at-scale` · **Depends on:** P4-02
+**Tool:** Claude Code · **Model:** **Opus** · **Branch:** `s/P4-03-resolve-at-scale` · **Depends on:** P4-02
 
 You are working on The FLAT Atlas. You have no memory of earlier sessions. Everything you need is in the repo.
 
@@ -41,6 +41,6 @@ Trustworthy works, authors and venues across the whole field, including authors 
 ## At the end
 - Run `uv run pytest` and `uv run ruff check .` and show me the output.
 - Go through "Done when" line by line: pass or fail, with evidence.
-- Update `docs/plan/PROGRESS.md`: tick P4-03, add a dated entry (built, not built, surprises) and a hand-off note for P4-04 (Fable).
+- Update `docs/plan/PROGRESS.md`: tick P4-03, add a dated entry (built, not built, surprises) and a hand-off note for P4-04 (Opus).
 - Record any decision you made in `docs/plan/DECISIONS.md`.
 - Commit, push the branch and open a PR to `main`. Do not merge.

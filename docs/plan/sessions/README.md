@@ -5,7 +5,7 @@ One file per build session. Each is self-contained: open a **new** Claude Code s
 - Order and acceptance criteria: `../ROADMAP.md`.
 - How a session runs (checkpoints, review, merge): `../WORKFLOW.md` §3.
 - `P0-00` and `P3-00` are checklists for Guilherme, not prompts.
-- `GATE.md` is the phase review prompt (Fable, fresh session). Replace `<N>` with the phase number.
+- `GATE.md` is the phase review prompt (Opus, fresh session). Replace `<N>` with the phase number.
 
 If a session turns out too big: stop at a clean point, let Claude write the hand-off note, and paste the same file into a new session with the first line "Continue this session from the hand-off note in PROGRESS.md".
 

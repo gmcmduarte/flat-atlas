@@ -39,6 +39,6 @@ Make the pilot public-ready: correction channel, transparent methods and sources
 ## At the end
 - Run `npm run check`, `npm run test` and `npm run build` in `web/` and show me the output.
 - Go through "Done when" line by line: pass or fail, with evidence.
-- Update `docs/plan/PROGRESS.md`: tick P1-12, add a dated entry (built, not built, surprises) and a hand-off note for the G1 gate review (Fable, `GATE.md`).
+- Update `docs/plan/PROGRESS.md`: tick P1-12, add a dated entry (built, not built, surprises) and a hand-off note for the G1 gate review (Opus, `GATE.md`).
 - Record any decision you made in `docs/plan/DECISIONS.md`.
 - Commit, push the branch and open a PR to `main`. Do not merge.

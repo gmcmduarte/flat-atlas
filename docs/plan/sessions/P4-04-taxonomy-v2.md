@@ -1,6 +1,6 @@
-# P4-04 — Taxonomy v2 on the full corpus (Fable + Guilherme's review)
+# P4-04 — Taxonomy v2 on the full corpus (Opus + Guilherme's review)
 
-**Tool:** Claude Code · **Model:** **Fable** · **Branch:** `s/P4-04-taxonomy-v2` · **Depends on:** P4-03
+**Tool:** Claude Code · **Model:** **Opus** · **Branch:** `s/P4-04-taxonomy-v2` · **Depends on:** P4-03
 
 You are working on The FLAT Atlas. You have no memory of earlier sessions. Everything you need is in the repo.
 
@@ -39,6 +39,6 @@ Extend the reviewed DAG to the whole field without disturbing what Guilherme alr
 ## At the end
 - Run `uv run pytest` and `uv run flatatlas taxonomy check` and show me the output.
 - Go through "Done when" line by line: pass or fail, with evidence.
-- Update `docs/plan/PROGRESS.md`: tick P4-04, add a dated entry (built, not built, surprises) and a hand-off note for P4-05 (Fable).
+- Update `docs/plan/PROGRESS.md`: tick P4-04, add a dated entry (built, not built, surprises) and a hand-off note for P4-05 (Opus).
 - Record any decision you made in `docs/plan/DECISIONS.md`.
 - Commit, push the branch and open a PR to `main`. Do not merge.

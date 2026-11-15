@@ -42,6 +42,6 @@ Prove the command works with `--limit 50`. Then give me the exact full command, 
 ## At the end
 - Run `uv run pytest` and `uv run ruff check .` and show me the output.
 - Go through "Done when" line by line: pass or fail, with evidence.
-- Update `docs/plan/PROGRESS.md`: tick P6-03, add a dated entry (built, not built, surprises) and a hand-off note for the G6 gate review (Fable, `GATE.md`).
+- Update `docs/plan/PROGRESS.md`: tick P6-03, add a dated entry (built, not built, surprises) and a hand-off note for the G6 gate review (Opus, `GATE.md`).
 - Record any decision you made in `docs/plan/DECISIONS.md`.
 - Commit, push the branch and open a PR to `main`. Do not merge.

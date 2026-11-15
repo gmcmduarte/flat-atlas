@@ -11,11 +11,11 @@ How Guilherme builds The FLAT Atlas with Claude's tools. Tool facts were checked
 | Run the next build session | Claude Code (desktop app Code tab, or terminal `claude`) in the repo | as the session file says (mostly Sonnet) | New session → paste the whole file `docs/plan/sessions/<id>.md` |
 | Review a session's diff before merging | VS Code with the Claude Code extension, or the desktop app's diff view | none needed, or Sonnet for questions | Open the PR branch; read the diff; ask "explain this change" on selected code |
 | Fix a small bug or tweak I can see | VS Code extension | Sonnet | Select the code, `@`-mention the file, describe the fix |
-| Debug something Sonnet failed at twice | Claude Code | **Fable** | "Read PROGRESS.md hand-off. Sonnet tried X and Y. Find the root cause before changing code." |
-| Review a finished phase | Claude Code, **fresh session** | **Fable** | Paste `docs/plan/sessions/GATE.md` with the phase number |
-| Re-plan after a gate or a surprise | Claude Code, plan mode | **Fable** | "Read ROADMAP.md, PROGRESS.md, RISKS.md. Propose changes to the roadmap. Do not edit code." |
-| Design work: taxonomy, tagging, scope rule | Claude Code | **Fable** | the Fable-marked session files |
-| Brainstorm, ask a FLAT or tooling question | Claude chat | Sonnet (Fable for hard ones) | In the "FLAT Atlas" chat project |
+| Debug something Sonnet failed at twice | Claude Code | **Opus** | "Read PROGRESS.md hand-off. Sonnet tried X and Y. Find the root cause before changing code." |
+| Review a finished phase | Claude Code, **fresh session** | **Opus** | Paste `docs/plan/sessions/GATE.md` with the phase number |
+| Re-plan after a gate or a surprise | Claude Code, plan mode | **Opus** | "Read ROADMAP.md, PROGRESS.md, RISKS.md. Propose changes to the roadmap. Do not edit code." |
+| Design work: taxonomy, tagging, scope rule | Claude Code | **Opus** | the Opus-marked session files |
+| Brainstorm, ask a FLAT or tooling question | Claude chat | Sonnet (Opus for hard ones) | In the "FLAT Atlas" chat project |
 | Read a paper, preface or API doc and extract facts | Claude chat (upload the PDF or paste the link) | Sonnet | "Extract … as a table. Mark what is not stated." Then save to `docs/notes/` |
 | Draft text for the site (About, Methods, How to cite) | Claude chat | Sonnet | Paste the relevant PLAN section; ask for a draft; save to `docs/notes/drafts/` |
 | Collect acceptance rates from prefaces | Claude chat | Sonnet | Upload preface → "submissions, accepted, quote the sentence" → paste into `config/venue_facts.yaml` through a Code session |
@@ -51,11 +51,11 @@ How Guilherme builds The FLAT Atlas with Claude's tools. Tool facts were checked
 
 ## 2. Which model for which job
 
-Default: **Sonnet**. Switch to **Fable** only for the cases below. In Claude Code switch with `/model`; the session files state the model on their first line.
+Default: **Sonnet**. Switch to **Opus** only for the cases below. In Claude Code switch with `/model`; the session files state the model on their first line.
 
-| Use Fable for | Why |
+| Use Opus for | Why |
 |---|---|
-| Sessions marked Fable in the roadmap: taxonomy draft (P1-06, P4-04), scope rule tuning (P2-02), entity-resolution at scale (P4-03), tagger v2 (P4-05) | judgment and domain knowledge decide the quality |
+| Sessions marked Opus in the roadmap: taxonomy draft (P1-06, P4-04), scope rule tuning (P2-02), entity-resolution at scale (P4-03), tagger v2 (P4-05) | judgment and domain knowledge decide the quality |
 | Every gate review (G1–G6) | a second, stronger and *fresh* pair of eyes |
 | Re-planning the roadmap | consequences across the whole plan |
 | A bug Sonnet failed to fix in two attempts | stop paying for retries |
@@ -68,11 +68,11 @@ Default: **Sonnet**. Switch to **Fable** only for the cases below. In Claude Cod
 | Reading logs, monitoring jobs, small questions | cheap |
 
 Keeping usage reasonable:
-- Fable sessions are short and focused: they read the plan and reports, decide, and write specs or YAML. Let Sonnet do the typing that follows.
-- Never keep a Fable session open "to continue later". End it with a hand-off; start Sonnet fresh.
+- Opus sessions are short and focused: they read the plan and reports, decide, and write specs or YAML. Let Sonnet do the typing that follows.
+- Never keep an Opus session open "to continue later". End it with a hand-off; start Sonnet fresh.
 - Use Claude chat with Sonnet for questions that do not need the repo.
-- Check `/usage` (or the usage panel) before starting a Fable gate; a gate needs a clear block of usage. ⚠ Exact plan limits for Fable were not verified; if Fable is scarce on your plan, do gates with Sonnet at high effort and reserve Fable for P1-06 and G1.
-- If a session file says Sonnet and Sonnet struggles on the *plan* (not the typing), stop, switch to Fable for the plan only (`/model`, plan mode), then switch back.
+- Check `/usage` (or the usage panel) before starting an Opus gate; a gate needs a clear block of usage. ⚠ Exact plan limits for Opus were not verified; if Opus is scarce on your plan, do gates with Sonnet at high effort and reserve Opus for P1-06 and G1.
+- If a session file says Sonnet and Sonnet struggles on the *plan* (not the typing), stop, switch to Opus for the plan only (`/model`, plan mode), then switch back.
 
 ---
 
@@ -128,15 +128,15 @@ Auto memory: Claude Code also keeps its own memory per project. Treat it as a co
 
 ## 5. Quality gates
 
-A phase is done when a **separate, fresh Fable session** has run `docs/plan/sessions/GATE.md` for that phase and written `docs/plan/reviews/G<n>-review.md` with a verdict: *pass*, *pass with fixes* (listed as small follow-up sessions), or *fail* (re-plan).
+A phase is done when a **separate, fresh Opus session** has run `docs/plan/sessions/GATE.md` for that phase and written `docs/plan/reviews/G<n>-review.md` with a verdict: *pass*, *pass with fixes* (listed as small follow-up sessions), or *fail* (re-plan).
 
 The gate checks, in this order:
 1. **Acceptance criteria** of every session in the phase, re-verified by running the checks, not by reading the log.
-2. **Data quality** (from `flatatlas evaluate` and `tests/data_quality/`): row counts per venue-year against DBLP's own counts; duplicate DOIs; orphan authorships; works without year or venue; share of works matched in each source; merge-confidence histogram; a random sample of 30 merges read by Fable and judged.
-3. **Tagging**: all §9.6 thresholds; Fable reads the spot-check report for 10 topics chosen across levels and writes down concrete errors and their likely cause (dictionary, centroid, taxonomy).
-4. **UI** (from Phase 1 on): Fable drives the built-in browser through a fixed checklist: search for three topics, open topic → child → related topic → bridge, open a paper and an author, expand map bubbles, check an empty state, check a narrow (mobile) viewport, check that every page shows sources and a "Suggest a change" link. Console must be free of errors.
+2. **Data quality** (from `flatatlas evaluate` and `tests/data_quality/`): row counts per venue-year against DBLP's own counts; duplicate DOIs; orphan authorships; works without year or venue; share of works matched in each source; merge-confidence histogram; a random sample of 30 merges read by Opus and judged.
+3. **Tagging**: all §9.6 thresholds; Opus reads the spot-check report for 10 topics chosen across levels and writes down concrete errors and their likely cause (dictionary, centroid, taxonomy).
+4. **UI** (from Phase 1 on): Opus drives the built-in browser through a fixed checklist: search for three topics, open topic → child → related topic → bridge, open a paper and an author, expand map bubbles, check an empty state, check a narrow (mobile) viewport, check that every page shows sources and a "Suggest a change" link. Console must be free of errors.
 5. **Code health**: CI green, tests exist for every transform, no secrets (`gitleaks` on full history), README and runbooks match reality.
-6. **Plan check**: are RISKS and the next phase's sessions still right? Fable proposes edits to ROADMAP and session files.
+6. **Plan check**: are RISKS and the next phase's sessions still right? Opus proposes edits to ROADMAP and session files.
 
 Your part of a gate (30–60 minutes): read the review, look at the spot-check report yourself for the topics you know best (this is the cheapest expert check in the whole project), decide.
 

@@ -38,6 +38,6 @@ Venue pages and a compare view for chairs and for researchers choosing where to 
 ## At the end
 - Run `npm run check`, `npm run test` and `npm run build` in `web/` and show me the output.
 - Go through "Done when" line by line: pass or fail, with evidence.
-- Update `docs/plan/PROGRESS.md`: tick P2-04, add a dated entry (built, not built, surprises) and a hand-off note for the G2 gate review (Fable, `GATE.md`).
+- Update `docs/plan/PROGRESS.md`: tick P2-04, add a dated entry (built, not built, surprises) and a hand-off note for the G2 gate review (Opus, `GATE.md`).
 - Record any decision you made in `docs/plan/DECISIONS.md`.
 - Commit, push the branch and open a PR to `main`. Do not merge.

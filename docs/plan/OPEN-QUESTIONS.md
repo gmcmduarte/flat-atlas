@@ -14,5 +14,19 @@ Short list. Write your answer under each question. None blocks Phase 0; the "nee
 | Q8 | **Your time.** Roughly how many hours per week? At about 4 hours per week, expect Phase 0–1 in 2–3 months and the full roadmap in 12–15 months. | 4 hours per week. | planning only |
 | Q9 | **Languages.** Should non-English works (French, German, Russian classics) be included when the sources have them? | Yes: include, tag by citations and translated-title matches where available; no translation effort. | P6-01 |
 
+## Answers (Guilherme, 2026-11-15)
+
+| # | Answer | Effect |
+|---|---|---|
+| Q1 | No Fable any more. Only Sonnet 5.5 and Opus 5.5 will be used. | Opus takes the sessions and gates planned for Fable (D-35, supersedes part of D-31). |
+| Q2 | Own GitHub account for now (`gmcmduarte`); custom domain later. | Site URL `https://gmcmduarte.github.io/flat-atlas/` until a domain is chosen. |
+| Q3 | Do not filter these journals up front. Consider all their publications, then drop the ones that turn out not to belong to FLAT after tagging. | D-36, supersedes D-07. Design in P2-01 / P2-02. |
+| Q4 | Show abstracts wherever there is no legal issue. | D-37, supersedes part of D-14. Design in P1-10. |
+| Q5 | Start with the venues as listed; more can be added later. | Defaults stand (Acta Cybernetica Tier B, DNA Tier B). |
+| Q6 | `guilherme.duarte@fc.up.pt` | Goes in `.env` as `CONTACT_EMAIL`; shown on the site for corrections. |
+| Q7 | No university constraints right now. | Ask again before P3-05. |
+| Q8 | No timeline; work happens whenever there is time. | Planning only. |
+| Q9 | Yes, include non-English works. | Default stands. |
+
 ## Things I could not verify (details in PLAN §17)
 CORE/ICORE ranks per venue (the portal blocked automated access); venue founding years and predecessor chains (from memory, to be checked against DBLP in P0-03 and P2-01); a few API parameters (OpenAlex per-second limit and DOI batch size, Semantic Scholar batch size); zbMATH Open payload contents; ACM CCS reuse terms; exact Fable usage limits on your plan.
