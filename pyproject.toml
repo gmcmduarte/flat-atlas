@@ -1,0 +1,49 @@
+[project]
+name = "flatatlas"
+version = "0.0.1"
+description = "The FLAT Atlas: an open map of formal languages and automata theory."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Guilherme Duarte" }]
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "duckdb",
+    "httpx",
+    "pyarrow",
+    "pydantic",
+    "pydantic-settings",
+    "pyyaml",
+    "rapidfuzz",
+    "tenacity",
+    "typer",
+]
+
+[project.scripts]
+flatatlas = "flatatlas.cli:app"
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "pytest-httpx",
+    "ruff",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/flatatlas"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM"]
