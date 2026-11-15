@@ -1,6 +1,6 @@
-# P4-05 — Tagger v2, incremental mode, scheduled refresh, release 1.0 (Fable)
+# P4-05 — Tagger v2, incremental mode, scheduled refresh, release 1.0 (Opus)
 
-**Tool:** Claude Code · **Model:** **Fable** · **Branch:** `s/P4-05-tagger-v2-release` · **Depends on:** P4-04
+**Tool:** Claude Code · **Model:** **Opus** · **Branch:** `s/P4-05-tagger-v2-release` · **Depends on:** P4-04
 
 You are working on The FLAT Atlas. You have no memory of earlier sessions. Everything you need is in the repo.
 
@@ -43,6 +43,6 @@ Prove the command works with `--limit 50`. Then give me the exact full command, 
 ## At the end
 - Run `uv run pytest` and `uv run ruff check .` and show me the output.
 - Go through "Done when" line by line: pass or fail, with evidence.
-- Update `docs/plan/PROGRESS.md`: tick P4-05, add a dated entry (built, not built, surprises) and a hand-off note for the G4 gate review (Fable, `GATE.md`).
+- Update `docs/plan/PROGRESS.md`: tick P4-05, add a dated entry (built, not built, surprises) and a hand-off note for the G4 gate review (Opus, `GATE.md`).
 - Record any decision you made in `docs/plan/DECISIONS.md`.
 - Commit, push the branch and open a PR to `main`. Do not merge.

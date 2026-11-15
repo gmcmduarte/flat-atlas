@@ -1,6 +1,6 @@
-# P1-06 — Taxonomy v1 and anchor papers (Fable + Guilherme's review)
+# P1-06 — Taxonomy v1 and anchor papers (Opus + Guilherme's review)
 
-**Tool:** Claude Code · **Model:** **Fable** · **Branch:** `s/P1-06-taxonomy-v1` · **Depends on:** P1-05
+**Tool:** Claude Code · **Model:** **Opus** · **Branch:** `s/P1-06-taxonomy-v1` · **Depends on:** P1-05
 
 You are working on The FLAT Atlas. You have no memory of earlier sessions. Everything you need is in the repo.
 

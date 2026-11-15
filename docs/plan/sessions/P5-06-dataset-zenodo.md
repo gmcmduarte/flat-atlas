@@ -37,6 +37,6 @@ Versioned, citable data releases with a clear licence.
 ## At the end
 - Run `uv run pytest` and `uv run ruff check .`, and `npm run check`, `npm run test` and `npm run build` in `web/` and show me the output.
 - Go through "Done when" line by line: pass or fail, with evidence.
-- Update `docs/plan/PROGRESS.md`: tick P5-06, add a dated entry (built, not built, surprises) and a hand-off note for the G5 gate review (Fable, `GATE.md`).
+- Update `docs/plan/PROGRESS.md`: tick P5-06, add a dated entry (built, not built, surprises) and a hand-off note for the G5 gate review (Opus, `GATE.md`).
 - Record any decision you made in `docs/plan/DECISIONS.md`.
 - Commit, push the branch and open a PR to `main`. Do not merge.

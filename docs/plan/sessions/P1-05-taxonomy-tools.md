@@ -12,7 +12,7 @@ You are working on The FLAT Atlas. You have no memory of earlier sessions. Every
 Then use plan mode: list the steps and the files you will create or change, and wait for my approval before coding.
 
 ## Goal
-The tools that turn the corpus and the seed schemes into a *proposed* topic DAG with evidence, ready for Fable to draft and Guilherme to review. This session builds tools; it does not decide the taxonomy.
+The tools that turn the corpus and the seed schemes into a *proposed* topic DAG with evidence, ready for Opus to draft and Guilherme to review. This session builds tools; it does not decide the taxonomy.
 
 ## Build
 - `taxonomy/seeds/`: `ccs.yaml` (the FLAT-related CCS nodes: fetch the official ACM CCS 2012 file, keep ids and labels for the relevant subtree only, note the source and reuse terms), `msc.yaml` (the codes listed in PLAN §9.1 with our own short wording), `openalex_topics.yaml` (generated: OpenAlex topics/keywords received by pilot works with counts).
@@ -37,6 +37,6 @@ The tools that turn the corpus and the seed schemes into a *proposed* topic DAG 
 ## At the end
 - Run `uv run pytest` and `uv run ruff check .` and show me the output.
 - Go through "Done when" line by line: pass or fail, with evidence.
-- Update `docs/plan/PROGRESS.md`: tick P1-05, add a dated entry (built, not built, surprises) and a hand-off note for P1-06 (Fable).
+- Update `docs/plan/PROGRESS.md`: tick P1-05, add a dated entry (built, not built, surprises) and a hand-off note for P1-06 (Opus).
 - Record any decision you made in `docs/plan/DECISIONS.md`.
 - Commit, push the branch and open a PR to `main`. Do not merge.

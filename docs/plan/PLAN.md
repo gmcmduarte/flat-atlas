@@ -448,7 +448,7 @@ All produced by `flatatlas evaluate`, stored in `ops_quality_report`, summarised
 
 | Check | What | Hard threshold (pilot) |
 |---|---|---|
-| **Anchor papers** | `taxonomy/anchors.yaml`: about 100–200 well-known papers with the topic they must land in (top 3). Drafted by Fable from the literature, verified to exist in the data, reviewed by Guilherme together with the taxonomy. Examples: Rabin & Scott 1959 → finite automata; Büchi 1962 → ω-automata; Brzozowski 1964 → derivatives of regular expressions; Angluin 1987 → grammatical inference; Yu, Zhuang & Salomaa 1994 → state complexity; Păun 2000 → membrane computing. | ≥ 90 % of anchors present in the corpus hit |
+| **Anchor papers** | `taxonomy/anchors.yaml`: about 100–200 well-known papers with the topic they must land in (top 3). Drafted by Opus from the literature, verified to exist in the data, reviewed by Guilherme together with the taxonomy. Examples: Rabin & Scott 1959 → finite automata; Büchi 1962 → ω-automata; Brzozowski 1964 → derivatives of regular expressions; Angluin 1987 → grammatical inference; Yu, Zhuang & Salomaa 1994 → state complexity; Păun 2000 → membrane computing. | ≥ 90 % of anchors present in the corpus hit |
 | **Method agreement** | Jaccard / top-1 agreement between lexical-only, embedding-only and source-only taggings; per-topic table | report; topics with agreement < 0.2 are flagged |
 | **Coverage** | share of in-scope works with ≥ 1 non-derived tag ≥ 0.35 | ≥ 85 % |
 | **Topic coherence** | NPMI of top title terms per topic; mean intra-topic cosine vs random baseline | flagged if below baseline + margin |
@@ -638,4 +638,4 @@ data/        (git-ignored) raw/  warehouse/  releases/  reports/  logs/
 7. ACM CCS reuse terms and the exact node list of the FLAT subtree; MSC code wording.
 8. Abstract coverage for DLT/CIAA/DCFS (to be measured in P1-02).
 9. Size of the whole field (150,000–300,000 works) and CPU embedding throughput: estimates.
-10. Current Claude plan limits for Fable vs Sonnet (see WORKFLOW.md §2).
+10. Current Claude plan limits for Opus vs Sonnet (see WORKFLOW.md §2).

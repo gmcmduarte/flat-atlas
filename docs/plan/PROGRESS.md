@@ -6,7 +6,7 @@
 - **Next:** finish `sessions/P0-00-manual-setup.md` (Guilherme), merge P0-01, then `P0-02`
 - **Live site:** none yet
 - **Latest release:** none
-- **Known problems:** the plan documents and session prompts still name Fable (see D-35)
+- **Known problems:** none
 - **Waiting on Guilherme:** the rest of P0-00 (branch protection, secret scanning, Pages source, API keys, `.env`, tmux, pre-commit install); review of the P0-01 PR
 
 ## Checklist
@@ -22,7 +22,7 @@
 
 ### 2026-11-15 — P0-01 Project scaffold, tooling and CI (branch `s/P0-01-scaffold`)
 - **Built:** `pyproject.toml` (uv, Python pinned to 3.12 in `.python-version`, `uv.lock` committed), package `src/flatatlas/` with the Typer CLI (`--version` and 13 empty command groups), smoke tests in `tests/unit/test_cli.py`, the folder skeleton from PLAN §16 with `.gitkeep` files, `.env.example`, `.pre-commit-config.yaml` (ruff lint + format, gitleaks, end-of-file, whitespace, YAML/TOML, large files), `.github/workflows/ci.yml` (uv sync, ruff, pytest; gitleaks over the full history), `LICENSE` (MIT), README status line and "Development" section. Guilherme's answers to Q1–Q9 are in `OPEN-QUESTIONS.md`; decisions D-35 to D-38 are in `DECISIONS.md`.
-- **Not built:** nothing from the prompt is missing. Not done on purpose: `compose.yaml`, `docker/`, `api/`, `web/` (later phases); the edits that follow from the answers (Fable → Opus in `WORKFLOW.md` and the session prompts; PLAN §6/§7 for D-36; abstracts for D-37).
+- **Not built:** nothing from the prompt is missing. Not done on purpose: `compose.yaml`, `docker/`, `api/`, `web/` (later phases); the plan edits that follow from D-36 (PLAN §6/§7, in P2-01 / P2-02) and D-37 (abstracts, in P1-10). Done in the same PR: Fable replaced by Opus in `WORKFLOW.md`, `ROADMAP.md`, `PLAN.md` and the session prompts (D-35).
 - **Surprises:** `pre-commit` and `gitleaks` were not installed on the Mac; both run through `uvx pre-commit` (pre-commit builds gitleaks itself), so nothing was installed system-wide. The Docker daemon was not running, so the full-history scan used the gitleaks binary that pre-commit built (v8.30.0): 1 commit scanned, no leaks. P0-00 is partly done (remote exists, `main` pushed, `gh` logged in) but is not ticked because the GitHub settings could not be checked from here.
 - **Hand-off to P0-02:**
   - Run everything with `uv run ...`; the system `python3` is 3.15 and must not be used.

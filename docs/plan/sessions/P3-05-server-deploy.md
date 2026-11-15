@@ -40,6 +40,6 @@ The site is live on the server, with refresh, backup and restore procedures that
 ## At the end
 - Run `uv run pytest` and `uv run ruff check .` and show me the output.
 - Go through "Done when" line by line: pass or fail, with evidence.
-- Update `docs/plan/PROGRESS.md`: tick P3-05, add a dated entry (built, not built, surprises) and a hand-off note for the G3 gate review (Fable, `GATE.md`).
+- Update `docs/plan/PROGRESS.md`: tick P3-05, add a dated entry (built, not built, surprises) and a hand-off note for the G3 gate review (Opus, `GATE.md`).
 - Record any decision you made in `docs/plan/DECISIONS.md`.
 - Commit, push the branch and open a PR to `main`. Do not merge.

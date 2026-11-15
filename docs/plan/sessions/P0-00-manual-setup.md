@@ -30,7 +30,7 @@ Not a model session. Do these yourself; tick them in `PROGRESS.md`.
 
 ## Claude
 - [ ] In claude.ai create a Project "FLAT Atlas" and add `CLAUDE.md`, `docs/plan/PLAN.md`, `docs/plan/DECISIONS.md` as project knowledge.
-- [ ] In Claude Code, check which models your plan offers (`/model`) and how much Fable usage you have (`/usage`). Note it in `docs/notes/claude-plan.md`.
+- [ ] In Claude Code, check which models your plan offers (`/model`) and how much Opus usage you have (`/usage`). Note it in `docs/notes/claude-plan.md`.
 
 ## Decisions to give before P0-03 / P2-01
 - [ ] Read `docs/plan/OPEN-QUESTIONS.md` and write your answers in it.

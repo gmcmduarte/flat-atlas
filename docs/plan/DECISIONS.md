@@ -85,7 +85,7 @@ Entries D-01 to D-04 were confirmed by Guilherme on 2026-11-15. The others were 
 
 ## Answers to open questions (confirmed by Guilherme, 2026-11-15)
 
-**D-35 Models: Sonnet 5.5 by default, Opus 5.5 where the plan says Fable.** Supersedes the model part of D-31. Fable is no longer available on Guilherme's plan, so the design sessions, gates, re-planning and stubborn bugs go to Opus. `WORKFLOW.md`, `sessions/GATE.md` and the session prompts that name Fable still need this edit (not done in P0-01).
+**D-35 Models: Sonnet 5.5 by default, Opus 5.5 where the plan says Fable.** Supersedes the model part of D-31. Fable is no longer available on Guilherme's plan, so the design sessions, gates, re-planning and stubborn bugs go to Opus. `WORKFLOW.md`, `ROADMAP.md`, `PLAN.md` and the session prompts were updated in the P0-01 PR; older entries in this log and in `PROGRESS.md` keep the name as history.
 
 **D-36 The broad core journals are harvested wholesale and filtered after tagging.** Supersedes D-07. Information and Computation, Acta Informatica, Fundamenta Informaticae and Natural Computing are not filtered by the scope rule up front; all their publications are considered, and those that turn out not to belong to FLAT after tagging are dropped. *Reason (Guilherme):* do not lose FLAT papers to an early filter. The mechanism (how "does not belong after tagging" is decided, with confidence and provenance) is designed in P2-01 / P2-02; PLAN §6 and §7 need the matching edit then.
 

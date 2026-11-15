@@ -1,6 +1,6 @@
 # GATE — Phase review (G<N>)
 
-**Tool:** Claude Code, a **fresh** session · **Model:** **Fable** · **Branch:** `s/G<N>-review`
+**Tool:** Claude Code, a **fresh** session · **Model:** **Opus** · **Branch:** `s/G<N>-review`
 
 Replace `<N>` with the phase number before pasting.
 
