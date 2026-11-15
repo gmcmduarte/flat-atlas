@@ -1,16 +1,16 @@
 # Progress
 
 ## Current state (keep this section under 30 lines)
-- **Phase:** 0 (P0-00 and P0-04 open), 1 started (P1-01 done)
-- **Last merged session:** P0-03 (PR #3); P1-01 is in review (see the P1-01 entry for the PR)
-- **Next:** review and merge the P1-01 PR; Guilherme finishes `sessions/P0-00-manual-setup.md`; then `P0-04` (web skeleton) and `P1-02` (OpenAlex + Crossref, long job) can go in either order
-- **Live site:** none yet
+- **Phase:** 0 (P0-00 open; P0-04 built, in review), 1 started (P1-01 done)
+- **Last merged session:** P1-01 (PR #4); P0-04 is in review (see its entry)
+- **Next:** Guilherme enables Pages (Settings > Pages > Source = "GitHub Actions") and merges the P0-04 PR, then checks the public URL (the last two "Done when" lines of P0-04); finishes the rest of `sessions/P0-00-manual-setup.md`; then `P1-02` (OpenAlex + Crossref, long job)
+- **Live site:** none yet (deploys when the P0-04 PR is merged and Pages is enabled)
 - **Latest release:** none
 - **Known problems:** the DBLP API is behind a bot challenge (HTTP 202, Anubis); DBLP data comes from the dump Guilherme downloads by hand (D-49). Refreshing it is manual. After a new dump, run `venues scan-dump` and then `parse dblp` again.
-- **Waiting on Guilherme:** the rest of P0-00 (branch protection, secret scanning, Pages source, tmux, pre-commit install; S2 key is set in `.env`); review of the P1-01 PR
+- **Waiting on Guilherme:** the rest of P0-00 (branch protection, secret scanning, Pages source, tmux, pre-commit install; S2 key is set in `.env`); review of the P0-04 PR
 
 ## Checklist
-**Phase 0** — [ ] P0-00 · [x] P0-01 · [x] P0-02 · [x] P0-03 · [ ] P0-04
+**Phase 0** — [ ] P0-00 · [x] P0-01 · [x] P0-02 · [x] P0-03 · [x] P0-04 (built; Pages URL unchecked until merge)
 **Phase 1** — [x] P1-01 · [ ] P1-02 · [ ] P1-03 · [ ] P1-04 · [ ] P1-05 · [ ] P1-06 · [ ] P1-07 · [ ] P1-08 · [ ] P1-09 · [ ] P1-10 · [ ] P1-11 · [ ] P1-12 · [ ] G1
 **Phase 2** — [ ] P2-01 · [ ] P2-02 · [ ] P2-03 · [ ] P2-04 · [ ] G2
 **Phase 3** — [ ] P3-00 · [ ] P3-01 · [ ] P3-02 · [ ] P3-03 · [ ] P3-04 · [ ] P3-05 · [ ] G3
@@ -19,6 +19,22 @@
 **Phase 6** — [ ] P6-01 · [ ] P6-02 · [ ] P6-03 · [ ] G6
 
 ## Log (newest first)
+
+### 2026-11-15 — P0-04 Web skeleton and GitHub Pages deployment (branch `s/P0-04-web-skeleton`)
+- **Built:** `web/` (SvelteKit 3, TypeScript, `adapter-static` with `fallback: '404.html'`, base path from `BASE_PATH`); `src/lib/data/` (`types.ts` from PLAN §4, `DataSource.ts`, `StaticDataSource.ts` with `shardOf`, stub `ApiDataSource.ts`, `getDataSource()` chosen by `PUBLIC_DATA_SOURCE`, settings in `src/env.ts`); fixture in `web/static/data-fixture/` (5 topics with `related` and `builds-on` edges, 10 works with tags and provenance, 5 authors, 1 venue, `map.json`; every record `fixture: true`); routes `/`, `/topic/[id]` (prerendered for every topic), `/about`; layout with header, disabled search placeholder, footer with source attributions; `TopicList` and `ConfidenceBadge` components; 11 Vitest tests (7 `StaticDataSource` against the fixture, 4 component); `.github/workflows/pages.yml`; a `web` job in `ci.yml`; `web/README.md`. Decisions D-54 to D-56.
+- **Not built (out of scope):** map, real search, paper/author/venue pages, styling beyond a plain readable default, edge-type or sort switches. `search()` matches topic names only; `getMap()` just returns the fixture layout.
+- **Surprises:** (1) SvelteKit 3 changed several things the plan assumed: config is in `vite.config.ts`, `$env/*` is replaced by `src/env.ts` + `$app/env/public`, `base` is no longer exported from `$app/paths` (it is relative while rendering on the server, so use `resolve()`). (2) The `.gitignore` rule `data/` also hid `web/src/lib/data/`; fixed with a negation. (3) The `sv` default for component tests is Vitest browser mode with Playwright, which needs a Chromium download (installed browsers did not match); replaced with jsdom (D-55). (4) Only the home page and topic pages are prerendered, so a deep link to a non-prerendered URL is the one that goes through `404.html`; there is no valid such route yet, so that path was tested with an unknown topic and a trailing-slash URL. (5) The data-folder `entries()` reads `static/<dir>/topics.json` from disk at build time.
+- **Done when (evidence):**
+  - Public Pages URL shows the home page and a fixture topic page: **not yet checked**. It needs Pages enabled with source "GitHub Actions" and the PR merged to `main`; `pages.yml` runs on that push. Checked locally instead: a built site (`BASE_PATH=/flat-atlas`) served under `/flat-atlas/` by a small server that imitates Pages (clean URLs, `404.html` with status 404 for anything else) showed `/` (two top-level topics with subtopic names) and `/topic/finite-automata` (breadcrumbs for both parents, edge panels, papers with confidence, authors, sparkline).
+  - Reloading a deep link works: **pass locally** (same imitation of Pages): `/topic/nope` returned 404 with the app shell and a "No topic" error page; `/topic/finite-automata/` (not a prerendered file) went through `404.html`, rendered the topic and then client-side navigation to another topic worked. Not yet confirmed on real Pages.
+  - CI runs the web checks: **pending the PR run** (`web` job: `npm ci`, check, lint, test, build with a base path).
+  - Local run in `web/`: `npm run check` 0 errors, 0 warnings; `npm run lint` clean; `npm test` 11 passed; `npm run build` with and without `BASE_PATH` succeeds.
+- **Hand-off to the next sessions (P1-02, P1-09, P1-10, P1-11):**
+  - Run `npm ci` once in `web/`; Node 22.17 or newer. `npm run dev` serves the fixture at `/`.
+  - The exporter (P1-09) must write the PLAN §11.2 layout into `web/static/data/` and the site then reads it with `PUBLIC_DATA_DIR=data` at build time; JSON field names equal the column names (snake_case), see `web/src/lib/data/types.ts`. Works and authors are sharded by the first two hex characters of SHA-256 of the ID (`shardOf`); keep both sides identical. Add a test on the exporter that checks the shard rule against `web/static/data-fixture/works/1e.json` (holds `WFIXTUREAAA`).
+  - New pages: add a `load` that uses `getDataSource(fetch)` and `resolve()` for links; routes without prerendered HTML work through `404.html`. Topic and venue pages should be prerendered with `entries()` as in `routes/topic/[id]/+page.server.ts`.
+  - Component tests go in `*.svelte.spec.ts` (jsdom, Testing Library); other tests in `*.spec.ts` (node).
+  - The footer says everything shown is fixture data; remove that sentence when real data is wired in.
 
 ### 2026-11-15 — P1-01 DBLP parse from the dump (branch `s/P1-01-dblp`)
 - **Built:** `sources/dblp.py` (`parse_dump`, `select_venues`, `compare_with_index`, `doi_share`, `write_tables`, title cleaning and normalisation, front-matter rules), `flatatlas parse dblp [--venue X] [--dump-dir PATH] [--profile P]`, `config/dblp_parse.yaml` (front-matter rules as data), `Record.attrs` / `Record.with_attrs` in `dblp_dump.py` (attributes such as `orcid=`), `extra_editions` and `excluded_editions` in `venues.py` and `venues.yaml`, tables `stg_dblp_edition`, `stg_dblp_paper`, `stg_dblp_authorship`, `stg_dblp_author` (DuckDB + Parquet in `data/warehouse/staging/`). The fixture was rebuilt from the real dump (`make_sample.py`: 30 records of 9 editions, 39 real person records, a homonym case, papers without DOI, the two CoRR volumes). 40 new tests, 146 in total. Decisions D-51 to D-53; PLAN §7 and `docs/notes/venues-pilot.md` updated.
