@@ -1,9 +1,9 @@
 # Progress
 
 ## Current state (keep this section under 30 lines)
-- **Phase:** 0 (P0-00 open; P0-04 done), 1 started (P1-01 done)
-- **Last merged session:** P0-04 (PR #5)
-- **Next:** Guilherme finishes the rest of `sessions/P0-00-manual-setup.md`; then `P1-02` (OpenAlex + Crossref, long job)
+- **Phase:** 0 (P0-00 open; P0-04 done), 1 started (P1-01, P1-02 done)
+- **Last merged session:** P0-04 (PR #5); P1-02 is in a PR awaiting review
+- **Next:** Guilherme finishes the rest of `sessions/P0-00-manual-setup.md` and merges the P1-02 PR; then `P1-03` (Semantic Scholar and embeddings)
 - **Live site:** https://gmcmduarte.github.io/flat-atlas/ (fixture data only; redeploys on every push to `main`)
 - **Latest release:** none
 - **Known problems:** the DBLP API is behind a bot challenge (HTTP 202, Anubis); DBLP data comes from the dump Guilherme downloads by hand (D-49). Refreshing it is manual. After a new dump, run `venues scan-dump` and then `parse dblp` again.
@@ -11,7 +11,7 @@
 
 ## Checklist
 **Phase 0** — [ ] P0-00 · [x] P0-01 · [x] P0-02 · [x] P0-03 · [x] P0-04
-**Phase 1** — [x] P1-01 · [ ] P1-02 · [ ] P1-03 · [ ] P1-04 · [ ] P1-05 · [ ] P1-06 · [ ] P1-07 · [ ] P1-08 · [ ] P1-09 · [ ] P1-10 · [ ] P1-11 · [ ] P1-12 · [ ] G1
+**Phase 1** — [x] P1-01 · [x] P1-02 · [ ] P1-03 · [ ] P1-04 · [ ] P1-05 · [ ] P1-06 · [ ] P1-07 · [ ] P1-08 · [ ] P1-09 · [ ] P1-10 · [ ] P1-11 · [ ] P1-12 · [ ] G1
 **Phase 2** — [ ] P2-01 · [ ] P2-02 · [ ] P2-03 · [ ] P2-04 · [ ] G2
 **Phase 3** — [ ] P3-00 · [ ] P3-01 · [ ] P3-02 · [ ] P3-03 · [ ] P3-04 · [ ] P3-05 · [ ] G3
 **Phase 4** — [ ] P4-01 · [ ] P4-02 · [ ] P4-03 · [ ] P4-04 · [ ] P4-05 · [ ] G4
@@ -19,6 +19,24 @@
 **Phase 6** — [ ] P6-01 · [ ] P6-02 · [ ] P6-03 · [ ] G6
 
 ## Log (newest first)
+
+### 2026-11-15 — P1-02 OpenAlex and Crossref enrichment, coverage report (branch `s/P1-02-openalex-crossref`)
+- **Built:** `sources/openalex.py` (DOI batches of 100, capped `title.search` fallback, parse of works, authorships with institutions, references, topics and keywords, abstracts rebuilt from the inverted index), `sources/crossref.py` (single-DOI harvest, JATS stripping, parse), `coverage.py`, commands `harvest openalex|crossref`, `parse openalex|crossref` (`--show N` prints enriched samples), `evaluate coverage`; `SourceClient.cached()` and `iter_cached()` (offline reads of the cache); tables `stg_openalex_lookup|work|authorship|reference|topic`, `stg_reference_candidates`, `stg_crossref_work`, local-only `local_abstract`; `reports/coverage-pilot.md`; fixtures `tests/fixtures/openalex|crossref` (trimmed real answers, rebuilt by `make_sample.py`). 68 new tests, 214 in total. Decisions D-57 to D-60. Live limits in `docs/notes/sources.md`; PLAN §5.3 and §17 updated; R1 numbers in `RISKS.md`.
+- **Not built:** Semantic Scholar (P1-03); merging into core tables (P1-04). No title-search fallback for papers whose DOI was asked and not returned (15, listed in the report). No `--refresh-older-than` option.
+- **Surprises:** (1) **Abstracts: 152 of 2,339 pilot papers (6 %), all from OpenAlex; Crossref gave none.** One DLT or CIAA paper from 2003 on has one; DLT 1993 to 1999, DCFS 2002 to 2010 and DCAGRS 2001 carry most. (2) `from_updated_date` is paid-only (HTTP 429, not a rate limit); the batch maximum is 100 DOIs (101 gives HTTP 400). (3) `filter=title.search` costs the same as `search=` (USD 0.001) but returns one precise hit instead of thousands. (4) 15 DOIs were asked and not returned (11 of them from 2018 on): OpenAlex answers only for DOIs it holds as primary, so versions merged into a journal record and very new papers come back empty. (5) A matching bug found by the tests: `normalize_doi` left `http://dx.doi.org/` in place. (6) Crossref answered all 1,981 DOIs asked (0 not found) at 10 requests/s per its headers, but this config keeps 3/s, so the run took 11 minutes. (7) OpenAlex author names have quirks ("Jean Berstel A").
+- **Done when (evidence):**
+  - >= 95 % of DBLP papers with a DOI matched in OpenAlex: **pass**, 2,009 of 2,024 (99.3 %); the 15 gaps are listed in the report.
+  - Coverage report exists and its summary was read: **pass**, `reports/coverage-pilot.md`: matched 2,282 of 2,339 papers (title search 273 of 315, 87 %); abstracts 6 %; reference lists 88 %; affiliations and countries 87 %.
+  - Daily budget never exceeded: **pass**, OpenAlex ledger USD 0.3472 of 1.00 on 2026-11-15 (21 batches, 323 searches including probes, plus the verification calls); the guard is tested with the real cost table.
+  - 10 random enriched works shown: **pass**, shown in the session (`parse openalex --show 10`, hash-ordered).
+- **Numbers (2026-11-15):** works 2,282 (one per matched paper), references 37,024, reference candidates 15,135, topic rows from OpenAlex for every matched work, abstracts 152 (`local_abstract`, source `openalex`). Crossref records 1,983 parsed. Run logs in `ops_run_log` stages `harvest-openalex`, `parse-openalex`, `harvest-crossref`, `parse-crossref`.
+- **Checks:** `uv run pytest` 214 passed; `uv run ruff check .` and `ruff format --check .` clean.
+- **Hand-off to P1-03:**
+  - Join key to the DBLP tables is `dblp_key`; `stg_openalex_lookup` maps it to `openalex_id` (and `stg_openalex_work.doi`). Semantic Scholar should be asked by DOI for the 2,024 papers with one and by DBLP key or title for the rest; the 57 papers OpenAlex did not match are the interesting ones.
+  - `local_abstract(dblp_key, openalex_id, doi, source, text, n_chars)`: add `source = 's2'` rows with `write_local_abstracts(con, paths, "s2", rows)`; it replaces only that source's rows. It is keyed by `dblp_key` until P1-04 mints work IDs.
+  - Abstract coverage is 6 %: embeddings from S2 are likely to be title-based for most of the pilot, which is fine for SPECTER2 but should be measured in P1-03.
+  - Parse stages read the cache only; re-run `parse openalex` and `parse crossref` after any new harvest. A harvest needs the DuckDB write lock, so do not run it while another job holds it.
+  - `parse openalex` must run before `harvest crossref` (it decides which DOIs Crossref is asked for) and before `evaluate coverage`.
 
 ### 2026-11-15 — P0-04 Web skeleton and GitHub Pages deployment (branch `s/P0-04-web-skeleton`)
 - **Built:** `web/` (SvelteKit 3, TypeScript, `adapter-static` with `fallback: '404.html'`, base path from `BASE_PATH`); `src/lib/data/` (`types.ts` from PLAN §4, `DataSource.ts`, `StaticDataSource.ts` with `shardOf`, stub `ApiDataSource.ts`, `getDataSource()` chosen by `PUBLIC_DATA_SOURCE`, settings in `src/env.ts`); fixture in `web/static/data-fixture/` (5 topics with `related` and `builds-on` edges, 10 works with tags and provenance, 5 authors, 1 venue, `map.json`; every record `fixture: true`); routes `/`, `/topic/[id]` (prerendered for every topic), `/about`; layout with header, disabled search placeholder, footer with source attributions; `TopicList` and `ConfidenceBadge` components; 11 Vitest tests (7 `StaticDataSource` against the fixture, 4 component); `.github/workflows/pages.yml`; a `web` job in `ci.yml`; `web/README.md`. Decisions D-54 to D-56.

@@ -256,7 +256,7 @@ One module used by every source client:
 
 ### 5.3 Incremental refresh
 - DBLP: re-list volumes of active venues; new keys only.
-- OpenAlex: `from_updated_date` filter for known source IDs ⚠ (verify it is available on the free key; otherwise re-fetch by DOI, which is free).
+- OpenAlex: `from_updated_date` is **not** available on the free key (HTTP 429, "Plan upgrade required"; checked in P1-02), so refresh re-fetches by DOI in batches of 100 (0.01 cents per batch).
 - Citation counts: refreshed for all works every quarter (free singleton/batch calls).
 - New works go through `resolve → scope → embed → tag --incremental → aggregate`. Full re-tag only when `taxonomy_version` or `tagger_version` changes.
 
@@ -635,11 +635,11 @@ data/        (git-ignored) raw/  warehouse/  releases/  reports/  logs/
 
 1. CORE/ICORE ranks of every venue, and whether the portal offers a CSV export and under which terms (portal returned 403 to automated fetch).
 2. Venue years, predecessor relations and DBLP stream keys in §7 for venues other than DLT, CIAA, DCFS (those three are verified, P0-03).
-3. OpenAlex per-second rate limit with a free key; batch size for `filter=doi:`; availability of `from_updated_date` on the free key; exact no-key allowance.
+3. ~~OpenAlex batch size and `from_updated_date`~~ (verified in P1-02: 100 DOIs, not available). Still open: the per-second rate with a free key (docs say 30/s; the config keeps 10/s) and the exact no-key allowance.
 4. Semantic Scholar: `POST /paper/batch` size limit (500), the exact field name `embedding.specter_v2`, incremental dataset diffs.
 5. Size of the Crossref public data file. (`dblp.xml.gz`: 1.12 GB, measured 2026-11-15.)
 6. zbMATH Open: MSC codes in the API payload; any numeric rate limit.
 7. ACM CCS reuse terms and the exact node list of the FLAT subtree; MSC code wording.
-8. Abstract coverage for DLT/CIAA/DCFS (to be measured in P1-02).
+8. ~~Abstract coverage for DLT/CIAA/DCFS~~ measured in P1-02: 6 % of pilot papers have an abstract from OpenAlex, none from Crossref (`reports/coverage-pilot.md`).
 9. Size of the whole field (150,000–300,000 works) and CPU embedding throughput: estimates.
 10. Current Claude plan limits for Opus vs Sonnet (see WORKFLOW.md §2).

@@ -20,6 +20,6 @@ Likelihood (L) and impact (I): high / medium / low. Reviewed at every gate.
 | **R14** | **Bus factor and longevity.** One person, one server. | medium | medium | Public repo, open licences, Zenodo releases, runbooks, reproducible pipeline, static mirror on GitHub Pages; anyone can rebuild the Atlas from a release. | — |
 
 ## Measured values (fill in as sessions report them)
-- R1 abstract coverage for DLT / CIAA / DCFS: _to be measured in P1-02_
+- R1 abstract coverage for DLT / CIAA / DCFS (P1-02, 2026-11-15, OpenAlex + Crossref only; Semantic Scholar comes in P1-03): **152 of 2,339 pilot papers (6 %)** have an abstract, all from OpenAlex; Crossref gave none. By venue: CIAA 0 % (716 papers), DLT 6 % (1,025), DCFS 16 % (505), WIA 1 % (74), DCAGRS 53 % (19). The abstracts that exist sit in DLT 1993 to 1999 (60 of 162 papers), DCFS 2002 to 2010 (79 of 201 papers) and DCAGRS 2001 (10 of 19); **of the 1,416 DLT and CIAA papers from 2003 on, exactly one (DLT 2015) has an abstract**. The R1 trigger (abstract share under 30 %) is met, so the tagger must work on titles, citations and embeddings (already the design). Reference lists (88 %) and affiliations (87 %) are well covered. Details: `reports/coverage-pilot.md`.
 - R6 bytes per work in raw cache and warehouse: _to be measured at G2_
 - R2 real rate limits observed per source: _see `docs/notes/sources.md`_

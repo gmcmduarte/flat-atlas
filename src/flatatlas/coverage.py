@@ -197,8 +197,8 @@ def _unmatched_section(cov: Coverage) -> list[str]:
         "",
         "OpenAlex answers a DOI filter only with works whose primary DOI it knows; a version "
         "merged into another record, or a paper it has not ingested yet, comes back empty.",
-        "" if shown >= gap else f"The newest {shown} are listed.",
         "",
+        *([] if shown >= gap else [f"The newest {shown} are listed.", ""]),
         "| DBLP key | Venue | Year | DOI |",
         "|---|---|---|---|",
     ]
