@@ -4,6 +4,7 @@ Each pipeline stage owns one command group; later sessions register their comman
 Names in ``PLAIN_COMMANDS`` are single commands instead of groups.
 """
 
+import json
 from pathlib import Path
 from typing import Annotated
 
@@ -11,7 +12,8 @@ import typer
 import yaml
 
 from flatatlas import __version__
-from flatatlas.db import connect, run_log
+from flatatlas import coverage as coverage_report
+from flatatlas.db import connect, run_log, write_text_atomic
 from flatatlas.dblp_dump import (
     DTD_FILE,
     DUMP_FILE,
@@ -23,9 +25,12 @@ from flatatlas.dblp_dump import (
     verify_checksum,
     write_index,
 )
+from flatatlas.http import BudgetExhausted, SourceClient, SourceError
 from flatatlas.log import setup_logging
-from flatatlas.settings import load_settings
+from flatatlas.settings import PROJECT_ROOT, load_settings
+from flatatlas.sources import crossref as crossref_src
 from flatatlas.sources import dblp as dblp_parse
+from flatatlas.sources import openalex as openalex_src
 from flatatlas.status import render_status
 from flatatlas.venues import (
     VenueConfigError,
@@ -312,3 +317,236 @@ def _parse_report(parsed, checks: list[dict], stale: bool, no_index: bool) -> st
         for r in dblp_parse.doi_share(parsed)
     )
     return "\n".join(lines)
+
+
+# -- P1-02: OpenAlex, Crossref, coverage ---------------------------------------------------------
+
+ProfileOption = Annotated[
+    str | None, typer.Option(help="Profile name (default: FLATATLAS_PROFILE or pilot).")
+]
+VenueOption = Annotated[
+    str | None, typer.Option(help="Only this venue (and its predecessors), e.g. dlt.")
+]
+
+
+def _venue_ids(settings, venue: str | None) -> list[str]:
+    try:
+        registry = load_venues()
+        venues = dblp_parse.select_venues(registry, settings.profile.active_venues, venue)
+    except VenueConfigError as exc:
+        for problem in exc.problems:
+            typer.echo(f"error: {problem}", err=True)
+        raise typer.Exit(1) from None
+    except (KeyError, ValueError) as exc:
+        typer.echo(f"error: {exc.args[0]}", err=True)
+        raise typer.Exit(1) from None
+    return [v.id for v in venues]
+
+
+def _require_tables(con, *names: str, hint: str) -> None:
+    have = {row[0] for row in con.execute("SHOW TABLES").fetchall()}
+    missing = [n for n in names if n not in have]
+    if missing:
+        typer.echo(f"error: missing table(s) {', '.join(missing)}; {hint}", err=True)
+        raise typer.Exit(1)
+
+
+def _spend_line(client: SourceClient) -> str:
+    budget = client.cfg.daily_budget_usd
+    spent = client.ledger.spent_today_usd()
+    return f"spent today (UTC): ${spent:.4f}" + (f" of ${budget:.2f}" if budget else "")
+
+
+@groups["harvest"].command("openalex")
+def harvest_openalex(
+    limit: Annotated[
+        int | None, typer.Option(help="Only this many papers (a hash-ordered sample).")
+    ] = None,
+    venue: VenueOption = None,
+    max_title_searches: Annotated[
+        int,
+        typer.Option(help="Most title searches for papers without a DOI (USD 0.001 each)."),
+    ] = openalex_src.DEFAULT_MAX_TITLE_SEARCHES,
+    restart: Annotated[bool, typer.Option(help="Ignore a finished job state.")] = False,
+    profile: ProfileOption = None,
+) -> None:
+    """Fetch OpenAlex works for the DBLP papers: by DOI in batches, then capped title searches.
+
+    Resumable: stop it any time and run the same command again. Run `flatatlas parse openalex`
+    afterwards.
+    """
+    settings = load_settings(profile=profile)
+    setup_logging(settings.paths.logs)
+    venue_ids = _venue_ids(settings, venue)
+    con = connect(settings.paths)
+    client = SourceClient("openalex", settings)
+    try:
+        _require_tables(con, "stg_dblp_paper", hint="run `flatatlas parse dblp` first")
+        papers = openalex_src.load_papers(con, venue_ids=venue_ids, limit=limit)
+        n_doi = sum(1 for p in papers if p.doi)
+        typer.echo(
+            f"venues: {', '.join(venue_ids)}; {len(papers)} papers ({n_doi} with a DOI, "
+            f"{len(papers) - n_doi} without); {_spend_line(client)}"
+        )
+        with run_log(con, "harvest-openalex") as run:
+            try:
+                stats = openalex_src.harvest(
+                    con,
+                    client,
+                    papers,
+                    max_title_searches=max_title_searches,
+                    restart=restart,
+                    on_progress=typer.echo,
+                )
+            finally:
+                run.counts["spent_today_usd"] = round(client.ledger.spent_today_usd(), 6)
+            run.counts.update(stats.as_counts())
+        typer.echo(f"done: {stats.as_counts()}")
+        if stats.papers_without_search:
+            typer.echo(
+                f"note: {stats.papers_without_search} papers without a usable DOI were not "
+                f"searched (cap {max_title_searches}); raise --max-title-searches to cover them"
+            )
+    except BudgetExhausted as exc:
+        typer.echo(f"stopped: {exc} Progress is saved; run the same command again.", err=True)
+        raise typer.Exit(3) from None
+    except SourceError as exc:
+        typer.echo(f"error: {exc}", err=True)
+        raise typer.Exit(1) from None
+    finally:
+        typer.echo(_spend_line(client))
+        client.close()
+        con.close()
+
+
+@groups["parse"].command("openalex")
+def parse_openalex(
+    venue: VenueOption = None,
+    show: Annotated[
+        int, typer.Option(help="Also print this many random matched papers, enriched.")
+    ] = 0,
+    profile: ProfileOption = None,
+) -> None:
+    """Parse cached OpenAlex answers into the stg_openalex_* tables (no network)."""
+    settings = load_settings(profile=profile)
+    setup_logging(settings.paths.logs)
+    venue_ids = _venue_ids(settings, venue)
+    con = connect(settings.paths)
+    client = SourceClient("openalex", settings)
+    try:
+        _require_tables(con, "stg_dblp_paper", hint="run `flatatlas parse dblp` first")
+        papers = openalex_src.load_papers(con, venue_ids=venue_ids)
+        with run_log(con, "parse-openalex") as run:
+            parsed = openalex_src.parse_openalex(client, papers)
+            run.counts.update({k: int(v) for k, v in parsed.stats.items()})
+            run.counts["papers"] = len(papers)
+            openalex_src.write_tables(con, settings.paths, parsed)
+    finally:
+        client.close()
+        con.close()
+    s = parsed.stats
+    typer.echo(
+        f"{len(papers)} papers: {s['fetched']} fetched, {s['matched']} matched "
+        f"({s['lookup_doi']} by DOI lookup, {s['lookup_title']} by title lookup, "
+        f"{s['lookup_none']} not searchable)"
+    )
+    typer.echo(
+        f"works {s['works']}, references {s['references']}, "
+        f"reference candidates {s['reference_candidates']}, abstracts {s['abstracts']}"
+    )
+    for row in openalex_src.sample_rows(parsed, show) if show else []:
+        typer.echo(json.dumps(row, ensure_ascii=False, indent=1))
+
+
+@groups["harvest"].command("crossref")
+def harvest_crossref(
+    limit: Annotated[int | None, typer.Option(help="Only this many DOIs (a sample).")] = None,
+    venue: VenueOption = None,
+    restart: Annotated[bool, typer.Option(help="Ignore a finished job state.")] = False,
+    profile: ProfileOption = None,
+) -> None:
+    """Fetch Crossref records for DOIs OpenAlex lacks or covers only partly.
+
+    Needs `flatatlas parse openalex` first (it decides which DOIs are needed).
+    """
+    settings = load_settings(profile=profile)
+    setup_logging(settings.paths.logs)
+    venue_ids = _venue_ids(settings, venue)
+    con = connect(settings.paths)
+    client = SourceClient("crossref", settings)
+    try:
+        _require_tables(
+            con,
+            "stg_dblp_paper",
+            "stg_openalex_lookup",
+            "stg_openalex_work",
+            hint="run `flatatlas parse dblp` and `flatatlas parse openalex` first",
+        )
+        dois = crossref_src.dois_needing_crossref(con, venue_ids=venue_ids, limit=limit)
+        typer.echo(f"{len(dois)} DOIs to ask Crossref (missing in OpenAlex or lacking fields)")
+        with run_log(con, "harvest-crossref") as run:
+            stats = crossref_src.harvest(con, client, dois, restart=restart, on_progress=typer.echo)
+            run.counts.update(stats.as_counts())
+        typer.echo(f"done: {stats.as_counts()}")
+    except SourceError as exc:
+        typer.echo(f"error: {exc}", err=True)
+        raise typer.Exit(1) from None
+    finally:
+        client.close()
+        con.close()
+
+
+@groups["parse"].command("crossref")
+def parse_crossref(venue: VenueOption = None, profile: ProfileOption = None) -> None:
+    """Parse cached Crossref answers into stg_crossref_work and local_abstract (no network)."""
+    settings = load_settings(profile=profile)
+    setup_logging(settings.paths.logs)
+    venue_ids = _venue_ids(settings, venue)
+    con = connect(settings.paths)
+    client = SourceClient("crossref", settings)
+    try:
+        _require_tables(con, "stg_dblp_paper", hint="run `flatatlas parse dblp` first")
+        papers = openalex_src.load_papers(con, venue_ids=venue_ids)
+        pairs = [(p.dblp_key, p.doi) for p in papers if p.doi]
+        with run_log(con, "parse-crossref") as run:
+            parsed = crossref_src.parse_crossref(client, pairs)
+            run.counts.update({k: int(v) for k, v in parsed.stats.items()})
+            crossref_src.write_tables(con, settings.paths, parsed)
+    finally:
+        client.close()
+        con.close()
+    s = parsed.stats
+    typer.echo(
+        f"{len(pairs)} papers with a DOI: {s['found']} DOIs found, {s['not_found']} not found, "
+        f"{s['not_fetched']} not fetched, {s['skipped_not_crossref']} skipped (not Crossref); "
+        f"abstracts {s['abstracts']}"
+    )
+
+
+@groups["evaluate"].command("coverage")
+def evaluate_coverage(
+    out: Annotated[
+        Path | None,
+        typer.Option(help="Report file (default: reports/coverage-<profile>.md in the repo)."),
+    ] = None,
+    profile: ProfileOption = None,
+) -> None:
+    """Write the coverage report: matches, abstracts, references and affiliations per venue."""
+    settings = load_settings(profile=profile)
+    setup_logging(settings.paths.logs)
+    con = connect(settings.paths)
+    try:
+        cov = coverage_report.compute(con)
+    except LookupError as exc:
+        typer.echo(f"error: {exc}", err=True)
+        raise typer.Exit(1) from None
+    finally:
+        con.close()
+    path = out or PROJECT_ROOT / "reports" / f"coverage-{settings.profile.name}.md"
+    write_text_atomic(path, coverage_report.render(cov, profile=settings.profile.name))
+    typer.echo(f"wrote {path}")
+    t = cov.total
+    typer.echo(
+        f"papers {t['papers']}; matched {t['matched']}; DOI match "
+        f"{t['doi_matched']}/{t['doi_fetched']}; abstracts {t['abs_any']}; refs {t['refs_any']}"
+    )

@@ -22,15 +22,17 @@ dblp:
 
 openalex:
   base_url: https://api.openalex.org
-  requests_per_second: 10.0     # reported 30/s with a key; PLAN says treat as 10/s (unverified)
+  requests_per_second: 10.0     # docs: 30/s with a free key (2026-11-15); we stay at 10/s on purpose
   burst: 10
-  batch_size: 50                # filter=doi:a|b|... ; 50-100 per call (unverified)
+  batch_size: 100               # filter=doi:a|b|... ; 100 is the maximum (101 gives HTTP 400); verified P1-02
   daily_budget_usd: 1.0         # free budget, resets at midnight UTC
   costs:
-    list: 0.0001                # $0.10 per 1,000 list/filter calls
+    list: 0.0001                # $0.10 per 1,000 list/filter calls (header x-ratelimit-cost-usd, P1-02)
     singleton: 0.0              # lookups by ID or DOI are free
     search: 0.001               # $1 per 1,000 search calls
-  auth: {style: query, name: api_key, secret: openalex_api_key, required: true}  # param name unverified
+  # from_updated_date / from_created_date are NOT available on the free key (HTTP 429, "Plan upgrade
+  # required"): incremental refresh re-fetches by DOI instead (PLAN §5.3).
+  auth: {style: query, name: api_key, secret: openalex_api_key, required: true}  # verified P0-03
 
 semanticscholar:
   base_url: https://api.semanticscholar.org/graph/v1

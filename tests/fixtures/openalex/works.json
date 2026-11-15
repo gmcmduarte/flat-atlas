@@ -1,0 +1,1392 @@
+[
+ {
+  "id": "https://openalex.org/W1965820674",
+  "doi": "https://doi.org/10.3115/1075812.1075912",
+  "title": "On-line cursive handwriting recognition using hidden Markov models and statistical grammars",
+  "publication_year": 1994,
+  "publication_date": "1994-01-01",
+  "type": "conference-paper",
+  "language": "en",
+  "authorships": [
+   {
+    "author_position": "first",
+    "author": {
+     "id": "https://openalex.org/A5112199595",
+     "display_name": "John I. Makhoul",
+     "orcid": null,
+     "observed_orcids": []
+    },
+    "institutions": [],
+    "countries": [],
+    "is_corresponding": false,
+    "raw_author_name": "John Makhoul",
+    "raw_affiliation_strings": [
+     "BBN Systems and Technologies, Cambridge, MA",
+     "BBN Systems and Technologies, Cambridge, MA#TAB#"
+    ],
+    "raw_orcid": null,
+    "affiliations": [
+     {
+      "raw_affiliation_string": "BBN Systems and Technologies, Cambridge, MA",
+      "institution_ids": []
+     },
+     {
+      "raw_affiliation_string": "BBN Systems and Technologies, Cambridge, MA#TAB#",
+      "institution_ids": []
+     }
+    ]
+   },
+   {
+    "author_position": "middle",
+    "author": {
+     "id": "https://openalex.org/A5045801671",
+     "display_name": "Thad E. Starner",
+     "orcid": "https://orcid.org/0000-0001-8442-7842",
+     "observed_orcids": [
+      "https://orcid.org/0000-0001-8442-7842"
+     ]
+    },
+    "institutions": [],
+    "countries": [],
+    "is_corresponding": false,
+    "raw_author_name": "Thad Starner",
+    "raw_affiliation_strings": [
+     "BBN Systems and Technologies, Cambridge, MA",
+     "BBN Systems and Technologies, Cambridge, MA#TAB#"
+    ],
+    "raw_orcid": null,
+    "affiliations": [
+     {
+      "raw_affiliation_string": "BBN Systems and Technologies, Cambridge, MA",
+      "institution_ids": []
+     },
+     {
+      "raw_affiliation_string": "BBN Systems and Technologies, Cambridge, MA#TAB#",
+      "institution_ids": []
+     }
+    ]
+   },
+   {
+    "author_position": "middle",
+    "author": {
+     "id": "https://openalex.org/A5089653752",
+     "display_name": "Richard M. Schwartz",
+     "orcid": "https://orcid.org/0000-0002-4654-624X",
+     "observed_orcids": [
+      "https://orcid.org/0000-0002-4654-624X"
+     ]
+    },
+    "institutions": [],
+    "countries": [],
+    "is_corresponding": false,
+    "raw_author_name": "Richard Schwartz",
+    "raw_affiliation_strings": [
+     "BBN Systems and Technologies, Cambridge, MA",
+     "BBN Systems and Technologies, Cambridge, MA#TAB#"
+    ],
+    "raw_orcid": null,
+    "affiliations": [
+     {
+      "raw_affiliation_string": "BBN Systems and Technologies, Cambridge, MA",
+      "institution_ids": []
+     },
+     {
+      "raw_affiliation_string": "BBN Systems and Technologies, Cambridge, MA#TAB#",
+      "institution_ids": []
+     }
+    ]
+   },
+   {
+    "author_position": "last",
+    "author": {
+     "id": "https://openalex.org/A5103386506",
+     "display_name": "George Chou",
+     "orcid": null,
+     "observed_orcids": []
+    },
+    "institutions": [],
+    "countries": [],
+    "is_corresponding": false,
+    "raw_author_name": "George Chou",
+    "raw_affiliation_strings": [
+     "BBN Systems and Technologies, Cambridge, MA",
+     "BBN Systems and Technologies, Cambridge, MA#TAB#"
+    ],
+    "raw_orcid": null,
+    "affiliations": [
+     {
+      "raw_affiliation_string": "BBN Systems and Technologies, Cambridge, MA",
+      "institution_ids": []
+     },
+     {
+      "raw_affiliation_string": "BBN Systems and Technologies, Cambridge, MA#TAB#",
+      "institution_ids": []
+     }
+    ]
+   }
+  ],
+  "referenced_works": [
+   "https://openalex.org/W1480865305",
+   "https://openalex.org/W1871667158",
+   "https://openalex.org/W1920769845",
+   "https://openalex.org/W2024490156",
+   "https://openalex.org/W2055075080"
+  ],
+  "referenced_works_count": 16,
+  "cited_by_count": 20,
+  "counts_by_year": [
+   {
+    "year": 2018,
+    "cited_by_count": 2
+   },
+   {
+    "year": 2017,
+    "cited_by_count": 1
+   },
+   {
+    "year": 2016,
+    "cited_by_count": 1
+   }
+  ],
+  "topics": [
+   {
+    "id": "https://openalex.org/T10601",
+    "display_name": "Handwritten Text Recognition Techniques",
+    "score": 0.9994999766349792,
+    "subfield": {
+     "id": "https://openalex.org/subfields/1707",
+     "display_name": "Computer Vision and Pattern Recognition"
+    },
+    "field": {
+     "id": "https://openalex.org/fields/17",
+     "display_name": "Computer Science"
+    },
+    "domain": {
+     "id": "https://openalex.org/domains/3",
+     "display_name": "Physical Sciences"
+    }
+   },
+   {
+    "id": "https://openalex.org/T10201",
+    "display_name": "Speech Recognition and Synthesis",
+    "score": 0.00019999999494757503,
+    "subfield": {
+     "id": "https://openalex.org/subfields/1702",
+     "display_name": "Artificial Intelligence"
+    },
+    "field": {
+     "id": "https://openalex.org/fields/17",
+     "display_name": "Computer Science"
+    },
+    "domain": {
+     "id": "https://openalex.org/domains/3",
+     "display_name": "Physical Sciences"
+    }
+   }
+  ],
+  "keywords": [
+   {
+    "id": "https://openalex.org/keywords/hidden-markov-models",
+    "display_name": "hidden Markov models",
+    "score": 0.843999981880188
+   },
+   {
+    "id": "https://openalex.org/keywords/continuous-speech-recognition",
+    "display_name": "continuous speech recognition",
+    "score": 0.7369999885559082
+   },
+   {
+    "id": "https://openalex.org/keywords/byblos",
+    "display_name": "Byblos",
+    "score": 0.8679999709129333
+   }
+  ],
+  "abstract_inverted_index": {
+   "The": [
+    0,
+    39
+   ],
+   "BYBLOS": [
+    1
+   ],
+   "continuous": [
+    2,
+    21
+   ],
+   "speech": [
+    3,
+    22
+   ],
+   "recognition": [
+    4,
+    139
+   ],
+   "system": [
+    5,
+    30
+   ],
+   "is": [
+    6
+   ],
+   "applied": [
+    7
+   ],
+   "to": [
+    8,
+    32
+   ],
+   "on-line": [
+    9,
+    17
+   ],
+   "cursive": [
+    10,
+    18
+   ],
+   "handwriting": [
+    11,
+    19,
+    33
+   ],
+   "recognition.": [
+    12,
+    56
+   ],
+   "By": [
+    13
+   ],
+   "exploiting": [
+    14
+   ],
+   "similarities": [
+    15
+   ],
+   "between": [
+    16,
+    121
+   ],
+   "and": [
+    20,
+    75,
+    145
+   ],
+   "recognition,": [
+    23
+   ],
+   "we": [
+    24,
+    61
+   ],
+   "can": [
+    25
+   ],
+   "use": [
+    26,
+    40
+   ],
+   "the": [
+    27,
+    46,
+    51,
+    68,
+    76,
+    88,
+    115,
+    138,
+    141,
+    148
+   ],
+   "same": [
+    28
+   ],
+   "base": [
+    29
+   ],
+   "adapted": [
+    31
+   ],
+   "feature": [
+    34
+   ],
+   "vectors": [
+    35
+   ],
+   "instead": [
+    36
+   ],
+   "of": [
+    37,
+    41,
+    50,
+    95,
+    137,
+    147
+   ],
+   "speech.": [
+    38
+   ],
+   "hidden": [
+    42
+   ],
+   "Markov": [
+    43
+   ],
+   "models": [
+    44
+   ],
+   "obviates": [
+    45
+   ],
+   "need": [
+    47
+   ],
+   "for": [
+    48
+   ],
+   "segmentation": [
+    49
+   ],
+   "handwritten": [
+    52,
+    63
+   ],
+   "script": [
+    53
+   ],
+   "sentences": [
+    54,
+    64
+   ],
+   "before": [
+    55
+   ],
+   "To": [
+    57
+   ],
+   "test": [
+    58,
+    113
+   ],
+   "our": [
+    59
+   ],
+   "system,": [
+    60,
+    140
+   ],
+   "collected": [
+    62,
+    105,
+    131
+   ],
+   "using": [
+    65
+   ],
+   "text": [
+    66
+   ],
+   "from": [
+    67,
+    106,
+    132
+   ],
+   "ARPA": [
+    69,
+    77
+   ],
+   "Airline": [
+    70
+   ],
+   "Travel": [
+    71
+   ],
+   "Information": [
+    72
+   ],
+   "Service": [
+    73
+   ],
+   "(ATIS)": [
+    74
+   ],
+   "Wall": [
+    78
+   ],
+   "Street": [
+    79
+   ],
+   "Journal": [
+    80
+   ],
+   "(WSJ)": [
+    81
+   ],
+   "corpora.": [
+    82
+   ],
+   "In": [
+    83,
+    109
+   ],
+   "an": [
+    84
+   ],
+   "initial": [
+    85
+   ],
+   "experiment": [
+    86
+   ],
+   "on": [
+    87,
+    114
+   ],
+   "ATIS": [
+    89
+   ],
+   "data,": [
+    90,
+    117
+   ],
+   "a": [
+    91,
+    100,
+    110,
+    126
+   ],
+   "word": [
+    92
+   ],
+   "error": [
+    93,
+    118
+   ],
+   "rate": [
+    94
+   ],
+   "1.1%": [
+    96
+   ],
+   "was": [
+    97
+   ],
+   "achieved": [
+    98
+   ],
+   "with": [
+    99,
+    125
+   ],
+   "3050-word": [
+    101
+   ],
+   "lexicon,": [
+    102,
+    128
+   ],
+   "52-character": [
+    103
+   ],
+   "set,": [
+    104,
+    130
+   ],
+   "one": [
+    107
+   ],
+   "writer.": [
+    108
+   ],
+   "subsequent": [
+    111
+   ],
+   "writer-dependent": [
+    112
+   ],
+   "WSJ": [
+    116
+   ],
+   "rates": [
+    119
+   ],
+   "ranging": [
+    120
+   ],
+   "2%-5%": [
+    122
+   ],
+   "were": [
+    123
+   ],
+   "obtained": [
+    124
+   ],
+   "25,595-word": [
+    127
+   ],
+   "86-character": [
+    129
+   ],
+   "six": [
+    133
+   ],
+   "different": [
+    134
+   ],
+   "writers.": [
+    135
+   ],
+   "Details": [
+    136
+   ],
+   "data": [
+    142
+   ],
+   "collection": [
+    143
+   ],
+   "process,": [
+    144
+   ],
+   "analysis": [
+    146
+   ],
+   "experiments": [
+    149
+   ],
+   "are": [
+    150
+   ],
+   "presented.": [
+    151
+   ]
+  },
+  "open_access": {
+   "is_oa": true,
+   "oa_status": "bronze",
+   "oa_url": "https://dl.acm.org/doi/pdf/10.3115/1075812.1075912",
+   "any_repository_has_fulltext": false
+  },
+  "primary_location": {
+   "id": "doi:10.3115/1075812.1075912",
+   "doi": "https://doi.org/10.3115/1075812.1075912",
+   "is_oa": true,
+   "landing_page_url": "https://doi.org/10.3115/1075812.1075912",
+   "pdf_url": "https://dl.acm.org/doi/pdf/10.3115/1075812.1075912",
+   "source": {
+    "id": "https://openalex.org/S7407086546",
+    "display_name": "DARPA Workshop on Speech and Natural Language (HLT)",
+    "issn_l": null,
+    "issn": null,
+    "is_oa": false,
+    "is_in_doaj": false,
+    "is_core": false,
+    "listed_in": [],
+    "host_organization": "https://openalex.org/P4310320244",
+    "host_organization_name": "Association for Computational Linguistics",
+    "host_organization_lineage": [
+     "https://openalex.org/P4310320244"
+    ],
+    "host_organization_lineage_names": [
+     "Association for Computational Linguistics"
+    ],
+    "type": "conference"
+   },
+   "license": null,
+   "license_id": null,
+   "version": "publishedVersion",
+   "is_accepted": true,
+   "is_published": true,
+   "raw_source_name": "Proceedings of the workshop on Human Language Technology - HLT '94",
+   "raw_type": "proceedings-article"
+  },
+  "biblio": {
+   "volume": null,
+   "issue": null,
+   "first_page": "432",
+   "last_page": "432"
+  },
+  "updated_date": "2026-11-14T11:04:58.165337"
+ },
+ {
+  "id": "https://openalex.org/W1051743951",
+  "doi": "https://doi.org/10.1007/978-3-319-19225-3_6",
+  "title": "Square on Ideal, Closed and Free Languages",
+  "publication_year": 2015,
+  "publication_date": "2015-06-15",
+  "type": "conference-paper",
+  "language": "en",
+  "authorships": [
+   {
+    "author_position": "first",
+    "author": {
+     "id": "https://openalex.org/A5000448954",
+     "display_name": "Kristína Čevorová",
+     "orcid": null,
+     "observed_orcids": []
+    },
+    "institutions": [
+     {
+      "id": "https://openalex.org/I207624831",
+      "display_name": "Slovak Academy of Sciences",
+      "ror": "https://ror.org/03h7qq074",
+      "country_code": "SK",
+      "type": "government",
+      "lineage": [
+       "https://openalex.org/I207624831"
+      ]
+     },
+     {
+      "id": "https://openalex.org/I4210120676",
+      "display_name": "Mathematical Institute of the Slovak Academy of Sciences",
+      "ror": "https://ror.org/02fhy7464",
+      "country_code": "SK",
+      "type": "facility",
+      "lineage": [
+       "https://openalex.org/I207624831",
+       "https://openalex.org/I4210120676"
+      ]
+     }
+    ],
+    "countries": [
+     "SK"
+    ],
+    "is_corresponding": true,
+    "raw_author_name": "Kristína Čevorová",
+    "raw_affiliation_strings": [
+     "Mathematical Institute, Slovak Academy of Sciences, Bratislava, Slovakia"
+    ],
+    "raw_orcid": null,
+    "affiliations": [
+     {
+      "raw_affiliation_string": "Mathematical Institute, Slovak Academy of Sciences, Bratislava, Slovakia",
+      "institution_ids": [
+       "https://openalex.org/I207624831",
+       "https://openalex.org/I4210120676"
+      ]
+     }
+    ]
+   }
+  ],
+  "referenced_works": [
+   "https://openalex.org/W136331652",
+   "https://openalex.org/W150490452",
+   "https://openalex.org/W1482663448",
+   "https://openalex.org/W1495359240",
+   "https://openalex.org/W1503539558"
+  ],
+  "referenced_works_count": 17,
+  "cited_by_count": 3,
+  "counts_by_year": [
+   {
+    "year": 2021,
+    "cited_by_count": 1
+   },
+   {
+    "year": 2019,
+    "cited_by_count": 1
+   },
+   {
+    "year": 2016,
+    "cited_by_count": 1
+   }
+  ],
+  "topics": [
+   {
+    "id": "https://openalex.org/T11567",
+    "display_name": "semigroups and automata theory",
+    "score": 1.0,
+    "subfield": {
+     "id": "https://openalex.org/subfields/1703",
+     "display_name": "Computational Theory and Mathematics"
+    },
+    "field": {
+     "id": "https://openalex.org/fields/17",
+     "display_name": "Computer Science"
+    },
+    "domain": {
+     "id": "https://openalex.org/domains/3",
+     "display_name": "Physical Sciences"
+    }
+   },
+   {
+    "id": "https://openalex.org/T11269",
+    "display_name": "Algorithms and Data Compression",
+    "score": 0.0,
+    "subfield": {
+     "id": "https://openalex.org/subfields/2614",
+     "display_name": "Theoretical Computer Science"
+    },
+    "field": {
+     "id": "https://openalex.org/fields/26",
+     "display_name": "Mathematics"
+    },
+    "domain": {
+     "id": "https://openalex.org/domains/3",
+     "display_name": "Physical Sciences"
+    }
+   }
+  ],
+  "keywords": [
+   {
+    "id": "https://openalex.org/keywords/subregular-languages",
+    "display_name": "subregular languages",
+    "score": 0.6230000257492065
+   },
+   {
+    "id": "https://openalex.org/keywords/ideal-language",
+    "display_name": "ideal language",
+    "score": 0.7620000243186951
+   },
+   {
+    "id": "https://openalex.org/keywords/finite-state-machines",
+    "display_name": "finite automata",
+    "score": 0.5419999957084656
+   }
+  ],
+  "abstract_inverted_index": null,
+  "open_access": {
+   "is_oa": false,
+   "oa_status": "closed",
+   "oa_url": null,
+   "any_repository_has_fulltext": false
+  },
+  "primary_location": {
+   "id": "doi:10.1007/978-3-319-19225-3_6",
+   "doi": "https://doi.org/10.1007/978-3-319-19225-3_6",
+   "is_oa": false,
+   "landing_page_url": "https://doi.org/10.1007/978-3-319-19225-3_6",
+   "pdf_url": null,
+   "source": {
+    "id": "https://openalex.org/S106296714",
+    "display_name": "Lecture notes in computer science",
+    "issn_l": "0302-9743",
+    "issn": [
+     "0302-9743",
+     "1611-3349"
+    ],
+    "is_oa": false,
+    "is_in_doaj": false,
+    "is_core": true,
+    "listed_in": [
+     "cwts-core",
+     "jufo-1",
+     "ki-jl-1",
+     "norway-1",
+     "vabb-shw"
+    ],
+    "host_organization": "https://openalex.org/P4310319900",
+    "host_organization_name": "Springer Science+Business Media",
+    "host_organization_lineage": [
+     "https://openalex.org/P4310319900",
+     "https://openalex.org/P4310319965"
+    ],
+    "host_organization_lineage_names": [
+     "Springer Science+Business Media",
+     "Springer Nature"
+    ],
+    "type": "book series"
+   },
+   "license": null,
+   "license_id": null,
+   "version": "publishedVersion",
+   "is_accepted": true,
+   "is_published": true,
+   "raw_source_name": "Lecture Notes in Computer Science",
+   "raw_type": "book-chapter"
+  },
+  "biblio": {
+   "volume": null,
+   "issue": null,
+   "first_page": "70",
+   "last_page": "80"
+  },
+  "ids": {
+   "openalex": "https://openalex.org/W1051743951",
+   "doi": "https://doi.org/10.1007/978-3-319-19225-3_6",
+   "mag": "1051743951"
+  },
+  "updated_date": "2026-11-15T12:55:33.944570"
+ },
+ {
+  "id": "https://openalex.org/W1492091436",
+  "doi": "https://doi.org/10.1007/3-540-45005-x_24",
+  "title": "Efficient Algorithm for Checking Multiplicity Equivalence for the Finite Z - Σ*-Automata",
+  "publication_year": 2003,
+  "publication_date": "2003-06-24",
+  "type": "conference-paper",
+  "language": "en",
+  "authorships": [
+   {
+    "author_position": "first",
+    "author": {
+     "id": "https://openalex.org/A5066583976",
+     "display_name": "Kostyantyn Archangelsky",
+     "orcid": null,
+     "observed_orcids": []
+    },
+    "institutions": [],
+    "countries": [],
+    "is_corresponding": true,
+    "raw_author_name": "Kostyantyn Archangelsky",
+    "raw_affiliation_strings": [
+     "cybernetics dept, Kiev National University, P.O.Box 129, 04070, Kiev, Ukraine"
+    ],
+    "raw_orcid": null,
+    "affiliations": [
+     {
+      "raw_affiliation_string": "cybernetics dept, Kiev National University, P.O.Box 129, 04070, Kiev, Ukraine",
+      "institution_ids": []
+     }
+    ]
+   }
+  ],
+  "referenced_works": [
+   "https://openalex.org/W1655990431",
+   "https://openalex.org/W2027671360"
+  ],
+  "referenced_works_count": 2,
+  "cited_by_count": 4,
+  "counts_by_year": [
+   {
+    "year": 2020,
+    "cited_by_count": 2
+   }
+  ],
+  "topics": [
+   {
+    "id": "https://openalex.org/T11567",
+    "display_name": "semigroups and automata theory",
+    "score": 1.0,
+    "subfield": {
+     "id": "https://openalex.org/subfields/1703",
+     "display_name": "Computational Theory and Mathematics"
+    },
+    "field": {
+     "id": "https://openalex.org/fields/17",
+     "display_name": "Computer Science"
+    },
+    "domain": {
+     "id": "https://openalex.org/domains/3",
+     "display_name": "Physical Sciences"
+    }
+   },
+   {
+    "id": "https://openalex.org/T11269",
+    "display_name": "Algorithms and Data Compression",
+    "score": 0.0,
+    "subfield": {
+     "id": "https://openalex.org/subfields/2614",
+     "display_name": "Theoretical Computer Science"
+    },
+    "field": {
+     "id": "https://openalex.org/fields/26",
+     "display_name": "Mathematics"
+    },
+    "domain": {
+     "id": "https://openalex.org/domains/3",
+     "display_name": "Physical Sciences"
+    }
+   }
+  ],
+  "keywords": [
+   {
+    "id": "https://openalex.org/keywords/finite-state-machines",
+    "display_name": "finite automata",
+    "score": 0.7559999823570251
+   },
+   {
+    "id": "https://openalex.org/keywords/polynomial-time-algorithms",
+    "display_name": "polynomial-time algorithms",
+    "score": 0.699999988079071
+   },
+   {
+    "id": "https://openalex.org/keywords/ring-structure",
+    "display_name": "ring structure",
+    "score": 0.4309999942779541
+   }
+  ],
+  "abstract_inverted_index": null,
+  "open_access": {
+   "is_oa": false,
+   "oa_status": "closed",
+   "oa_url": null,
+   "any_repository_has_fulltext": false
+  },
+  "primary_location": {
+   "id": "doi:10.1007/3-540-45005-x_24",
+   "doi": "https://doi.org/10.1007/3-540-45005-x_24",
+   "is_oa": false,
+   "landing_page_url": "https://doi.org/10.1007/3-540-45005-x_24",
+   "pdf_url": null,
+   "source": {
+    "id": "https://openalex.org/S106296714",
+    "display_name": "Lecture notes in computer science",
+    "issn_l": "0302-9743",
+    "issn": [
+     "0302-9743",
+     "1611-3349"
+    ],
+    "is_oa": false,
+    "is_in_doaj": false,
+    "is_core": true,
+    "listed_in": [
+     "cwts-core",
+     "jufo-1",
+     "ki-jl-1",
+     "norway-1",
+     "vabb-shw"
+    ],
+    "host_organization": "https://openalex.org/P4310319900",
+    "host_organization_name": "Springer Science+Business Media",
+    "host_organization_lineage": [
+     "https://openalex.org/P4310319900",
+     "https://openalex.org/P4310319965"
+    ],
+    "host_organization_lineage_names": [
+     "Springer Science+Business Media",
+     "Springer Nature"
+    ],
+    "type": "book series"
+   },
+   "license": null,
+   "license_id": null,
+   "version": "publishedVersion",
+   "is_accepted": true,
+   "is_published": true,
+   "raw_source_name": "Lecture Notes in Computer Science",
+   "raw_type": "book-chapter"
+  },
+  "biblio": {
+   "volume": null,
+   "issue": null,
+   "first_page": "283",
+   "last_page": "289"
+  },
+  "ids": {
+   "openalex": "https://openalex.org/W1492091436",
+   "doi": "https://doi.org/10.1007/3-540-45005-x_24",
+   "mag": "1492091436"
+  },
+  "updated_date": "2026-11-15T12:55:33.944570"
+ },
+ {
+  "id": "https://openalex.org/W1469711373",
+  "doi": "https://doi.org/10.1007/978-3-319-22360-5_7",
+  "title": "Security of Numerical Sensors in Automata",
+  "publication_year": 2015,
+  "publication_date": "2015-07-27",
+  "type": "conference-paper",
+  "language": "en",
+  "authorships": [
+   {
+    "author_position": "first",
+    "author": {
+     "id": "https://openalex.org/A5040068875",
+     "display_name": "Zhe Dang",
+     "orcid": "https://orcid.org/0000-0002-8580-8169",
+     "observed_orcids": [
+      "https://orcid.org/0000-0002-8580-8169"
+     ]
+    },
+    "institutions": [
+     {
+      "id": "https://openalex.org/I72951846",
+      "display_name": "Washington State University",
+      "ror": "https://ror.org/05dk0ce17",
+      "country_code": "US",
+      "type": "education",
+      "lineage": [
+       "https://openalex.org/I72951846"
+      ]
+     }
+    ],
+    "countries": [
+     "US"
+    ],
+    "is_corresponding": false,
+    "raw_author_name": "Zhe Dang",
+    "raw_affiliation_strings": [
+     "School of Electrical Engineering and Computer Science, Washington State University, Pullman, WA, 99164, USA"
+    ],
+    "raw_orcid": null,
+    "affiliations": [
+     {
+      "raw_affiliation_string": "School of Electrical Engineering and Computer Science, Washington State University, Pullman, WA, 99164, USA",
+      "institution_ids": [
+       "https://openalex.org/I72951846"
+      ]
+     }
+    ]
+   },
+   {
+    "author_position": "middle",
+    "author": {
+     "id": null,
+     "display_name": "Dmitry Dementyev",
+     "orcid": null,
+     "observed_orcids": []
+    },
+    "institutions": [
+     {
+      "id": "https://openalex.org/I72951846",
+      "display_name": "Washington State University",
+      "ror": "https://ror.org/05dk0ce17",
+      "country_code": "US",
+      "type": "education",
+      "lineage": [
+       "https://openalex.org/I72951846"
+      ]
+     }
+    ],
+    "countries": [
+     "US"
+    ],
+    "is_corresponding": false,
+    "raw_author_name": "Dmitry Dementyev",
+    "raw_affiliation_strings": [
+     "School of Electrical Engineering and Computer Science, Washington State University, Pullman, WA, 99164, USA"
+    ],
+    "raw_orcid": null,
+    "affiliations": [
+     {
+      "raw_affiliation_string": "School of Electrical Engineering and Computer Science, Washington State University, Pullman, WA, 99164, USA",
+      "institution_ids": [
+       "https://openalex.org/I72951846"
+      ]
+     }
+    ]
+   },
+   {
+    "author_position": "middle",
+    "author": {
+     "id": "https://openalex.org/A5044941545",
+     "display_name": "T.R. Fischer",
+     "orcid": "https://orcid.org/0000-0002-2987-0478",
+     "observed_orcids": [
+      "https://orcid.org/0000-0002-2987-0478"
+     ]
+    },
+    "institutions": [
+     {
+      "id": "https://openalex.org/I72951846",
+      "display_name": "Washington State University",
+      "ror": "https://ror.org/05dk0ce17",
+      "country_code": "US",
+      "type": "education",
+      "lineage": [
+       "https://openalex.org/I72951846"
+      ]
+     }
+    ],
+    "countries": [
+     "US"
+    ],
+    "is_corresponding": false,
+    "raw_author_name": "Thomas R. Fischer",
+    "raw_affiliation_strings": [
+     "School of Electrical Engineering and Computer Science, Washington State University, Pullman, WA, 99164, USA"
+    ],
+    "raw_orcid": null,
+    "affiliations": [
+     {
+      "raw_affiliation_string": "School of Electrical Engineering and Computer Science, Washington State University, Pullman, WA, 99164, USA",
+      "institution_ids": [
+       "https://openalex.org/I72951846"
+      ]
+     }
+    ]
+   },
+   {
+    "author_position": "last",
+    "author": {
+     "id": "https://openalex.org/A5039338948",
+     "display_name": "William J. Hutton",
+     "orcid": null,
+     "observed_orcids": []
+    },
+    "institutions": [
+     {
+      "id": "https://openalex.org/I72951846",
+      "display_name": "Washington State University",
+      "ror": "https://ror.org/05dk0ce17",
+      "country_code": "US",
+      "type": "education",
+      "lineage": [
+       "https://openalex.org/I72951846"
+      ]
+     }
+    ],
+    "countries": [
+     "US"
+    ],
+    "is_corresponding": true,
+    "raw_author_name": "William J. Hutton",
+    "raw_affiliation_strings": [
+     "School of Electrical Engineering and Computer Science, Washington State University, Pullman, WA, 99164, USA"
+    ],
+    "raw_orcid": null,
+    "affiliations": [
+     {
+      "raw_affiliation_string": "School of Electrical Engineering and Computer Science, Washington State University, Pullman, WA, 99164, USA",
+      "institution_ids": [
+       "https://openalex.org/I72951846"
+      ]
+     }
+    ]
+   }
+  ],
+  "referenced_works": [
+   "https://openalex.org/W183172886",
+   "https://openalex.org/W186403072",
+   "https://openalex.org/W1538510509",
+   "https://openalex.org/W1550189296",
+   "https://openalex.org/W1587463421"
+  ],
+  "referenced_works_count": 30,
+  "cited_by_count": 2,
+  "counts_by_year": [
+   {
+    "year": 2016,
+    "cited_by_count": 1
+   },
+   {
+    "year": 2015,
+    "cited_by_count": 1
+   }
+  ],
+  "topics": [
+   {
+    "id": "https://openalex.org/T11567",
+    "display_name": "semigroups and automata theory",
+    "score": 0.490200012922287,
+    "subfield": {
+     "id": "https://openalex.org/subfields/1703",
+     "display_name": "Computational Theory and Mathematics"
+    },
+    "field": {
+     "id": "https://openalex.org/fields/17",
+     "display_name": "Computer Science"
+    },
+    "domain": {
+     "id": "https://openalex.org/domains/3",
+     "display_name": "Physical Sciences"
+    }
+   },
+   {
+    "id": "https://openalex.org/T10142",
+    "display_name": "Formal Methods in Verification",
+    "score": 0.33500000834465027,
+    "subfield": {
+     "id": "https://openalex.org/subfields/1703",
+     "display_name": "Computational Theory and Mathematics"
+    },
+    "field": {
+     "id": "https://openalex.org/fields/17",
+     "display_name": "Computer Science"
+    },
+    "domain": {
+     "id": "https://openalex.org/domains/3",
+     "display_name": "Physical Sciences"
+    }
+   }
+  ],
+  "keywords": [
+   {
+    "id": "https://openalex.org/keywords/mutual-information-rate",
+    "display_name": "mutual information rate",
+    "score": 0.9620000123977661
+   },
+   {
+    "id": "https://openalex.org/keywords/covert-channels",
+    "display_name": "covert channels",
+    "score": 0.8920000195503235
+   },
+   {
+    "id": "https://openalex.org/keywords/nondeterministic-pushdown-automata",
+    "display_name": "nondeterministic pushdown automata",
+    "score": 0.9430000185966492
+   }
+  ],
+  "abstract_inverted_index": null,
+  "open_access": {
+   "is_oa": false,
+   "oa_status": "closed",
+   "oa_url": null,
+   "any_repository_has_fulltext": false
+  },
+  "primary_location": {
+   "id": "doi:10.1007/978-3-319-22360-5_7",
+   "doi": "https://doi.org/10.1007/978-3-319-22360-5_7",
+   "is_oa": false,
+   "landing_page_url": "https://doi.org/10.1007/978-3-319-22360-5_7",
+   "pdf_url": null,
+   "source": {
+    "id": "https://openalex.org/S106296714",
+    "display_name": "Lecture notes in computer science",
+    "issn_l": "0302-9743",
+    "issn": [
+     "0302-9743",
+     "1611-3349"
+    ],
+    "is_oa": false,
+    "is_in_doaj": false,
+    "is_core": true,
+    "listed_in": [
+     "cwts-core",
+     "jufo-1",
+     "ki-jl-1",
+     "norway-1",
+     "vabb-shw"
+    ],
+    "host_organization": "https://openalex.org/P4310319900",
+    "host_organization_name": "Springer Science+Business Media",
+    "host_organization_lineage": [
+     "https://openalex.org/P4310319900",
+     "https://openalex.org/P4310319965"
+    ],
+    "host_organization_lineage_names": [
+     "Springer Science+Business Media",
+     "Springer Nature"
+    ],
+    "type": "book series"
+   },
+   "license": null,
+   "license_id": null,
+   "version": "publishedVersion",
+   "is_accepted": true,
+   "is_published": true,
+   "raw_source_name": "Lecture Notes in Computer Science",
+   "raw_type": "book-chapter"
+  },
+  "biblio": {
+   "volume": null,
+   "issue": null,
+   "first_page": "76",
+   "last_page": "88"
+  },
+  "ids": {
+   "openalex": "https://openalex.org/W1469711373",
+   "doi": "https://doi.org/10.1007/978-3-319-22360-5_7",
+   "mag": "1469711373"
+  },
+  "updated_date": "2026-11-15T12:55:33.944570"
+ },
+ {
+  "id": "https://openalex.org/W185336034",
+  "doi": null,
+  "title": "Geometrical OL-Systems Coming from Tilings of the Plane.",
+  "publication_year": 1993,
+  "publication_date": "1993-01-01",
+  "type": "article",
+  "language": "en",
+  "authorships": [
+   {
+    "author_position": "first",
+    "author": {
+     "id": "https://openalex.org/A5075743248",
+     "display_name": "Philippe Narbel",
+     "orcid": null,
+     "observed_orcids": []
+    },
+    "institutions": [],
+    "countries": [],
+    "is_corresponding": true,
+    "raw_author_name": "Philippe Narbel",
+    "raw_affiliation_strings": [],
+    "raw_orcid": null,
+    "affiliations": []
+   }
+  ],
+  "referenced_works": [],
+  "referenced_works_count": 0,
+  "cited_by_count": 1,
+  "counts_by_year": [],
+  "topics": [
+   {
+    "id": "https://openalex.org/T11567",
+    "display_name": "semigroups and automata theory",
+    "score": 0.9916999936103821,
+    "subfield": {
+     "id": "https://openalex.org/subfields/1703",
+     "display_name": "Computational Theory and Mathematics"
+    },
+    "field": {
+     "id": "https://openalex.org/fields/17",
+     "display_name": "Computer Science"
+    },
+    "domain": {
+     "id": "https://openalex.org/domains/3",
+     "display_name": "Physical Sciences"
+    }
+   },
+   {
+    "id": "https://openalex.org/T12504",
+    "display_name": "Mathematics and Applications",
+    "score": 0.0007999999797903001,
+    "subfield": {
+     "id": "https://openalex.org/subfields/2608",
+     "display_name": "Geometry and Topology"
+    },
+    "field": {
+     "id": "https://openalex.org/fields/26",
+     "display_name": "Mathematics"
+    },
+    "domain": {
+     "id": "https://openalex.org/domains/3",
+     "display_name": "Physical Sciences"
+    }
+   }
+  ],
+  "keywords": [
+   {
+    "id": "https://openalex.org/keywords/formal-languages",
+    "display_name": "formal languages",
+    "score": 0.3720000088214874
+   }
+  ],
+  "abstract_inverted_index": null,
+  "open_access": {
+   "is_oa": false,
+   "oa_status": "closed",
+   "oa_url": null,
+   "any_repository_has_fulltext": false
+  },
+  "primary_location": {
+   "id": "mag:185336034",
+   "doi": null,
+   "is_oa": false,
+   "landing_page_url": "https://dblp.uni-trier.de/db/conf/dlt/dlt1993.html#Narbel93",
+   "pdf_url": null,
+   "source": {
+    "id": "https://openalex.org/S4306418189",
+    "display_name": "Developments in Language Theory",
+    "issn_l": null,
+    "issn": null,
+    "is_oa": false,
+    "is_in_doaj": false,
+    "is_core": false,
+    "listed_in": [],
+    "host_organization": null,
+    "host_organization_name": null,
+    "host_organization_lineage": [],
+    "host_organization_lineage_names": [],
+    "type": "conference"
+   },
+   "license": null,
+   "license_id": null,
+   "version": null,
+   "is_accepted": false,
+   "is_published": false,
+   "raw_source_name": "Developments in Language Theory",
+   "raw_type": null
+  },
+  "biblio": {
+   "volume": null,
+   "issue": null,
+   "first_page": "237",
+   "last_page": "249"
+  },
+  "updated_date": "2026-11-14T11:04:58.165337"
+ }
+]
