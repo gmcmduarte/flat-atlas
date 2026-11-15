@@ -37,7 +37,7 @@ Order rule: sessions run in order inside a phase. Phase 2 and the first four ses
 
 | ID | Session | Tool / model | Acceptance criteria |
 |---|---|---|---|
-| P1-01 | DBLP harvest + parse: editions, papers, authors with PIDs | CC / S ⏳ | All editions of the three venues in `stg_dblp_*`; paper counts per edition equal DBLP's table of contents (front matter flagged); parser tests on fixtures |
+| P1-01 | DBLP parse from the dump (the API is blocked, D-49): editions, papers, authors with PIDs | CC / S ⏳ | All editions of the three venues in `stg_dblp_*`; paper counts per edition equal DBLP's table of contents (front matter flagged); parser tests on fixtures |
 | P1-02 | OpenAlex + Crossref enrichment; **coverage report** | CC / S ⏳ | ≥ 95 % of DBLP papers with a DOI matched in OpenAlex; references, counts by year, affiliations, topics parsed; `reports/coverage-pilot.md` gives abstract/affiliation/reference coverage per venue and decade; daily budget never exceeded |
 | P1-03 | Semantic Scholar enrichment + embeddings (S2 vectors, local SPECTER2 fallback) | CC / S ⏳ | Every pilot work has a 768-d vector with its source recorded; local and S2 vectors for a 50-paper sample have mean cosine ≥ 0.9 (or the difference is explained and recorded); abstracts merged by priority into `local_abstract` |
 | P1-04 | Entity resolution + core tables + data-quality tests | CC / S | `core_*` tables as in PLAN §4; conference/journal merges produced with confidence; authors anchored on DBLP PIDs; `tests/data_quality` pass; a report lists 30 sampled merges and all uncertain cases |
@@ -86,7 +86,7 @@ Order rule: sessions run in order inside a phase. Phase 2 and the first four ses
 
 | ID | Session | Tool / model | Acceptance criteria |
 |---|---|---|---|
-| P4-01 | Bulk loaders + orchestrator: DBLP XML dump parser, large-batch OpenAlex/S2 paths, `flatatlas run` with per-stage state, `flatatlas status` | CC / S | DBLP dump parsed in streaming mode within 4 GB RAM; results equal the API path on the pilot venues; an interrupted `run` resumes at the failed stage; status shows progress and ETA |
+| P4-01 | Bulk loaders + orchestrator: DBLP XML dump parser, large-batch OpenAlex/S2 paths, `flatatlas run` with per-stage state, `flatatlas status` | CC / S | DBLP dump parsed in streaming mode for all configured streams within 4 GB RAM, with incremental refresh; results for the pilot venues unchanged from P1-01; an interrupted `run` resumes at the failed stage; status shows progress and ETA |
 | P4-02 | ⏳ Full harvest: all Tier A and Tier B venues, stub collection, two expansion rounds; scope report | CC / S | All configured venues harvested; scope applied; counts per venue and status in `reports/scope-full.md`; raw cache size and API spend recorded; no source blocked us (no sustained 429s) |
 | P4-03 | Entity resolution at scale: authors outside DBLP, version merging quality, venue successions | CC / **O** | Merge precision ≥ 95 % on a 100-pair sample judged by Opus with reasons; no two DBLP PIDs merged; provisional authors flagged; uncertain-case report produced |
 | P4-04 | 👤 Taxonomy v2 on the full corpus: proposals for new areas (ω-automata, weighted, natural computing, inference, trees/graphs/pictures), your review (2–3 h) | CC / **O** | `topics.yaml` v2 with 400–900 topics, still 15–25 at level 0; reviewed fields untouched unless you changed them; anchors extended to ≥ 150 covering every level-0 topic |

@@ -4,12 +4,24 @@ Each pipeline stage owns one command group; later sessions register their comman
 Names in ``PLAIN_COMMANDS`` are single commands instead of groups.
 """
 
+from pathlib import Path
 from typing import Annotated
 
 import typer
 import yaml
 
 from flatatlas import __version__
+from flatatlas.dblp_dump import (
+    DTD_FILE,
+    DUMP_FILE,
+    INDEX_FILE,
+    DumpError,
+    build_stream_index,
+    edition_summary,
+    read_index,
+    verify_checksum,
+    write_index,
+)
 from flatatlas.log import setup_logging
 from flatatlas.settings import load_settings
 from flatatlas.status import render_status
@@ -122,6 +134,74 @@ def venues_show(venue_id: Annotated[str, typer.Argument(help="Venue id, e.g. dlt
     typer.echo(yaml.safe_dump(venue.model_dump(mode="json"), sort_keys=False, allow_unicode=True))
     predecessors = registry.predecessors(venue_id)
     typer.echo(f"predecessors: {', '.join(predecessors) if predecessors else '(none)'}")
-    # The DBLP edition count is not wired up yet: DBLP serves a bot challenge to automated
-    # clients (docs/notes/venues-pilot.md), so there is nothing verified to count against.
-    typer.echo("DBLP editions: not checked (DBLP access pending, see docs/notes/venues-pilot.md)")
+    typer.echo(_dblp_line(venue, load_settings().paths.raw / "dblp-dump" / INDEX_FILE))
+
+
+def _dblp_line(venue, index_path) -> str:
+    index = read_index(index_path)
+    if index is None or not venue.dblp_stream:
+        why = "no dblp_stream" if not venue.dblp_stream else "no index yet"
+        return f"DBLP editions: unknown ({why}; run `flatatlas venues scan-dump`)"
+    summary = edition_summary(
+        index, venue.dblp_stream, first_year=venue.first_year, last_year=venue.last_year
+    )
+    if summary is None:
+        return (
+            f"DBLP editions: unknown (stream {venue.dblp_stream} is not in the index; "
+            "run `flatatlas venues scan-dump`)"
+        )
+    span = f"{summary['first_year']} to {summary['last_year']}"
+    gaps = (
+        f"; no edition in {', '.join(map(str, summary['missing_years']))}"
+        if summary["missing_years"]
+        else ""
+    )
+    return (
+        f"DBLP editions: {summary['n_editions']} ({span}; {summary['n_with_proceedings_record']} "
+        f"with a proceedings record; {summary['n_papers']} papers{gaps}) "
+        f"[stream {venue.dblp_stream}, dump {index['dump_md5'][:8]}, indexed {index['built_at']}]"
+    )
+
+
+@groups["venues"].command("scan-dump")
+def venues_scan_dump(
+    dump_dir: Annotated[
+        Path | None,
+        typer.Option(help="Folder with dblp.xml.gz and dblp.dtd (default: <data>/raw/dblp-dump)."),
+    ] = None,
+) -> None:
+    """Index the DBLP dump for every venue stream (about two minutes, no network)."""
+    settings = load_settings()
+    setup_logging(None)
+    folder = dump_dir or settings.paths.raw / "dblp-dump"
+    dump, dtd = folder / DUMP_FILE, folder / DTD_FILE
+    for needed in (dump, dtd):
+        if not needed.exists():
+            typer.echo(f"error: {needed} not found; see docs/notes/venues-pilot.md", err=True)
+            raise typer.Exit(1)
+    streams = sorted({v.dblp_stream for v in load_venues() if v.dblp_stream})
+    try:
+        md5 = verify_checksum(dump)
+        has_md5_file = dump.with_name(dump.name + ".md5").exists()
+        checked = "matches the .md5 file" if has_md5_file else "no .md5 file to compare"
+        typer.echo(f"{dump.name}: MD5 {md5} ({checked})")
+        typer.echo(f"streams: {', '.join(streams)}")
+        index = build_stream_index(
+            dump,
+            dtd,
+            streams,
+            progress=lambda n: (
+                typer.echo(f"  {n:,} records read", err=True) if n % 2_000_000 == 0 else None
+            ),
+        )
+    except DumpError as exc:
+        typer.echo(f"error: {exc}", err=True)
+        raise typer.Exit(1) from None
+    path = write_index(index, folder / INDEX_FILE)
+    typer.echo(f"wrote {path}")
+    for stream, info in index["streams"].items():
+        summary = edition_summary(index, stream)
+        typer.echo(
+            f"  {stream}: {summary['n_editions']} editions, {info['n_records']} records, "
+            f"{summary['first_year']} to {summary['last_year']}"
+        )

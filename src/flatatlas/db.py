@@ -84,6 +84,18 @@ def write_parquet_atomic(table: pa.Table, path: Path) -> Path:
     return path
 
 
+def write_text_atomic(path: Path, text: str) -> Path:
+    """Write a text file via a temp file and a rename."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = _tmp_beside(path)
+    try:
+        tmp.write_text(text, encoding="utf-8")
+        os.replace(tmp, path)
+    finally:
+        tmp.unlink(missing_ok=True)
+    return path
+
+
 def write_query_parquet_atomic(con: duckdb.DuckDBPyConnection, query: str, path: Path) -> Path:
     """Same as ``write_parquet_atomic`` but for the result of a DuckDB query."""
     path.parent.mkdir(parents=True, exist_ok=True)

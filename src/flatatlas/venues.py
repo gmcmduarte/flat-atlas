@@ -155,6 +155,24 @@ def find_problems(venues: list[Venue]) -> list[str]:
                 f"{venue.id}: verified.openalex is set but openalex_source_ids is empty"
             )
 
+    # Two venues may share one DBLP stream (WIA and CIAA are both conf/wia) only if both state
+    # a year range and the ranges do not overlap: the range decides which editions are whose.
+    by_stream: dict[str, list[Venue]] = {}
+    for venue in venues:
+        if venue.dblp_stream:
+            by_stream.setdefault(venue.dblp_stream, []).append(venue)
+    for stream, sharing in by_stream.items():
+        if len(sharing) < 2:
+            continue
+        names = ", ".join(v.id for v in sharing)
+        if any(v.first_year is None for v in sharing):
+            problems.append(f"{stream} is shared by {names}: each needs first_year")
+            continue
+        spans = sorted((v.first_year or 0, v.last_year or 9999, v.id) for v in sharing)
+        for (_, end, a), (start, _, b) in zip(spans, spans[1:], strict=False):
+            if start <= end:
+                problems.append(f"{stream}: year ranges of {a} and {b} overlap")
+
     # Cycles in successor_of: depth-first search; a node met again while still on the path closes
     # a cycle.
     edges = {v.id: [t for t in v.successor_of if t in known and t != v.id] for v in venues}

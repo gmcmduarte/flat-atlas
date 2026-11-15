@@ -104,7 +104,7 @@ Checked on 2026-11-15. Re-check limits in the first session that uses each sourc
 
 | Source | Role | Access and limits | Bulk option | Licence | Abstracts |
 |---|---|---|---|---|---|
-| **DBLP** | Backbone: venues, volumes, papers, author IDs (PIDs) | Open API, no key. Rate-limited: HTTP 429 with empty body when exceeded; exact numbers not published. Use ≤ 1 request/s and honour `Retry-After`. Also a public SPARQL endpoint (`sparql.dblp.org`). | `dblp.xml.gz` updated daily; monthly persistent releases since 2015; RDF dump (N-Triples/Turtle). About 1 GB compressed ⚠ size unverified. | **CC0 1.0** | None |
+| **DBLP** | Backbone: venues, volumes, papers, author IDs (PIDs) | Open API, no key; rate-limited (429 with empty body). **Since 2026-11-15 the API and both mirrors answer scripts with a bot challenge (HTTP 202, Anubis); it is not bypassed (D-49). DBLP data therefore comes from the XML dump (below).** Also a public SPARQL endpoint (`sparql.dblp.org`), not checked. | `dblp.xml.gz` (+ `dblp.dtd`, `.md5`) downloaded by hand into `data/raw/dblp-dump/`; 1.12 GB compressed, 128 M lines, 13.1 M records; read as a stream by `flatatlas.dblp_dump` (about 100 s for a full pass). Updated daily; monthly persistent releases since 2015; RDF dump. | **CC0 1.0** | None |
 | **OpenAlex** | Citations, references, affiliations, countries, topics, keywords, abstracts (partial) | **Free API key required** since Feb 2026. Budget **$1/day free**, resets at midnight UTC. Single-record lookups (by ID or DOI) are free. List/filter calls cost $0.10 per 1,000 calls, so $1 buys 10,000 calls (1,000,000 works at `per_page=100`). Search costs $1 per 1,000 calls. New accounts are paced at $0.10 per 5 minutes at first. Rate limit ⚠ reported as 30 requests/s with key; treat as 10/s. | Free snapshot in S3 bucket `openalex` (`--no-sign-request`), JSONL or Parquet, **about 745 GB compressed**, refreshed **quarterly**. Daily snapshots are paid. | **CC0** | As `abstract_inverted_index`. Missing for many closed-access papers: Springer non-OA removed in 2022, Elsevier reduced since 2024 (secondary sources). |
 | **Semantic Scholar** | SPECTER2 embeddings, citations with "influential" flag, abstracts (partial), TLDRs | Free API key on request; key gives **1 request/s** on all endpoints. Without key: shared anonymous pool, unreliable. `POST /paper/batch` takes many IDs per call (⚠ 500 per call, from memory). | Datasets API (key needed), release `2026-11-10` seen: `papers` (30×1.5 GB), `abstracts` (30×1.8 GB), `citations` (30×8.5 GB), `embeddings-specter_v2` (30×28 GB), `authors`, `tldrs`. Incremental diffs between releases ⚠ unverified. | Data **ODC-BY 1.0** (attribution; cite Kinney et al. 2023). Embeddings **Apache 2.0**. API licence requires "Semantic Scholar" attribution on the site. | In `abstracts` dataset and API; "selected papers" only. Redistribution of abstract text is not clearly granted. |
 | **Crossref** | DOI metadata, reference lists, some abstracts, ISSN/ISBN, publication dates | No key. Polite pool by adding `mailto=`. Since 21 July 2026: polite = **10 requests/s single-record, 3 requests/s list queries**; public = 5 and 1. Limits are per email address. Read the `x-rate-limit-*` headers. | Annual public data file (2026 file released March 2026) ⚠ size unverified, larger than 200 GB. Not needed. | Metadata is treated as facts (no copyright claimed by Crossref); abstracts may be copyrighted by publishers. | Some, in JATS XML. |
@@ -318,14 +318,16 @@ The weights and thresholds live in `config/scope.yaml`. They are tuned without h
 ```
 Adding a venue = adding an entry and running `flatatlas harvest --venue <id>`.
 
-All years, predecessor relations and DBLP keys below are **from memory and ⚠ must be verified against DBLP** in session P0-03 (pilot three) and P2-01 (the rest).
+The pilot three (DLT, CIAA, DCFS) and their predecessors were verified against the DBLP dump in P0-03 (`docs/notes/venues-pilot.md`). Everything else below is **from memory and ⚠ must be verified against DBLP** in P2-01.
+
+**DBLP does not always have one stream per venue name.** CIAA and its predecessor WIA share the stream `conf/wia`; DCFS and its predecessor DCAGRS share `conf/dcfs`. `venues.yaml` therefore lets two venues share a stream when their `first_year`/`last_year` ranges do not overlap (D-50). An edition is a `<proceedings>` record or a `crossref` key cited by papers (every pilot edition has a record; the second rule is a safeguard).
 
 ### 7.1 Core venues (Tier A)
 | Venue | Notes to verify |
 |---|---|
-| DLT | since 1993; LNCS |
-| CIAA | since 2000; successor of WIA (1996–1999) |
-| DCFS | since about 1999 as DCAGRS; DCFS name after merging with FDSR |
+| DLT | **Verified (P0-03):** stream `conf/dlt`; editions 1993 to 2026 (30th), biennial until 1999; World Scientific first, Springer LNCS from 2001. DBLP files a Kyoto colloquium (`conf/dlt/2000`) in the stream. |
+| CIAA | **Verified (P0-03):** DBLP stream is `conf/wia` (there is no `conf/ciaa`); WIA 1996 to 1999 (1st to 4th), CIAA from 2000 (5th) to 2026 (30th), no 2020 edition. |
+| DCFS | **Verified (P0-03):** stream `conf/dcfs`; the 3rd workshop (2001) was still called DCAGRS (DBLP has only that one DCAGRS record; the first two workshops, about 1999 and 2000, are not in DBLP), renamed DCFS from the 4th (2002) to the 27th (2026). No 2024 edition; 2009 and 2010 are only CoRR records in DBLP (`journals/corr`). The earlier "merged with FDSR" is not visible in DBLP. |
 | NCMA | since 2009; recent proceedings in EPTCS |
 | AFL | Hungarian series since the 1970s; recent proceedings in EPTCS |
 | LATA | since 2007; LNCS from 2008 |
@@ -630,10 +632,10 @@ data/        (git-ignored) raw/  warehouse/  releases/  reports/  logs/
 ## 17. Unverified items (check when first used)
 
 1. CORE/ICORE ranks of every venue, and whether the portal offers a CSV export and under which terms (portal returned 403 to automated fetch).
-2. All venue years, predecessor relations and DBLP stream keys in §7 (from memory).
+2. Venue years, predecessor relations and DBLP stream keys in §7 for venues other than DLT, CIAA, DCFS (those three are verified, P0-03).
 3. OpenAlex per-second rate limit with a free key; batch size for `filter=doi:`; availability of `from_updated_date` on the free key; exact no-key allowance.
 4. Semantic Scholar: `POST /paper/batch` size limit (500), the exact field name `embedding.specter_v2`, incremental dataset diffs.
-5. Size of `dblp.xml.gz` and of the Crossref public data file.
+5. Size of the Crossref public data file. (`dblp.xml.gz`: 1.12 GB, measured 2026-11-15.)
 6. zbMATH Open: MSC codes in the API payload; any numeric rate limit.
 7. ACM CCS reuse terms and the exact node list of the FLAT subtree; MSC code wording.
 8. Abstract coverage for DLT/CIAA/DCFS (to be measured in P1-02).

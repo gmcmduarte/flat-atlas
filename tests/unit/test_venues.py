@@ -128,6 +128,43 @@ def test_unverified_lists_missing_sources() -> None:
     assert registry.unverified() == [("b", ["dblp"])]
 
 
+def test_two_venues_may_share_a_dblp_stream_with_disjoint_year_ranges() -> None:
+    registry = parse_venues(
+        [
+            entry("wia", dblp_stream="conf/wia", first_year=1996, last_year=1999),
+            entry("ciaa", dblp_stream="conf/wia", first_year=2000, successor_of=["wia"]),
+        ]
+    )
+    assert len(registry) == 2
+
+
+def test_shared_stream_with_overlapping_ranges_is_reported() -> None:
+    problems = problems_of(
+        [
+            entry("a", dblp_stream="conf/x", first_year=1996, last_year=2001),
+            entry("b", dblp_stream="conf/x", first_year=2001),
+        ]
+    )
+    assert problems == ["conf/x: year ranges of a and b overlap"]
+
+
+def test_shared_stream_needs_a_first_year_on_every_venue() -> None:
+    problems = problems_of(
+        [entry("a", dblp_stream="conf/x"), entry("b", dblp_stream="conf/x", first_year=2000)]
+    )
+    assert problems == ["conf/x is shared by a, b: each needs first_year"]
+
+
+def test_open_ended_range_overlaps_a_later_start() -> None:
+    problems = problems_of(
+        [
+            entry("a", dblp_stream="conf/x", first_year=1990),
+            entry("b", dblp_stream="conf/x", first_year=2000),
+        ]
+    )
+    assert any("overlap" in p for p in problems)
+
+
 # -- the real config ---------------------------------------------------------------------------
 
 

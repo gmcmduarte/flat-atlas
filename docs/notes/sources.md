@@ -5,13 +5,24 @@ evidence. Newest first within each source.
 
 ## DBLP
 
-- **2026-11-15 (P0-03): bot challenge.** `dblp.org`, `dblp.uni-trier.de` and `dblp.dagstuhl.de`
-  answer API requests (`/search/venue/api?...&format=json`) with HTTP 202 and an Anubis
-  proof-of-work page instead of JSON. Not solved on purpose (bypassing bot detection). The
-  client raises `SourceError: dblp: HTTP 202 ...`. Consequence: the DBLP API cannot be used from
-  scripts as things stand; see `venues-pilot.md` for the options. P1-01 depends on the outcome.
-- Rate-limit behaviour could not be observed (no successful call). `requests_per_second: 1.0`
-  in `config/sources.yaml` stays as the conservative value.
+- **2026-11-15 (P0-03): bot challenge on the API.** `dblp.org`, `dblp.uni-trier.de` and
+  `dblp.dagstuhl.de` answer API requests (`/search/venue/api?...&format=json`) with HTTP 202 and
+  an Anubis proof-of-work page instead of JSON. Not solved on purpose (bypassing bot detection).
+  `SourceClient` raises `SourceError: dblp: HTTP 202 ...`. Nothing from the DBLP API is cached.
+  Consequence: DBLP data comes from the XML dump (D-49). The `dblp` entry of `config/sources.yaml`
+  is unused for now.
+- **2026-11-15: the dump.** `dblp.xml.gz` 1,120,092,202 bytes (MD5 `4316d8f5...`), 128,293,598
+  lines, 13,108,712 records, ISO-8859-1 with named entities defined in `dblp.dtd`
+  (65 numeric-character entities, read by regular expression). A full streaming pass through
+  `flatatlas.dblp_dump` takes about 100 s and constant memory. Top-level tags: `article`,
+  `inproceedings`, `proceedings`, `book`, `incollection`, `phdthesis`, `mastersthesis`, `www`,
+  `data` (the DTD also allows `person`; the dump has none). The file is grouped by type, not by venue, and has no release date inside.
+- Record shapes seen: a `proceedings` record has `editor`, `title`, `booktitle`, `publisher`,
+  `year` (publication year), `series`, `volume`, `isbn`, `ee` (the volume DOI) and `url`
+  (`db/conf/dlt/dlt2019.html`); a paper has `author` (name only, homonyms as `Name 0001`, ORCID
+  as an attribute), `title`, `pages`, `year`, `booktitle`, `ee` (DOI), `crossref` (the edition
+  key) and `url`. Author PIDs are not on papers: person records are `<www key="homepages/226/0821">`
+  (PID `226/0821`) with the name variants as `author` children; mapping is for P1-01.
 
 ## OpenAlex
 
