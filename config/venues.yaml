@@ -1,0 +1,98 @@
+# The venue registry (PLAN §7). Adding a venue is an entry here, not a code change.
+# Validate with: uv run flatatlas venues check
+#
+# successor_of   venues this one continues (a rename or a merger): ciaa continues wia.
+# first_year /   the conference years of this venue *inside its DBLP stream*. Two venues may share
+# last_year      one stream (WIA and CIAA are both conf/wia) if their ranges do not overlap; the
+#                range decides which editions belong to which venue.
+# verified       date each source was checked for this entry. null = from memory, do not harvest.
+#                  dblp      dblp_stream, first_year, last_year, successor_of: checked against the
+#                            DBLP XML dump (the DBLP API is behind a bot challenge, D-49)
+#                  openalex  openalex_source_ids
+#                Evidence: docs/notes/venues-pilot.md.
+# openalex_source_ids  OpenAlex files LNCS proceedings under the book series (S106296714), not the
+#                conference, so these lists are short and DBLP defines membership (PLAN §8.4).
+
+- id: dlt
+  acronym: DLT
+  name: Developments in Language Theory
+  kind: conference
+  tier: core
+  dblp_stream: conf/dlt
+  openalex_source_ids: [S4306418189]
+  publisher: Springer
+  first_year: 1993
+  successor_of: []
+  verified: {dblp: 2026-11-15, openalex: 2026-11-15}
+  notes: >
+    Editions 1993 to 2026 (30th); biennial until 1999. Early volumes were World Scientific, 2001 on Springer LNCS.
+    DBLP files conf/dlt/2000 (the Kyoto colloquium "Words, Languages and Combinatorics III")
+    in this stream; it is not a DLT edition. Proceedings of conf/dlt/2025 and 2026 both carry
+    publication year 2026. In OpenAlex the conference source holds only a small, partly
+    duplicated subset; the DOI-bearing papers sit under the LNCS series source.
+
+- id: wia
+  acronym: WIA
+  name: Workshop on Implementing Automata
+  kind: conference
+  tier: core
+  dblp_stream: conf/wia
+  openalex_source_ids: []          # no OpenAlex source found by name search on 2026-11-15
+  publisher: Springer
+  first_year: 1996
+  last_year: 1999
+  successor_of: []
+  verified: {dblp: 2026-11-15, openalex: null}
+  notes: >
+    The 1st to 4th workshops (London ON 1996 and 1997, Rouen 1998, Potsdam 1999). DBLP keeps
+    them in the same stream as CIAA (conf/wia).
+
+- id: ciaa
+  acronym: CIAA
+  name: International Conference on Implementation and Application of Automata
+  kind: conference
+  tier: core
+  dblp_stream: conf/wia            # sic: DBLP has no conf/ciaa; CIAA continues the WIA stream
+  openalex_source_ids: [S4306419526]
+  publisher: Springer
+  first_year: 2000                 # the 5th meeting, in London ON; 30th is CIAA 2026
+  successor_of: [wia]
+  verified: {dblp: 2026-11-15, openalex: 2026-11-15}
+  notes: >
+    No edition in 2020 (24th in 2019, 25th in 2021). The OpenAlex source holds only 2002 papers
+    from the ACM Digital Library; the LNCS volumes are under the LNCS series source.
+
+- id: dcagrs
+  acronym: DCAGRS
+  name: Descriptional Complexity of Automata, Grammars and Related Structures
+  kind: conference
+  tier: core
+  dblp_stream: conf/dcfs
+  openalex_source_ids: []          # no OpenAlex source found by name search on 2026-11-15
+  first_year: 2001                 # first edition in DBLP; the series itself started earlier
+  last_year: 2001
+  successor_of: []
+  verified: {dblp: 2026-11-15, openalex: null}
+  notes: >
+    DBLP has one record for this name: conf/dcfs/2001, "Third International Workshop ... DCAGRS
+    2001", Vienna. The first two workshops (about 1999 and 2000) are
+    not in DBLP. The series was renamed DCFS with the 4th workshop in 2002.
+
+- id: dcfs
+  acronym: DCFS
+  name: Descriptional Complexity of Formal Systems
+  kind: conference
+  tier: core
+  dblp_stream: conf/dcfs
+  openalex_source_ids: [S4306507593, S4306418178]
+  publisher: Springer
+  first_year: 2002                 # 4th workshop, London ON; 27th is DCFS 2026
+  successor_of: [dcagrs]
+  verified: {dblp: 2026-11-15, openalex: 2026-11-15}
+  notes: >
+    Gaps in the DBLP stream: no 2009 and 2010 (the 11th and 12th workshops appear in DBLP only
+    as CoRR records, journals/corr/abs-0907-5257 and abs-1008-1270, which looks like the EPTCS
+    proceedings series), and no 2024 (the 25th was in 2023, the 26th in 2025). The publisher
+    field is the host university until 2008 and Springer from 2011. OpenAlex has two sources:
+    S4306507593 (named "DCFS", typed journal, about 110 works from 2001) and S4306418178 (about 4
+    works). FDSR has no stream of its own in DBLP, so it gets no entry.

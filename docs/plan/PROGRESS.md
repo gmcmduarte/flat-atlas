@@ -2,15 +2,15 @@
 
 ## Current state (keep this section under 30 lines)
 - **Phase:** 0 (in progress)
-- **Last merged session:** P0-01 (PR #1)
-- **Next:** review and merge the P0-02 PR, finish `sessions/P0-00-manual-setup.md` (Guilherme), then `P0-03`
+- **Last merged session:** P0-02 (PR #2); P0-03 is in review (PR #3)
+- **Next:** review and merge the P0-03 PR, finish `sessions/P0-00-manual-setup.md` (Guilherme), then `P0-04`; P1-01 now parses the DBLP dump (prompt rewritten)
 - **Live site:** none yet
 - **Latest release:** none
-- **Known problems:** none
-- **Waiting on Guilherme:** the rest of P0-00 (branch protection, secret scanning, Pages source, tmux, pre-commit install; `.env` with the OpenAlex key and contact email now exists; S2 key still empty); review of the P0-02 PR
+- **Known problems:** the DBLP API is behind a bot challenge (HTTP 202, Anubis); DBLP data comes from the dump Guilherme downloads by hand (D-49). Refreshing it is manual.
+- **Waiting on Guilherme:** the rest of P0-00 (branch protection, secret scanning, Pages source, tmux, pre-commit install; S2 key is set in `.env`); review of the P0-03 PR
 
 ## Checklist
-**Phase 0** — [ ] P0-00 · [x] P0-01 · [x] P0-02 · [ ] P0-03 · [ ] P0-04
+**Phase 0** — [ ] P0-00 · [x] P0-01 · [x] P0-02 · [x] P0-03 · [ ] P0-04
 **Phase 1** — [ ] P1-01 · [ ] P1-02 · [ ] P1-03 · [ ] P1-04 · [ ] P1-05 · [ ] P1-06 · [ ] P1-07 · [ ] P1-08 · [ ] P1-09 · [ ] P1-10 · [ ] P1-11 · [ ] P1-12 · [ ] G1
 **Phase 2** — [ ] P2-01 · [ ] P2-02 · [ ] P2-03 · [ ] P2-04 · [ ] G2
 **Phase 3** — [ ] P3-00 · [ ] P3-01 · [ ] P3-02 · [ ] P3-03 · [ ] P3-04 · [ ] P3-05 · [ ] G3
@@ -19,6 +19,18 @@
 **Phase 6** — [ ] P6-01 · [ ] P6-02 · [ ] P6-03 · [ ] G6
 
 ## Log (newest first)
+
+### 2026-11-15 — P0-03 Venue registry and ID registry (branch `s/P0-03-venue-registry`)
+- **Built:** `venues.py` (pydantic model; loader that reports every problem at once: duplicate ids, unknown successors, cycles, bad tier/kind/ID formats, `verified` consistency, shared-stream year ranges; venue facts model; profile cross-check), `flatatlas venues check | show <id> | scan-dump`, `ids.py` (deterministic IDs, `IdRegistry` with `merged_into`, `resolve`, Parquet persistence), `dblp_dump.py` (streaming reader for the DBLP XML dump, stream index), `config/venues.yaml` (DLT, WIA, CIAA, DCAGRS, DCFS, all verified against DBLP and, where a source exists, OpenAlex), `config/venue_facts.yaml` (empty structure), `docs/notes/venues-pilot.md`, `docs/notes/sources.md`, real DBLP fixtures in `tests/fixtures/dblp/` (20 records plus `make_sample.py`). 106 offline tests in total (62 new). Decisions D-46 to D-50. PLAN §3, §7, §7.1 and §17 corrected; P1-01 and P4-01 prompts and their ROADMAP rows rewritten for the dump route.
+- **Not built:** DBLP edition counts for venues outside the pilot (P2-01); the DCFS 2009 and 2010 volumes (only CoRR records in DBLP, see below); a reusable OpenAlex source client (P1-02).
+- **Surprises:** (1) The DBLP API is behind an Anubis bot challenge, not bypassed; Guilherme downloaded the XML dump instead (D-49); full pass about 100 s. (2) **DBLP does not have one stream per venue name:** CIAA is in `conf/wia` together with WIA (no `conf/ciaa`), DCAGRS is in `conf/dcfs` together with DCFS; so `venues.yaml` lets two venues share a stream by year range (D-50). (3) A proceedings record's `year` is the publication year; the edition year is the key's. (4) DCFS: no 2009/2010 (CoRR only), no 2024; CIAA: no 2020; DLT: `conf/dlt/2000` is another meeting's volume; the first two DCAGRS workshops and the FDSR merger are not in DBLP. PLAN §7.1 said otherwise or nothing. (5) OpenAlex types DCFS as a "journal"; the conference sources hold few works because LNCS papers sit under the LNCS series. (6) 8-character IDs would have had a ~4% chance of a collision at 300,000 works, so IDs use 10 (D-46); a first `mint_from` promised more than the one-anchor-per-row schema can give (D-47).
+- **Checks:** `uv run pytest` 106 passed; `uv run ruff check .` clean; pre-commit (gitleaks) passes. "Done when": `venues check` passes with warnings only for OpenAlex sources that do not exist (WIA, DCAGRS); the three venues and their predecessors have verified streams, first years and predecessor links (evidence in `venues-pilot.md`); ID tests pass.
+- **Hand-off to P0-04 and P1-01:**
+  - `uv run flatatlas venues check` / `show <id>` / `scan-dump` (writes `data/raw/dblp-dump/stream_index.json`; re-run it after a new dump). Load venues with `flatatlas.venues.load_venues()`; `registry.get(id)`, `.predecessors(id)`, `.unverified()`.
+  - **P1-01 parses the dump, not the API** (prompt rewritten). Use `flatatlas.dblp_dump.iter_records(dump, dtd, key_filter=...)`; split shared streams with each venue's `first_year`/`last_year`; edition year = key year. Author PIDs come from `www` records (`homepages/<PID>`); not yet verified or implemented. **Do not harvest a venue whose `verified.dblp` is null** (D-48).
+  - Open for P1-01: whether to add the DCFS 2009 and 2010 CoRR volumes (`journals/corr/abs-0907-5257`, `abs-1008-1270`; would need extra keys per venue in `venues.yaml`). Ask Guilherme.
+  - IDs: `IdRegistry.load(settings.paths)`, `get_or_mint(kind, source, id)`, `mint_from(kind, {source: id})`, `merge`, `resolve`, `save(settings.paths)`. Venue IDs are not minted yet (resolve stage, P1-04; suggested anchor `("config", venue.id)`).
+  - The dump is 1.1 GB in `data/raw/dblp-dump/` (git-ignored); the Mac has about 22 GB free, so never decompress it.
 
 ### 2026-11-15 — P0-02 Harvest core (branch `s/P0-02-harvest-core`)
 - **Built:** `settings.py` (`.env` + profile + `config/sources.yaml`, data-root paths), `http.py` (`SourceClient`: gzip-JSON disk cache, token bucket, retry/back-off with `Retry-After`, budget guard, keys kept out of logs, errors and cache), `budget.py` (daily ledger), `harvest.py` (`paged()` with resume), `db.py` (DuckDB connection, `ops_*` tables, atomic Parquet writes, `run_log`), `log.py` (redacting logging to stderr and `data/logs/`, `Progress` with ETA), `status.py` and the `flatatlas status` command. Config: `config/sources.yaml`, `config/profiles/pilot.yaml`, `server.yaml`. 44 offline tests (all of the prompt's list, plus a mutation check that the key test fails if httpx logs the URL). Decisions D-39 to D-45.
@@ -54,3 +66,5 @@
 - Per-author topic timeline visualisation.
 - Wikidata / ROR enrichment for institutions.
 - A short dataset paper describing the Atlas.
+- `SourceClient`: report an HTTP 202 HTML body (bot challenge) as "blocked by bot protection" instead of a bare `HTTP 202`.
+- Ask DBLP (dblp@dagstuhl.de) whether an identified polite client could be allow-listed for the API; the dump makes this optional.

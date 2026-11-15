@@ -16,7 +16,7 @@ Then use plan mode: list the steps and the files you will create or change, and 
 Make the pipeline efficient and robust at field scale: bulk input where it beats API calls, and a `run` command that survives interruptions.
 
 ## Build
-- DBLP dump loader: streaming parser for `dblp.xml.gz` with its DTD (lxml iterparse, constant memory), filtered to configured streams, producing the same `stg_dblp_*` tables as the API path. Download with resume and checksum; record the dump date in the manifest.
+- DBLP dump at field scale: P1-01 already parses the dump for the pilot streams (`flatatlas.dblp_dump`, D-49/D-50). Extend it to every configured stream, add incremental refresh (compare the dump's MD5 and each record's `mdate`; new and changed keys only) and measure memory and time on the whole dump. The dump is downloaded by hand (the DBLP API is blocked); document the download steps.
 - OpenAlex at scale: fetch by source ID with cursor paging for journals and by DOI batches for DBLP-defined conference papers; optional snapshot path only if the server disk allows (read Parquet from the public bucket filtered by source IDs with DuckDB `httpfs`; test whether this is practical and record the finding).
 - Semantic Scholar at scale: batch endpoint remains the default; evaluate the Datasets API for citations (download one file, filter to corpus IDs, measure) and document when it is worth using.
 - `flatatlas run --profile P [--from stage] [--to stage] [--incremental]`: stage graph with per-stage state in `ops_run_log`; resumes at the failed stage; lock file to prevent two runs; summary at the end.
