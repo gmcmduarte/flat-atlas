@@ -9,7 +9,7 @@ The Atlas links topics, papers, authors and venues so that researchers and stude
 - see the whole field as a map;
 - compare venues with transparent, side-by-side metrics.
 
-**Status:** planning complete, building not started. See [`docs/plan/PROGRESS.md`](docs/plan/PROGRESS.md).
+**Status:** Phase 0 (foundations) in progress: the project scaffold, CLI and CI exist; no data or site yet. See [`docs/plan/PROGRESS.md`](docs/plan/PROGRESS.md).
 
 ## How it works
 
@@ -26,13 +26,29 @@ The Atlas links topics, papers, authors and venues so that researchers and stude
 | [`docs/plan/DECISIONS.md`](docs/plan/DECISIONS.md) | Decision log |
 | [`docs/plan/RISKS.md`](docs/plan/RISKS.md) | Risks and mitigations |
 
+## Development
+
+Needs [uv](https://docs.astral.sh/uv/); uv installs the pinned Python (3.12) by itself.
+
+```bash
+uv sync                      # create .venv and install the locked dependencies
+uv run flatatlas --help      # the pipeline CLI
+uv run pytest                # tests
+uv run ruff check .          # lint
+uv run ruff format .         # format
+uvx pre-commit install       # once: run the hooks (ruff, gitleaks) on every commit
+uvx pre-commit run --all-files
+```
+
+API keys go in `.env` (git-ignored); copy `.env.example` and fill it in. Never commit real values.
+
 ## Corrections
 
 Found a wrong tag, a missing paper or a duplicated author? Please open an issue.
 
 ## Licence
 
-Code: MIT (see `LICENSE`, added in Phase 0). Data releases: CC BY 4.0, with attribution to the sources. Details in `docs/plan/PLAN.md` §10.
+Code: MIT (see [`LICENSE`](LICENSE)). Data releases: CC BY 4.0, with attribution to the sources. Details in `docs/plan/PLAN.md` §10.
 
 ## Maintainer
 
