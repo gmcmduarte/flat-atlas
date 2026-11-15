@@ -1,0 +1,35 @@
+# secrets
+.env
+.env.*
+!.env.example
+
+# local data and caches (never committed)
+data/
+*.duckdb
+*.duckdb.wal
+
+# python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+dist/
+build/
+*.egg-info/
+
+# node
+node_modules/
+web/.svelte-kit/
+web/build/
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# Claude Code local settings
+.claude/settings.local.json
