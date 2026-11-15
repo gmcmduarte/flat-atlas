@@ -1,0 +1,10 @@
+# Manually sourced facts per venue and year (PLAN §4.2 core_edition, §15.1).
+# Human-edited. Every value needs a source_url; "note" says where in the source it was read.
+#
+# venues:
+#   dlt:
+#     2019:
+#       core_rank:   {value: "B", source_url: "https://portal.core.edu.au/conf-ranks/...", note: "ICORE 2021"}
+#       submissions: {value: 40, source_url: "https://...", note: "Preface, p. v"}
+#       accepted:    {value: 22, source_url: "https://...", note: "Preface, p. v"}
+venues: {}

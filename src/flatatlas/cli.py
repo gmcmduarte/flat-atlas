@@ -7,11 +7,18 @@ Names in ``PLAIN_COMMANDS`` are single commands instead of groups.
 from typing import Annotated
 
 import typer
+import yaml
 
 from flatatlas import __version__
 from flatatlas.log import setup_logging
 from flatatlas.settings import load_settings
 from flatatlas.status import render_status
+from flatatlas.venues import (
+    VenueConfigError,
+    load_venue_facts,
+    load_venues,
+    profile_problems,
+)
 
 COMMAND_GROUPS: dict[str, str] = {
     "harvest": "Fetch raw responses from the sources into the local cache.",
@@ -78,3 +85,43 @@ def status(
     settings = load_settings(profile=profile)
     setup_logging(None)
     typer.echo(render_status(settings))
+
+
+@groups["venues"].command("check")
+def venues_check() -> None:
+    """Validate config/venues.yaml and config/venue_facts.yaml."""
+    try:
+        registry = load_venues()
+        facts = load_venue_facts(registry=registry)
+        problems = profile_problems(registry)
+        if problems:
+            raise VenueConfigError(problems)
+    except VenueConfigError as exc:
+        for problem in exc.problems:
+            typer.echo(f"error: {problem}", err=True)
+        raise typer.Exit(1) from None
+    n_facts = sum(len(years) for years in facts.venues.values())
+    typer.echo(f"OK: {len(registry)} venues, {n_facts} venue-year fact entries")
+    for venue_id, missing in registry.unverified():
+        typer.echo(f"warning: {venue_id}: not verified against {', '.join(missing)}")
+
+
+@groups["venues"].command("show")
+def venues_show(venue_id: Annotated[str, typer.Argument(help="Venue id, e.g. dlt")]) -> None:
+    """Print one venue entry, its predecessors and what is known about its editions."""
+    try:
+        registry = load_venues()
+        venue = registry.get(venue_id)
+    except VenueConfigError as exc:
+        for problem in exc.problems:
+            typer.echo(f"error: {problem}", err=True)
+        raise typer.Exit(1) from None
+    except KeyError as exc:
+        typer.echo(f"error: {exc.args[0]}; known venues: {', '.join(registry.ids())}", err=True)
+        raise typer.Exit(1) from None
+    typer.echo(yaml.safe_dump(venue.model_dump(mode="json"), sort_keys=False, allow_unicode=True))
+    predecessors = registry.predecessors(venue_id)
+    typer.echo(f"predecessors: {', '.join(predecessors) if predecessors else '(none)'}")
+    # The DBLP edition count is not wired up yet: DBLP serves a bot challenge to automated
+    # clients (docs/notes/venues-pilot.md), so there is nothing verified to count against.
+    typer.echo("DBLP editions: not checked (DBLP access pending, see docs/notes/venues-pilot.md)")

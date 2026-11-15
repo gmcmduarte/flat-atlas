@@ -1,0 +1,84 @@
+# The venue registry (PLAN §7). Adding a venue is an entry here, not a code change.
+# Validate with: uv run flatatlas venues check
+#
+# successor_of   venues this one continues (a rename or a merger): ciaa continues wia.
+# verified       date each source was checked for this entry. null = the value is still from
+#                memory and must not be harvested against. Evidence: docs/notes/venues-pilot.md.
+#                  dblp      dblp_stream, first_year, last_year, successor_of
+#                  openalex  openalex_source_ids
+# openalex_source_ids  OpenAlex files LNCS proceedings under the book series (S106296714), not the
+#                conference, so these lists are short and DBLP defines membership (PLAN §8.4).
+
+- id: dlt
+  acronym: DLT
+  name: Developments in Language Theory
+  kind: conference
+  tier: core
+  dblp_stream: conf/dlt            # unverified: DBLP blocks automated access (venues-pilot.md)
+  openalex_source_ids: [S4306418189]
+  publisher: Springer
+  first_year: 1993                 # unverified, from memory
+  successor_of: []
+  verified: {dblp: null, openalex: 2026-11-15}
+  notes: >
+    Proceedings are LNCS, so most papers sit under the LNCS series source in OpenAlex; the
+    conference source holds only a small, partly duplicated subset.
+
+- id: ciaa
+  acronym: CIAA
+  name: International Conference on Implementation and Application of Automata
+  kind: conference
+  tier: core
+  dblp_stream: conf/ciaa           # unverified
+  openalex_source_ids: [S4306419526]
+  publisher: Springer
+  first_year: 2000                 # unverified, from memory
+  successor_of: [wia]
+  verified: {dblp: null, openalex: 2026-11-15}
+  notes: >
+    The OpenAlex source holds only 2002 papers from the ACM Digital Library; the LNCS volumes
+    are under the LNCS series source.
+
+- id: wia
+  acronym: WIA
+  name: Workshop on Implementing Automata
+  kind: conference
+  tier: core
+  dblp_stream: conf/wia            # unverified
+  openalex_source_ids: []          # no OpenAlex source found by name search on 2026-11-15
+  publisher: Springer
+  first_year: 1996                 # unverified, from memory
+  last_year: 1999                  # unverified, from memory
+  successor_of: []
+  verified: {dblp: null, openalex: null}
+  notes: Predecessor of CIAA (PLAN §8.4).
+
+- id: dcfs
+  acronym: DCFS
+  name: Descriptional Complexity of Formal Systems
+  kind: conference
+  tier: core
+  dblp_stream: conf/dcfs           # unverified
+  openalex_source_ids: [S4306507593, S4306418178]
+  publisher: Springer
+  first_year: 2002                 # unverified, from memory (PLAN says "about 1999 as DCAGRS")
+  successor_of: [dcagrs]
+  verified: {dblp: null, openalex: 2026-11-15}
+  notes: >
+    OpenAlex has two sources: S4306507593 (named "DCFS", typed journal, about 110 works from
+    2001) and S4306418178 (about 4 works). Both are kept; the DCFS LNCS volumes are under the
+    LNCS series source. Whether FDSR (merged into DCFS) needs its own entry is open until DBLP
+    can be checked.
+
+- id: dcagrs
+  acronym: DCAGRS
+  name: Descriptional Complexity of Automata, Grammars and Related Structures
+  kind: conference
+  tier: core
+  dblp_stream: conf/dcagrs         # unverified
+  openalex_source_ids: []          # no OpenAlex source found by name search on 2026-11-15
+  first_year: 1999                 # unverified, from memory
+  last_year: 2001                  # unverified, from memory
+  successor_of: []
+  verified: {dblp: null, openalex: null}
+  notes: Predecessor of DCFS (PLAN §7.1).
