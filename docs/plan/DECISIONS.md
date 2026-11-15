@@ -82,3 +82,15 @@ Entries D-01 to D-04 were confirmed by Guilherme on 2026-11-15. The others were 
 **D-33 Phase 3 starts on the Mac with containers**, so the server stage is built and tested before the server exists.
 
 **D-34 Pilot venue order kept as requested (DCFS, DLT, CIAA)** despite expected poor abstract coverage (all three are Springer LNCS). *Reason:* it tests the hardest realistic case for the tagger early; the gate G1 question is exactly whether titles + citations + embeddings suffice.
+
+## Answers to open questions (confirmed by Guilherme, 2026-11-15)
+
+**D-35 Models: Sonnet 5.5 by default, Opus 5.5 where the plan says Fable.** Supersedes the model part of D-31. Fable is no longer available on Guilherme's plan, so the design sessions, gates, re-planning and stubborn bugs go to Opus. `WORKFLOW.md`, `sessions/GATE.md` and the session prompts that name Fable still need this edit (not done in P0-01).
+
+**D-36 The broad core journals are harvested wholesale and filtered after tagging.** Supersedes D-07. Information and Computation, Acta Informatica, Fundamenta Informaticae and Natural Computing are not filtered by the scope rule up front; all their publications are considered, and those that turn out not to belong to FLAT after tagging are dropped. *Reason (Guilherme):* do not lose FLAT papers to an early filter. The mechanism (how "does not belong after tagging" is decided, with confidence and provenance) is designed in P2-01 / P2-02; PLAN §6 and §7 need the matching edit then.
+
+**D-37 Abstracts are shown on the site wherever there is no legal issue.** Supersedes the "never shown" part of D-14. Which sources and licences qualify (for example OpenAlex CC0 abstracts) is settled in P1-10 with RISKS R3 in mind; until then nothing is exported. Redistribution in the dataset stays off unless decided separately.
+
+## Scaffold (P0-01)
+
+**D-38 Packaging and tooling details.** `src/` layout built with hatchling; `requires-python = ">=3.12,<3.13"`; dev tools in a PEP 735 `dev` dependency group (installed by plain `uv sync`). pre-commit is not a project dependency: it runs with `uvx pre-commit`. ruff rules `E, F, W, I, UP, B, SIM`, line length 100. CI runs gitleaks from the official container, pinned to the same version as the pre-commit hook, over the full history. *Alternatives:* setuptools or the uv build backend; `gitleaks-action` (scans only the pushed commits). *Reason:* fewest moving parts, and "nothing in the full history" is checked on every run.
