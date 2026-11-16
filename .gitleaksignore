@@ -1,0 +1,4 @@
+# False positives, one fingerprint per line (gitleaks reports them as commit:file:rule:line).
+# tests/resolve_inputs.py: a synthetic OpenAlex lookup row ("dblp_key", "openalex_id") that the
+# generic-api-key rule takes for a key. There is no secret in it.
+2c480ca9c2b7e663237c1d128b7c61931d389eb4:tests/resolve_inputs.py:generic-api-key:145

@@ -1,0 +1,79 @@
+# Entity resolution settings (PLAN §8). Human-edited; the resolve stage reads this file and
+# nothing else decides a threshold. Change a number here, re-run `flatatlas resolve`, read the
+# report in reports/resolve-<profile>.md.
+#
+# Uncertain cases (report_min <= score < merge_min) are never merged; they are listed in the report.
+
+# --- §8.1 attaching a source record to a DBLP paper --------------------------------------------
+source_match:
+  # A record found by title search is accepted only if all three hold (PLAN §8.1).
+  title_min: 0.93          # title similarity (see title_similarity in resolve/text.py)
+  year_tolerance: 1        # |record year - paper year| <= this
+  first_author_surname: true   # waived (and the confidence capped) when the source gives no authors
+  no_author_confidence_cap: 0.9
+
+# --- §8.2 conference and journal versions of one work -------------------------------------------
+versions:
+  merge_min: 0.85          # score >= this: merge
+  report_min: 0.5          # report_min <= score < merge_min: listed, not merged; below: ignored
+  candidate:
+    shared_authors_min: 1
+    max_year_gap: 6        # later version at most this many years after the earlier one
+    title_min: 0.75        # pairs with less similar titles are not scored: different papers
+  # score = title*w + authors*w + embedding*w + extra*w, each feature in [0, 1];
+  # "extra" is the strongest of: both papers resolve to one external record; and, only when the
+  # two versions are of different kinds (conference paper, journal article), the later cites the
+  # earlier, or the later appears in a special issue of the earlier one's venue.
+  weights:
+    title: 0.45
+    authors: 0.30
+    embedding: 0.15
+    extra: 0.10
+  # embedding feature = clip((cosine - floor) / (1 - floor), 0, 1)
+  embedding_floor: 0.70
+  # Extra feature values.
+  extra_values:
+    same_external_record: 1.0      # both papers carry the same S2 corpus ID or OpenAlex ID
+    external_record_names_other: 0.5   # S2's record for one paper lists the other's DBLP key
+    cites: 1.0
+    special_issue: 1.0
+  # Words that mark a later or shorter version and are not part of the title (case-insensitive,
+  # removed before comparing titles; parenthesised or after a colon or dash at the end).
+  strip_title_markers:
+    - extended abstract
+    - extended version
+    - full version
+    - full paper
+    - journal version
+    - preliminary version
+    - invited talk
+    - invited paper
+    - invited lecture
+    - abstract
+
+# --- §8.3 mapping OpenAlex authors onto DBLP PIDs -----------------------------------------------
+authors:
+  name_match_min: 0.85       # similarity for two names to be taken as the same person on a paper
+  min_papers: 2              # an external ID is linked when this many papers agree ...
+  min_share: 0.8             # ... and this share of its matched papers point to that PID
+  orcid_min_papers: 1        # one paper is enough when the ORCIDs agree
+
+# --- scope (out of scope for P1-04: every pilot paper is Tier A) -------------------------------
+scope:
+  tier_a_status: core
+  tier_a_score: 1.0
+  tier_a_reason: "tier A venue (venues.yaml)"
+
+# --- data-quality thresholds (flatatlas evaluate --data) ------------------------------------------
+quality:
+  # Share of papers that must have a record in each source. For crossref the base is the papers
+  # with a DOI (the only ones it is asked for).
+  min_share_openalex: 0.90
+  min_share_s2: 0.90
+  min_share_crossref_of_doi: 0.95
+  # Uncertain version pairs. These are mostly follow-up papers by the same authors with a similar
+  # title (the pilot has only proceedings). A broken signal gave 460 on a first run; 150 is about
+  # 6 % of the papers, so it catches that without failing on the usual noise.
+  max_uncertain_pairs: 150
+  # Merge-confidence histogram bin edges (informational rows, never fail).
+  histogram_edges: [0.5, 0.6, 0.7, 0.8, 0.85, 0.9, 0.95, 1.0]

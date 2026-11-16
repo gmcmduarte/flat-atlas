@@ -11,7 +11,7 @@ from typing import Annotated
 import typer
 import yaml
 
-from flatatlas import __version__
+from flatatlas import __version__, quality
 from flatatlas import coverage as coverage_report
 from flatatlas.db import connect, run_log, write_text_atomic
 from flatatlas.dblp_dump import (
@@ -29,6 +29,11 @@ from flatatlas.embed import stage as embed_stage
 from flatatlas.embed import store as embed_store
 from flatatlas.http import BudgetExhausted, SourceClient, SourceError
 from flatatlas.log import setup_logging
+from flatatlas.resolve import report as resolve_report
+from flatatlas.resolve import stage as resolve_stage
+from flatatlas.resolve.config import ResolveConfigError, load_resolve_config
+from flatatlas.resolve.inputs import MissingInputs
+from flatatlas.resolve.works import ResolveError
 from flatatlas.settings import PROJECT_ROOT, load_settings
 from flatatlas.sources import crossref as crossref_src
 from flatatlas.sources import dblp as dblp_parse
@@ -68,9 +73,11 @@ app = typer.Typer(
 )
 
 # One sub-app per group. Stage modules add commands with ``@groups["harvest"].command()``.
-# ``embed`` runs when called without a sub-command, so it must not print its help instead.
+# ``embed`` and ``resolve`` run when called without a sub-command, and ``evaluate`` has the
+# ``--data`` flag, so none of them may print its help instead.
+RUNNABLE_GROUPS = {"embed", "resolve", "evaluate"}
 groups: dict[str, typer.Typer] = {
-    name: typer.Typer(name=name, help=help_text, no_args_is_help=name != "embed")
+    name: typer.Typer(name=name, help=help_text, no_args_is_help=name not in RUNNABLE_GROUPS)
     for name, help_text in COMMAND_GROUPS.items()
     if name not in PLAIN_COMMANDS
 }
@@ -742,6 +749,94 @@ def embed_compare(
     write_text_atomic(path, text)
     typer.echo(text)
     typer.echo(f"wrote {path}")
+
+
+@groups["resolve"].callback(invoke_without_command=True)
+def resolve_run(
+    ctx: typer.Context,
+    out: Annotated[
+        Path | None,
+        typer.Option(help="Report file (default: reports/resolve-<profile>.md in the repo)."),
+    ] = None,
+    profile: ProfileOption = None,
+) -> None:
+    """Resolve the staging tables into the `core_*` tables (PLAN §8) and write the report.
+
+    Needs the staging tables of `parse dblp`, `parse openalex`, `parse crossref` and `parse s2`.
+    Idempotent: IDs come from the registry, so a second run changes nothing.
+    """
+    if ctx.invoked_subcommand is not None:
+        return
+    settings = load_settings(profile=profile)
+    setup_logging(settings.paths.logs)
+    try:
+        cfg = load_resolve_config()
+    except ResolveConfigError as exc:
+        typer.echo(f"error: {exc}", err=True)
+        raise typer.Exit(1) from None
+    con = connect(settings.paths)
+    try:
+        with run_log(con, "resolve") as run:
+            try:
+                result = resolve_stage.run(con, settings.paths, config=cfg)
+            except (MissingInputs, ResolveError) as exc:
+                typer.echo(f"error: {exc}", err=True)
+                raise typer.Exit(1) from None
+            run.counts.update({k: str(v) for k, v in result.resolved.stats.items()})
+    finally:
+        con.close()
+    path = out or PROJECT_ROOT / "reports" / f"resolve-{settings.profile.name}.md"
+    write_text_atomic(
+        path, resolve_report.render(result.resolved, result.inputs, profile=settings.profile.name)
+    )
+    s = result.resolved.stats
+    typer.echo(
+        f"{s['papers']} papers -> {s['works']} works ({s['merged_versions']} versions merged), "
+        f"{s['authors']} authors, {s['citation_edges']} citation edges; "
+        f"{s['pairs_uncertain']} uncertain pairs, {s['ids_minted']} new IDs"
+    )
+    typer.echo(f"wrote {path}")
+    typer.echo("next: flatatlas evaluate --data")
+
+
+@groups["evaluate"].callback(invoke_without_command=True)
+def evaluate_run(
+    ctx: typer.Context,
+    data: Annotated[
+        bool,
+        typer.Option("--data", help="Run the data-quality checks on the core tables."),
+    ] = False,
+    profile: ProfileOption = None,
+) -> None:
+    """Run the automatic quality checks (exit code 1 if one fails)."""
+    if ctx.invoked_subcommand is not None:
+        return
+    if not data:
+        typer.echo(ctx.get_help())
+        raise typer.Exit()
+    settings = load_settings(profile=profile)
+    setup_logging(settings.paths.logs)
+    try:
+        cfg = load_resolve_config()
+    except ResolveConfigError as exc:
+        typer.echo(f"error: {exc}", err=True)
+        raise typer.Exit(1) from None
+    con = connect(settings.paths)
+    try:
+        with run_log(con, "evaluate-data") as run:
+            try:
+                results = quality.run_checks(con, cfg.quality)
+            except LookupError as exc:
+                typer.echo(f"error: {exc}", err=True)
+                raise typer.Exit(1) from None
+            quality.record(con, run.run_id, results, log=typer.echo)
+            failed = [r for r in results if not r.passed]
+            run.counts.update({"checks": str(len(results)), "failed": str(len(failed))})
+    finally:
+        con.close()
+    typer.echo(f"{len(results) - len(failed)} of {len(results)} checks passed")
+    if failed:
+        raise typer.Exit(1)
 
 
 @groups["evaluate"].command("coverage")
