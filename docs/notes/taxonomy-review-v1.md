@@ -9,7 +9,7 @@ raw material for the draft of `taxonomy/topics.yaml` (P1-06) and for your review
 - 348 candidate topics from 2333 works (302 from mined phrases, 46 from clusters no phrase covers).
 - 17 roots (no parent). Levels: level 0: 17, level 1: 183, level 2: 110, level 3: 33, level 4: 5.
 - Parents: 250 topics have a parent backed by evidence, 81 a soft parent (containment only).
-- 12 topics matched an MSC or CCS entry by name; 4 seed entries matched no topic (listed below).
+- 30 topics matched an MSC or CCS entry by name; 7 seed entries matched no topic (listed below).
 - Settings hash `7933e436c3` (`config/taxonomy.yaml`).
 - `taxonomy check` on the proposal: passes.
 
@@ -27,13 +27,16 @@ with the phrase in the title (clusters: the five closest to the cluster centre).
 - MSC 68Q07: Biologically inspired models: membrane computing, DNA computing, L systems
 - MSC 68Q85: Models and methods for concurrent and distributed computing
 - MSC 37B10: Symbolic dynamics and subshifts, where they meet languages
+- CCS 10003752.10003753: Models of computation
+- CCS 10003752.10003766.10003767: Formalisms
+- CCS 10003752.10003766.10003770: Automata over infinite objects
 
 ## Topics
 
 - **Automata** `automata` · size 987 · mined · level 0
   - aliases: automaton, automatons, automaton operations
   - parents: none (root)
-  - seeds: OpenAlex T11269 Algorithms and Data Compression (42%)
+  - seeds: CCS 10003752.10003766.10003773 (Automata extensions); CCS 10003752.10003766.10003773.10003775 (Quantitative automata); OpenAlex T11269 Algorithms and Data Compression (42%)
   - example 1: Finding Common Motifs with Gaps Using Finite Automata (CIAA 2006) `WOECMVFNDLE`
   - example 2: State Complexity of Basic Operations on Nondeterministic Finite Automata (CIAA 2002) `WH22LATR6XT`
   - example 3: Descriptional Complexity of Cellular Automata and Decidability Questions (DCAGRS 2001) `WFVBCANRO6B`
@@ -42,7 +45,7 @@ with the phrase in the title (clusters: the five closest to the cluster centre).
   - **Languages** `languages` · size 849 · mined · level 1
     - aliases: language, language operations, language operation, language operators
     - parents: Automata (soft: holds 40% of this topic's works)
-    - seeds: OpenAlex T11269 Algorithms and Data Compression (49%)
+    - seeds: CCS 10003752.10003766.10003772 (Tree languages); CCS 10003752.10003766.10003776 (Regular languages); OpenAlex T11269 Algorithms and Data Compression (49%)
     - example 1: State Complexity of Basic Operations on Finite Languages (WIA 1999) `WQY4YXS5DWY`
     - example 2: Quotient Complexity of Regular Languages (DCFS 2009) `W3X7DOBUVQJ`
     - example 3: Unary Language Operations and Their Nondeterministic State Complexity (DLT 2002) `WCX7SDKVXT3`
@@ -51,7 +54,7 @@ with the phrase in the title (clusters: the five closest to the cluster centre).
     - **Regular languages** `regular-languages` · size 246 · mined · level 2
       - aliases: regular language, regular language operations
       - parents: Languages (score 3.0: head word, co-assignment; P(parent|child) 1.00, P(child|parent) 0.29)
-      - seeds: OpenAlex T11269 Algorithms and Data Compression (65%)
+      - seeds: CCS 10003752.10003766.10003776 (Regular languages); OpenAlex T11269 Algorithms and Data Compression (65%)
       - example 1: Quotient Complexity of Regular Languages (DCFS 2009) `W3X7DOBUVQJ`
       - example 2: In Search of Most Complex Regular Languages (CIAA 2012) `W2QVNU2UZND`
       - example 3: On the State Complexity of the Shuffle of Regular Languages (DCFS 2016) `WJN6GUHJIZF`
@@ -60,7 +63,7 @@ with the phrase in the title (clusters: the five closest to the cluster centre).
       - **Complexity of regular languages** `complexity-of-regular-languages` · size 6 · mined · level 3
         - aliases: complexity of regular language
         - parents: Regular languages (score 3.0: head word, co-assignment; P(parent|child) 1.00, P(child|parent) 0.02)
-        - seeds: OpenAlex T11269 Algorithms and Data Compression (67%)
+        - seeds: CCS 10003752.10003766.10003776 (Regular languages); OpenAlex T11269 Algorithms and Data Compression (67%)
         - example 1: Quotient Complexity of Regular Languages (DCFS 2009) `W3X7DOBUVQJ`
         - example 2: Descriptional Complexity of Regular Languages (Concepts and Open Problems) (DCAGRS 2001) `WOTJ2QPPTCH`
         - example 3: Energy Complexity of Regular Language Recognition (CIAA 2022) `WFNNEZKKI55`
@@ -78,7 +81,7 @@ with the phrase in the title (clusters: the five closest to the cluster centre).
       - **Prefix-free regular languages** `prefix-free-regular-languages` · size 5 · mined · level 3
         - parents: Regular languages (score 3.0: head word, co-assignment; P(parent|child) 1.00, P(child|parent) 0.02); Prefix-free (score 2.5: head word, co-assignment; P(parent|child) 1.00, P(child|parent) 0.31); State complexity (score 2.0: co-assignment; P(parent|child) 0.80, P(child|parent) 0.03)
         - also under: Prefix-free, State complexity
-        - seeds: OpenAlex T11269 Algorithms and Data Compression (100%)
+        - seeds: CCS 10003752.10003766.10003776 (Regular languages); OpenAlex T11269 Algorithms and Data Compression (100%)
         - example 1: Complexity in Prefix-Free Regular Languages (DCFS 2010) `WR2J2247G5K`
         - example 2: State Complexity of Prefix-Free Regular Languages (DCFS 2006) `WXCQWUVSRGD`
         - example 3: State Complexity of k-Union and k-Intersection for Prefix-Free Regular Languages (DCFS 2013) `W7A43LEABEA`
@@ -267,7 +270,7 @@ with the phrase in the title (clusters: the five closest to the cluster centre).
         - example 5: Large Aperiodic Semigroups (CIAA 2014) `WJ6X7U3KI7N`
     - **Context-free** `context-free` · size 168 · mined · level 2
       - parents: Languages (score 2.0: co-assignment; P(parent|child) 0.73, P(child|parent) 0.14)
-      - seeds: OpenAlex T11269 Algorithms and Data Compression (42%)
+      - seeds: CCS 10003752.10003766.10003771 (Grammars and context-free languages); OpenAlex T11269 Algorithms and Data Compression (42%)
       - example 1: Context-Free Insertion-Deletion Systems (DCFS 2003) `WDKPKDQRWBP`
       - example 2: Exponential ambiguity of context-free grammars (DLT 1999) `WE432Z6IM4V`
       - example 3: Descriptional Complexity of Bounded Context-Free Languages (DLT 2007) `W6JF5NWV746`
@@ -276,7 +279,7 @@ with the phrase in the title (clusters: the five closest to the cluster centre).
       - **Context-free languages** `context-free-languages` · size 77 · mined · level 3
         - aliases: context-free language
         - parents: Context-free (score 2.5: head word, co-assignment; P(parent|child) 1.00, P(child|parent) 0.46)
-        - seeds: OpenAlex T11269 Algorithms and Data Compression (53%)
+        - seeds: CCS 10003752.10003766.10003771 (Grammars and context-free languages); OpenAlex T11269 Algorithms and Data Compression (53%)
         - example 1: Descriptional Complexity of Bounded Context-Free Languages (DLT 2007) `W6JF5NWV746`
         - example 2: Finding the Growth Rate of a Regular of Context-Free Language in Polynomial Time (DLT 2008) `WJK4QNCKWJY`
         - example 3: The Inclusion Problem of Context-Free Languages: Some Tractable Cases (DLT 2009) `WT3SJECKEGV`
@@ -285,7 +288,7 @@ with the phrase in the title (clusters: the five closest to the cluster centre).
         - **Deterministic context-free languages** `deterministic-context-free-languages` · size 11 · mined · level 4
           - aliases: deterministic context free language, deterministic context-free language
           - parents: Context-free languages (score 3.0: head word, co-assignment; P(parent|child) 1.00, P(child|parent) 0.14)
-          - seeds: OpenAlex T11269 Algorithms and Data Compression (64%); OpenAlex T12002 Computability, Logic, AI Algorithms (27%)
+          - seeds: CCS 10003752.10003766.10003771 (Grammars and context-free languages); OpenAlex T11269 Algorithms and Data Compression (64%); OpenAlex T12002 Computability, Logic, AI Algorithms (27%)
           - example 1: Some Non-semi-decidability Problems for Linear and Deterministic Context-Free Languages (CIAA 2004) `WAQS3Y6R6HM`
           - example 2: A Structural Lemma for Deterministic Context-Free Languages (DLT 2018) `WEDMK4IH4XC`
           - example 3: Homomorphisms Preserving Deterministic Context-Free Languages (DLT 2012) `WJFAG4AK3VH`
@@ -294,7 +297,7 @@ with the phrase in the title (clusters: the five closest to the cluster centre).
     - **Regular** `regular` · size 77 · cluster · level 2
       - aliases: formal, theory
       - parents: Languages (score 2.0: co-assignment; P(parent|child) 0.77, P(child|parent) 0.07)
-      - seeds: OpenAlex T12002 Computability, Logic, AI Algorithms (29%); OpenAlex T11269 Algorithms and Data Compression (27%)
+      - seeds: CCS 10003752.10003766.10003776 (Regular languages); OpenAlex T12002 Computability, Logic, AI Algorithms (29%); OpenAlex T11269 Algorithms and Data Compression (27%)
       - clusters: g70-c7 (1.00), g30-c14 (1.00), g12-c38 (0.71)
       - example 1: Iteration Conditions of W. Ogden's Type and Applications to Programming Languages (II) (DLT 1993) `WBSQUMWYUK3`
       - example 2: Operational Complexity of Straight Line Programs for Regular Languages (DCFS 2020) `W5NG6D2UMUE`
@@ -349,7 +352,7 @@ with the phrase in the title (clusters: the five closest to the cluster centre).
     - **Formal languages** `formal-languages` · size 52 · mined · level 2
       - aliases: formal language, formal-language, formal language operations, formal language operators
       - parents: Languages (score 3.0: head word, co-assignment; P(parent|child) 1.00, P(child|parent) 0.06)
-      - seeds: MSC 68Q45 (Formal languages and automata: the core classes, operations and decision problems); OpenAlex T11269 Algorithms and Data Compression (38%)
+      - seeds: CCS 10003752.10003766 (Formal languages and automata theory); MSC 68Q45 (Formal languages and automata: the core classes, operations and decision problems); OpenAlex T11269 Algorithms and Data Compression (38%)
       - example 1: Decidability and Shortest Strings in Formal Languages (DCFS 2011) `WS5LUJZTTWR`
       - example 2: Fractals, Dimension, and Formal Languages (DLT 1993) `WABMG5LY4WG`
       - example 3: Closures in Formal Languages and Kuratowski's Theorem (DLT 2009) `WGAPQDFTOOM`
@@ -357,7 +360,7 @@ with the phrase in the title (clusters: the five closest to the cluster centre).
       - example 5: Word Equations, Constraints, and Formal Languages (DLT 2024) `W5OEFNGJY63`
       - **Formal language theory** `formal-language-theory` · size 12 · mined · level 3
         - parents: Formal languages (score 2.5: head word, co-assignment; P(parent|child) 1.00, P(child|parent) 0.23)
-        - seeds: OpenAlex T11567 semigroups and automata theory (33%); OpenAlex T11269 Algorithms and Data Compression (25%)
+        - seeds: CCS 10003752.10003766 (Formal languages and automata theory); CCS 10003752.10003766.10003767.10003768 (Algebraic language theory); OpenAlex T11567 semigroups and automata theory (33%); OpenAlex T11269 Algorithms and Data Compression (25%)
         - example 1: Well Quasi-orders in Formal Language Theory (DLT 2008) `WOQZA6E2AUY`
         - example 2: Numeration Systems: A Link between Number Theory and Formal Language Theory (DLT 2010) `W7FF6LCOG5F`
         - example 3: Communication Complexity Method for Proving Lower Bounds on Descriptional Complexity in Automata and Formal Language Theory (DCFS 2005) `WJTCI7MUKHG`
@@ -477,7 +480,7 @@ with the phrase in the title (clusters: the five closest to the cluster centre).
     - **Tree languages** `tree-languages` · size 23 · mined · level 2
       - aliases: tree language
       - parents: Languages (score 3.0: head word, co-assignment; P(parent|child) 1.00, P(child|parent) 0.03)
-      - seeds: OpenAlex T11269 Algorithms and Data Compression (39%)
+      - seeds: CCS 10003752.10003766.10003772 (Tree languages); OpenAlex T11269 Algorithms and Data Compression (39%)
       - example 1: Learning a Regular Tree Language from a Teacher (DLT 2003) `WYXXMSLZRJU`
       - example 2: State Complexity of Subtree-Free Regular Tree Languages (DCFS 2013) `WMORFOY5GEV`
       - example 3: Tree Languages Recognizable by Regular Frontier Check (DLT 1993) `WCHL2B3FCTI`
@@ -486,7 +489,7 @@ with the phrase in the title (clusters: the five closest to the cluster centre).
       - **Regular tree languages** `regular-tree-languages` · size 11 · mined · level 3
         - aliases: regular tree language
         - parents: Tree languages (score 3.0: head word, co-assignment; P(parent|child) 1.00, P(child|parent) 0.48)
-        - seeds: OpenAlex T11269 Algorithms and Data Compression (55%); OpenAlex T10142 Formal Methods in Verification (27%)
+        - seeds: CCS 10003752.10003766.10003772 (Tree languages); CCS 10003752.10003766.10003776 (Regular languages); OpenAlex T11269 Algorithms and Data Compression (55%); OpenAlex T10142 Formal Methods in Verification (27%)
         - example 1: Learning a Regular Tree Language from a Teacher (DLT 2003) `WYXXMSLZRJU`
         - example 2: State Complexity of Subtree-Free Regular Tree Languages (DCFS 2013) `WMORFOY5GEV`
         - example 3: A Tentative Approach for the Wadge-Wagner Hierarchy of Regular Tree Languages of Index [0, 2] (DCFS 2015) `WKKUIH2FBND`
@@ -494,7 +497,7 @@ with the phrase in the title (clusters: the five closest to the cluster centre).
         - example 5: State Complexity of Regular Tree Languages for Tree Pattern Matching (DCFS 2014) `WV3JET3CHL3`
     - **Language theory** `language-theory` · size 19 · mined · level 2
       - parents: Languages (score 2.5: head word, co-assignment; P(parent|child) 1.00, P(child|parent) 0.02)
-      - seeds: MSC 20M35 (Semigroups used in automata theory, languages and combinatorics)
+      - seeds: CCS 10003752.10003766.10003767.10003768 (Algebraic language theory); CCS 10003752.10003766 (Formal languages and automata theory); MSC 20M35 (Semigroups used in automata theory, languages and combinatorics)
       - example 1: Well Quasi-orders in Formal Language Theory (DLT 2008) `WOQZA6E2AUY`
       - example 2: Numeration Systems: A Link between Number Theory and Formal Language Theory (DLT 2010) `W7FF6LCOG5F`
       - example 3: Can Abstract State Machines Be Useful in Language Theory? (DLT 2006) `WBALOIALKOC`
@@ -1629,7 +1632,7 @@ with the phrase in the title (clusters: the five closest to the cluster centre).
   - **Automata theory** `automata-theory` · size 29 · mined · level 1
     - aliases: automaton-theory
     - parents: Automata (score 2.5: head word, co-assignment; P(parent|child) 1.00, P(child|parent) 0.03)
-    - seeds: MSC 03D05 (Automata and formal grammars viewed through logic and recursion theory); MSC 20M35 (Semigroups used in automata theory, languages and combinatorics); MSC 68Q32 (Learning theory, including grammatical inference and learning of automata); OpenAlex T11567 semigroups and automata theory (31%)
+    - seeds: CCS 10003752.10003766 (Formal languages and automata theory); MSC 03D05 (Automata and formal grammars viewed through logic and recursion theory); MSC 20M35 (Semigroups used in automata theory, languages and combinatorics); MSC 68Q32 (Learning theory, including grammatical inference and learning of automata); OpenAlex T11567 semigroups and automata theory (31%)
     - example 1: Unambiguity in Automata Theory (DCFS 2015) `WBQUX5BPSNA`
     - example 2: How to Settle the ReDoS Problem: Back to the Classical Automata Theory (CIAA 2022) `WRQWKS63XVE`
     - example 3: SEA: A Symbolic Environment for Automata Theory (WIA 1999) `W2LAQ2KMGKZ`
@@ -2527,7 +2530,7 @@ with the phrase in the title (clusters: the five closest to the cluster centre).
   - **Trajectories** `trajectories` · size 21 · cluster · level 1
     - aliases: computability
     - parents: Sequences (score 2.0: co-assignment; P(parent|child) 1.00, P(child|parent) 0.06)
-    - seeds: OpenAlex T11269 Algorithms and Data Compression (33%)
+    - seeds: CCS 10003752.10003753.10003754 (Computability); OpenAlex T11269 Algorithms and Data Compression (33%)
     - clusters: g12-c5 (1.00)
     - example 1: Site-Directed Insertion: Decision Problems, Maximality and Minimality (DCFS 2018) `WC52HFYUSBR`
     - example 2: Schema for Parallel Insertion and Deletion (DLT 2010) `WUO47FIATT7`
@@ -2713,7 +2716,7 @@ with the phrase in the title (clusters: the five closest to the cluster centre).
 
 - **Systems** `systems` · size 272 · cluster · level 0
   - parents: none (root)
-  - seeds: OpenAlex T11269 Algorithms and Data Compression (33%)
+  - seeds: CCS 10003752.10003766.10003767.10003769 (Rewrite systems); OpenAlex T11269 Algorithms and Data Compression (33%)
   - clusters: g70-c8 (1.00), g30-c19 (0.81), g12-c48 (0.58)
   - example 1: State Grammars with Stores (DCFS 2018) `WLVOHSCHHBU`
   - example 2: Valuated and Valence Grammars: An Algebraic View (DLT 2001) `W7UG4PRGMOH`
@@ -2732,7 +2735,7 @@ with the phrase in the title (clusters: the five closest to the cluster centre).
       - aliases: context-free grammar, context free grammar
       - parents: Grammars (score 3.0: head word, co-assignment; P(parent|child) 1.00, P(child|parent) 0.29); Context-free (score 2.5: head word, co-assignment; P(parent|child) 1.00, P(child|parent) 0.35)
       - also under: Context-free
-      - seeds: OpenAlex T11269 Algorithms and Data Compression (34%)
+      - seeds: CCS 10003752.10003766.10003771 (Grammars and context-free languages); OpenAlex T11269 Algorithms and Data Compression (34%)
       - example 1: Exponential ambiguity of context-free grammars (DLT 1999) `WE432Z6IM4V`
       - example 2: On Müller Context-Free Grammars (DLT 2010) `WJF2SNLZAZF`
       - example 3: Synchronization Functions of Synchronized Context-Free Grammars and Languages (DCFS 2005) `WOQAXCOJGAB`
@@ -2927,7 +2930,7 @@ with the phrase in the title (clusters: the five closest to the cluster centre).
 - **Transducers** `transducers` · size 133 · mined · level 0
   - aliases: transducer
   - parents: none (root)
-  - seeds: OpenAlex T11269 Algorithms and Data Compression (33%)
+  - seeds: CCS 10003752.10003766.10003773.10003774 (Transducers); OpenAlex T11269 Algorithms and Data Compression (33%)
   - example 1: OpenFst: A General and Efficient Weighted Finite-State Transducer Library (CIAA 2007) `WJKFIFYQGL6`
   - example 2: A Rational Design for a Weighted Finite-State Transducer Library (WIA 1997) `WZGLGP4E63D`
   - example 3: Multi-Return Macro Tree Transducers (CIAA 2008) `WA7B34WDGDK`
@@ -2954,7 +2957,7 @@ with the phrase in the title (clusters: the five closest to the cluster centre).
   - **Tree transducers** `tree-transducers` · size 28 · mined · level 1
     - aliases: tree transducer
     - parents: Transducers (score 3.0: head word, co-assignment; P(parent|child) 1.00, P(child|parent) 0.21)
-    - seeds: OpenAlex T10126 Logic, programming, and type systems (54%)
+    - seeds: CCS 10003752.10003766.10003773.10003774 (Transducers); OpenAlex T10126 Logic, programming, and type systems (54%)
     - clusters: g12-c30 (0.68)
     - example 1: Multi-Return Macro Tree Transducers (CIAA 2008) `WA7B34WDGDK`
     - example 2: Equivalence of Linear Tree Transducers with Output in the Free Group (DLT 2020) `WAMRQCUPSGH`
@@ -2999,7 +3002,7 @@ with the phrase in the title (clusters: the five closest to the cluster centre).
   - **Finite transducers** `finite-transducers` · size 6 · mined · level 1
     - aliases: finite transducer
     - parents: Transducers (score 3.0: head word, co-assignment; P(parent|child) 1.00, P(child|parent) 0.04)
-    - seeds: OpenAlex T11567 semigroups and automata theory (50%); OpenAlex T11269 Algorithms and Data Compression (33%)
+    - seeds: CCS 10003752.10003766.10003773.10003774 (Transducers); OpenAlex T11567 semigroups and automata theory (50%); OpenAlex T11269 Algorithms and Data Compression (33%)
     - example 1: On Weakly Ambiguous Finite Transducers (DLT 2006) `W655CRPX6WP`
     - example 2: Characterizing the Valuedness of Two-Way Finite Transducers (DLT 2019) `W6WUSJJKMFV`
     - example 3: Counting Equivalent Linear Finite Transducers Using a Canonical Form (CIAA 2014) `WL2GYOG72BK`

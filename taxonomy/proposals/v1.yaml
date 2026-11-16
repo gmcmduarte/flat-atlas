@@ -613,7 +613,9 @@ topics:
   description: ''
   parents: []
   xref:
-    ccs: []
+    ccs:
+    - 10003752.10003766.10003773
+    - 10003752.10003766.10003773.10003775
     msc: []
     openalex:
     - T11269
@@ -634,7 +636,15 @@ topics:
     phrase_keys:
     - automaton
     clusters: []
-    seeds: []
+    seeds:
+    - scheme: ccs
+      id: 10003752.10003766.10003773
+      label: Automata extensions
+      jaccard: 0.5
+    - scheme: ccs
+      id: 10003752.10003766.10003773.10003775
+      label: Quantitative automata
+      jaccard: 0.5
     openalex_topics:
     - id: T11269
       name: Algorithms and Data Compression
@@ -880,7 +890,8 @@ topics:
   parents:
   - automata
   xref:
-    ccs: []
+    ccs:
+    - '10003752.10003766'
     msc:
     - 03D05
     - 20M35
@@ -903,6 +914,10 @@ topics:
     - automaton theory
     clusters: []
     seeds:
+    - scheme: ccs
+      id: '10003752.10003766'
+      label: Formal languages and automata theory
+      jaccard: 0.5
     - scheme: msc
       id: 03D05
       label: Automata and formal grammars viewed through logic and recursion theory
@@ -2707,7 +2722,8 @@ topics:
   parents:
   - regular-languages
   xref:
-    ccs: []
+    ccs:
+    - 10003752.10003766.10003776
     msc: []
     openalex:
     - T11269
@@ -2726,7 +2742,11 @@ topics:
     phrase_keys:
     - complexity of regular language
     clusters: []
-    seeds: []
+    seeds:
+    - scheme: ccs
+      id: 10003752.10003766.10003776
+      label: Regular languages
+      jaccard: 0.5
     openalex_topics:
     - id: T11269
       name: Algorithms and Data Compression
@@ -3286,7 +3306,8 @@ topics:
   parents:
   - languages
   xref:
-    ccs: []
+    ccs:
+    - 10003752.10003766.10003771
     msc: []
     openalex:
     - T11269
@@ -3304,7 +3325,11 @@ topics:
     phrase_keys:
     - context free
     clusters: []
-    seeds: []
+    seeds:
+    - scheme: ccs
+      id: 10003752.10003766.10003771
+      label: Grammars and context-free languages
+      jaccard: 0.5
     openalex_topics:
     - id: T11269
       name: Algorithms and Data Compression
@@ -3338,7 +3363,8 @@ topics:
   - grammars
   - context-free
   xref:
-    ccs: []
+    ccs:
+    - 10003752.10003766.10003771
     msc: []
     openalex:
     - T11269
@@ -3358,7 +3384,11 @@ topics:
     phrase_keys:
     - context free grammar
     clusters: []
-    seeds: []
+    seeds:
+    - scheme: ccs
+      id: 10003752.10003766.10003771
+      label: Grammars and context-free languages
+      jaccard: 0.6
     openalex_topics:
     - id: T11269
       name: Algorithms and Data Compression
@@ -3399,7 +3429,8 @@ topics:
   parents:
   - context-free
   xref:
-    ccs: []
+    ccs:
+    - 10003752.10003766.10003771
     msc: []
     openalex:
     - T11269
@@ -3418,7 +3449,11 @@ topics:
     phrase_keys:
     - context free language
     clusters: []
-    seeds: []
+    seeds:
+    - scheme: ccs
+      id: 10003752.10003766.10003771
+      label: Grammars and context-free languages
+      jaccard: 0.6
     openalex_topics:
     - id: T11269
       name: Algorithms and Data Compression
@@ -4523,7 +4558,8 @@ topics:
   parents:
   - context-free-languages
   xref:
-    ccs: []
+    ccs:
+    - 10003752.10003766.10003771
     msc: []
     openalex:
     - T11269
@@ -4544,7 +4580,11 @@ topics:
     phrase_keys:
     - deterministic context free language
     clusters: []
-    seeds: []
+    seeds:
+    - scheme: ccs
+      id: 10003752.10003766.10003771
+      label: Grammars and context-free languages
+      jaccard: 0.5
     openalex_topics:
     - id: T11269
       name: Algorithms and Data Compression
@@ -5942,7 +5982,8 @@ topics:
   parents:
   - transducers
   xref:
-    ccs: []
+    ccs:
+    - 10003752.10003766.10003773.10003774
     msc: []
     openalex:
     - T11567
@@ -5962,7 +6003,11 @@ topics:
     phrase_keys:
     - finite transducer
     clusters: []
-    seeds: []
+    seeds:
+    - scheme: ccs
+      id: 10003752.10003766.10003773.10003774
+      label: Transducers
+      jaccard: 0.5
     openalex_topics:
     - id: T11567
       name: semigroups and automata theory
@@ -6217,7 +6262,9 @@ topics:
   parents:
   - formal-languages
   xref:
-    ccs: []
+    ccs:
+    - '10003752.10003766'
+    - 10003752.10003766.10003767.10003768
     msc: []
     openalex:
     - T11567
@@ -6236,7 +6283,15 @@ topics:
     phrase_keys:
     - formal language theory
     clusters: []
-    seeds: []
+    seeds:
+    - scheme: ccs
+      id: '10003752.10003766'
+      label: Formal languages and automata theory
+      jaccard: 0.6
+    - scheme: ccs
+      id: 10003752.10003766.10003767.10003768
+      label: Algebraic language theory
+      jaccard: 0.5
     openalex_topics:
     - id: T11567
       name: semigroups and automata theory
@@ -6276,7 +6331,8 @@ topics:
   parents:
   - languages
   xref:
-    ccs: []
+    ccs:
+    - '10003752.10003766'
     msc:
     - 68Q45
     openalex:
@@ -6300,6 +6356,10 @@ topics:
     - formal language
     clusters: []
     seeds:
+    - scheme: ccs
+      id: '10003752.10003766'
+      label: Formal languages and automata theory
+      jaccard: 0.5
     - scheme: msc
       id: 68Q45
       label: 'Formal languages and automata: the core classes, operations and decision problems'
@@ -8139,7 +8199,9 @@ topics:
   parents:
   - languages
   xref:
-    ccs: []
+    ccs:
+    - '10003752.10003766'
+    - 10003752.10003766.10003767.10003768
     msc:
     - 20M35
     openalex: []
@@ -8158,6 +8220,14 @@ topics:
     - language theory
     clusters: []
     seeds:
+    - scheme: ccs
+      id: 10003752.10003766.10003767.10003768
+      label: Algebraic language theory
+      jaccard: 0.667
+    - scheme: ccs
+      id: '10003752.10003766'
+      label: Formal languages and automata theory
+      jaccard: 0.5
     - scheme: msc
       id: 20M35
       label: Semigroups used in automata theory, languages and combinatorics
@@ -8195,7 +8265,9 @@ topics:
   parents:
   - automata
   xref:
-    ccs: []
+    ccs:
+    - 10003752.10003766.10003772
+    - 10003752.10003766.10003776
     msc: []
     openalex:
     - T11269
@@ -8217,7 +8289,15 @@ topics:
     phrase_keys:
     - language
     clusters: []
-    seeds: []
+    seeds:
+    - scheme: ccs
+      id: 10003752.10003766.10003772
+      label: Tree languages
+      jaccard: 0.5
+    - scheme: ccs
+      id: 10003752.10003766.10003776
+      label: Regular languages
+      jaccard: 0.5
     openalex_topics:
     - id: T11269
       name: Algorithms and Data Compression
@@ -11863,7 +11943,8 @@ topics:
   - prefix-free
   - state-complexity
   xref:
-    ccs: []
+    ccs:
+    - 10003752.10003766.10003776
     msc: []
     openalex:
     - T11269
@@ -11881,7 +11962,11 @@ topics:
     phrase_keys:
     - prefix free regular language
     clusters: []
-    seeds: []
+    seeds:
+    - scheme: ccs
+      id: 10003752.10003766.10003776
+      label: Regular languages
+      jaccard: 0.5
     openalex_topics:
     - id: T11269
       name: Algorithms and Data Compression
@@ -12935,7 +13020,8 @@ topics:
   parents:
   - languages
   xref:
-    ccs: []
+    ccs:
+    - 10003752.10003766.10003776
     msc: []
     openalex:
     - T12002
@@ -12961,7 +13047,11 @@ topics:
       jaccard: 1.0
     - cluster: g12-c38
       jaccard: 0.714
-    seeds: []
+    seeds:
+    - scheme: ccs
+      id: 10003752.10003766.10003776
+      label: Regular languages
+      jaccard: 0.5
     openalex_topics:
     - id: T12002
       name: Computability, Logic, AI Algorithms
@@ -13105,7 +13195,8 @@ topics:
   parents:
   - languages
   xref:
-    ccs: []
+    ccs:
+    - 10003752.10003766.10003776
     msc: []
     openalex:
     - T11269
@@ -13125,7 +13216,11 @@ topics:
     phrase_keys:
     - regular language
     clusters: []
-    seeds: []
+    seeds:
+    - scheme: ccs
+      id: 10003752.10003766.10003776
+      label: Regular languages
+      jaccard: 1.0
     openalex_topics:
     - id: T11269
       name: Algorithms and Data Compression
@@ -13261,7 +13356,9 @@ topics:
   parents:
   - tree-languages
   xref:
-    ccs: []
+    ccs:
+    - 10003752.10003766.10003772
+    - 10003752.10003766.10003776
     msc: []
     openalex:
     - T11269
@@ -13281,7 +13378,15 @@ topics:
     phrase_keys:
     - regular tree language
     clusters: []
-    seeds: []
+    seeds:
+    - scheme: ccs
+      id: 10003752.10003766.10003772
+      label: Tree languages
+      jaccard: 0.667
+    - scheme: ccs
+      id: 10003752.10003766.10003776
+      label: Regular languages
+      jaccard: 0.667
     openalex_topics:
     - id: T11269
       name: Algorithms and Data Compression
@@ -16045,7 +16150,8 @@ topics:
   description: ''
   parents: []
   xref:
-    ccs: []
+    ccs:
+    - 10003752.10003766.10003767.10003769
     msc: []
     openalex:
     - T11269
@@ -16068,7 +16174,11 @@ topics:
       jaccard: 0.809
     - cluster: g12-c48
       jaccard: 0.581
-    seeds: []
+    seeds:
+    - scheme: ccs
+      id: 10003752.10003766.10003767.10003769
+      label: Rewrite systems
+      jaccard: 0.5
     openalex_topics:
     - id: T11269
       name: Algorithms and Data Compression
@@ -16960,7 +17070,8 @@ topics:
   parents:
   - sequences
   xref:
-    ccs: []
+    ccs:
+    - 10003752.10003753.10003754
     msc: []
     openalex:
     - T11269
@@ -16980,7 +17091,11 @@ topics:
     clusters:
     - cluster: g12-c5
       jaccard: 1.0
-    seeds: []
+    seeds:
+    - scheme: ccs
+      id: 10003752.10003753.10003754
+      label: Computability
+      jaccard: 1.0
     openalex_topics:
     - id: T11269
       name: Algorithms and Data Compression
@@ -17011,7 +17126,8 @@ topics:
   description: ''
   parents: []
   xref:
-    ccs: []
+    ccs:
+    - 10003752.10003766.10003773.10003774
     msc: []
     openalex:
     - T11269
@@ -17030,7 +17146,11 @@ topics:
     phrase_keys:
     - transducer
     clusters: []
-    seeds: []
+    seeds:
+    - scheme: ccs
+      id: 10003752.10003766.10003773.10003774
+      label: Transducers
+      jaccard: 1.0
     openalex_topics:
     - id: T11269
       name: Algorithms and Data Compression
@@ -17215,7 +17335,8 @@ topics:
   parents:
   - languages
   xref:
-    ccs: []
+    ccs:
+    - 10003752.10003766.10003772
     msc: []
     openalex:
     - T11269
@@ -17234,7 +17355,11 @@ topics:
     phrase_keys:
     - tree language
     clusters: []
-    seeds: []
+    seeds:
+    - scheme: ccs
+      id: 10003752.10003766.10003772
+      label: Tree languages
+      jaccard: 1.0
     openalex_topics:
     - id: T11269
       name: Algorithms and Data Compression
@@ -17326,7 +17451,8 @@ topics:
   parents:
   - transducers
   xref:
-    ccs: []
+    ccs:
+    - 10003752.10003766.10003773.10003774
     msc: []
     openalex:
     - T10126
@@ -17347,7 +17473,11 @@ topics:
     clusters:
     - cluster: g12-c30
       jaccard: 0.677
-    seeds: []
+    seeds:
+    - scheme: ccs
+      id: 10003752.10003766.10003773.10003774
+      label: Transducers
+      jaccard: 0.5
     openalex_topics:
     - id: T10126
       name: Logic, programming, and type systems

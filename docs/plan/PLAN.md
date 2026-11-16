@@ -748,7 +748,7 @@ data/        (git-ignored) raw/  warehouse/  releases/  reports/  logs/
 4. ~~Semantic Scholar: batch size limit, field name `embedding.specter_v2`~~ (verified in P1-03: 500, `DOI:` prefix only, name confirmed; per-edge `isInfluential` is not available in batch calls). Still open: incremental dataset diffs.
 5. Size of the Crossref public data file. (`dblp.xml.gz`: 1.12 GB, measured 2026-11-15.)
 6. zbMATH Open: MSC codes in the API payload; any numeric rate limit.
-7. ACM CCS: reuse terms read on acm.org (free for educational and research use, ACM keeps the copyright; P1-05) but the SKOS file is still to be downloaded by hand (the site answers 403 to scripts) and the node list of the FLAT subtree checked against it; MSC code wording.
+7. ACM CCS: reuse terms read on acm.org (free for educational and research use, ACM keeps the copyright; P1-05) the SKOS file was downloaded by hand (the site answers 403 to scripts) and the FLAT subtree read from it (13 concepts, `taxonomy/seeds/ccs.yaml`); MSC code wording is still from memory.
 8. ~~Abstract coverage for DLT/CIAA/DCFS~~ measured in P1-02: 6 % of pilot papers have an abstract from OpenAlex, none from Crossref (`reports/coverage-pilot.md`).
 9. Size of the whole field (150,000–300,000 works): estimate. ~~CPU embedding throughput~~ measured in P1-03 (M1: 9 to 19 texts/s with abstracts, 82 to 119 texts/s titles only).
 10. Current Claude plan limits for Opus vs Sonnet (see WORKFLOW.md §2).

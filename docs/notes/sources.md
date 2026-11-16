@@ -71,7 +71,7 @@ evidence. Newest first within each source.
   optimisation), a broad contrast rather than a close one.
 - **ACM CCS download:** `https://dl.acm.org/ccs` answered HTTP 403 to an automated fetch (checked
   2026-11-16), so `flatatlas taxonomy seeds --ccs-file` reads a SKOS file that a person saves from
-  that page (default `data/raw/seeds/acm-ccs.xml`). The ACM page states that the CCS is free to use
+  that page (default `data/raw/seeds/acm-ccs.xml`; done on 2026-11-16: 2,113 concepts, 13 kept). The ACM page states that the CCS is free to use
   for educational and research purposes; ACM keeps the copyright.
 
 ## Semantic Scholar
