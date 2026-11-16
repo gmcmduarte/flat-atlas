@@ -1,8 +1,9 @@
 """Atlas IDs and the ID registry (PLAN §4.1).
 
 An Atlas ID is a one-letter kind prefix plus base32 characters taken from a hash of the *anchor*,
-the ``(source, id)`` pair that first identified the thing: ``W`` works, ``A`` authors, ``V``
-venues, ``E`` editions. The same anchor always gives the same ID. The registry is authoritative:
+the ``(source, id)`` pair that first identified the thing: ``W`` works, ``P`` versions
+(publications), ``A`` authors, ``V`` venues, ``E`` editions. The same anchor always gives the
+same ID. The registry is authoritative:
 
 - an ID is never reused: a merged-away ID stays in the table with ``merged_into`` set;
 - if the hash of a new anchor collides with an existing ID, the new ID takes one more character
@@ -29,9 +30,15 @@ import pyarrow.parquet as pq
 from flatatlas.db import utcnow, write_parquet_atomic
 from flatatlas.settings import Paths
 
-Kind = Literal["work", "author", "venue", "edition"]
+Kind = Literal["work", "version", "author", "venue", "edition"]
 
-PREFIX: dict[str, str] = {"work": "W", "author": "A", "venue": "V", "edition": "E"}
+PREFIX: dict[str, str] = {
+    "work": "W",
+    "version": "P",
+    "author": "A",
+    "venue": "V",
+    "edition": "E",
+}
 KIND_OF_PREFIX = {prefix: kind for kind, prefix in PREFIX.items()}
 
 # 10 base32 characters = 50 bits: about a 4 in 100,000 chance of any collision among 300,000 IDs.

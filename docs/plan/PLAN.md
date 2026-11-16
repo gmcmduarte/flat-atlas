@@ -126,7 +126,7 @@ Logical model. Types are DuckDB/Parquet types; the Postgres serving schema mirro
 All tables live in `data/warehouse/` as Parquet, queried through DuckDB. Naming: `raw_*` (as received), `stg_*` (parsed per source), `core_*` (resolved entities), `tag_*`, `agg_*` (derived).
 
 ### 4.1 Identifiers
-- Atlas IDs are short, opaque and stable: `W…` works, `A…` authors, `V…` venues, `E…` editions, topics use readable slugs (`shuffle-of-words`).
+- Atlas IDs are short, opaque and stable: `W…` works, `P…` versions, `A…` authors, `V…` venues, `E…` editions, topics use readable slugs (`shuffle-of-words`). A work's ID is minted from its earliest version (D-75).
 - `core_id_registry(atlas_id, kind, anchor_source, anchor_id, minted_at, merged_into)` is authoritative. IDs are never reused. A merge sets `merged_into`, and the site redirects.
 - Anchor preference when minting: DBLP key → DOI → OpenAlex ID → Semantic Scholar corpus ID → zbMATH ID.
 - The registry is part of every release, so IDs survive rebuilds.
@@ -160,6 +160,8 @@ All tables live in `data/warehouse/` as Parquet, queried through DuckDB. Naming:
 | url_landing, url_oa | open-access link if any (from OpenAlex) |
 | merge_confidence, merge_method | how it was attached to `work_id` |
 
+**`core_version_match`** (D-78): `version_id`, `source`, `external_id`, `method`, `confidence`, `title_similarity`, `year_diff`, `first_author_agrees`: why each OpenAlex, Semantic Scholar or Crossref record is attached to a version. **`core_version_pair`**: every scored version pair that was not ignored, with its features and verdict.
+
 **`core_author`**: `author_id`, `display_name`, `name_variants[]`, `dblp_pid`, `orcid`, `openalex_ids[]`, `s2_ids[]`, `resolution_confidence`, `resolution_method`.
 
 **`core_authorship`**: `version_id`, `author_id`, `position`, `raw_name`, `affiliation_raw`, `institution_id` (OpenAlex/ROR), `country_code`, `source`.
@@ -174,7 +176,7 @@ All tables live in `data/warehouse/` as Parquet, queried through DuckDB. Naming:
 
 **`core_stub`**: out-of-scope works that in-scope papers cite or are cited by often. Minimal fields (IDs, title, year). They help scope and propagation but have no pages.
 
-**Local-only (never in a release): `local_abstract(work_id, text, source)`** (one row per work and source; priority OpenAlex, Semantic Scholar, Crossref), **`local_embedding(work_id, model, source, vector FLOAT[768], …)`** (exactly one row per work; `source` is `s2` or `local`, S2 wins). Until P1-04 mints work IDs both tables are keyed by `dblp_key` (D-70).
+**Local-only (never in a release): `local_abstract(work_id, text, source)`** (one row per work and source; priority OpenAlex, Semantic Scholar, Crossref), **`local_embedding(work_id, model, source, vector FLOAT[768], …)`** (exactly one row per work; `source` is `s2` or `local`, S2 wins). `local_abstract` and `local_embedding` are keyed by `dblp_key` (one row per paper, D-70); the resolve stage adds `local_work_abstract` and `local_work_embedding`, one row per work (D-78), which later stages read.
 Embeddings are derived data under Apache 2.0 / our own computation and *may* be released as a separate optional file (decision D-14).
 
 ### 4.3 Topics
@@ -366,10 +368,10 @@ Information and Computation is also broad (logic, complexity). Default: **Tier B
 All merges are recorded with `method` and `confidence`. Thresholds live in `config/resolve.yaml`. Uncertain cases (0.5–0.8) are *not* merged; they are listed in a report and can be the subject of community suggestions.
 
 ### 8.1 Cross-source matching of one publication
-Join order: DOI (normalised, lower-case) → DBLP key ↔ S2 `externalIds.DBLP` → OpenAlex ID → fuzzy: `title_norm` similarity ≥ 0.93 (token-set ratio, rapidfuzz) **and** same year ±1 **and** first-author surname match. DBLP wins conflicts on authors and venue; Crossref wins on dates and pages; OpenAlex wins on affiliations.
+Join order: DOI (normalised, lower-case) → DBLP key ↔ S2 `externalIds.DBLP` → OpenAlex ID → fuzzy: `title_norm` similarity ≥ 0.93 (token-sort ratio, rapidfuzz; D-73) **and** same year ±1 **and** first-author surname match. DBLP wins conflicts on authors and venue; Crossref wins on dates and pages; OpenAlex wins on affiliations.
 
 ### 8.2 Conference and journal versions of the same work
-Candidate pairs: share ≥ 1 author (resolved ID), journal year ∈ [conference year, conference year + 6], different venues, one is a proceedings paper.
+Candidate pairs: share ≥ 1 author (resolved ID), later year ∈ [earlier year, earlier year + 6], different editions, title similarity ≥ 0.75 (D-74 changes "different venues" and adds the title floor).
 Score features: title similarity after removing "(extended abstract)", "full version", etc.; author-set Jaccard; SPECTER2 cosine; journal version cites the conference version; journal issue is a known special issue of that conference (config). Merge when score ≥ 0.85; otherwise keep separate. The work's `year` is the earliest version; citations are the union over versions.
 arXiv preprints are attached as versions when OpenAlex/S2 already link them; they are never the primary version.
 
@@ -379,6 +381,7 @@ arXiv preprints are attached as versions when OpenAlex/S2 already link them; the
 - Authors of works **not in DBLP** (older mathematics journals): use OpenAlex author ID if it maps to a PID; else zbMATH author ID; else create a provisional author keyed by normalised name + coauthor overlap, flagged `resolution_confidence < 0.6`.
 - DBLP PIDs that DBLP itself marks as undisambiguated are flagged and excluded from chair tools.
 - Never merge two distinct DBLP PIDs automatically.
+- Status after P1-04 (D-77): OpenAlex IDs are mapped; S2 author IDs are not harvested yet, and provisional authors are not built until a work outside DBLP is in the corpus.
 
 ### 8.4 Venues and renames
 `successor_of` in `venues.yaml` models renames (Information and Control → Information and Computation; EIK → JALC; WIA → CIAA; DCAGRS → DCFS; Mathematical Systems Theory → Theory of Computing Systems; UC/UMC → UCNC). Analytics can show a venue "with predecessors" or alone. External source IDs (several OpenAlex source IDs for one venue are common, especially LNCS volumes) are lists.
