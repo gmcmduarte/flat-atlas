@@ -84,6 +84,18 @@ def write_parquet_atomic(table: pa.Table, path: Path) -> Path:
     return path
 
 
+def replace_table(
+    con: duckdb.DuckDBPyConnection, name: str, table: pa.Table, parquet_path: Path
+) -> Path:
+    """Replace warehouse table ``name`` with ``table`` and write a Parquet copy of it."""
+    con.register("_replace_rows", table)
+    try:
+        con.execute(f"CREATE OR REPLACE TABLE {name} AS SELECT * FROM _replace_rows")
+    finally:
+        con.unregister("_replace_rows")
+    return write_parquet_atomic(table, parquet_path)
+
+
 def write_text_atomic(path: Path, text: str) -> Path:
     """Write a text file via a temp file and a rename."""
     path.parent.mkdir(parents=True, exist_ok=True)

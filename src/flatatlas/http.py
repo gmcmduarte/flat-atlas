@@ -17,7 +17,7 @@ import os
 import re
 import time
 import uuid
-from collections.abc import Callable, Mapping
+from collections.abc import Callable, Iterator, Mapping
 from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 from email.utils import parsedate_to_datetime
@@ -260,6 +260,34 @@ class SourceClient:
             if status in CACHED_MISSING_STATUSES:
                 return self._write_cache(key, method, shown_url, status, None, resp.headers, cost)
             raise SourceError(f"{self.source}: HTTP {status} for {shown_url}")
+
+    def cached(self, path: str, params: Mapping[str, Any] | None = None) -> Response | None:
+        """The cached answer to a GET, or None. Never touches the network (used by parse stages)."""
+        url = self._url(path)
+        pairs = _sorted_params(params)
+        key = self._cache_key("GET", url, pairs, None)
+        shown_url = f"{url}?{urlencode(pairs)}" if pairs else url
+        return self._read_cache(key, shown_url)
+
+    def iter_cached(self, url_prefix: str = "") -> Iterator[Response]:
+        """Every cached answer whose URL starts with ``url_prefix`` (relative to the base URL).
+
+        Order follows the file names, so it is stable but meaningless. Corrupt entries are skipped.
+        """
+        prefix = self._url(url_prefix) if url_prefix else self.cfg.base_url.rstrip("/")
+        for meta_path in sorted(self.cache_dir.glob("??/*.meta.json")):
+            try:
+                meta = json.loads(meta_path.read_text(encoding="utf-8"))
+                if not str(meta["url"]).startswith(prefix):
+                    continue
+                data_path = meta_path.with_name(
+                    meta_path.name.removesuffix(".meta.json") + ".json.gz"
+                )
+                data = json.loads(gzip.decompress(data_path.read_bytes()))
+                fetched_at = datetime.fromisoformat(meta["fetched_at"])
+                yield Response(int(meta["status"]), data, fetched_at, True, str(meta["url"]))
+            except (OSError, ValueError, KeyError, EOFError):
+                continue
 
     def close(self) -> None:
         self._http.close()

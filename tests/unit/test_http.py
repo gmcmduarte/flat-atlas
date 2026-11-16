@@ -312,3 +312,33 @@ def test_only_http_module_imports_httpx():
         if p.name != "http.py" and pattern.search(p.read_text())
     ]
     assert offenders == []
+
+
+# -- read-only cache access (parse stages) ------------------------------------------------------
+
+
+def test_cached_returns_the_stored_answer_without_the_network(settings, clock, httpx_mock):
+    httpx_mock.add_response(json={"hits": 5})
+    c = client("dblp", settings, clock)
+    assert c.cached("search/publ/api", {"q": "automata"}) is None  # nothing stored yet
+    c.get("search/publ/api", {"q": "automata"})
+    hit = c.cached("search/publ/api", {"q": "automata"})
+    assert hit is not None and hit.data == {"hits": 5} and hit.from_cache
+    assert c.cached("search/publ/api", {"q": "other"}) is None
+    assert len(httpx_mock.get_requests()) == 1
+
+
+def test_iter_cached_lists_answers_by_url_prefix_and_keeps_404s(settings, clock, httpx_mock):
+    httpx_mock.add_response(url=f"{DBLP}?q=a", json={"n": 1})
+    httpx_mock.add_response(url="https://dblp.org/search/venue/api?q=b", status_code=404)
+    c = client("dblp", settings, clock)
+    c.get("search/publ/api", {"q": "a"})
+    c.get("search/venue/api", {"q": "b"})
+    everything = list(c.iter_cached())
+    assert sorted(r.status for r in everything) == [200, 404]
+    only_publ = list(c.iter_cached("search/publ"))
+    assert [(r.url, r.data) for r in only_publ] == [(f"{DBLP}?q=a", {"n": 1})]
+    # a corrupt data file is skipped, not fatal
+    for path in (settings.paths.raw / "dblp").rglob("*.json.gz"):
+        path.write_bytes(b"not gzip")
+    assert list(c.iter_cached()) == []

@@ -1,0 +1,1957 @@
+[
+ {
+  "query_title": "Geometrical OL-Systems Coming from Tilings of the Plane",
+  "years": [
+   "1992",
+   "1993",
+   "1994"
+  ],
+  "results": [
+   {
+    "id": "https://openalex.org/W185336034",
+    "doi": null,
+    "title": "Geometrical OL-Systems Coming from Tilings of the Plane.",
+    "publication_year": 1993,
+    "publication_date": "1993-01-01",
+    "type": "article",
+    "language": "en",
+    "authorships": [
+     {
+      "author_position": "first",
+      "author": {
+       "id": "https://openalex.org/A5075743248",
+       "display_name": "Philippe Narbel",
+       "orcid": null,
+       "observed_orcids": []
+      },
+      "institutions": [],
+      "countries": [],
+      "is_corresponding": true,
+      "raw_author_name": "Philippe Narbel",
+      "raw_affiliation_strings": [],
+      "raw_orcid": null,
+      "affiliations": []
+     }
+    ],
+    "referenced_works": [],
+    "referenced_works_count": 0,
+    "cited_by_count": 1,
+    "counts_by_year": [],
+    "topics": [
+     {
+      "id": "https://openalex.org/T11567",
+      "display_name": "semigroups and automata theory",
+      "score": 0.9916999936103821,
+      "subfield": {
+       "id": "https://openalex.org/subfields/1703",
+       "display_name": "Computational Theory and Mathematics"
+      },
+      "field": {
+       "id": "https://openalex.org/fields/17",
+       "display_name": "Computer Science"
+      },
+      "domain": {
+       "id": "https://openalex.org/domains/3",
+       "display_name": "Physical Sciences"
+      }
+     },
+     {
+      "id": "https://openalex.org/T12504",
+      "display_name": "Mathematics and Applications",
+      "score": 0.0007999999797903001,
+      "subfield": {
+       "id": "https://openalex.org/subfields/2608",
+       "display_name": "Geometry and Topology"
+      },
+      "field": {
+       "id": "https://openalex.org/fields/26",
+       "display_name": "Mathematics"
+      },
+      "domain": {
+       "id": "https://openalex.org/domains/3",
+       "display_name": "Physical Sciences"
+      }
+     }
+    ],
+    "keywords": [
+     {
+      "id": "https://openalex.org/keywords/formal-languages",
+      "display_name": "formal languages",
+      "score": 0.3720000088214874
+     }
+    ],
+    "abstract_inverted_index": null,
+    "open_access": {
+     "is_oa": false,
+     "oa_status": "closed",
+     "oa_url": null,
+     "any_repository_has_fulltext": false
+    },
+    "primary_location": {
+     "id": "mag:185336034",
+     "doi": null,
+     "is_oa": false,
+     "landing_page_url": "https://dblp.uni-trier.de/db/conf/dlt/dlt1993.html#Narbel93",
+     "pdf_url": null,
+     "source": {
+      "id": "https://openalex.org/S4306418189",
+      "display_name": "Developments in Language Theory",
+      "issn_l": null,
+      "issn": null,
+      "is_oa": false,
+      "is_in_doaj": false,
+      "is_core": false,
+      "listed_in": [],
+      "host_organization": null,
+      "host_organization_name": null,
+      "host_organization_lineage": [],
+      "host_organization_lineage_names": [],
+      "type": "conference"
+     },
+     "license": null,
+     "license_id": null,
+     "version": null,
+     "is_accepted": false,
+     "is_published": false,
+     "raw_source_name": "Developments in Language Theory",
+     "raw_type": null
+    },
+    "biblio": {
+     "volume": null,
+     "issue": null,
+     "first_page": "237",
+     "last_page": "249"
+    },
+    "updated_date": "2026-11-14T11:04:58.165337"
+   }
+  ]
+ },
+ {
+  "query_title": "State Complexity of Some Operations on Regular Languages",
+  "years": [
+   "2002",
+   "2003",
+   "2004"
+  ],
+  "results": [
+   {
+    "id": "https://openalex.org/W2400280342",
+    "doi": null,
+    "title": "State Complexity of Some Operations on Regular Languages.",
+    "publication_year": 2003,
+    "publication_date": "2003-01-01",
+    "type": "article",
+    "language": "en",
+    "authorships": [
+     {
+      "author_position": "first",
+      "author": {
+       "id": "https://openalex.org/A5012840795",
+       "display_name": "Galina Jirásková",
+       "orcid": "https://orcid.org/0000-0001-9817-8197",
+       "observed_orcids": [
+        "https://orcid.org/0000-0001-9817-8197"
+       ]
+      },
+      "institutions": [],
+      "countries": [],
+      "is_corresponding": true,
+      "raw_author_name": "Galina Jirásková",
+      "raw_affiliation_strings": [],
+      "raw_orcid": "https://orcid.org/0000-0001-9817-8197",
+      "affiliations": []
+     }
+    ],
+    "referenced_works": [],
+    "referenced_works_count": 0,
+    "cited_by_count": 14,
+    "counts_by_year": [
+     {
+      "year": 2014,
+      "cited_by_count": 1
+     }
+    ],
+    "topics": [
+     {
+      "id": "https://openalex.org/T11567",
+      "display_name": "semigroups and automata theory",
+      "score": 1.0,
+      "subfield": {
+       "id": "https://openalex.org/subfields/1703",
+       "display_name": "Computational Theory and Mathematics"
+      },
+      "field": {
+       "id": "https://openalex.org/fields/17",
+       "display_name": "Computer Science"
+      },
+      "domain": {
+       "id": "https://openalex.org/domains/3",
+       "display_name": "Physical Sciences"
+      }
+     },
+     {
+      "id": "https://openalex.org/T11269",
+      "display_name": "Algorithms and Data Compression",
+      "score": 0.0,
+      "subfield": {
+       "id": "https://openalex.org/subfields/2614",
+       "display_name": "Theoretical Computer Science"
+      },
+      "field": {
+       "id": "https://openalex.org/fields/26",
+       "display_name": "Mathematics"
+      },
+      "domain": {
+       "id": "https://openalex.org/domains/3",
+       "display_name": "Physical Sciences"
+      }
+     }
+    ],
+    "keywords": [
+     {
+      "id": "https://openalex.org/keywords/state-complexity",
+      "display_name": "state complexity",
+      "score": 0.9990000128746033
+     },
+     {
+      "id": "https://openalex.org/keywords/regular-languages",
+      "display_name": "regular languages",
+      "score": 0.9950000047683716
+     },
+     {
+      "id": "https://openalex.org/keywords/finite-state-machines",
+      "display_name": "finite automata",
+      "score": 0.7710000276565552
+     }
+    ],
+    "abstract_inverted_index": null,
+    "open_access": {
+     "is_oa": false,
+     "oa_status": "closed",
+     "oa_url": null,
+     "any_repository_has_fulltext": false
+    },
+    "primary_location": {
+     "id": "mag:2400280342",
+     "doi": null,
+     "is_oa": false,
+     "landing_page_url": "https://dblp.uni-trier.de/db/conf/dcfs/dcfs2003.html#Jiraskova03",
+     "pdf_url": null,
+     "source": {
+      "id": "https://openalex.org/S4306507593",
+      "display_name": "DCFS",
+      "issn_l": null,
+      "issn": null,
+      "is_oa": false,
+      "is_in_doaj": false,
+      "is_core": false,
+      "listed_in": [],
+      "host_organization": null,
+      "host_organization_name": null,
+      "host_organization_lineage": [],
+      "host_organization_lineage_names": [],
+      "type": "journal"
+     },
+     "license": null,
+     "license_id": null,
+     "version": null,
+     "is_accepted": false,
+     "is_published": false,
+     "raw_source_name": "DCFS",
+     "raw_type": null
+    },
+    "biblio": {
+     "volume": null,
+     "issue": null,
+     "first_page": "114",
+     "last_page": "125"
+    },
+    "updated_date": "2025-10-10T17:16:08.811792"
+   },
+   {
+    "id": "https://openalex.org/W2050154914",
+    "doi": "https://doi.org/10.1016/j.tcs.2004.04.011",
+    "title": "State complexity of some operations on binary regular languages",
+    "publication_year": 2004,
+    "publication_date": "2004-10-24",
+    "type": "article",
+    "language": "en",
+    "authorships": [
+     {
+      "author_position": "first",
+      "author": {
+       "id": "https://openalex.org/A5012840795",
+       "display_name": "Galina Jirásková",
+       "orcid": "https://orcid.org/0000-0001-9817-8197",
+       "observed_orcids": [
+        "https://orcid.org/0000-0001-9817-8197"
+       ]
+      },
+      "institutions": [
+       {
+        "id": "https://openalex.org/I207624831",
+        "display_name": "Slovak Academy of Sciences",
+        "ror": "https://ror.org/03h7qq074",
+        "country_code": "SK",
+        "type": "government",
+        "lineage": [
+         "https://openalex.org/I207624831"
+        ]
+       },
+       {
+        "id": "https://openalex.org/I4210120676",
+        "display_name": "Mathematical Institute of the Slovak Academy of Sciences",
+        "ror": "https://ror.org/02fhy7464",
+        "country_code": "SK",
+        "type": "facility",
+        "lineage": [
+         "https://openalex.org/I207624831",
+         "https://openalex.org/I4210120676"
+        ]
+       }
+      ],
+      "countries": [
+       "SK"
+      ],
+      "is_corresponding": true,
+      "raw_author_name": "Galina Jirásková",
+      "raw_affiliation_strings": [
+       "Mathematical Institute, Slovak Academy of Sciences, Grešákova 6, 040 01 Košice, Slovakia"
+      ],
+      "raw_orcid": null,
+      "affiliations": [
+       {
+        "raw_affiliation_string": "Mathematical Institute, Slovak Academy of Sciences, Grešákova 6, 040 01 Košice, Slovakia",
+        "institution_ids": [
+         "https://openalex.org/I207624831",
+         "https://openalex.org/I4210120676"
+        ]
+       }
+      ]
+     }
+    ],
+    "referenced_works": [
+     "https://openalex.org/W42926958",
+     "https://openalex.org/W63217226",
+     "https://openalex.org/W127832380",
+     "https://openalex.org/W143525561",
+     "https://openalex.org/W191942163"
+    ],
+    "referenced_works_count": 32,
+    "cited_by_count": 130,
+    "counts_by_year": [
+     {
+      "year": 2026,
+      "cited_by_count": 1
+     },
+     {
+      "year": 2025,
+      "cited_by_count": 5
+     },
+     {
+      "year": 2024,
+      "cited_by_count": 3
+     }
+    ],
+    "topics": [
+     {
+      "id": "https://openalex.org/T11567",
+      "display_name": "semigroups and automata theory",
+      "score": 1.0,
+      "subfield": {
+       "id": "https://openalex.org/subfields/1703",
+       "display_name": "Computational Theory and Mathematics"
+      },
+      "field": {
+       "id": "https://openalex.org/fields/17",
+       "display_name": "Computer Science"
+      },
+      "domain": {
+       "id": "https://openalex.org/domains/3",
+       "display_name": "Physical Sciences"
+      }
+     },
+     {
+      "id": "https://openalex.org/T11269",
+      "display_name": "Algorithms and Data Compression",
+      "score": 0.0,
+      "subfield": {
+       "id": "https://openalex.org/subfields/2614",
+       "display_name": "Theoretical Computer Science"
+      },
+      "field": {
+       "id": "https://openalex.org/fields/26",
+       "display_name": "Mathematics"
+      },
+      "domain": {
+       "id": "https://openalex.org/domains/3",
+       "display_name": "Physical Sciences"
+      }
+     }
+    ],
+    "keywords": [
+     {
+      "id": "https://openalex.org/keywords/state-complexity",
+      "display_name": "state complexity",
+      "score": 1.0
+     },
+     {
+      "id": "https://openalex.org/keywords/deterministic-finite-automata",
+      "display_name": "deterministic finite automata",
+      "score": 0.9319999814033508
+     },
+     {
+      "id": "https://openalex.org/keywords/nondeterministic-finite-automata",
+      "display_name": "nondeterministic finite automata",
+      "score": 0.9980000257492065
+     }
+    ],
+    "abstract_inverted_index": null,
+    "open_access": {
+     "is_oa": true,
+     "oa_status": "bronze",
+     "oa_url": "https://www.sciencedirect.com/science/article/pii/S0304397504006577/pdf",
+     "any_repository_has_fulltext": false
+    },
+    "primary_location": {
+     "id": "doi:10.1016/j.tcs.2004.04.011",
+     "doi": "https://doi.org/10.1016/j.tcs.2004.04.011",
+     "is_oa": true,
+     "landing_page_url": "https://doi.org/10.1016/j.tcs.2004.04.011",
+     "pdf_url": "https://www.sciencedirect.com/science/article/pii/S0304397504006577/pdf",
+     "source": {
+      "id": "https://openalex.org/S90727058",
+      "display_name": "Theoretical Computer Science",
+      "issn_l": "0304-3975",
+      "issn": [
+       "0304-3975",
+       "1879-2294"
+      ],
+      "is_oa": false,
+      "is_in_doaj": false,
+      "is_core": true,
+      "listed_in": [
+       "anvur-class-a",
+       "anvur-scientific",
+       "ccf-b",
+       "cwts-core",
+       "dongbi-c",
+       "jufo-2",
+       "ki-jl-2",
+       "norway-2",
+       "poland-100",
+       "russia-white-list-3",
+       "vabb-shw"
+      ],
+      "host_organization": "https://openalex.org/P4310320990",
+      "host_organization_name": "Elsevier BV",
+      "host_organization_lineage": [
+       "https://openalex.org/P4310320990"
+      ],
+      "host_organization_lineage_names": [
+       "Elsevier BV"
+      ],
+      "type": "journal"
+     },
+     "license": null,
+     "license_id": null,
+     "version": "publishedVersion",
+     "is_accepted": true,
+     "is_published": true,
+     "raw_source_name": "Theoretical Computer Science",
+     "raw_type": "journal-article"
+    },
+    "biblio": {
+     "volume": "330",
+     "issue": "2",
+     "first_page": "287",
+     "last_page": "298"
+    },
+    "updated_date": "2026-11-12T12:28:57.059296"
+   }
+  ]
+ },
+ {
+  "query_title": "On the Representation of Finite Automata",
+  "years": [
+   "2004",
+   "2005",
+   "2006"
+  ],
+  "results": [
+   {
+    "id": "https://openalex.org/W2131616022",
+    "doi": "https://doi.org/10.1109/cdc.2006.377759",
+    "title": "Minimal Representation of Finite Automata for Hybrid Systems Control",
+    "publication_year": 2006,
+    "publication_date": "2006-01-01",
+    "type": "conference-paper",
+    "language": "en",
+    "authorships": [
+     {
+      "author_position": "first",
+      "author": {
+       "id": "https://openalex.org/A5040531473",
+       "display_name": "Koichi Kobayashi",
+       "orcid": "https://orcid.org/0000-0002-3358-0254",
+       "observed_orcids": [
+        "https://orcid.org/0000-0002-3358-0254"
+       ]
+      },
+      "institutions": [
+       {
+        "id": "https://openalex.org/I114531698",
+        "display_name": "Tokyo Institute of Technology",
+        "ror": "https://ror.org/0112mx960",
+        "country_code": "JP",
+        "type": "education",
+        "lineage": [
+         "https://openalex.org/I114531698",
+         "https://openalex.org/I4400009020"
+        ]
+       }
+      ],
+      "countries": [
+       "JP"
+      ],
+      "is_corresponding": false,
+      "raw_author_name": "Koichi Kobayashi",
+      "raw_affiliation_strings": [
+       "Tokyo Institute of Technology, Tokyo, Japan",
+       "Tokyo Institute of Technology; 2-12-1, Oh-okayama, Meguro-ku, Tokyo 152-8552, Japan. k-kobayashi@cyb.mei.titech.ac.jp"
+      ],
+      "raw_orcid": null,
+      "affiliations": [
+       {
+        "raw_affiliation_string": "Tokyo Institute of Technology, Tokyo, Japan",
+        "institution_ids": [
+         "https://openalex.org/I114531698"
+        ]
+       },
+       {
+        "raw_affiliation_string": "Tokyo Institute of Technology; 2-12-1, Oh-okayama, Meguro-ku, Tokyo 152-8552, Japan. k-kobayashi@cyb.mei.titech.ac.jp",
+        "institution_ids": [
+         "https://openalex.org/I114531698"
+        ]
+       }
+      ]
+     },
+     {
+      "author_position": "last",
+      "author": {
+       "id": "https://openalex.org/A5001435105",
+       "display_name": "Jun‐ichi Imura",
+       "orcid": "https://orcid.org/0000-0002-9273-134X",
+       "observed_orcids": [
+        "https://orcid.org/0000-0002-9273-134X"
+       ]
+      },
+      "institutions": [
+       {
+        "id": "https://openalex.org/I114531698",
+        "display_name": "Tokyo Institute of Technology",
+        "ror": "https://ror.org/0112mx960",
+        "country_code": "JP",
+        "type": "education",
+        "lineage": [
+         "https://openalex.org/I114531698",
+         "https://openalex.org/I4400009020"
+        ]
+       }
+      ],
+      "countries": [
+       "JP"
+      ],
+      "is_corresponding": false,
+      "raw_author_name": "Jun-ichi Imura",
+      "raw_affiliation_strings": [
+       "Tokyo Institute of Technology, Tokyo, Japan",
+       "Tokyo Institute of Technology; 2-12-1, Oh-okayama, Meguro-ku, Tokyo 152-8552, Japan. imura@cyb.mei.titech.ac.jp"
+      ],
+      "raw_orcid": null,
+      "affiliations": [
+       {
+        "raw_affiliation_string": "Tokyo Institute of Technology, Tokyo, Japan",
+        "institution_ids": [
+         "https://openalex.org/I114531698"
+        ]
+       },
+       {
+        "raw_affiliation_string": "Tokyo Institute of Technology; 2-12-1, Oh-okayama, Meguro-ku, Tokyo 152-8552, Japan. imura@cyb.mei.titech.ac.jp",
+        "institution_ids": [
+         "https://openalex.org/I114531698"
+        ]
+       }
+      ]
+     }
+    ],
+    "referenced_works": [
+     "https://openalex.org/W1569612250",
+     "https://openalex.org/W1766451190",
+     "https://openalex.org/W1822372655",
+     "https://openalex.org/W1977985274",
+     "https://openalex.org/W2151769777"
+    ],
+    "referenced_works_count": 6,
+    "cited_by_count": 6,
+    "counts_by_year": [],
+    "topics": [
+     {
+      "id": "https://openalex.org/T10791",
+      "display_name": "Advanced Control Systems Optimization",
+      "score": 0.8720999956130981,
+      "subfield": {
+       "id": "https://openalex.org/subfields/2207",
+       "display_name": "Control and Systems Engineering"
+      },
+      "field": {
+       "id": "https://openalex.org/fields/22",
+       "display_name": "Engineering"
+      },
+      "domain": {
+       "id": "https://openalex.org/domains/3",
+       "display_name": "Physical Sciences"
+      }
+     },
+     {
+      "id": "https://openalex.org/T10142",
+      "display_name": "Formal Methods in Verification",
+      "score": 0.07370000332593918,
+      "subfield": {
+       "id": "https://openalex.org/subfields/1703",
+       "display_name": "Computational Theory and Mathematics"
+      },
+      "field": {
+       "id": "https://openalex.org/fields/17",
+       "display_name": "Computer Science"
+      },
+      "domain": {
+       "id": "https://openalex.org/domains/3",
+       "display_name": "Physical Sciences"
+      }
+     }
+    ],
+    "keywords": [
+     {
+      "id": "https://openalex.org/keywords/finite-state-machines",
+      "display_name": "finite automata",
+      "score": 0.9660000205039978
+     },
+     {
+      "id": "https://openalex.org/keywords/minimal-representation",
+      "display_name": "minimal representation",
+      "score": 0.921999990940094
+     },
+     {
+      "id": "https://openalex.org/keywords/hybrid-systems",
+      "display_name": "hybrid systems",
+      "score": 0.7120000123977661
+     }
+    ],
+    "abstract_inverted_index": {
+     "This": [
+      0
+     ],
+     "paper": [
+      1,
+      86
+     ],
+     "discusses": [
+      2
+     ],
+     "a": [
+      3,
+      8,
+      12,
+      37,
+      46,
+      90,
+      93,
+      117,
+      126
+     ],
+     "new": [
+      4
+     ],
+     "approach": [
+      5
+     ],
+     "to": [
+      6,
+      24,
+      88,
+      92
+     ],
+     "representing": [
+      7
+     ],
+     "finite": [
+      9,
+      47,
+      100,
+      127
+     ],
+     "automaton": [
+      10
+     ],
+     "as": [
+      11
+     ],
+     "linear": [
+      13,
+      160
+     ],
+     "state": [
+      14,
+      77,
+      130
+     ],
+     "equation": [
+      15,
+      78,
+      131
+     ],
+     "with": [
+      16
+     ],
+     "the": [
+      17,
+      26,
+      31,
+      66,
+      69,
+      76,
+      82,
+      103,
+      108,
+      134,
+      147,
+      150,
+      153
+     ],
+     "smallest": [
+      18
+     ],
+     "number": [
+      19
+     ],
+     "of": [
+      20,
+      36,
+      39,
+      68,
+      71,
+      84,
+      95,
+      99,
+      124,
+      136,
+      152
+     ],
+     "binary": [
+      21,
+      72,
+      109
+     ],
+     "input": [
+      22,
+      73,
+      154
+     ],
+     "variables": [
+      23,
+      74,
+      155
+     ],
+     "reduce": [
+      25
+     ],
+     "computational": [
+      27
+     ],
+     "time": [
+      28
+     ],
+     "for": [
+      29,
+      44,
+      116,
+      158
+     ],
+     "solving": [
+      30
+     ],
+     "model": [
+      32,
+      121
+     ],
+     "predictive": [
+      33
+     ],
+     "control": [
+      34
+     ],
+     "problem": [
+      35,
+      98
+     ],
+     "class": [
+      38
+     ],
+     "hybrid": [
+      40
+     ],
+     "systems.": [
+      41
+     ],
+     "Our": [
+      42
+     ],
+     "method": [
+      43,
+      143
+     ],
+     "modeling": [
+      45
+     ],
+     "automaton,": [
+      48,
+      128
+     ],
+     "which": [
+      49
+     ],
+     "has": [
+      50
+     ],
+     "been": [
+      51
+     ],
+     "proposed": [
+      52
+     ],
+     "in": [
+      53,
+      75,
+      146
+     ],
+     "our": [
+      54,
+      142
+     ],
+     "previous": [
+      55
+     ],
+     "paper,": [
+      56
+     ],
+     "is": [
+      57,
+      79,
+      87,
+      113,
+      144,
+      156
+     ],
+     "explained": [
+      58
+     ],
+     "at": [
+      59
+     ],
+     "first.": [
+      60
+     ],
+     "Then": [
+      61
+     ],
+     "an": [
+      62
+     ],
+     "open": [
+      63
+     ],
+     "question": [
+      64
+     ],
+     "on": [
+      65,
+      107,
+      122,
+      133,
+      163
+     ],
+     "minimality": [
+      67
+     ],
+     "dimension": [
+      70,
+      151
+     ],
+     "described.": [
+      80
+     ],
+     "Thus": [
+      81
+     ],
+     "purpose": [
+      83
+     ],
+     "this": [
+      85
+     ],
+     "give": [
+      89
+     ],
+     "solution": [
+      91
+     ],
+     "kind": [
+      94
+     ],
+     "minimal": [
+      96,
+      145,
+      157
+     ],
+     "representation": [
+      97,
+      132
+     ],
+     "automata.": [
+      101
+     ],
+     "Using": [
+      102
+     ],
+     "implicit": [
+      104,
+      119
+     ],
+     "system": [
+      105,
+      120
+     ],
+     "expression": [
+      106
+     ],
+     "field": [
+      110,
+      135
+     ],
+     "GF(2)9": [
+      111
+     ],
+     "it": [
+      112
+     ],
+     "proven": [
+      114
+     ],
+     "that,": [
+      115
+     ],
+     "given": [
+      118
+     ],
+     "GF{2)": [
+      123
+     ],
+     "expressing": [
+      125
+     ],
+     "its": [
+      129
+     ],
+     "real": [
+      137
+     ],
+     "numbers": [
+      138
+     ],
+     "R": [
+      139
+     ],
+     "obtained": [
+      140
+     ],
+     "via": [
+      141
+     ],
+     "sense": [
+      148
+     ],
+     "that": [
+      149
+     ],
+     "all": [
+      159
+     ],
+     "equivalence": [
+      161
+     ],
+     "transformations": [
+      162
+     ],
+     "GF(2)": [
+      164
+     ]
+    },
+    "open_access": {
+     "is_oa": false,
+     "oa_status": "closed",
+     "oa_url": null,
+     "any_repository_has_fulltext": false
+    },
+    "primary_location": {
+     "id": "doi:10.1109/cdc.2006.377759",
+     "doi": "https://doi.org/10.1109/cdc.2006.377759",
+     "is_oa": false,
+     "landing_page_url": "https://doi.org/10.1109/cdc.2006.377759",
+     "pdf_url": null,
+     "source": {
+      "id": "https://openalex.org/S4210221977",
+      "display_name": "IEEE Conference on Decision and Control (CDC)",
+      "issn_l": "0191-2216",
+      "issn": [
+       "0191-2216"
+      ],
+      "is_oa": false,
+      "is_in_doaj": false,
+      "is_core": false,
+      "listed_in": [],
+      "host_organization": "https://openalex.org/P4310319808",
+      "host_organization_name": "Institute of Electrical and Electronics Engineers",
+      "host_organization_lineage": [
+       "https://openalex.org/P4310319808"
+      ],
+      "host_organization_lineage_names": [
+       "Institute of Electrical and Electronics Engineers"
+      ],
+      "type": "conference"
+     },
+     "license": null,
+     "license_id": null,
+     "version": "publishedVersion",
+     "is_accepted": true,
+     "is_published": true,
+     "raw_source_name": "Proceedings of the 45th IEEE Conference on Decision and Control",
+     "raw_type": "proceedings-article"
+    },
+    "biblio": {
+     "volume": "35",
+     "issue": null,
+     "first_page": "930",
+     "last_page": "935"
+    },
+    "updated_date": "2026-11-04T10:54:05.112534"
+   },
+   {
+    "id": "https://openalex.org/W205242014",
+    "doi": null,
+    "title": "A Representation Theorem for Languages Accepted by Watson-Crick Finite Automata.",
+    "publication_year": 2004,
+    "publication_date": "2004-01-01",
+    "type": "article",
+    "language": "en",
+    "authorships": [
+     {
+      "author_position": "first",
+      "author": {
+       "id": "https://openalex.org/A5013960593",
+       "display_name": "José M. Sempere",
+       "orcid": "https://orcid.org/0000-0003-2393-9224",
+       "observed_orcids": [
+        "https://orcid.org/0000-0003-2393-9224"
+       ]
+      },
+      "institutions": [],
+      "countries": [],
+      "is_corresponding": true,
+      "raw_author_name": "José M. Sempere",
+      "raw_affiliation_strings": [],
+      "raw_orcid": "https://orcid.org/0000-0003-2393-9224",
+      "affiliations": []
+     }
+    ],
+    "referenced_works": [],
+    "referenced_works_count": 0,
+    "cited_by_count": 12,
+    "counts_by_year": [
+     {
+      "year": 2023,
+      "cited_by_count": 1
+     },
+     {
+      "year": 2021,
+      "cited_by_count": 4
+     }
+    ],
+    "topics": [
+     {
+      "id": "https://openalex.org/T11567",
+      "display_name": "semigroups and automata theory",
+      "score": 0.9994999766349792,
+      "subfield": {
+       "id": "https://openalex.org/subfields/1703",
+       "display_name": "Computational Theory and Mathematics"
+      },
+      "field": {
+       "id": "https://openalex.org/fields/17",
+       "display_name": "Computer Science"
+      },
+      "domain": {
+       "id": "https://openalex.org/domains/3",
+       "display_name": "Physical Sciences"
+      }
+     },
+     {
+      "id": "https://openalex.org/T11269",
+      "display_name": "Algorithms and Data Compression",
+      "score": 0.00019999999494757503,
+      "subfield": {
+       "id": "https://openalex.org/subfields/2614",
+       "display_name": "Theoretical Computer Science"
+      },
+      "field": {
+       "id": "https://openalex.org/fields/26",
+       "display_name": "Mathematics"
+      },
+      "domain": {
+       "id": "https://openalex.org/domains/3",
+       "display_name": "Physical Sciences"
+      }
+     }
+    ],
+    "keywords": [
+     {
+      "id": "https://openalex.org/keywords/watson-crick-automata",
+      "display_name": "Watson-Crick automata",
+      "score": 0.9110000133514404
+     },
+     {
+      "id": "https://openalex.org/keywords/representation-theorem",
+      "display_name": "representation theorem",
+      "score": 0.675000011920929
+     },
+     {
+      "id": "https://openalex.org/keywords/finite-state-machines",
+      "display_name": "finite automata",
+      "score": 0.6380000114440918
+     }
+    ],
+    "abstract_inverted_index": null,
+    "open_access": {
+     "is_oa": false,
+     "oa_status": "closed",
+     "oa_url": null,
+     "any_repository_has_fulltext": false
+    },
+    "primary_location": {
+     "id": "mag:205242014",
+     "doi": null,
+     "is_oa": false,
+     "landing_page_url": "https://dblp.uni-trier.de/db/journals/eatcs/eatcs83.html#Sempere04",
+     "pdf_url": null,
+     "source": {
+      "id": "https://openalex.org/S109144305",
+      "display_name": "Bulletin of the European Association for Theoretical Computer Science",
+      "issn_l": "0252-9742",
+      "issn": [
+       "0252-9742"
+      ],
+      "is_oa": false,
+      "is_in_doaj": false,
+      "is_core": true,
+      "listed_in": [
+       "cwts-core",
+       "dongbi-c",
+       "norway-1",
+       "poland-20",
+       "russia-white-list-4"
+      ],
+      "host_organization": "https://openalex.org/P4310321815",
+      "host_organization_name": "European Association for Theoretical Computer Science",
+      "host_organization_lineage": [
+       "https://openalex.org/P4310321815"
+      ],
+      "host_organization_lineage_names": [
+       "European Association for Theoretical Computer Science"
+      ],
+      "type": "journal"
+     },
+     "license": null,
+     "license_id": null,
+     "version": null,
+     "is_accepted": false,
+     "is_published": false,
+     "raw_source_name": "Bulletin of the European Association for Theoretical Computer Science",
+     "raw_type": null
+    },
+    "biblio": {
+     "volume": "83",
+     "issue": null,
+     "first_page": "187",
+     "last_page": "191"
+    },
+    "updated_date": "2026-11-14T11:04:58.165337"
+   },
+   {
+    "id": "https://openalex.org/W1568767831",
+    "doi": "https://doi.org/10.1007/978-3-540-30499-9_39",
+    "title": "Representation and Identification of Finite State Automata by Recurrent Neural Networks",
+    "publication_year": 2004,
+    "publication_date": "2004-01-01",
+    "type": "conference-paper",
+    "language": "en",
+    "authorships": [
+     {
+      "author_position": "first",
+      "author": {
+       "id": "https://openalex.org/A5001161243",
+       "display_name": "Yasuaki Kuroe",
+       "orcid": "https://orcid.org/0000-0001-5126-0660",
+       "observed_orcids": [
+        "https://orcid.org/0000-0001-5126-0660"
+       ]
+      },
+      "institutions": [
+       {
+        "id": "https://openalex.org/I27429435",
+        "display_name": "Kyoto Institute of Technology",
+        "ror": "https://ror.org/00965ax52",
+        "country_code": "JP",
+        "type": "education",
+        "lineage": [
+         "https://openalex.org/I27429435"
+        ]
+       }
+      ],
+      "countries": [
+       "JP"
+      ],
+      "is_corresponding": true,
+      "raw_author_name": "Yasuaki Kuroe",
+      "raw_affiliation_strings": [
+       "Center for Information Science, Kyoto Institute of Technology, Matsugasaki, Sakyo-ku, Kyoto, 606-8585, Japan"
+      ],
+      "raw_orcid": null,
+      "affiliations": [
+       {
+        "raw_affiliation_string": "Center for Information Science, Kyoto Institute of Technology, Matsugasaki, Sakyo-ku, Kyoto, 606-8585, Japan",
+        "institution_ids": [
+         "https://openalex.org/I27429435"
+        ]
+       }
+      ]
+     }
+    ],
+    "referenced_works": [
+     "https://openalex.org/W1973756824",
+     "https://openalex.org/W1982370770",
+     "https://openalex.org/W1990813072",
+     "https://openalex.org/W2012140001",
+     "https://openalex.org/W2102059542"
+    ],
+    "referenced_works_count": 6,
+    "cited_by_count": 4,
+    "counts_by_year": [
+     {
+      "year": 2025,
+      "cited_by_count": 1
+     },
+     {
+      "year": 2013,
+      "cited_by_count": 1
+     }
+    ],
+    "topics": [
+     {
+      "id": "https://openalex.org/T11567",
+      "display_name": "semigroups and automata theory",
+      "score": 0.5508000254631042,
+      "subfield": {
+       "id": "https://openalex.org/subfields/1703",
+       "display_name": "Computational Theory and Mathematics"
+      },
+      "field": {
+       "id": "https://openalex.org/fields/17",
+       "display_name": "Computer Science"
+      },
+      "domain": {
+       "id": "https://openalex.org/domains/3",
+       "display_name": "Physical Sciences"
+      }
+     },
+     {
+      "id": "https://openalex.org/T10320",
+      "display_name": "Neural Networks and Applications",
+      "score": 0.44429999589920044,
+      "subfield": {
+       "id": "https://openalex.org/subfields/1702",
+       "display_name": "Artificial Intelligence"
+      },
+      "field": {
+       "id": "https://openalex.org/fields/17",
+       "display_name": "Computer Science"
+      },
+      "domain": {
+       "id": "https://openalex.org/domains/3",
+       "display_name": "Physical Sciences"
+      }
+     }
+    ],
+    "keywords": [
+     {
+      "id": "https://openalex.org/keywords/finite-state-machines",
+      "display_name": "finite automata",
+      "score": 0.9559999704360962
+     },
+     {
+      "id": "https://openalex.org/keywords/recurrent-neural-networks",
+      "display_name": "recurrent neural networks",
+      "score": 0.9810000061988831
+     },
+     {
+      "id": "https://openalex.org/keywords/genetic-algorithm",
+      "display_name": "genetic algorithm",
+      "score": 0.40299999713897705
+     }
+    ],
+    "abstract_inverted_index": null,
+    "open_access": {
+     "is_oa": false,
+     "oa_status": "closed",
+     "oa_url": null,
+     "any_repository_has_fulltext": false
+    },
+    "primary_location": {
+     "id": "doi:10.1007/978-3-540-30499-9_39",
+     "doi": "https://doi.org/10.1007/978-3-540-30499-9_39",
+     "is_oa": false,
+     "landing_page_url": "https://doi.org/10.1007/978-3-540-30499-9_39",
+     "pdf_url": null,
+     "source": {
+      "id": "https://openalex.org/S106296714",
+      "display_name": "Lecture notes in computer science",
+      "issn_l": "0302-9743",
+      "issn": [
+       "0302-9743",
+       "1611-3349"
+      ],
+      "is_oa": false,
+      "is_in_doaj": false,
+      "is_core": true,
+      "listed_in": [
+       "cwts-core",
+       "jufo-1",
+       "ki-jl-1",
+       "norway-1",
+       "vabb-shw"
+      ],
+      "host_organization": "https://openalex.org/P4310319900",
+      "host_organization_name": "Springer Science+Business Media",
+      "host_organization_lineage": [
+       "https://openalex.org/P4310319900",
+       "https://openalex.org/P4310319965"
+      ],
+      "host_organization_lineage_names": [
+       "Springer Science+Business Media",
+       "Springer Nature"
+      ],
+      "type": "book series"
+     },
+     "license": null,
+     "license_id": null,
+     "version": "publishedVersion",
+     "is_accepted": true,
+     "is_published": true,
+     "raw_source_name": "Lecture Notes in Computer Science",
+     "raw_type": "book-chapter"
+    },
+    "biblio": {
+     "volume": null,
+     "issue": null,
+     "first_page": "261",
+     "last_page": "268"
+    },
+    "updated_date": "2026-11-14T11:04:58.165337"
+   },
+   {
+    "id": "https://openalex.org/W2789073726",
+    "doi": null,
+    "title": "Pathway representation using finite state automata and comparison using the NCI thesaurus",
+    "publication_year": 2006,
+    "publication_date": "2006-01-01",
+    "type": "dissertation",
+    "language": "en",
+    "authorships": [
+     {
+      "author_position": "first",
+      "author": {
+       "id": "https://openalex.org/A5039549626",
+       "display_name": "Samuel C. Y. Leung",
+       "orcid": "https://orcid.org/0000-0003-0138-7254",
+       "observed_orcids": [
+        "https://orcid.org/0000-0003-0138-7254"
+       ]
+      },
+      "institutions": [],
+      "countries": [],
+      "is_corresponding": true,
+      "raw_author_name": "Samuel Leung",
+      "raw_affiliation_strings": [],
+      "raw_orcid": "https://orcid.org/0000-0003-0138-7254",
+      "affiliations": []
+     }
+    ],
+    "referenced_works": [],
+    "referenced_works_count": 0,
+    "cited_by_count": 0,
+    "counts_by_year": [],
+    "topics": [
+     {
+      "id": "https://openalex.org/T10887",
+      "display_name": "Bioinformatics and Genomic Networks",
+      "score": 0.9940999746322632,
+      "subfield": {
+       "id": "https://openalex.org/subfields/1312",
+       "display_name": "Molecular Biology"
+      },
+      "field": {
+       "id": "https://openalex.org/fields/13",
+       "display_name": "Biochemistry, Genetics and Molecular Biology"
+      },
+      "domain": {
+       "id": "https://openalex.org/domains/1",
+       "display_name": "Life Sciences"
+      }
+     },
+     {
+      "id": "https://openalex.org/T10621",
+      "display_name": "Gene Regulatory Network Analysis",
+      "score": 0.002400000113993883,
+      "subfield": {
+       "id": "https://openalex.org/subfields/1312",
+       "display_name": "Molecular Biology"
+      },
+      "field": {
+       "id": "https://openalex.org/fields/13",
+       "display_name": "Biochemistry, Genetics and Molecular Biology"
+      },
+      "domain": {
+       "id": "https://openalex.org/domains/1",
+       "display_name": "Life Sciences"
+      }
+     }
+    ],
+    "keywords": [
+     {
+      "id": "https://openalex.org/keywords/metabolic-pathways",
+      "display_name": "metabolic pathways",
+      "score": 0.878000020980835
+     },
+     {
+      "id": "https://openalex.org/keywords/pathway-topology",
+      "display_name": "pathway topology",
+      "score": 0.7979999780654907
+     },
+     {
+      "id": "https://openalex.org/keywords/finite-state-machines",
+      "display_name": "finite automata",
+      "score": 0.8820000290870667
+     }
+    ],
+    "abstract_inverted_index": {
+     "Can": [
+      0
+     ],
+     "one": [
+      1,
+      32
+     ],
+     "classify": [
+      2
+     ],
+     "biochemical": [
+      3,
+      15,
+      24,
+      67,
+      78,
+      89
+     ],
+     "pathways": [
+      4,
+      25,
+      79
+     ],
+     "based": [
+      5
+     ],
+     "on": [
+      6
+     ],
+     "their": [
+      7
+     ],
+     "topology?": [
+      8
+     ],
+     "What": [
+      9,
+      17
+     ],
+     "is": [
+      10
+     ],
+     "the": [
+      11,
+      19,
+      61,
+      106
+     ],
+     "topology": [
+      12
+     ],
+     "of": [
+      13,
+      66,
+      83
+     ],
+     "a": [
+      14,
+      57,
+      73,
+      81,
+      95
+     ],
+     "pathway?": [
+      16
+     ],
+     "are": [
+      18
+     ],
+     "fundamental": [
+      20
+     ],
+     "principles": [
+      21
+     ],
+     "underlying": [
+      22
+     ],
+     "different": [
+      23
+     ],
+     "involved": [
+      26
+     ],
+     "in": [
+      27,
+      42,
+      48
+     ],
+     "similar": [
+      28,
+      39
+     ],
+     "functional": [
+      29
+     ],
+     "areas?": [
+      30
+     ],
+     "Will": [
+      31
+     ],
+     "be": [
+      33
+     ],
+     "able": [
+      34
+     ],
+     "to": [
+      35,
+      40,
+      55,
+      76,
+      86,
+      100
+     ],
+     "characterize": [
+      36
+     ],
+     "pathway": [
+      37
+     ],
+     "\"motifs\"": [
+      38
+     ],
+     "motifs": [
+      41
+     ],
+     "proteins": [
+      43
+     ],
+     "-": [
+      44
+     ],
+     "i.e.": [
+      45
+     ],
+     "reoccurring": [
+      46
+     ],
+     "patterns": [
+      47
+     ],
+     "pathways?": [
+      49
+     ],
+     "This": [
+      50,
+      69
+     ],
+     "thesis": [
+      51
+     ],
+     "describes": [
+      52
+     ],
+     "an": [
+      53
+     ],
+     "attempt": [
+      54
+     ],
+     "develop": [
+      56
+     ],
+     "quantitative": [
+      58,
+      70
+     ],
+     "framework": [
+      59,
+      71
+     ],
+     "for": [
+      60
+     ],
+     "general": [
+      62
+     ],
+     "representation": [
+      63
+     ],
+     "and": [
+      64,
+      80
+     ],
+     "comparison": [
+      65
+     ],
+     "pathways.": [
+      68,
+      90
+     ],
+     "involves": [
+      72
+     ],
+     "mathematical": [
+      74
+     ],
+     "model": [
+      75
+     ],
+     "represent": [
+      77
+     ],
+     "set": [
+      82
+     ],
+     "similarity": [
+      84
+     ],
+     "criteria": [
+      85
+     ],
+     "compare": [
+      87
+     ],
+     "these": [
+      88
+     ],
+     "We": [
+      91
+     ],
+     "anticipate": [
+      92
+     ],
+     "that": [
+      93
+     ],
+     "such": [
+      94,
+      104
+     ],
+     "tool": [
+      96
+     ],
+     "would": [
+      97
+     ],
+     "allow": [
+      98
+     ],
+     "biologists": [
+      99
+     ],
+     "answer": [
+      101
+     ],
+     "important": [
+      102
+     ],
+     "questions": [
+      103
+     ],
+     "as": [
+      105
+     ],
+     "ones": [
+      107
+     ],
+     "mentioned": [
+      108
+     ],
+     "above.": [
+      109
+     ]
+    },
+    "open_access": {
+     "is_oa": false,
+     "oa_status": "closed",
+     "oa_url": null,
+     "any_repository_has_fulltext": false
+    },
+    "primary_location": {
+     "id": "pmh:oai:dspace.library.uvic.ca:1828/2200",
+     "doi": null,
+     "is_oa": false,
+     "landing_page_url": "http://hdl.handle.net/1828/2200",
+     "pdf_url": null,
+     "source": {
+      "id": "https://openalex.org/S4306401509",
+      "display_name": "UVic’s Research and Learning Repository (University of Victoria)",
+      "issn_l": null,
+      "issn": null,
+      "is_oa": false,
+      "is_in_doaj": false,
+      "is_core": false,
+      "listed_in": [],
+      "host_organization": "https://openalex.org/I212119943",
+      "host_organization_name": "University of Victoria",
+      "host_organization_lineage": [
+       "https://openalex.org/I212119943"
+      ],
+      "host_organization_lineage_names": [],
+      "type": "repository"
+     },
+     "license": null,
+     "license_id": null,
+     "version": "submittedVersion",
+     "is_accepted": false,
+     "is_published": false,
+     "raw_source_name": null,
+     "raw_type": "Thesis"
+    },
+    "biblio": {
+     "volume": null,
+     "issue": null,
+     "first_page": null,
+     "last_page": null
+    },
+    "updated_date": "2026-11-14T11:04:58.165337"
+   },
+   {
+    "id": "https://openalex.org/W2125097532",
+    "doi": "https://doi.org/10.1007/11550907_30",
+    "title": "Representation and Identification Method of Finite State Automata by Recurrent High-Order Neural Networks",
+    "publication_year": 2005,
+    "publication_date": "2005-01-01",
+    "type": "conference-paper",
+    "language": "en",
+    "authorships": [
+     {
+      "author_position": "first",
+      "author": {
+       "id": "https://openalex.org/A5001161243",
+       "display_name": "Yasuaki Kuroe",
+       "orcid": "https://orcid.org/0000-0001-5126-0660",
+       "observed_orcids": [
+        "https://orcid.org/0000-0001-5126-0660"
+       ]
+      },
+      "institutions": [
+       {
+        "id": "https://openalex.org/I27429435",
+        "display_name": "Kyoto Institute of Technology",
+        "ror": "https://ror.org/00965ax52",
+        "country_code": "JP",
+        "type": "education",
+        "lineage": [
+         "https://openalex.org/I27429435"
+        ]
+       }
+      ],
+      "countries": [
+       "JP"
+      ],
+      "is_corresponding": true,
+      "raw_author_name": "Yasuaki Kuroe",
+      "raw_affiliation_strings": [
+       "Center for Information Science, Kyoto Institute of Technology, Matsugasaki, Sakyo-ku, Kyoto, 606-8585, Japan"
+      ],
+      "raw_orcid": null,
+      "affiliations": [
+       {
+        "raw_affiliation_string": "Center for Information Science, Kyoto Institute of Technology, Matsugasaki, Sakyo-ku, Kyoto, 606-8585, Japan",
+        "institution_ids": [
+         "https://openalex.org/I27429435"
+        ]
+       }
+      ]
+     }
+    ],
+    "referenced_works": [
+     "https://openalex.org/W1568767831",
+     "https://openalex.org/W1973756824",
+     "https://openalex.org/W1982370770",
+     "https://openalex.org/W1990813072",
+     "https://openalex.org/W2012140001"
+    ],
+    "referenced_works_count": 8,
+    "cited_by_count": 3,
+    "counts_by_year": [
+     {
+      "year": 2025,
+      "cited_by_count": 1
+     }
+    ],
+    "topics": [
+     {
+      "id": "https://openalex.org/T10320",
+      "display_name": "Neural Networks and Applications",
+      "score": 0.6890000104904175,
+      "subfield": {
+       "id": "https://openalex.org/subfields/1702",
+       "display_name": "Artificial Intelligence"
+      },
+      "field": {
+       "id": "https://openalex.org/fields/17",
+       "display_name": "Computer Science"
+      },
+      "domain": {
+       "id": "https://openalex.org/domains/3",
+       "display_name": "Physical Sciences"
+      }
+     },
+     {
+      "id": "https://openalex.org/T11567",
+      "display_name": "semigroups and automata theory",
+      "score": 0.30660000443458557,
+      "subfield": {
+       "id": "https://openalex.org/subfields/1703",
+       "display_name": "Computational Theory and Mathematics"
+      },
+      "field": {
+       "id": "https://openalex.org/fields/17",
+       "display_name": "Computer Science"
+      },
+      "domain": {
+       "id": "https://openalex.org/domains/3",
+       "display_name": "Physical Sciences"
+      }
+     }
+    ],
+    "keywords": [
+     {
+      "id": "https://openalex.org/keywords/finite-state-machines",
+      "display_name": "finite automata",
+      "score": 0.9480000138282776
+     },
+     {
+      "id": "https://openalex.org/keywords/recurrent-high-order-neural-network",
+      "display_name": "recurrent high order neural network",
+      "score": 0.8809999823570251
+     },
+     {
+      "id": "https://openalex.org/keywords/deterministic-finite-automata",
+      "display_name": "deterministic finite automata",
+      "score": 0.6809999942779541
+     }
+    ],
+    "abstract_inverted_index": null,
+    "open_access": {
+     "is_oa": false,
+     "oa_status": "closed",
+     "oa_url": null,
+     "any_repository_has_fulltext": false
+    },
+    "primary_location": {
+     "id": "doi:10.1007/11550907_30",
+     "doi": "https://doi.org/10.1007/11550907_30",
+     "is_oa": false,
+     "landing_page_url": "https://doi.org/10.1007/11550907_30",
+     "pdf_url": null,
+     "source": {
+      "id": "https://openalex.org/S106296714",
+      "display_name": "Lecture notes in computer science",
+      "issn_l": "0302-9743",
+      "issn": [
+       "0302-9743",
+       "1611-3349"
+      ],
+      "is_oa": false,
+      "is_in_doaj": false,
+      "is_core": true,
+      "listed_in": [
+       "cwts-core",
+       "jufo-1",
+       "ki-jl-1",
+       "norway-1",
+       "vabb-shw"
+      ],
+      "host_organization": "https://openalex.org/P4310319900",
+      "host_organization_name": "Springer Science+Business Media",
+      "host_organization_lineage": [
+       "https://openalex.org/P4310319900",
+       "https://openalex.org/P4310319965"
+      ],
+      "host_organization_lineage_names": [
+       "Springer Science+Business Media",
+       "Springer Nature"
+      ],
+      "type": "book series"
+     },
+     "license": null,
+     "license_id": null,
+     "version": "publishedVersion",
+     "is_accepted": true,
+     "is_published": true,
+     "raw_source_name": "Lecture Notes in Computer Science",
+     "raw_type": "book-chapter"
+    },
+    "biblio": {
+     "volume": null,
+     "issue": null,
+     "first_page": "181",
+     "last_page": "189"
+    },
+    "updated_date": "2026-11-14T11:04:58.165337"
+   }
+  ]
+ }
+]
