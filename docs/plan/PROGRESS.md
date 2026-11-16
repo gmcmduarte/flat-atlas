@@ -11,7 +11,7 @@
 
 ## Checklist
 **Phase 0** — [ ] P0-00 · [x] P0-01 · [x] P0-02 · [x] P0-03 · [x] P0-04
-**Phase 1** — [x] P1-01 · [x] P1-02 · [ ] P1-03 · [ ] P1-04 · [ ] P1-05 · [ ] P1-06 · [ ] P1-07 · [ ] P1-08 · [ ] P1-09 · [ ] P1-10 · [ ] P1-11 · [ ] P1-12 · [ ] G1
+**Phase 1** — [x] P1-01 · [x] P1-02 · [ ] P1-03 · [ ] P1-04 · [ ] P1-05 · [ ] P1-06 · [ ] P1-06b · [ ] P1-07 · [ ] P1-07b · [ ] P1-08 · [ ] P1-09 · [ ] P1-10 · [ ] P1-11 · [ ] P1-12 · [ ] G1
 **Phase 2** — [ ] P2-01 · [ ] P2-02 · [ ] P2-03 · [ ] P2-04 · [ ] G2
 **Phase 3** — [ ] P3-00 · [ ] P3-01 · [ ] P3-02 · [ ] P3-03 · [ ] P3-04 · [ ] P3-05 · [ ] G3
 **Phase 4** — [ ] P4-01 · [ ] P4-02 · [ ] P4-03 · [ ] P4-04 · [ ] P4-05 · [ ] G4
@@ -19,6 +19,14 @@
 **Phase 6** — [ ] P6-01 · [ ] P6-02 · [ ] P6-03 · [ ] G6
 
 ## Log (newest first)
+
+### 2026-11-16 — Tagging redesign: plan and prompts only (Fable; committed on branch `s/P1-03-s2-embeddings`)
+- **Built (documents only, no code):** PLAN §9 rewritten around a cheap-to-expensive cascade (signals and shortlist, learned fusion, local decision model for unsure works, distilled classifier for increments), with a cost line per step and a cost model (§9.8); small edits to PLAN §4.4, §5, §14, §16, §17. Prompts rewritten: P1-05, P1-06, P1-07, P1-08, P4-05; new prompts `P1-06b-labelled-set.md` and `P1-07b-decision-model.md`; P4-04 gains a step to migrate the labelled set. ROADMAP, RISKS (R4), WORKFLOW, `sessions/README.md` and the `taxonomy/` row of `CLAUDE.md` brought in line. Source: `docs/notes/tagging-redesign-brief.md`.
+- **Decisions drafted, awaiting approval:** D-61 (labelled set; amends D-27), D-62 (note on D-02), D-63 (cascade; supersedes D-26), D-64 (composite text), D-65 (schema and config), D-66 (D-12 and D-13 stand, no Redis). **D-67 (capped hosted decision model) is drafted as NOT ACTIVE**; hard rule 3 is unchanged and nothing in the plan depends on it.
+- **Departures from the brief:** thresholds are tuned on gold-train, and the held-out third is opened once after tuning; the labelled sample is random and stratified, never picked by tagger output; 50 works are labelled blind to measure how much the draft steers the review; with only 130–200 held-out works a method is adopted only if the paired bootstrap interval excludes zero.
+- **Surprise:** the composite text needs the titles of cited works, but only reference IDs are harvested (S2 asks for `references.corpusId`, OpenAlex gives IDs). P1-05 now fetches the titles through `flatatlas.http` inside the free budgets. If P1-03 is still open, adding `references.title` to the S2 field list there would save a second pass (not done here; check first that the batch endpoint accepts it).
+- **Not verified:** all speeds and shares in PLAN §9.5 and §9.8 are estimates until P1-07b; model names, licences and the hosted price are unchecked (PLAN §17 items 11 and 12).
+- **Hand-off:** nothing changes for P1-03 and P1-04. From P1-05 on, use the rewritten prompts. Order: P1-05 → P1-06 → P1-06b → P1-07 → P1-07b → P1-08.
 
 ### 2026-11-15 — P1-02 OpenAlex and Crossref enrichment, coverage report (branch `s/P1-02-openalex-crossref`)
 - **Built:** `sources/openalex.py` (DOI batches of 100, capped `title.search` fallback, parse of works, authorships with institutions, references, topics and keywords, abstracts rebuilt from the inverted index), `sources/crossref.py` (single-DOI harvest, JATS stripping, parse), `coverage.py`, commands `harvest openalex|crossref`, `parse openalex|crossref` (`--show N` prints enriched samples), `evaluate coverage`; `SourceClient.cached()` and `iter_cached()` (offline reads of the cache); tables `stg_openalex_lookup|work|authorship|reference|topic`, `stg_reference_candidates`, `stg_crossref_work`, local-only `local_abstract`; `reports/coverage-pilot.md`; fixtures `tests/fixtures/openalex|crossref` (trimmed real answers, rebuilt by `make_sample.py`). 68 new tests, 214 in total. Decisions D-57 to D-60. Live limits in `docs/notes/sources.md`; PLAN §5.3 and §17 updated; R1 numbers in `RISKS.md`.
@@ -120,3 +128,7 @@
 - `SourceClient`: report an HTTP 202 HTML body (bot challenge) as "blocked by bot protection" instead of a bare `HTTP 202`.
 - Person records carry more links (zbMATH, Wikidata, Google Scholar, affiliation notes): a source of author IDs for P1-04 and of affiliations for authors OpenAlex cannot place.
 - Ask DBLP (dblp@dagstuhl.de) whether an identified polite client could be allow-listed for the API; the dump makes this optional.
+- Measure whether OpenAlex and author keywords carry signal (precision on the labelled set); they are excluded from the tagger until then (D-65).
+- Precomputed "similar papers" (top 20 per work) and nearest topics per topic as JSON in the static export (D-66); P1-09 or later.
+- Hierarchical encoder heads (HYDRA, path-level alignment): need thousands of labels; revisit only if the labelled set grows that far.
+- A second labeller for a sample of the labelled set, to measure agreement between people.

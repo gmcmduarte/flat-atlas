@@ -55,7 +55,7 @@ Default: **Sonnet**. Switch to **Opus** only for the cases below. In Claude Code
 
 | Use Opus for | Why |
 |---|---|
-| Sessions marked Opus in the roadmap: taxonomy draft (P1-06, P4-04), scope rule tuning (P2-02), entity-resolution at scale (P4-03), tagger v2 (P4-05) | judgment and domain knowledge decide the quality |
+| Sessions marked Opus in the roadmap: taxonomy draft (P1-06, P4-04), labelled set (P1-06b), scope rule tuning (P2-02), entity-resolution at scale (P4-03), tagger v2 (P4-05) | judgment and domain knowledge decide the quality |
 | Every gate review (G1–G6) | a second, stronger and *fresh* pair of eyes |
 | Re-planning the roadmap | consequences across the whole plan |
 | A bug Sonnet failed to fix in two attempts | stop paying for retries |
@@ -133,7 +133,7 @@ A phase is done when a **separate, fresh Opus session** has run `docs/plan/sessi
 The gate checks, in this order:
 1. **Acceptance criteria** of every session in the phase, re-verified by running the checks, not by reading the log.
 2. **Data quality** (from `flatatlas evaluate` and `tests/data_quality/`): row counts per venue-year against DBLP's own counts; duplicate DOIs; orphan authorships; works without year or venue; share of works matched in each source; merge-confidence histogram; a random sample of 30 merges read by Opus and judged.
-3. **Tagging**: all §9.6 thresholds; Opus reads the spot-check report for 10 topics chosen across levels and writes down concrete errors and their likely cause (dictionary, centroid, taxonomy).
+3. **Tagging**: all §9.6 thresholds, including precision and recall on the held-out labelled set (check that no held-out work was used for training or tuning); Opus reads the spot-check report for 10 topics chosen across levels and writes down concrete errors and their likely cause (dictionary, centroid, taxonomy).
 4. **UI** (from Phase 1 on): Opus drives the built-in browser through a fixed checklist: search for three topics, open topic → child → related topic → bridge, open a paper and an author, expand map bubbles, check an empty state, check a narrow (mobile) viewport, check that every page shows sources and a "Suggest a change" link. Console must be free of errors.
 5. **Code health**: CI green, tests exist for every transform, no secrets (`gitleaks` on full history), README and runbooks match reality.
 6. **Plan check**: are RISKS and the next phase's sessions still right? Opus proposes edits to ROADMAP and session files.
@@ -178,7 +178,7 @@ Rule: **Claude writes and checks jobs; you launch them; nobody babysits.**
 7. **Polishing the pilot.** The pilot's job is to prove the whole chain on three venues. Rough but end-to-end beats beautiful and partial.
 8. **Hand-fixing data.** A wrong tag is fixed in the taxonomy, a dictionary or the tagger, never in the output.
 9. **Re-running harvests by habit.** The cache makes re-parsing free; hitting the APIs again is slow and impolite.
-10. **Letting the taxonomy review slip.** Everything after P1-06 is built on it. Block the 2–4 hours in your calendar.
+10. **Letting the taxonomy review slip.** Everything after P1-06 is built on it. Block the 2–4 hours in your calendar, and a second block of 2–3 hours for the labelled set (P1-06b).
 11. **Building on the server before it exists.** Phase 3 starts with containers on the Mac so nothing waits on IT.
 12. **Changing the plan silently.** If a session deviates, it writes a decision. Future sessions only know what is written.
 13. **Long sessions when tired.** Approving plans and diffs is the job; an inattentive "yes" is how bad merges happen. Stop at a checkpoint and continue another day.
