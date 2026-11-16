@@ -36,9 +36,13 @@ openalex:
 
 semanticscholar:
   base_url: https://api.semanticscholar.org/graph/v1
-  requests_per_second: 1.0      # key gives 1 request/s on all endpoints
+  # The key is documented at 1 request/s, but a sustained run at 1/s drew about two HTTP 429s per
+  # success and died after six in a row (P1-03, 2026-11-16, run 1 and 2 at title match 55 of 724).
+  # So: half the documented rate, and patience with long throttling stretches (about 4 minutes).
+  requests_per_second: 0.5
   burst: 1
-  batch_size: 100               # POST /paper/batch; PLAN says 500 from memory (unverified), so start lower
+  max_attempts: 10
+  batch_size: 500               # POST /paper/batch maximum; 501 gives HTTP 400 (checked P1-03)
   daily_budget_usd: null
   costs: {}
   auth: {style: header, name: x-api-key, secret: s2_api_key, required: false}

@@ -25,12 +25,15 @@ from flatatlas.dblp_dump import (
     verify_checksum,
     write_index,
 )
+from flatatlas.embed import stage as embed_stage
+from flatatlas.embed import store as embed_store
 from flatatlas.http import BudgetExhausted, SourceClient, SourceError
 from flatatlas.log import setup_logging
 from flatatlas.settings import PROJECT_ROOT, load_settings
 from flatatlas.sources import crossref as crossref_src
 from flatatlas.sources import dblp as dblp_parse
 from flatatlas.sources import openalex as openalex_src
+from flatatlas.sources import s2 as s2_src
 from flatatlas.status import render_status
 from flatatlas.venues import (
     VenueConfigError,
@@ -65,8 +68,9 @@ app = typer.Typer(
 )
 
 # One sub-app per group. Stage modules add commands with ``@groups["harvest"].command()``.
+# ``embed`` runs when called without a sub-command, so it must not print its help instead.
 groups: dict[str, typer.Typer] = {
-    name: typer.Typer(name=name, help=help_text, no_args_is_help=True)
+    name: typer.Typer(name=name, help=help_text, no_args_is_help=name != "embed")
     for name, help_text in COMMAND_GROUPS.items()
     if name not in PLAIN_COMMANDS
 }
@@ -521,6 +525,223 @@ def parse_crossref(venue: VenueOption = None, profile: ProfileOption = None) -> 
         f"{s['not_fetched']} not fetched, {s['skipped_not_crossref']} skipped (not Crossref); "
         f"abstracts {s['abstracts']}"
     )
+
+
+@groups["harvest"].command("s2")
+def harvest_s2(
+    limit: Annotated[
+        int | None, typer.Option(help="Only this many papers (the same hash-ordered sample).")
+    ] = None,
+    venue: VenueOption = None,
+    max_title_matches: Annotated[
+        int,
+        typer.Option(help="Most title matches for papers S2 does not return by DOI (1 call each)."),
+    ] = s2_src.DEFAULT_MAX_TITLE_MATCHES,
+    restart: Annotated[bool, typer.Option(help="Ignore a finished job state.")] = False,
+    profile: ProfileOption = None,
+) -> None:
+    """Fetch Semantic Scholar records for the DBLP papers: DOI batches, then title matches.
+
+    Resumable: stop it any time and run the same command again. Run `flatatlas parse s2`
+    afterwards. Title matches cost one request each at 1 request/s.
+    """
+    settings = load_settings(profile=profile)
+    setup_logging(settings.paths.logs)
+    venue_ids = _venue_ids(settings, venue)
+    con = connect(settings.paths)
+    client = SourceClient("semanticscholar", settings)
+    try:
+        _require_tables(con, "stg_dblp_paper", hint="run `flatatlas parse dblp` first")
+        papers = openalex_src.load_papers(con, venue_ids=venue_ids, limit=limit)
+        n_doi = sum(1 for p in papers if p.doi)
+        has_key = bool(settings.secret_for("semanticscholar"))
+        key = "set" if has_key else "NOT set (shared, unreliable pool)"
+        typer.echo(
+            f"venues: {', '.join(venue_ids)}; {len(papers)} papers ({n_doi} with a DOI, "
+            f"{len(papers) - n_doi} without); S2 key {key}"
+        )
+        with run_log(con, "harvest-s2") as run:
+            stats = s2_src.harvest(
+                con,
+                client,
+                papers,
+                max_title_matches=max_title_matches,
+                restart=restart,
+                on_progress=typer.echo,
+            )
+            run.counts.update(stats.as_counts())
+        typer.echo(f"done: {stats.as_counts()}")
+        if stats.papers_not_matched_by_cap:
+            typer.echo(
+                f"note: {stats.papers_not_matched_by_cap} papers were not title-matched (cap "
+                f"{max_title_matches}); raise --max-title-matches to cover them"
+            )
+    except SourceError as exc:
+        typer.echo(f"error: {exc}", err=True)
+        raise typer.Exit(1) from None
+    finally:
+        client.close()
+        con.close()
+
+
+@groups["parse"].command("s2")
+def parse_s2(venue: VenueOption = None, profile: ProfileOption = None) -> None:
+    """Parse cached S2 answers into stg_s2_*, local_abstract and local_embedding (no network)."""
+    settings = load_settings(profile=profile)
+    setup_logging(settings.paths.logs)
+    venue_ids = _venue_ids(settings, venue)
+    con = connect(settings.paths)
+    client = SourceClient("semanticscholar", settings)
+    try:
+        _require_tables(con, "stg_dblp_paper", hint="run `flatatlas parse dblp` first")
+        papers = openalex_src.load_papers(con, venue_ids=venue_ids)
+        with run_log(con, "parse-s2") as run:
+            parsed = s2_src.parse_s2(client, papers)
+            run.counts.update({k: int(v) for k, v in parsed.stats.items()})
+            s2_src.write_tables(con, settings.paths, parsed)
+    finally:
+        client.close()
+        con.close()
+    s = parsed.stats
+    typer.echo(
+        f"{s['papers']} papers: {s['matched']} matched ({s['matched_doi']} by DOI, "
+        f"{s['matched_title']} by title), {s['not_found']} not found, "
+        f"{s['not_fetched']} not fetched"
+    )
+    typer.echo(
+        f"S2 papers {s['s2_papers']}, references {s['references']}, abstracts {s['abstracts']}, "
+        f"S2 vectors {s['embeddings']}"
+    )
+
+
+@groups["embed"].callback(invoke_without_command=True)
+def embed_run(
+    ctx: typer.Context,
+    limit: Annotated[
+        int | None,
+        typer.Option(help="Embed at most this many papers locally (a hash-ordered sample)."),
+    ] = None,
+    venue: VenueOption = None,
+    device: Annotated[
+        str | None, typer.Option(help="mps | cpu | cuda (default: the profile's embedding_device).")
+    ] = None,
+    profile: ProfileOption = None,
+) -> None:
+    """Give every paper one SPECTER2 vector: S2's (from `parse s2`), else computed locally.
+
+    Needs `uv sync --extra ml` (torch) and `flatatlas parse s2` first. Resumable: finished
+    batches are cached, so a stopped run continues where it was.
+    """
+    if ctx.invoked_subcommand is not None:
+        return
+    settings = load_settings(profile=profile)
+    setup_logging(settings.paths.logs)
+    venue_ids = _venue_ids(settings, venue)
+    con = connect(settings.paths)
+    try:
+        _require_tables(
+            con, "stg_dblp_paper", "stg_s2_lookup", hint="run `parse dblp` and `parse s2` first"
+        )
+        papers = embed_stage.load_paper_texts(con, venue_ids)
+        missing = embed_stage.papers_without_s2_vector(con, papers)
+        typer.echo(
+            f"{len(papers)} papers; {len(papers) - len(missing)} have an S2 vector; "
+            f"{len(missing)} need a local one"
+        )
+        if not missing:
+            typer.echo("nothing to compute")
+        dev = device or settings.profile.embedding_device
+        encoder = None
+        if missing:
+            from flatatlas.embed.specter2 import MissingMlExtra, load_encoder
+
+            typer.echo(f"loading SPECTER2 on {dev} (the first run downloads the model) ...")
+            try:
+                encoder = load_encoder(dev)
+            except MissingMlExtra as exc:
+                typer.echo(f"error: {exc}", err=True)
+                raise typer.Exit(1) from None
+            typer.echo(f"device in use: {encoder.device}")
+        with run_log(con, "embed") as run:
+            result = (
+                embed_stage.run_embed(
+                    con,
+                    settings.paths,
+                    encoder,
+                    papers,
+                    limit=limit,
+                    batch_size=settings.profile.batch_sizes.get("embed", 32),
+                    on_progress=typer.echo,
+                )
+                if encoder
+                else None
+            )
+            cov = embed_store.coverage(con, [p.dblp_key for p in papers])
+            run.counts.update({k: v for k, v in cov.items() if isinstance(v, int)})
+            if result:
+                run.counts.update(
+                    local_computed=result.stats.computed,
+                    local_from_cache=result.stats.from_cache,
+                    local_seconds=round(result.stats.seconds, 1),
+                )
+    finally:
+        con.close()
+    if result:
+        st = result.stats
+        typer.echo(
+            f"local: {result.done} of {result.wanted} papers embedded ({result.kinds}); "
+            f"{st.computed} computed, {st.from_cache} from cache, {st.per_second:.1f} texts/s"
+        )
+    typer.echo(
+        f"vectors: {cov['with_vector']} of {cov['papers']} papers {cov['by_source']}; "
+        f"missing {cov['missing']}; papers with more than one vector: {cov['duplicated']}"
+    )
+
+
+@groups["embed"].command("compare")
+def embed_compare(
+    sample: Annotated[int, typer.Option(help="Papers with an S2 vector to embed locally.")] = 50,
+    device: Annotated[
+        str | None, typer.Option(help="mps | cpu | cuda (default: the profile's embedding_device).")
+    ] = None,
+    out: Annotated[
+        Path | None,
+        typer.Option(help="Report file (default: reports/embedding-compare-<profile>.md)."),
+    ] = None,
+    profile: ProfileOption = None,
+) -> None:
+    """Embed papers that have an S2 vector with the local model and report the cosine."""
+    from flatatlas.embed.specter2 import MissingMlExtra, load_encoder
+
+    settings = load_settings(profile=profile)
+    setup_logging(settings.paths.logs)
+    con = connect(settings.paths)
+    try:
+        _require_tables(con, "stg_dblp_paper", "stg_s2_lookup", hint="run `parse s2` first")
+        papers = embed_stage.load_paper_texts(con)
+        dev = device or settings.profile.embedding_device
+        try:
+            encoder = load_encoder(dev)
+        except MissingMlExtra as exc:
+            typer.echo(f"error: {exc}", err=True)
+            raise typer.Exit(1) from None
+        typer.echo(f"device in use: {encoder.device}")
+        comparison = embed_stage.compare_with_s2(
+            con,
+            encoder,
+            papers,
+            n=sample,
+            batch_size=settings.profile.batch_sizes.get("embed", 32),
+            device=encoder.device,
+            on_progress=typer.echo,
+        )
+    finally:
+        con.close()
+    text = embed_stage.render_comparison(comparison, profile=settings.profile.name)
+    path = out or PROJECT_ROOT / "reports" / f"embedding-compare-{settings.profile.name}.md"
+    write_text_atomic(path, text)
+    typer.echo(text)
+    typer.echo(f"wrote {path}")
 
 
 @groups["evaluate"].command("coverage")

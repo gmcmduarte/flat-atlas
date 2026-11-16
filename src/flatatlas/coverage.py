@@ -33,6 +33,8 @@ WITH paper AS (
         coalesce(w.has_abstract, false) AS abs_openalex,
         EXISTS (SELECT 1 FROM local_abstract a
                 WHERE a.dblp_key = p.dblp_key AND a.source = 'crossref') AS abs_crossref,
+        EXISTS (SELECT 1 FROM local_abstract a
+                WHERE a.dblp_key = p.dblp_key AND a.source = 's2') AS abs_s2,
         coalesce(w.n_references_listed, 0) > 0 AS refs_openalex,
         coalesce(c.n_references_listed, 0) > 0 AS refs_crossref,
         coalesce(w.n_authors_with_institution, 0) > 0 AS has_affiliation,
@@ -56,7 +58,8 @@ SELECT
     count(*) FILTER (WHERE matched) AS matched,
     count(*) FILTER (WHERE abs_openalex) AS abs_openalex,
     count(*) FILTER (WHERE abs_crossref) AS abs_crossref,
-    count(*) FILTER (WHERE abs_openalex OR abs_crossref) AS abs_any,
+    count(*) FILTER (WHERE abs_s2) AS abs_s2,
+    count(*) FILTER (WHERE abs_openalex OR abs_crossref OR abs_s2) AS abs_any,
     count(*) FILTER (WHERE refs_openalex) AS refs_openalex,
     count(*) FILTER (WHERE refs_crossref) AS refs_crossref,
     count(*) FILTER (WHERE refs_openalex OR refs_crossref) AS refs_any,
@@ -162,6 +165,7 @@ def _table(rows: Sequence[dict[str, Any]], first: Sequence[tuple[str, str]]) -> 
         "Matched",
         "Abstract OA",
         "Abstract CR",
+        "Abstract S2",
         "Abstract any",
         "Refs any",
         "Affil.",
@@ -177,6 +181,7 @@ def _table(rows: Sequence[dict[str, Any]], first: Sequence[tuple[str, str]]) -> 
             pct(r["matched"], n),
             pct(r["abs_openalex"], n),
             pct(r["abs_crossref"], n),
+            pct(r["abs_s2"], n),
             pct(r["abs_any"], n),
             pct(r["refs_any"], n),
             pct(r["has_affiliation"], n),
@@ -232,8 +237,8 @@ def render(cov: Coverage, *, profile: str = "pilot", dblp_note: str = "") -> str
         f"{openalex.TITLE_YEAR_SLACK}.",
         f"- **Abstracts (any source):** {t['abs_any']} of {n} ({pct(t['abs_any'], n)}): "
         f"OpenAlex {t['abs_openalex']} ({pct(t['abs_openalex'], n)}), "
-        f"Crossref {t['abs_crossref']} ({pct(t['abs_crossref'], n)}). Semantic Scholar is added "
-        "in P1-03.",
+        f"Crossref {t['abs_crossref']} ({pct(t['abs_crossref'], n)}), "
+        f"Semantic Scholar {t['abs_s2']} ({pct(t['abs_s2'], n)}).",
         f"- **Reference lists:** {t['refs_any']} of {n} ({pct(t['refs_any'], n)}): "
         f"OpenAlex {t['refs_openalex']}, Crossref {t['refs_crossref']}.",
         f"- **Affiliations / countries (OpenAlex):** {t['has_affiliation']} / {t['has_country']} "
@@ -267,7 +272,8 @@ def render(cov: Coverage, *, profile: str = "pilot", dblp_note: str = "") -> str
         "- The unit is a DBLP paper; DBLP decides which papers belong to a venue (PLAN §8.4).",
         "- Every percentage is of all papers in its row, except the match rates in the summary.",
         "- *DOI*: share of papers with a DOI in DBLP. *Matched*: share found in OpenAlex.",
-        "- *Abstract OA / CR*: an abstract text from OpenAlex / Crossref. Abstracts stay in the "
+        "- *Abstract OA / CR / S2*: an abstract text from OpenAlex / Crossref / Semantic Scholar. "
+        "Abstracts stay in the "
         "local warehouse and are not exported (CLAUDE.md rule 2).",
         "- *Refs any*: a non-empty reference list in OpenAlex or Crossref.",
         "- *Affil.* / *Country*: at least one author with an institution / country in OpenAlex.",
