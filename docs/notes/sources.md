@@ -51,3 +51,74 @@ evidence. Newest first within each source.
   "CIAA" found nothing). `select=` works on `/sources` and `/works`.
 - Per-second rate with a key: not measured (the session made 29 calls at the configured
   10/s; no 429).
+
+## Semantic Scholar
+
+- **2026-11-16 (P1-03): checked live with our key.** (a) `POST /graph/v1/paper/batch?fields=...`
+  takes at most **500** IDs: 500 returned 500 answers, 501 gave HTTP 400. A 500-ID answer with the
+  full field list is about 6 MB of JSON and took 11 s. (b) Accepted ID prefix: **`DOI:`**. **`DBLP:<key>` is not
+  accepted**: it answers `null` in the batch even for a paper S2 holds (the same paper was found
+  by its DOI, and its `externalIds.DBLP` shows that key). So papers without a DOI, and papers S2
+  does not know by DOI, go through `GET /paper/search/match?query=<title>` (best title match, one
+  call each; no hit is HTTP 404 and is cached). The match answer has the same fields as the batch.
+  (c) The field name is **`embedding.specter_v2`**: the answer is `{"model": "specter_v2",
+  "vector": [768 floats]}`, or `null`. (d) `references.corpusId` works; **`references.isInfluential`
+  gives HTTP 400** in a batch, so the per-edge "influential" flag cannot be had this way (it
+  exists on `/paper/{id}/references`, one call per paper, and in the datasets). Per-paper
+  `influentialCitationCount` is available. (e) Always returned, whatever is asked: `paperId`,
+  `authors`, `openAccessPdf`. For Springer papers `openAccessPdf.disclaimer` says the publisher
+  elided `abstract` and `references`: **abstract is null for most pilot papers and the reference
+  list is null for about 77 %** of the S2 papers (518 of 2,257 have one). A `null` list is stored
+  as `n_references` null, never as zero.
+- **Rate limit: the documented 1 request/s is not what we get.** With the key set, a sustained
+  run drew HTTP 429 on 15 to 25 % of calls at 5 s spacing, and about **1.3 to 2 per success** at
+  1/s and at 0.5/s. A lighter request (fewer fields) was no better. The 429 body is the generic
+  "Too Many Requests ... apply for a key" and there are no `Retry-After` or rate-limit headers.
+  It looks like server-side throttling, not our rate. Two runs at 1/s with six attempts died
+  after six 429s in a row (title match 55 of 724). Config now: 0.5/s and `max_attempts: 10`
+  (back-off 1, 2, 4, 8, 16, 32, 60 s ..., about 4 minutes). The resumed run did 637 title matches
+  in **1 h 53 min** (838 logged 429s), about 10.6 s per match; the DOI batches (5 calls) take a
+  minute. Budget a title-match job at roughly 11 s per paper.
+- **Match quality.** Accepted at title similarity >= 0.95 and year within 1 of the DBLP edition
+  (the OpenAlex rule): 645 of 724 asked papers matched (89 %), average similarity 1.0, lowest
+  0.95. Of 2,260 matched papers, **354 point to another
+  DBLP key** in S2's own `externalIds.DBLP` (220 via title match, 134 via DOI): S2 has merged the
+  conference paper with its journal or CoRR version. They are kept, with the other key stored in
+  `stg_s2_lookup.s2_dblp_key`, for P1-04's version merging (PLAN §8.2).
+- **`references.title` and `references.year` are accepted** in a batch (checked 2026-11-16 on one
+  paper: 34 references, each `{paperId, corpusId, title, year}`; `corpusId` inside a reference is a
+  string). P1-03 did not ask for them, so the cached answers hold reference IDs only; asking now
+  changes the field list and so the cache keys (a new full pass, about 2 hours with title matches,
+  or about a minute for the DOI batches alone). Only about 23 % of the S2 papers have a reference
+  list at all.
+- **TLDRs** are returned for most papers (1,831 of 2,257) and kept in
+  `stg_s2_paper.tldr` (staging is never exported).
+
+## SPECTER2 on this Mac (Hugging Face)
+
+- **Model:** base `allenai/specter2_base` plus the proximity adapter **`allenai/specter2`**
+  (renamed on Hugging Face; the model card of 2026-11-16 loads it with `adapters`:
+  `model.load_adapter("allenai/specter2", source="hf", load_as="proximity", set_active=True)`).
+  Vector = first-token state of the last layer, 768 floats. Input `title + [SEP] + abstract`.
+  `adapters` logs "adapters available but none are activated" once while loading; it is
+  harmless (`model.active_adapters` is `Stack[proximity]` afterwards, and the encoder refuses to
+  run if it is empty). Without the adapter the cosine to S2's vectors drops from 0.997 to 0.939.
+- **Download:** about 843 MB in `~/.cache/huggingface` (base model plus adapter); torch,
+  transformers and adapters add about 0.9 GB to `.venv`. Versions at the time: torch 2.15.0,
+  transformers 4.57.6.
+- **Throughput on the M1 (batch 32, encoder time only):**
+
+  | Device | Title and abstract (median 687 characters) | Title only (median 52 characters) |
+  |---|---|---|
+  | `mps` | 18.8 texts/s | 82 texts/s |
+  | `cpu` | 9.0 texts/s | 119 texts/s |
+
+  The full pilot run embedded 888 texts (mostly titles) at 127 texts/s (7 s). For the whole
+  field (PLAN §17 item 9) that is about 0.5 s per 10 abstract texts; titles are cheap. `cpu` is
+  faster than `mps` for very short texts (launch overhead), so `embedding_device` matters only
+  for abstracts.
+- **Local against S2 vectors** (50 papers that have both): mean cosine **0.980**; papers with an
+  abstract 0.999, title only 0.960 (min 0.926). The model-card form for no abstract
+  (`title[SEP]`) gives 0.958, so title alone is kept. Likely cause of the gap for title-only
+  papers: S2 holds abstracts that its API hides for Springer papers and embedded them
+  (not tested). `reports/embedding-compare-pilot.md`.
