@@ -1,0 +1,39 @@
+taxonomy_version: 1
+works:
+- work: WAAAAAAAAAB
+  title: Fixture work
+  labels:
+  - regular-languages
+  split: heldout
+  sampling: random
+  blind: false
+  reviewed: true
+  note: ''
+- work: WAAAAAAAAAC
+  title: Fixture work
+  labels:
+  - regular-languages
+  - descriptional-complexity
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: ''
+- work: WAAAAAAAAAA
+  title: Fixture work
+  labels:
+  - context-free-languages
+  split: heldout
+  sampling: random
+  blind: false
+  reviewed: true
+  note: ''
+- work: WAAAAAAAAAK
+  title: Fixture work
+  labels:
+  - shuffle-of-words
+  split: heldout
+  sampling: random
+  blind: true
+  reviewed: true
+  note: ''

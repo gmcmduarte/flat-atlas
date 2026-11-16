@@ -1,0 +1,61 @@
+# Settings of the taxonomy tools (P1-05). Every number here can change a proposal; the proposal
+# records the hash of this file, so two runs are comparable only when it is unchanged.
+seed: 20261116            # one seed for UMAP, HDBSCAN and every random choice
+
+seeds:
+  # Where `taxonomy seeds --ccs-file` finds the SKOS download by default (under the data root).
+  ccs_file: raw/seeds/acm-ccs.xml
+  # The CCS subtree kept: every concept whose label is listed here, with all its descendants, plus
+  # the listed concepts alone (no descendants). Labels are matched case-insensitively.
+  ccs_subtrees: ["Formal languages and automata theory"]
+  ccs_single: ["Models of computation", "Computability"]
+  openalex_min_works: 2   # an OpenAlex topic is listed when at least this many pilot works have it
+
+background:
+  # Titles of non-FLAT theory papers, the contrast set of the c-TF-IDF (PLAN §9.1 step 2).
+  n_titles: 5000
+  per_page: 200
+  # Theory papers that are not FLAT: OpenAlex subfields 1703 (Computational Theory and Mathematics)
+  # and 2614 (Theoretical Computer Science), 1995 to 2025, minus the topics most pilot works have
+  # as their primary topic (checked live 2026-11-16). `sample` and the seed make it repeatable.
+  filter: >-
+    primary_topic.subfield.id:1703|2614,primary_topic.id:!T11269,primary_topic.id:!T12002,primary_topic.id:!T11567,primary_topic.id:!T10142,primary_topic.id:!T10126,primary_topic.id:!T11727,primary_topic.id:!T12162,publication_year:1995-2025,type:article
+  # Titles with these words are dropped from the background when mining (they are FLAT after all).
+  exclude_title_words: [automaton, automata, grammar, grammars, transducer, transducers, "formal language", "regular expression", "regular language", "context-free", "pushdown", "turing machine"]
+
+mine:
+  min_ngram: 1
+  max_ngram: 4
+  min_docs: 3             # a phrase must occur in at least this many works
+  reference_weight: 0.3   # a reference title counts this much against 1.0 for the work's own title
+  title_weight: 1.0
+  abstract_weight: 0.7
+  tldr_weight: 0.7
+  top_candidates: 600     # phrases kept in phrases.parquet
+  merge_embedding_cosine: 0.9   # embedding-based merge suggestions only above this
+
+cluster:
+  granularities: [12, 30, 70]   # HDBSCAN min_cluster_size from coarse to fine
+  min_samples: 3
+  umap_neighbors: 15
+  umap_components: 10
+  umap_min_dist: 0.0
+  label_terms: 6
+
+propose:
+  max_topics: 400                       # the best-scored candidates are kept
+  min_topic_size: 5                     # works holding the phrase in title, abstract or TLDR
+  min_specificity: 0.85                 # of a phrase against the background (see mine.py)
+  min_unigram_specificity: 0.99         # a single word must be nearly absent from the background
+  # Words and phrases frequent in titles that are not topics (found by reading the first proposal).
+  # A single word ending in -ed or -ly is never a topic either (accepted, recognized, finitely).
+  exclude_phrases: [whether, follow, back, adding, properties, extended abstract, expressive, head]
+  synonym_jaccard: 0.8                  # two phrases on (nearly) the same works are one topic
+  cluster_match_jaccard: 0.5            # a cluster this close to a topic is evidence, not a new topic
+  subsumption_parent_given_child: 0.7   # P(parent | child) at or above this
+  subsumption_child_given_parent: 0.5   # and P(child | parent) below this
+  min_link_score: 2.0                   # evidence needed for a parent link (weights in propose.py)
+  soft_attach_containment: 0.4          # an orphan joins a larger topic holding this share of it
+  citation_min_share: 0.2               # share of a child's in-corpus citations into the parent
+  max_parents: 3
+  examples_per_topic: 5

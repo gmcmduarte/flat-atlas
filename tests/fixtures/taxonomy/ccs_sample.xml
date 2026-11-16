@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- A tiny, invented SKOS file shaped like ACM's CCS download: it tests the parser only. -->
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+  <skos:Concept rdf:about="https://example.org/ccs/10000001">
+    <skos:prefLabel xml:lang="en">Theory of computation</skos:prefLabel>
+    <skos:narrower rdf:resource="https://example.org/ccs/10000001.10000002"/>
+    <skos:narrower rdf:resource="https://example.org/ccs/10000001.10000009"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="https://example.org/ccs/10000001.10000002">
+    <skos:prefLabel xml:lang="en">Formal languages and automata theory</skos:prefLabel>
+    <skos:broader rdf:resource="https://example.org/ccs/10000001"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="https://example.org/ccs/10000001.10000002.10000003">
+    <skos:prefLabel xml:lang="en">Regular languages</skos:prefLabel>
+    <skos:broader rdf:resource="https://example.org/ccs/10000001.10000002"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="https://example.org/ccs/10000001.10000002.10000004">
+    <skos:prefLabel xml:lang="en">Tree languages</skos:prefLabel>
+    <skos:prefLabel xml:lang="de">Baumsprachen</skos:prefLabel>
+    <skos:broader rdf:resource="https://example.org/ccs/10000001.10000002"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="https://example.org/ccs/10000001.10000009">
+    <skos:prefLabel xml:lang="en">Models of computation</skos:prefLabel>
+    <skos:broader rdf:resource="https://example.org/ccs/10000001"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="https://example.org/ccs/10000001.10000009.10000010">
+    <skos:prefLabel xml:lang="en">Quantum computation theory</skos:prefLabel>
+    <skos:broader rdf:resource="https://example.org/ccs/10000001.10000009"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="https://example.org/ccs/20000000">
+    <skos:prefLabel xml:lang="en">Software and its engineering</skos:prefLabel>
+  </skos:Concept>
+</rdf:RDF>

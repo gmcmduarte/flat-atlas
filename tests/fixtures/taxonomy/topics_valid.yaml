@@ -1,0 +1,33 @@
+taxonomy_version: 1
+topics:
+  - id: regular-languages
+    name: Regular languages
+    aliases: [rational languages]
+    description: Languages recognised by finite automata.
+    parents: []
+    xref: {ccs: [], msc: [68Q45], openalex: []}
+    include_phrases: ["regular language", "finite automaton"]
+    origin: msc
+    reviewed: true
+  - id: context-free-languages
+    name: Context-free languages
+    parents: []
+    include_phrases: ["context-free grammar"]
+    origin: ccs
+  - id: descriptional-complexity
+    name: Descriptional complexity
+    aliases: [state complexity]
+    parents: [regular-languages]
+    include_phrases: ["state complexity", {phrase: "size", context: ["automaton", "grammar"]}]
+    origin: mined
+  - id: shuffle-of-words
+    name: Shuffle of words and languages
+    aliases: [shuffle product]
+    parents: [regular-languages, context-free-languages]
+    include_phrases: ["shuffle of", {phrase: "size", context: ["shuffle"]}]
+    exclude_phrases: ["card shuffl"]
+    origin: mined
+  - id: unary-languages
+    name: Unary languages
+    parents: [descriptional-complexity]
+    origin: cluster
