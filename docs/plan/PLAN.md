@@ -176,14 +176,14 @@ All tables live in `data/warehouse/` as Parquet, queried through DuckDB. Naming:
 
 **`core_stub`**: out-of-scope works that in-scope papers cite or are cited by often. Minimal fields (IDs, title, year). They help scope and propagation but have no pages.
 
-**Local-only (never in a release): `local_abstract(work_id, text, source)`** (one row per work and source; priority OpenAlex, Semantic Scholar, Crossref), **`local_embedding(work_id, model, source, vector FLOAT[768], …)`** (exactly one row per work; `source` is `s2` or `local`, S2 wins). `local_abstract` and `local_embedding` are keyed by `dblp_key` (one row per paper, D-70); the resolve stage adds `local_work_abstract` and `local_work_embedding`, one row per work (D-78), which later stages read.
+**Local-only (never in a release): `local_abstract(work_id, text, source)`** (one row per work and source; priority OpenAlex, Semantic Scholar, Crossref), **`local_work_text(work_id, title, venue, year, reference_titles[], abstract, tldr, abstract_source, n_references, n_references_with_title, text)`** (the composite text of §9.3, one row per work, D-81), **`local_embedding(work_id, model, source, vector FLOAT[768], …)`** (exactly one row per work; `source` is `s2` or `local`, S2 wins). `local_abstract` and `local_embedding` are keyed by `dblp_key` (one row per paper, D-70); the resolve stage adds `local_work_abstract` and `local_work_embedding`, one row per work (D-78), which later stages read.
 Embeddings are derived data under Apache 2.0 / our own computation and *may* be released as a separate optional file (decision D-14).
 
 ### 4.3 Topics
 
 **`taxonomy/topics.yaml`** is the source of truth for the DAG (human-reviewed, in git). The pipeline loads it into:
 
-**`core_topic`**: `topic_id` (slug), `name`, `aliases[]`, `description` (own wording, 1–3 sentences), `level` (0 = top-level bubble), `status` (`active`/`proposed`/`deprecated`), `xref_ccs[]`, `xref_msc[]`, `xref_openalex[]`, `seed_work_ids[]`, `origin` (`ccs`/`msc`/`mined`/`cluster`/`manual`), `reviewed`, `taxonomy_version`.
+**`core_topic`**: `topic_id` (slug), `name`, `aliases[]`, `description` (own wording, 1–3 sentences), `level` (0 = top-level bubble; shortest distance to a root, D-80), `status` (`active`/`proposed`/`deprecated`), `include_phrases[]`, `exclude_phrases[]`, `xref_ccs[]`, `xref_msc[]`, `xref_openalex[]`, `seed_work_ids[]`, `origin` (`ccs`/`msc`/`mined`/`cluster`/`manual`), `reviewed`, `taxonomy_version`.
 
 **`core_topic_edge`**: `src_topic`, `dst_topic`, `edge_type`, `weight`, `confidence`, `provenance`, `evidence` (counts), `year_from`, `year_to`.
 
@@ -450,7 +450,7 @@ For each topic: (1) **phrase dictionary**: `include_phrases` + aliases + mined v
 
 - The 10 references are chosen by a fixed rule (in-corpus references first, then the most cited within the corpus, ties by ID), so the text is deterministic.
 - Abstract and TLDR are local-use data (rule 2): they are read from `local_abstract` and the local S2 table, used in memory, and never exported. The composite text itself is stored only under `warehouse/local/`.
-- Reference titles are public metadata, but only IDs are harvested so far. P1-05 fetches the missing titles through `flatatlas.http` within the free budgets (⚠ route to verify: `references.title` in the S2 batch, or OpenAlex ID batches of 100).
+- Reference titles are public metadata. P1-05 fetched them from OpenAlex in ID batches of 100 (`stg_reference_title`; 97.9 % of the pilot's reference edges have one, D-81). Only OpenAlex references are used; S2 reference lists are IDs only. Titles are cleaned (no volumes, reviews, listings in other scripts, near-duplicates, D-86).
 - **Embeddings:** the Semantic Scholar SPECTER2 vector when there is one (it may have used text we cannot get); otherwise a local SPECTER2 embedding. Whether the local vector of title-only works improves when the reference titles are appended is one small experiment in P1-07, judged on gold-train.
 
 **Signals (per work × topic).** All free.
@@ -748,7 +748,7 @@ data/        (git-ignored) raw/  warehouse/  releases/  reports/  logs/
 4. ~~Semantic Scholar: batch size limit, field name `embedding.specter_v2`~~ (verified in P1-03: 500, `DOI:` prefix only, name confirmed; per-edge `isInfluential` is not available in batch calls). Still open: incremental dataset diffs.
 5. Size of the Crossref public data file. (`dblp.xml.gz`: 1.12 GB, measured 2026-11-15.)
 6. zbMATH Open: MSC codes in the API payload; any numeric rate limit.
-7. ACM CCS reuse terms and the exact node list of the FLAT subtree; MSC code wording.
+7. ACM CCS: reuse terms read on acm.org (free for educational and research use, ACM keeps the copyright; P1-05) the SKOS file was downloaded by hand (the site answers 403 to scripts) and the FLAT subtree read from it (13 concepts, `taxonomy/seeds/ccs.yaml`); MSC code wording is still from memory.
 8. ~~Abstract coverage for DLT/CIAA/DCFS~~ measured in P1-02: 6 % of pilot papers have an abstract from OpenAlex, none from Crossref (`reports/coverage-pilot.md`).
 9. Size of the whole field (150,000–300,000 works): estimate. ~~CPU embedding throughput~~ measured in P1-03 (M1: 9 to 19 texts/s with abstracts, 82 to 119 texts/s titles only).
 10. Current Claude plan limits for Opus vs Sonnet (see WORKFLOW.md §2).

@@ -52,6 +52,28 @@ evidence. Newest first within each source.
 - Per-second rate with a key: not measured (the session made 29 calls at the configured
   10/s; no 429).
 
+- **2026-11-16 (P1-05): titles of cited works.** (a) The route chosen is **OpenAlex ID batches**,
+  `GET /works?filter=openalex:W1|W2|...&select=id,title,publication_year,type&per_page=100`
+  (the filter name `openalex` checked live; 100 IDs per call, USD 0.0001 a call). A probe of
+  100 IDs returned 99 works. The full run asked the **15,135** candidate IDs of
+  `stg_reference_candidates` in **152 calls, USD 0.0152**, and got **14,797** works back (338, or
+  2.2 %, not returned; 1 returned without a title). With the 856 pilot works that are cited by
+  other pilot works, **36,250 of the 37,024 reference edges (97.9 %)** have a title. (b) The S2
+  route (`references.title` in the batch) was not used: it changes every cache key, needs a second
+  pass of about 2 hours at the current throttling, and only 23 % of S2 papers have reference
+  lists at all. (c) **Background titles:** `sample=<n>&seed=<k>&per_page=200&page=<p>` pages like a
+  normal list (page 2 of a 400-sample returned the next 200); 25 calls gave 5,000 works, 4,993
+  with a title. Negated filters work: `primary_topic.id:!T11269` (repeat the filter for each
+  value). Subfield IDs checked: `1703` Computational Theory and Mathematics (954,659 works),
+  `2614` Theoretical Computer Science (90,247). The background is a seeded sample of articles of
+  these two subfields from 1995 to 2025, minus the seven topics most pilot works have as their
+  primary topic (`config/taxonomy.yaml`). It is mathematics-flavoured theory (graphs, matrices,
+  optimisation), a broad contrast rather than a close one.
+- **ACM CCS download:** `https://dl.acm.org/ccs` answered HTTP 403 to an automated fetch (checked
+  2026-11-16), so `flatatlas taxonomy seeds --ccs-file` reads a SKOS file that a person saves from
+  that page (default `data/raw/seeds/acm-ccs.xml`; done on 2026-11-16: 2,113 concepts, 13 kept). The ACM page states that the CCS is free to use
+  for educational and research purposes; ACM keeps the copyright.
+
 ## Semantic Scholar
 
 - **2026-11-16 (P1-03): checked live with our key.** (a) `POST /graph/v1/paper/batch?fields=...`

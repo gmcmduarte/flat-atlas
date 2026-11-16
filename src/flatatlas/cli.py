@@ -38,8 +38,10 @@ from flatatlas.settings import PROJECT_ROOT, load_settings
 from flatatlas.sources import crossref as crossref_src
 from flatatlas.sources import dblp as dblp_parse
 from flatatlas.sources import openalex as openalex_src
+from flatatlas.sources import reftitles as reftitles_src
 from flatatlas.sources import s2 as s2_src
 from flatatlas.status import render_status
+from flatatlas.taxonomy import commands as taxonomy_commands
 from flatatlas.venues import (
     VenueConfigError,
     load_venue_facts,
@@ -83,6 +85,15 @@ groups: dict[str, typer.Typer] = {
 }
 for _group in groups.values():
     app.add_typer(_group)
+
+
+groups["taxonomy"].command("check")(taxonomy_commands.check)
+groups["taxonomy"].command("load")(taxonomy_commands.load)
+groups["taxonomy"].command("seeds")(taxonomy_commands.seeds)
+groups["taxonomy"].command("composite")(taxonomy_commands.composite)
+groups["taxonomy"].command("mine")(taxonomy_commands.mine)
+groups["taxonomy"].command("cluster")(taxonomy_commands.cluster)
+groups["taxonomy"].command("propose")(taxonomy_commands.propose)
 
 
 def _show_version(value: bool) -> None:
@@ -467,6 +478,162 @@ def parse_openalex(
     )
     for row in openalex_src.sample_rows(parsed, show) if show else []:
         typer.echo(json.dumps(row, ensure_ascii=False, indent=1))
+
+
+@groups["harvest"].command("reference-titles")
+def harvest_reference_titles(
+    limit: Annotated[
+        int | None, typer.Option(help="Only the most cited this many candidate works.")
+    ] = None,
+    estimate: Annotated[
+        bool, typer.Option("--estimate", help="Print the calls and the cost, then stop.")
+    ] = False,
+    restart: Annotated[bool, typer.Option(help="Ignore a finished job state.")] = False,
+    profile: ProfileOption = None,
+) -> None:
+    """Fetch the titles of works the pilot papers cite (OpenAlex ID batches, 100 per call).
+
+    Resumable: stop it any time and run the same command again. Run
+    `flatatlas parse reference-titles` afterwards.
+    """
+    settings = load_settings(profile=profile)
+    setup_logging(settings.paths.logs)
+    con = connect(settings.paths)
+    client = SourceClient("openalex", settings)
+    try:
+        _require_tables(
+            con, "stg_reference_candidates", hint="run `flatatlas parse openalex` first"
+        )
+        ids = reftitles_src.candidate_ids(con, limit)
+        est = reftitles_src.estimate(
+            len(ids),
+            client.cfg.batch_size,
+            client.cfg.costs["list"],
+            client.ledger.spent_today_usd(),
+            client.cfg.daily_budget_usd,
+        )
+        typer.echo(f"estimate: {est}")
+        if estimate:
+            return
+        with run_log(con, "harvest-reference-titles") as run:
+            try:
+                stats = reftitles_src.harvest_reference_titles(
+                    con, client, ids, restart=restart, on_progress=typer.echo
+                )
+            finally:
+                run.counts["spent_today_usd"] = round(client.ledger.spent_today_usd(), 6)
+            run.counts.update(stats.as_counts())
+        typer.echo(f"done: {stats.as_counts()}")
+    except BudgetExhausted as exc:
+        typer.echo(f"stopped: {exc} Progress is saved; run the same command again.", err=True)
+        raise typer.Exit(3) from None
+    except SourceError as exc:
+        typer.echo(f"error: {exc}", err=True)
+        raise typer.Exit(1) from None
+    finally:
+        typer.echo(_spend_line(client))
+        client.close()
+        con.close()
+
+
+@groups["parse"].command("reference-titles")
+def parse_reference_titles(profile: ProfileOption = None) -> None:
+    """Parse cached reference-title answers into stg_reference_title (no network)."""
+    settings = load_settings(profile=profile)
+    setup_logging(settings.paths.logs)
+    con = connect(settings.paths)
+    client = SourceClient("openalex", settings)
+    try:
+        _require_tables(
+            con, "stg_reference_candidates", hint="run `flatatlas parse openalex` first"
+        )
+        with run_log(con, "parse-reference-titles") as run:
+            parsed = reftitles_src.parse_reference_titles(con, client)
+            reftitles_src.write_reference_titles(con, settings.paths, parsed["rows"])
+            cov = reftitles_src.coverage(con)
+            run.counts.update({k: v for k, v in cov.items() if not isinstance(v, float)})
+            run.counts["edge_share"] = round(cov["edge_share"], 4)
+            run.counts["candidates"] = parsed["n_candidates"]
+            run.counts["candidates_asked"] = parsed["n_asked"]
+    finally:
+        client.close()
+        con.close()
+    typer.echo(
+        f"candidates asked {parsed['n_asked']} of {parsed['n_candidates']}; "
+        f"references with a title: {cov['edges_with_title']} of {cov['edges']} "
+        f"({cov['edge_share']:.1%}); cited works with a title "
+        f"{cov['cited_works_with_title']} of {cov['cited_works']}; "
+        f"works with at least 10 titled references {cov['works_with_10_titles']} of "
+        f"{cov['works_with_references']}"
+    )
+
+
+@groups["harvest"].command("background-titles")
+def harvest_background_titles(
+    restart: Annotated[bool, typer.Option(help="Ignore a finished job state.")] = False,
+    profile: ProfileOption = None,
+) -> None:
+    """Fetch about 5,000 titles of non-FLAT theory papers once (the contrast set for mining)."""
+    from flatatlas.taxonomy.config import load_config
+
+    settings = load_settings(profile=profile)
+    setup_logging(settings.paths.logs)
+    cfg = load_config()
+    con = connect(settings.paths)
+    client = SourceClient("openalex", settings)
+    try:
+        pages = -(-cfg.background.n_titles // cfg.background.per_page)
+        typer.echo(
+            f"estimate: {pages} calls, about ${pages * client.cfg.costs['list']:.4f}; "
+            f"{_spend_line(client)}"
+        )
+        with run_log(con, "harvest-background-titles") as run:
+            try:
+                stats = reftitles_src.harvest_background_titles(
+                    con,
+                    client,
+                    filter_=cfg.background.filter,
+                    n_titles=cfg.background.n_titles,
+                    per_page=cfg.background.per_page,
+                    seed=cfg.seed,
+                    restart=restart,
+                    on_progress=typer.echo,
+                )
+            finally:
+                run.counts["spent_today_usd"] = round(client.ledger.spent_today_usd(), 6)
+            run.counts.update(stats.as_counts())
+        typer.echo(f"done: {stats.as_counts()}")
+    except BudgetExhausted as exc:
+        typer.echo(f"stopped: {exc} Progress is saved; run the same command again.", err=True)
+        raise typer.Exit(3) from None
+    except SourceError as exc:
+        typer.echo(f"error: {exc}", err=True)
+        raise typer.Exit(1) from None
+    finally:
+        typer.echo(_spend_line(client))
+        client.close()
+        con.close()
+
+
+@groups["parse"].command("background-titles")
+def parse_background_titles(profile: ProfileOption = None) -> None:
+    """Parse the cached background sample into stg_background_title (no network)."""
+    from flatatlas.taxonomy.config import load_config
+
+    settings = load_settings(profile=profile)
+    setup_logging(settings.paths.logs)
+    cfg = load_config()
+    con = connect(settings.paths)
+    client = SourceClient("openalex", settings)
+    try:
+        with run_log(con, "parse-background-titles") as run:
+            rows = reftitles_src.parse_background_titles(client, filter_=cfg.background.filter)
+            reftitles_src.write_background_titles(con, settings.paths, rows)
+            run.counts["titles"] = len(rows)
+    finally:
+        client.close()
+        con.close()
+    typer.echo(f"{len(rows)} background titles")
 
 
 @groups["harvest"].command("crossref")
