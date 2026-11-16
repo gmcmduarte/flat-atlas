@@ -67,6 +67,7 @@ class Response:
     fetched_at: datetime
     from_cache: bool
     url: str  # without any secret
+    request_body: Any = None  # the JSON body of a POST, kept so parse stages know what was asked
 
 
 class TokenBucket:
@@ -256,9 +257,13 @@ class SourceClient:
                     raise SourceError(
                         f"{self.source}: HTTP 200 but the body is not JSON for {shown_url}"
                     ) from None
-                return self._write_cache(key, method, shown_url, status, data, resp.headers, cost)
+                return self._write_cache(
+                    key, method, shown_url, status, data, resp.headers, cost, json_body
+                )
             if status in CACHED_MISSING_STATUSES:
-                return self._write_cache(key, method, shown_url, status, None, resp.headers, cost)
+                return self._write_cache(
+                    key, method, shown_url, status, None, resp.headers, cost, json_body
+                )
             raise SourceError(f"{self.source}: HTTP {status} for {shown_url}")
 
     def cached(self, path: str, params: Mapping[str, Any] | None = None) -> Response | None:
@@ -285,7 +290,14 @@ class SourceClient:
                 )
                 data = json.loads(gzip.decompress(data_path.read_bytes()))
                 fetched_at = datetime.fromisoformat(meta["fetched_at"])
-                yield Response(int(meta["status"]), data, fetched_at, True, str(meta["url"]))
+                yield Response(
+                    int(meta["status"]),
+                    data,
+                    fetched_at,
+                    True,
+                    str(meta["url"]),
+                    meta.get("request_body"),
+                )
             except (OSError, ValueError, KeyError, EOFError):
                 continue
 
@@ -403,7 +415,9 @@ class SourceClient:
             ):
                 return None
             data = json.loads(gzip.decompress(data_path.read_bytes()))
-            return Response(int(meta["status"]), data, fetched_at, True, shown_url)
+            return Response(
+                int(meta["status"]), data, fetched_at, True, shown_url, meta.get("request_body")
+            )
         except (OSError, ValueError, KeyError, EOFError):  # missing or corrupt: refetch
             return None
 
@@ -416,6 +430,7 @@ class SourceClient:
         data: Any,
         headers: httpx.Headers,
         cost: str,
+        body: Any = None,
     ) -> Response:
         fetched_at = self._now()
         data_path, meta_path = self._cache_paths(key)
@@ -427,6 +442,7 @@ class SourceClient:
             "status": status,
             "fetched_at": fetched_at.isoformat(),
             "cost_kind": cost,
+            **({"request_body": body} if body is not None else {}),
             "headers": {
                 k: v
                 for k, v in headers.items()
@@ -437,7 +453,7 @@ class SourceClient:
         # Data first, metadata last: a reader needs both, so a crash in between is just a miss.
         self._atomic_write(data_path, payload)
         self._atomic_write(meta_path, json.dumps(meta, indent=1).encode())
-        return Response(status, data, fetched_at, False, shown_url)
+        return Response(status, data, fetched_at, False, shown_url, body)
 
     @staticmethod
     def _atomic_write(path: Path, payload: bytes) -> None:
