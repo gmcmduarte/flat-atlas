@@ -48,4 +48,4 @@ def test_status_budget_line_reads_the_ledger(settings: Settings, clock):
         settings.paths.raw / "openalex" / "_budget.json", 1.0, now=clock.now, source="openalex"
     )
     ledger.charge(0.0005)
-    assert "openalex: $0.0005 of $1.00" in render_status(settings)
+    assert "openalex: $0.0005 of $1.00" in render_status(settings, now=clock.now)

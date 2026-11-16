@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from datetime import UTC, datetime
 
 import duckdb
@@ -19,7 +20,7 @@ def _table(headers: list[str], rows: list[list[str]]) -> list[str]:
     return ["  " + fmt.format(*headers).rstrip()] + ["  " + fmt.format(*r).rstrip() for r in rows]
 
 
-def _budget_lines(settings: Settings) -> list[str]:
+def _budget_lines(settings: Settings, now: Callable[[], datetime]) -> list[str]:
     lines: list[str] = []
     for name, cfg in settings.sources.items():
         if cfg.daily_budget_usd is None:
@@ -27,7 +28,7 @@ def _budget_lines(settings: Settings) -> list[str]:
         ledger = BudgetLedger(
             settings.paths.raw / name / "_budget.json",
             cfg.daily_budget_usd,
-            now=lambda: datetime.now(UTC),
+            now=now,
             source=name,
         )
         lines.append(
@@ -36,13 +37,15 @@ def _budget_lines(settings: Settings) -> list[str]:
     return lines
 
 
-def render_status(settings: Settings) -> str:
+def render_status(
+    settings: Settings, *, now: Callable[[], datetime] = lambda: datetime.now(UTC)
+) -> str:
     out = [
         f"Profile: {settings.profile.name}",
         f"Data root: {settings.paths.root}",
         "",
         "Budgets",
-        *_budget_lines(settings),
+        *_budget_lines(settings, now),
         "",
     ]
     db_path = settings.paths.warehouse_db
