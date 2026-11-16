@@ -6,10 +6,10 @@ raw material for the draft of `taxonomy/topics.yaml` (P1-06) and for your review
 
 ## Summary
 
-- 348 candidate topics from 2333 works (302 from mined phrases, 46 from clusters no phrase covers).
-- 17 roots (no parent). Levels: level 0: 17, level 1: 183, level 2: 110, level 3: 33, level 4: 5.
-- Parents: 250 topics have a parent backed by evidence, 81 a soft parent (containment only).
-- 30 topics matched an MSC or CCS entry by name; 7 seed entries matched no topic (listed below).
+- 354 candidate topics from 2333 works (308 from mined phrases, 46 from clusters no phrase covers).
+- 18 roots (no parent). Levels: level 0: 18, level 1: 185, level 2: 113, level 3: 33, level 4: 5.
+- Parents: 252 topics have a parent backed by evidence, 84 a soft parent (containment only).
+- 29 topics matched an MSC or CCS entry by name; 7 seed entries matched no topic (listed below).
 - Settings hash `7933e436c3` (`config/taxonomy.yaml`).
 - `taxonomy check` on the proposal: passes.
 
@@ -495,14 +495,15 @@ with the phrase in the title (clusters: the five closest to the cluster centre).
         - example 3: A Tentative Approach for the Wadge-Wagner Hierarchy of Regular Tree Languages of Index [0, 2] (DCFS 2015) `WKKUIH2FBND`
         - example 4: Alignment Distance of Regular Tree Languages (CIAA 2017) `WP5TLBKC4FS`
         - example 5: State Complexity of Regular Tree Languages for Tree Pattern Matching (DCFS 2014) `WV3JET3CHL3`
-    - **Language theory** `language-theory` · size 19 · mined · level 2
-      - parents: Languages (score 2.5: head word, co-assignment; P(parent|child) 1.00, P(child|parent) 0.02)
-      - seeds: CCS 10003752.10003766.10003767.10003768 (Algebraic language theory); CCS 10003752.10003766 (Formal languages and automata theory); MSC 20M35 (Semigroups used in automata theory, languages and combinatorics)
-      - example 1: Well Quasi-orders in Formal Language Theory (DLT 2008) `WOQZA6E2AUY`
-      - example 2: Numeration Systems: A Link between Number Theory and Formal Language Theory (DLT 2010) `W7FF6LCOG5F`
-      - example 3: Can Abstract State Machines Be Useful in Language Theory? (DLT 2006) `WBALOIALKOC`
-      - example 4: The Equational Theory of Fixed Points with Applications to Generalized Language Theory (DLT 2001) `WBAN2WUNWCV`
-      - example 5: Communication Complexity Method for Proving Lower Bounds on Descriptional Complexity in Automata and Formal Language Theory (DCFS 2005) `WJTCI7MUKHG`
+    - **Complexity measures** `complexity-measures` · size 19 · mined · level 2
+      - aliases: complexity measure, complexity-measure
+      - parents: Languages (score 2.5: citations, co-assignment; P(parent|child) 0.74, P(child|parent) 0.02)
+      - seeds: OpenAlex T11269 Algorithms and Data Compression (42%); OpenAlex T12002 Computability, Logic, AI Algorithms (37%)
+      - example 1: The Orthogonality of Some Complexity Measures of Context-Free Languages (DLT 1995) `W4FRQ5SVVLS`
+      - example 2: Sensing as a Complexity Measure (DCFS 2017) `W4IY5GFOL5I`
+      - example 3: Descriptional Complexity and Operations - Two Non-classical Cases (DCFS 2017) `WGKCNV7BIPA`
+      - example 4: Most Complex Non-returning Regular Languages (DCFS 2017) `WEIS5VYEHS5`
+      - example 5: Most Complex Deterministic Union-Free Regular Languages (DCFS 2018) `WPAPWXCPMZ3`
     - **Natural language** `natural-language` · size 19 · mined · level 1
       - aliases: natural languages
       - parents: Languages (score 3.0: head word, co-assignment; P(parent|child) 0.95, P(child|parent) 0.02); Systems (score 2.0: co-assignment; P(parent|child) 0.79, P(child|parent) 0.06)
@@ -600,6 +601,14 @@ with the phrase in the title (clusters: the five closest to the cluster centre).
       - example 3: Language Equations with Complementation (DLT 2006) `WQ4QVBJQSEP`
       - example 4: On Language Equations XXK = XXL and XM = N over a Unary Alphabet (DLT 2010) `WX46V5VOIDP`
       - example 5: Syntactic Semiring and Language Equations (CIAA 2002) `W7U5M2LWT2P`
+    - **Pattern languages** `pattern-languages` · size 12 · mined · level 2
+      - parents: Languages (score 3.0: head word, co-assignment; P(parent|child) 1.00, P(child|parent) 0.01)
+      - seeds: OpenAlex T11269 Algorithms and Data Compression (42%); OpenAlex T12002 Computability, Logic, AI Algorithms (42%)
+      - example 1: Regular and Context-Free Pattern Languages over Small Alphabets (DLT 2012) `WQJXNJH32FH`
+      - example 2: Closure Properties of Pattern Languages (DLT 2014) `W3Y4U3H5JBJ`
+      - example 3: The Teaching Complexity of Erasing Pattern Languages with Bounded Variable Frequency (DLT 2019) `WLPMFTMWPI5`
+      - example 4: Bad News on Decision Problems for Patterns (DLT 2008) `WVD23O6SBOJ`
+      - example 5: Unambiguous Morphic Images of Strings (DLT 2005) `WQRBS2EOYSS`
     - **Picture languages** `picture-languages` · size 12 · mined · level 2
       - aliases: picture language
       - parents: Languages (score 3.0: head word, co-assignment; P(parent|child) 1.00, P(child|parent) 0.01)
@@ -722,15 +731,6 @@ with the phrase in the title (clusters: the five closest to the cluster centre).
       - example 3: Finite State Recognizability for Two-Dimensional Languages: A Brief Survey (DLT 1995) `WBPPQDML75R`
       - example 4: Regular Expressions for Two-Dimensional Languages Over One-Letter Alphabet (DLT 2004) `WFFUHEE3TBA`
       - example 5: Two-Dimensional Languages and Recognizable Functions (DLT 1993) `WKB4C5NHN7X`
-    - **Language recognition** `language-recognition` · size 7 · mined · level 2
-      - parents: Languages (score 2.5: head word, co-assignment; P(parent|child) 1.00, P(child|parent) 0.01); Quantum (score 2.0: co-assignment; P(parent|child) 0.71, P(child|parent) 0.05)
-      - also under: Quantum
-      - seeds: OpenAlex T11567 semigroups and automata theory (29%); OpenAlex T12002 Computability, Logic, AI Algorithms (29%)
-      - example 1: Energy Complexity of Regular Language Recognition (CIAA 2022) `WFNNEZKKI55`
-      - example 2: Sublinear-Time Language Recognition and Decision by One-Dimensional Cellular Automata (DLT 2020) `WHUPXAM3LU3`
-      - example 3: Towards Robustness in Parsing - Fuzzifying Context-Free Language Recognition (DLT 1995) `WRXK3H23WB6`
-      - example 4: Classical Automata on Promise Problems (DCFS 2014) `WAFHPAGWSHT`
-      - example 5: Deleting Automata with a Restart Operation (DLT 1997) `W65FRN437QI`
     - **Rational languages** `rational-languages` · size 6 · mined · level 2
       - aliases: rational language
       - parents: Languages (score 3.0: head word, co-assignment; P(parent|child) 1.00, P(child|parent) 0.01)
@@ -877,6 +877,14 @@ with the phrase in the title (clusters: the five closest to the cluster centre).
       - example 3: Reset Complexity of Ideal Languages Over a Binary Alphabet (DCFS 2017) `WOOGXKIQSBA`
       - example 4: Fibonacci Pictures on a Binary Alphabet (DCFS 2025) `WPD2PNQGGC5`
       - example 5: Tight Bounds for NFA to DFCA Transformations for Binary Alphabets (CIAA 2004) `WX5AVQXXMEN`
+    - **One-letter** `one-letter` · size 10 · mined · level 2
+      - parents: Alphabet (score 2.0: co-assignment; P(parent|child) 1.00, P(child|parent) 0.06)
+      - seeds: OpenAlex T11269 Algorithms and Data Compression (40%); OpenAlex T12002 Computability, Logic, AI Algorithms (40%)
+      - example 1: The Power of One-Letter Rational Languages (DLT 2001) `WPQEL5OSVY4`
+      - example 2: Unambiguous Conjunctive Grammars over a One-Letter Alphabet (DLT 2013) `WDCPP4V6Z52`
+      - example 3: Regular Expressions for Two-Dimensional Languages Over One-Letter Alphabet (DLT 2004) `WFFUHEE3TBA`
+      - example 4: Describing Periodicity in Two-Way Deterministic Finite Automata Using Transformation Semigroups (DLT 2011) `W4ZOKB7LFN5`
+      - example 5: Limited Automata and Regular Languages (DCFS 2013) `W2W6RW4MXBR`
   - **Nondeterministic** `nondeterministic` · size 175 · mined · level 1
     - parents: Automata (score 2.0: co-assignment; P(parent|child) 0.77, P(child|parent) 0.14)
     - seeds: OpenAlex T11269 Algorithms and Data Compression (58%)
@@ -1243,7 +1251,6 @@ with the phrase in the title (clusters: the five closest to the cluster centre).
       - example 4: On Finite and Polynomial Ambiguity of Weighted Tree Automata (DLT 2016) `WJ2MMI45TNF`
       - example 5: On Weakly Ambiguous Finite Transducers (DLT 2006) `W655CRPX6WP`
     - **Multiplicities** `multiplicities` · size 20 · cluster · level 2
-      - aliases: minimality
       - parents: Alternating (score 3.0: nested clusters, co-assignment; P(parent|child) 1.00, P(child|parent) 0.21)
       - seeds: OpenAlex T11269 Algorithms and Data Compression (35%)
       - clusters: g12-c47 (1.00)
@@ -1455,6 +1462,16 @@ with the phrase in the title (clusters: the five closest to the cluster centre).
     - example 3: Extended Temporal Logic on Finite Words and Wreath Product of Monoids with Distinguished Generators (DLT 2002) `WSUKECVOJCV`
     - example 4: On Deterministic Finite Automata and Syntactic Monoid Size, Continued (DLT 2003) `WT3RVXI3MMN`
     - example 5: Decidability and Complexity in Automatic Monoids (DLT 2004) `WCQKHIOZHJF`
+    - **Syntactic monoid** `syntactic-monoid` · size 12 · mined · level 2
+      - aliases: syntactic monoids
+      - parents: Monoids (score 3.0: head word, co-assignment; P(parent|child) 1.00, P(child|parent) 0.22); Languages (score 2.0: co-assignment; P(parent|child) 0.83, P(child|parent) 0.01)
+      - also under: Languages
+      - seeds: OpenAlex T11269 Algorithms and Data Compression (50%); OpenAlex T11727 Advanced Algebra and Logic (42%)
+      - example 1: On Deterministic Finite Automata and Syntactic Monoid Size (DLT 2002) `WLGOE5QUBGZ`
+      - example 2: On Deterministic Finite Automata and Syntactic Monoid Size, Continued (DLT 2003) `WT3RVXI3MMN`
+      - example 3: Partially-Ordered Two-Way Automata: A New Characterization of DA (DLT 2001) `W3TELLLEUJ5`
+      - example 4: Descriptional Complexity of Biautomata (DCFS 2012) `W2SNICVJWAA`
+      - example 5: Biautomata for k-Piecewise Testable Languages (DLT 2012) `WINZQCD6DUG`
     - **Free monoids** `free-monoids` · size 8 · mined · level 2
       - aliases: free monoid
       - parents: Monoids (score 3.0: head word, co-assignment; P(parent|child) 1.00, P(child|parent) 0.14)
@@ -1508,8 +1525,8 @@ with the phrase in the title (clusters: the five closest to the cluster centre).
     - example 3: On the Uniform Random Generation of Non Deterministic Automata Up to Isomorphism (CIAA 2015) `WREPBRM6DCC`
     - example 4: Brzozowski Algorithm Is Generically Super-Polynomial for Deterministic Automata (DLT 2013) `WIF6KCI5NAN`
     - example 5: Testing Whether a Binary and Prolongeable Regular Language LIs Geometrical or Not on the Minimal Deterministic Automaton of Pref(L) (CIAA 2008) `WAYBSB7MEKY`
-  - **Minimal** `minimal` · size 41 · cluster · level 1
-    - aliases: minimizing, log
+  - **Minimization** `minimization` · size 41 · cluster · level 1
+    - aliases: minimal, minimizing
     - parents: Automata (score 2.0: co-assignment; P(parent|child) 0.85, P(child|parent) 0.04)
     - seeds: OpenAlex T11269 Algorithms and Data Compression (63%)
     - clusters: g30-c8 (1.00), g12-c13 (1.00)
@@ -1519,7 +1536,7 @@ with the phrase in the title (clusters: the five closest to the cluster centre).
     - example 4: Better Hyper-minimization - Not as Fast, But Fewer Errors (CIAA 2010) `WKIRYVN3JXQ`
     - example 5: An nlogn Algorithm for Hyper-minimizing States in a (Minimized) Deterministic Automaton (CIAA 2009) `WTSE23KLR4S`
     - **Hopcroft** `hopcroft` · size 7 · mined · level 2
-      - parents: Minimal (score 2.0: co-assignment; P(parent|child) 0.86, P(child|parent) 0.15)
+      - parents: Minimization (score 2.0: co-assignment; P(parent|child) 0.86, P(child|parent) 0.15)
       - seeds: OpenAlex T11269 Algorithms and Data Compression (86%)
       - example 1: On the Complexity of Hopcroft's State Minimization Algorithm (CIAA 2004) `W7DOQV5M4EG`
       - example 2: Around Hopcroft's Algorithm (CIAA 2006) `WOVQA6OKRKN`
@@ -1801,6 +1818,14 @@ with the phrase in the title (clusters: the five closest to the cluster centre).
     - example 3: The Power of Regularity-Preserving Multi Bottom-up Tree Transducers (CIAA 2014) `W26ZHPRKBNG`
     - example 4: Extended Multi Bottom-Up Tree Transducers (DLT 2008) `WIL7K4UPQWB`
     - example 5: The Bottom-Up Position Tree Automaton and Its Compact Version (CIAA 2018) `WRLA2QQ2YOM`
+  - **Computational complexity** `computational-complexity` · size 19 · mined · level 1
+    - parents: Automata (soft: holds 58% of this topic's works)
+    - seeds: OpenAlex T11269 Algorithms and Data Compression (58%)
+    - example 1: On the State and Computational Complexity of the Reverse of Acyclic Minimal DFAs (CIAA 2012) `W75FSFBN4UH`
+    - example 2: Nondeterministic Finite Automata-Recent Results on the Descriptional and Computational Complexity (CIAA 2008) `WZKA4CZTTGG`
+    - example 3: On Computational Complexity of Set Automata (DLT 2017) `WR6U6AEQZE4`
+    - example 4: On the Computational Complexity of Problems Related to Distinguishability Sets (DCFS 2015) `W2LDPHVEU74`
+    - example 5: Computational Complexity of Decision Problems on Self-verifying Finite Automata (DLT 2018) `WCY4FAJSTS6`
   - **Determinization** `determinization` · size 19 · mined · level 1
     - aliases: determinisation
     - parents: Automata (score 2.0: co-assignment; P(parent|child) 0.84, P(child|parent) 0.02)
@@ -1860,6 +1885,15 @@ with the phrase in the title (clusters: the five closest to the cluster centre).
       - example 2: Determinization of Glushkov Automata (WIA 1998) `WBRKJUXBFHS`
       - example 3: The Average Transition Complexity of Glushkov and Partial Derivative Automata (DLT 2011) `WDOEMPVU6OZ`
       - example 4: Star Normal Form, Rational Expressions, and Glushkov WFAs Properties (CIAA 2002) `WXWJK4J74NU`
+      - example 5: From Glushkov WFAs to Rational Expressions (DLT 2003) `WVH2RG72526`
+    - **Glushkov automata** `glushkov-automata` · size 5 · mined · level 2
+      - aliases: glushkov automaton
+      - parents: Construction (score 2.0: co-assignment; P(parent|child) 0.80, P(child|parent) 0.23)
+      - seeds: OpenAlex T11269 Algorithms and Data Compression (100%)
+      - example 1: Determinization of Glushkov Automata (WIA 1998) `WBRKJUXBFHS`
+      - example 2: A New Quadratic Algorithm to Convert a Regular Expression into an Automaton (WIA 1996) `WSEIVIX5TTQ`
+      - example 3: Star Normal Form, Rational Expressions, and Glushkov WFAs Properties (CIAA 2002) `WXWJK4J74NU`
+      - example 4: On the Uniform Distribution of Regular Expressions (DCFS 2021) `WY3J3SE5WCF`
       - example 5: From Glushkov WFAs to Rational Expressions (DLT 2003) `WVH2RG72526`
   - **Determinism** `determinism` · size 17 · mined · level 1
     - parents: Automata (soft: holds 59% of this topic's works)
@@ -2014,6 +2048,14 @@ with the phrase in the title (clusters: the five closest to the cluster centre).
     - example 3: Two-Dimensional Pattern Matching Against Basic Picture Languages (CIAA 2019) `W2BUBQ3HPOM`
     - example 4: Recognition of Labeled Multidigraphs by Spanning Tree Automata (CIAA 2014) `WAWW4O7IE55`
     - example 5: Constrained Synchronization and Subset Synchronization Problems for Weakly Acyclic Automata (DLT 2021) `WDXL652XU67`
+  - **Syntax** `syntax` · size 10 · mined · level 1
+    - parents: Automata (soft: holds 60% of this topic's works)
+    - seeds: OpenAlex T11269 Algorithms and Data Compression (40%); OpenAlex T10126 Logic, programming, and type systems (30%)
+    - example 1: On the Syntax, Semantics, and Implementation of a Graph-Based Computational Environment (WIA 1998) `WJ7KSUS5EWJ`
+    - example 2: Syntax Checking Either Way (CIAA 2022) `WL5W3WXQECJ`
+    - example 3: Reversible Top-Down Syntax Analysis (DLT 2021) `WXQVXMJH7WZ`
+    - example 4: From Ambiguous Regular Expressions to Deterministic Parsing Automata (CIAA 2015) `W4R374YYU2K`
+    - example 5: Yakyak: parsing with logical side constraints (DLT 1999) `WYOOX63FL3D`
   - **Automata-theoretic** `automata-theoretic` · size 9 · mined · level 1
     - aliases: automaton theoretic
     - parents: Automata (soft: holds 67% of this topic's works)
@@ -2197,14 +2239,6 @@ with the phrase in the title (clusters: the five closest to the cluster centre).
     - example 3: Universally Wheeler Languages (DLT 2025) `WDLL3BDOAGE`
     - example 4: Scattered Context-Free Linear Orderings (DLT 2011) `WUYRJNYNCMA`
     - example 5: Limited Nondeterminism of Input-Driven Pushdown Automata: Decidability and Complexity (DCFS 2019) `WVW43FOZ5SD`
-  - **Local testability** `local-testability` · size 6 · mined · level 1
-    - parents: Automata (score 2.0: co-assignment; P(parent|child) 1.00, P(child|parent) 0.01)
-    - seeds: OpenAlex T11269 Algorithms and Data Compression (100%)
-    - example 1: Strict Local Testability with Consensus Equals Regularity (CIAA 2012) `WI33ILSCINO`
-    - example 2: A Precise Estimation of the Order of Local Testability of a Deterministic Finite Automaton (WIA 1997) `WQ5RZHMQ4CV`
-    - example 3: A Polynomial Time Algorithm for Left [Right] Local Testability (CIAA 2002) `WZV4ZLA35BD`
-    - example 4: From Ambiguous Regular Expressions to Deterministic Parsing Automata (CIAA 2015) `W4R374YYU2K`
-    - example 5: A Package TESTAS for Checking Some Kinds of Testability (CIAA 2002) `WTHRVFPRDYG`
   - **Minimal acyclic** `minimal-acyclic` · size 6 · mined · level 1
     - parents: Automata (score 2.0: co-assignment; P(parent|child) 0.83, P(child|parent) 0.01); Words (score 2.0: co-assignment; P(parent|child) 0.83, P(child|parent) 0.01)
     - also under: Words
@@ -2316,8 +2350,8 @@ with the phrase in the title (clusters: the five closest to the cluster centre).
     - example 3: On the Grammatical Complexity of Finite Languages (DCFS 2018) `W677FWSMCCF`
     - example 4: On the Mother of All Automata: The Position Automaton (DLT 2017) `WELYEL6N5JM`
     - example 5: Weak cyclic forms of rw-automata (DLT 1999) `WPSY77MCWWY`
-  - **Toolkit** `toolkit` · size 5 · mined · level 1
-    - aliases: toolkits
+  - **Toolkits** `toolkits` · size 5 · mined · level 1
+    - aliases: toolkit
     - parents: Automata (score 2.0: co-assignment; P(parent|child) 0.80, P(child|parent) 0.00)
     - seeds: OpenAlex T11269 Algorithms and Data Compression (60%); OpenAlex T11567 semigroups and automata theory (40%)
     - example 1: Tiburon: A Weighted Tree Automata Toolkit (CIAA 2006) `W44HQEAGZ5J`
@@ -2422,16 +2456,16 @@ with the phrase in the title (clusters: the five closest to the cluster centre).
       - example 3: One-Unknown Word Equations and Three-Unknown Constant-Free Word Equations (DLT 2016) `WBNJXMPHUAA`
       - example 4: Recompression: Word Equations and Beyond (DLT 2013) `WJ5MYR65TDB`
       - example 5: Word Equations in the Context of String Solving (DLT 2022) `WVZCKSO5PXQ`
-    - **Collapsing words** `collapsing-words` · size 6 · mined · level 1
-      - aliases: collapsing word
-      - parents: Words (score 3.0: head word, co-assignment; P(parent|child) 1.00, P(child|parent) 0.02); Sequences (score 2.0: co-assignment; P(parent|child) 0.83, P(child|parent) 0.01)
+    - **Lyndon words** `lyndon-words` · size 7 · mined · level 1
+      - aliases: lyndon word
+      - parents: Words (score 3.0: head word, co-assignment; P(parent|child) 1.00, P(child|parent) 0.02); Sequences (score 2.0: co-assignment; P(parent|child) 0.86, P(child|parent) 0.02)
       - also under: Sequences
-      - seeds: OpenAlex T11269 Algorithms and Data Compression (100%)
-      - example 1: Collapsing Words vs. Synchronizing Words (DLT 2001) `W3Q2YOVU3CU`
-      - example 2: An Inverse Automata Algorithm for Recognizing 2-Collapsing Words (DLT 2002) `W5SQIJ3MIF3`
-      - example 3: Collapsing Words: A Progress Report (DLT 2005) `WAVFXSUZZBL`
-      - example 4: On Some Properties of the Language of 2-Collapsing Words (DLT 2005) `WXEZHBOH5WS`
-      - example 5: Recognizing Collapsing Words is co-NP-Complete (DCFS 2006) `WS67AL4XY32`
+      - seeds: OpenAlex T11269 Algorithms and Data Compression (57%)
+      - example 1: Suffixes, Conjugates and Lyndon Words (DLT 2013) `WEKGHMRZG3G`
+      - example 2: Lyndon Words Formalized in Isabelle/HOL (DLT 2021) `WJM4IDZ6TDA`
+      - example 3: Transfinite Lyndon Words (DLT 2015) `WQWJUVBLNWR`
+      - example 4: The Average Lengths of the Factors of the Standard Factorization of Lyndon Words (DLT 2002) `WS6YCRI3DFV`
+      - example 5: On Prefix Normal Words (DLT 2011) `W5CL4J7RGGF`
   - **Groups** `groups` · size 51 · cluster · level 1
     - aliases: finitely, codes
     - parents: Sequences (score 3.0: nested clusters, co-assignment; P(parent|child) 1.00, P(child|parent) 0.14)
@@ -2489,7 +2523,7 @@ with the phrase in the title (clusters: the five closest to the cluster centre).
     - example 4: On a Generalization of Standard Episturmian Morphisms (DLT 2008) `W65TVLEDODE`
     - example 5: An Undecidability Result Concerning Periodic Morphisms (DLT 2001) `WDJIXAQHKVI`
   - **Abelian** `abelian` · size 28 · cluster · level 1
-    - aliases: binary, avoidable
+    - aliases: avoidable, binary
     - parents: Sequences (score 3.0: nested clusters, co-assignment; P(parent|child) 1.00, P(child|parent) 0.07); Words (score 2.0: co-assignment; P(parent|child) 0.71, P(child|parent) 0.05)
     - also under: Words
     - seeds: OpenAlex T11269 Algorithms and Data Compression (93%)
@@ -2644,6 +2678,14 @@ with the phrase in the title (clusters: the five closest to the cluster centre).
     - example 3: Repetitions in Kolakoski Sequence (DLT 1993) `WC7KKO7X2EC`
     - example 4: Repetition Avoidance in Circular Factors (DLT 2013) `WFOD7QUW4L5`
     - example 5: Upper Bounds on Distinct Maximal (Sub-)Repetitions in Compressed Strings (DLT 2021) `WHXLAPN6PBT`
+  - **Computational completeness** `computational-completeness` · size 9 · mined · level 1
+    - parents: Sequences (soft: holds 56% of this topic's works)
+    - seeds: OpenAlex T12002 Computability, Logic, AI Algorithms (56%)
+    - example 1: Parsimonious Computational Completeness (DLT 2021) `W6ZMNOKGQTE`
+    - example 2: Computational Completeness of Path-Structured Graph-Controlled Insertion-Deletion Systems (CIAA 2017) `W3ORGBGAD6J`
+    - example 3: Computational Completeness of Networks of Evolutionary Processors with Elementary Polarizations and a Small Number of Processors (DCFS 2017) `WB5VI7X25OI`
+    - example 4: Computational Completeness of Hybrid Networks of Evolutionary Processors with Seven Nodes (DCFS 2008) `WVJI4DSDFY5`
+    - example 5: Graph-Controlled Insertion-Deletion Systems (DCFS 2010) `WBV5DVGPMNE`
   - **Power-free** `power-free` · size 8 · mined · level 1
     - parents: Sequences (soft: holds 62% of this topic's works)
     - seeds: OpenAlex T11269 Algorithms and Data Compression (100%)
@@ -3047,6 +3089,16 @@ with the phrase in the title (clusters: the five closest to the cluster centre).
     - example 3: A Ciliate Bio-operation and Language Families (DLT 2004) `W6DNOQGB7VH`
     - example 4: Ciliate Gene Unscrambling with Fewer Templates (DCFS 2010) `WFXMLFY5BOM`
     - example 5: Simulating the Process of Gene Assembly in Ciliates (CIAA 2004) `WKBJDDDEECT`
+
+- **Finite set** `finite-set` · size 23 · mined · level 0
+  - aliases: finite sets
+  - parents: none (root)
+  - seeds: OpenAlex T11269 Algorithms and Data Compression (56%)
+  - example 1: State Complexity and the Monoid of Transformations of a Finite Set (CIAA 2004) `WMUMQJ6WVZ6`
+  - example 2: Well Quasi Orders and the Shuffle Closure of Finite Sets (DLT 2006) `WYC25SZK5XV`
+  - example 3: Automata to Recognize Finite and Infinite Words with at Least Two Factorizations on a Given Finite Set (WIA 1998) `WN7HXMYOIA6`
+  - example 4: The Average State Complexity of the Star of a Finite Set of Words Is Linear (DLT 2008) `WWXSHBHVMDA`
+  - example 5: Finding Common Motifs with Gaps Using Finite Automata (CIAA 2006) `WOECMVFNDLE`
 
 - **Fragments** `fragments` · size 19 · mined · level 0
   - aliases: fragment

@@ -450,7 +450,7 @@ For each topic: (1) **phrase dictionary**: `include_phrases` + aliases + mined v
 
 - The 10 references are chosen by a fixed rule (in-corpus references first, then the most cited within the corpus, ties by ID), so the text is deterministic.
 - Abstract and TLDR are local-use data (rule 2): they are read from `local_abstract` and the local S2 table, used in memory, and never exported. The composite text itself is stored only under `warehouse/local/`.
-- Reference titles are public metadata. P1-05 fetched them from OpenAlex in ID batches of 100 (`stg_reference_title`; 97.9 % of the pilot's reference edges have one, D-81). Only OpenAlex references are used; S2 reference lists are IDs only.
+- Reference titles are public metadata. P1-05 fetched them from OpenAlex in ID batches of 100 (`stg_reference_title`; 97.9 % of the pilot's reference edges have one, D-81). Only OpenAlex references are used; S2 reference lists are IDs only. Titles are cleaned (no volumes, reviews, listings in other scripts, near-duplicates, D-86).
 - **Embeddings:** the Semantic Scholar SPECTER2 vector when there is one (it may have used text we cannot get); otherwise a local SPECTER2 embedding. Whether the local vector of title-only works improves when the reference titles are appended is one small experiment in P1-07, judged on gold-train.
 
 **Signals (per work × topic).** All free.

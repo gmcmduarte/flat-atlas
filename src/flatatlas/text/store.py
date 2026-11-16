@@ -80,9 +80,9 @@ def load_inputs(
             tldr[wid] = s2_tldr[corpus]
 
     titles = {
-        oid: (title, source == "pilot")
-        for oid, title, source in con.execute(
-            "SELECT openalex_id, title, source FROM stg_reference_title"
+        oid: (title, source == "pilot", kind)
+        for oid, title, source, kind in con.execute(
+            "SELECT openalex_id, title, source, type FROM stg_reference_title"
         ).fetchall()
     }
     cited_by_pilot = dict(
@@ -102,10 +102,9 @@ def load_inputs(
         refs = []
         for oid in sorted(oa_ids.get(wid, ())):
             for cited in refs_of.get(oid, ()):
-                ref_title, in_corpus = titles.get(cited, (None, False))
-                refs.append(
-                    Reference(cited, ref_title, in_corpus, int(cited_by_pilot.get(cited, 0)))
-                )
+                ref_title, in_corpus, kind = titles.get(cited, (None, False, None))
+                n_citing = int(cited_by_pilot.get(cited, 0))
+                refs.append(Reference(cited, ref_title, in_corpus, n_citing, kind))
         source, text = abstracts.get(wid, (None, None))
         out.append(
             WorkInputs(

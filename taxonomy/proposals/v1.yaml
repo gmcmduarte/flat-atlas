@@ -5,8 +5,8 @@ topics:
 - id: abelian
   name: Abelian
   aliases:
-  - binary
   - avoidable
+  - binary
   description: ''
   parents:
   - sequences
@@ -18,8 +18,8 @@ topics:
     - T11269
   include_phrases:
   - abelian
-  - binary
   - avoidable
+  - binary
   exclude_phrases: []
   seed_works: []
   origin: cluster
@@ -87,7 +87,7 @@ topics:
   status: proposed
   evidence:
     size: 13
-    score: 3.045
+    score: 3.073
     specificity: 1.0
     phrase_keys:
     - acceptor
@@ -243,7 +243,7 @@ topics:
   status: proposed
   evidence:
     size: 182
-    score: 4.099
+    score: 4.114
     specificity: 1.0
     phrase_keys:
     - alphabet
@@ -466,7 +466,7 @@ topics:
   status: proposed
   evidence:
     size: 18
-    score: 2.918
+    score: 2.934
     specificity: 1.0
     phrase_keys:
     - ambiguous
@@ -853,7 +853,7 @@ topics:
   status: proposed
   evidence:
     size: 9
-    score: 3.414
+    score: 3.444
     specificity: 1.0
     phrase_keys:
     - automaton theoretic
@@ -908,7 +908,7 @@ topics:
   status: proposed
   evidence:
     size: 29
-    score: 5.044
+    score: 5.034
     specificity: 1.0
     phrase_keys:
     - automaton theory
@@ -977,7 +977,7 @@ topics:
   status: proposed
   evidence:
     size: 6
-    score: 2.991
+    score: 2.976
     specificity: 1.0
     phrase_keys:
     - automatic sequence
@@ -1035,7 +1035,7 @@ topics:
   status: proposed
   evidence:
     size: 9
-    score: 2.97
+    score: 3.016
     specificity: 1.0
     phrase_keys:
     - automaton construction
@@ -1707,7 +1707,7 @@ topics:
   status: proposed
   evidence:
     size: 33
-    score: 3.674
+    score: 3.704
     specificity: 1.0
     phrase_keys:
     - cellular automaton
@@ -1978,7 +1978,7 @@ topics:
   status: proposed
   evidence:
     size: 8
-    score: 2.379
+    score: 2.407
     specificity: 1.0
     phrase_keys:
     - ciliate
@@ -2032,8 +2032,8 @@ topics:
   status: proposed
   evidence:
     size: 5
-    score: 2.247
-    specificity: 0.9574000239372253
+    score: 2.275
+    specificity: 0.9585000276565552
     phrase_keys:
     - circuit complexity
     clusters: []
@@ -2181,7 +2181,7 @@ topics:
   status: proposed
   evidence:
     size: 29
-    score: 2.067
+    score: 2.14
     specificity: 1.0
     phrase_keys:
     - closure property
@@ -2210,66 +2210,6 @@ topics:
       title: Multi-Return Macro Tree Transducers
     - work: WOHBDWH5SJB
       title: On the Size Complexity of Rotating and Sweeping Automata
-- id: collapsing-words
-  name: Collapsing words
-  aliases:
-  - collapsing word
-  description: ''
-  parents:
-  - words
-  - sequences
-  xref:
-    ccs: []
-    msc: []
-    openalex:
-    - T11269
-  include_phrases:
-  - collapsing words
-  - collapsing word
-  exclude_phrases: []
-  seed_works: []
-  origin: mined
-  reviewed: false
-  status: proposed
-  evidence:
-    size: 6
-    score: 1.946
-    specificity: 1.0
-    phrase_keys:
-    - collapsing word
-    clusters: []
-    seeds: []
-    openalex_topics:
-    - id: T11269
-      name: Algorithms and Data Compression
-      share: 1.0
-    parent_links:
-    - parent: words
-      score: 3.0
-      evidence:
-        head: 1.0
-        subsumption: 2.0
-      p_parent_given_child: 1.0
-      p_child_given_parent: 0.016
-      soft: false
-    - parent: sequences
-      score: 2.0
-      evidence:
-        subsumption: 2.0
-      p_parent_given_child: 0.833
-      p_child_given_parent: 0.013
-      soft: false
-    examples:
-    - work: W3Q2YOVU3CU
-      title: Collapsing Words vs. Synchronizing Words
-    - work: W5SQIJ3MIF3
-      title: An Inverse Automata Algorithm for Recognizing 2-Collapsing Words
-    - work: WAVFXSUZZBL
-      title: 'Collapsing Words: A Progress Report'
-    - work: WXEZHBOH5WS
-      title: On Some Properties of the Language of 2-Collapsing Words
-    - work: WS67AL4XY32
-      title: Recognizing Collapsing Words is co-NP-Complete
 - id: combinatorics
   name: Combinatorics
   aliases: []
@@ -2291,7 +2231,7 @@ topics:
   status: proposed
   evidence:
     size: 15
-    score: 4.089
+    score: 4.094
     specificity: 0.9925000071525574
     phrase_keys:
     - combinatorics
@@ -2604,6 +2544,64 @@ topics:
       title: Infinite trajectories
     - work: WQ5E4BNQKXT
       title: The degree of parallelism
+- id: complexity-measures
+  name: Complexity measures
+  aliases:
+  - complexity measure
+  - complexity-measure
+  description: ''
+  parents:
+  - languages
+  xref:
+    ccs: []
+    msc: []
+    openalex:
+    - T11269
+    - T12002
+  include_phrases:
+  - complexity measures
+  - complexity measure
+  - complexity-measure
+  exclude_phrases: []
+  seed_works: []
+  origin: mined
+  reviewed: false
+  status: proposed
+  evidence:
+    size: 19
+    score: 2.054
+    specificity: 1.0
+    phrase_keys:
+    - complexity measure
+    clusters: []
+    seeds: []
+    openalex_topics:
+    - id: T11269
+      name: Algorithms and Data Compression
+      share: 0.421
+    - id: T12002
+      name: Computability, Logic, AI Algorithms
+      share: 0.368
+    parent_links:
+    - parent: languages
+      score: 2.5
+      evidence:
+        citation: 0.5
+        subsumption: 2.0
+      p_parent_given_child: 0.737
+      p_child_given_parent: 0.016
+      soft: false
+    examples:
+    - work: W4FRQ5SVVLS
+      title: The Orthogonality of Some Complexity Measures of Context-Free Languages
+    - work: W4IY5GFOL5I
+      title: Sensing as a Complexity Measure
+    - work: WGKCNV7BIPA
+      title: Descriptional Complexity and Operations - Two Non-classical Cases
+    - work: WEIS5VYEHS5
+      title: Most Complex Non-returning Regular Languages
+    - work: WPAPWXCPMZ3
+      title: Most Complex Deterministic Union-Free Regular Languages
 - id: complexity-of-deterministic
   name: Complexity of deterministic
   aliases: []
@@ -2682,7 +2680,7 @@ topics:
   status: proposed
   evidence:
     size: 5
-    score: 2.874
+    score: 2.89
     specificity: 1.0
     phrase_keys:
     - complexity of finite automaton
@@ -2737,7 +2735,7 @@ topics:
   status: proposed
   evidence:
     size: 6
-    score: 3.456
+    score: 3.493
     specificity: 1.0
     phrase_keys:
     - complexity of regular language
@@ -2822,6 +2820,103 @@ topics:
       title: Rule Space Transformations and One-Dimensional Cellular Automata
     - work: WOMHE5GQRUJ
       title: The Kind Hearted Dragon Prof. Sheng Yu, 1950-2012
+- id: computational-completeness
+  name: Computational completeness
+  aliases: []
+  description: ''
+  parents:
+  - sequences
+  xref:
+    ccs: []
+    msc: []
+    openalex:
+    - T12002
+  include_phrases:
+  - computational completeness
+  exclude_phrases: []
+  seed_works: []
+  origin: mined
+  reviewed: false
+  status: proposed
+  evidence:
+    size: 9
+    score: 1.96
+    specificity: 1.0
+    phrase_keys:
+    - computational completeness
+    clusters: []
+    seeds: []
+    openalex_topics:
+    - id: T12002
+      name: Computability, Logic, AI Algorithms
+      share: 0.556
+    parent_links:
+    - parent: sequences
+      score: 0.0
+      evidence: {}
+      p_parent_given_child: 0.556
+      p_child_given_parent: 0.013
+      soft: true
+    examples:
+    - work: W6ZMNOKGQTE
+      title: Parsimonious Computational Completeness
+    - work: W3ORGBGAD6J
+      title: Computational Completeness of Path-Structured Graph-Controlled Insertion-Deletion Systems
+    - work: WB5VI7X25OI
+      title: Computational Completeness of Networks of Evolutionary Processors with Elementary Polarizations
+        and a Small Number of Processors
+    - work: WVJI4DSDFY5
+      title: Computational Completeness of Hybrid Networks of Evolutionary Processors with Seven Nodes
+    - work: WBV5DVGPMNE
+      title: Graph-Controlled Insertion-Deletion Systems
+- id: computational-complexity
+  name: Computational complexity
+  aliases: []
+  description: ''
+  parents:
+  - automata
+  xref:
+    ccs: []
+    msc: []
+    openalex:
+    - T11269
+  include_phrases:
+  - computational complexity
+  exclude_phrases: []
+  seed_works: []
+  origin: mined
+  reviewed: false
+  status: proposed
+  evidence:
+    size: 19
+    score: 2.616
+    specificity: 0.8528000116348267
+    phrase_keys:
+    - computational complexity
+    clusters: []
+    seeds: []
+    openalex_topics:
+    - id: T11269
+      name: Algorithms and Data Compression
+      share: 0.579
+    parent_links:
+    - parent: automata
+      score: 0.0
+      evidence: {}
+      p_parent_given_child: 0.579
+      p_child_given_parent: 0.011
+      soft: true
+    examples:
+    - work: W75FSFBN4UH
+      title: On the State and Computational Complexity of the Reverse of Acyclic Minimal DFAs
+    - work: WZKA4CZTTGG
+      title: Nondeterministic Finite Automata-Recent Results on the Descriptional and Computational Complexity
+    - work: WR6U6AEQZE4
+      title: On Computational Complexity of Set Automata
+    - work: W2LDPHVEU74
+      title: On the Computational Complexity of Problems Related to Distinguishability Sets
+    - work: WCY4FAJSTS6
+      title: Computational Complexity of Decision Problems on Self-verifying Finite Automata
 - id: computational-power
   name: Computational power
   aliases:
@@ -2946,8 +3041,8 @@ topics:
   status: proposed
   evidence:
     size: 14
-    score: 4.256
-    specificity: 0.9879000186920166
+    score: 3.713
+    specificity: 0.9801999926567078
     phrase_keys:
     - computer science
     clusters: []
@@ -3320,7 +3415,7 @@ topics:
   status: proposed
   evidence:
     size: 168
-    score: 5.235
+    score: 5.242
     specificity: 1.0
     phrase_keys:
     - context free
@@ -3379,7 +3474,7 @@ topics:
   status: proposed
   evidence:
     size: 59
-    score: 3.936
+    score: 3.906
     specificity: 1.0
     phrase_keys:
     - context free grammar
@@ -3444,7 +3539,7 @@ topics:
   status: proposed
   evidence:
     size: 77
-    score: 4.8
+    score: 4.815
     specificity: 1.0
     phrase_keys:
     - context free language
@@ -3499,7 +3594,7 @@ topics:
   status: proposed
   evidence:
     size: 25
-    score: 3.096
+    score: 3.148
     specificity: 1.0
     phrase_keys:
     - context sensitive
@@ -3553,7 +3648,7 @@ topics:
   status: proposed
   evidence:
     size: 14
-    score: 2.518
+    score: 2.565
     specificity: 1.0
     phrase_keys:
     - context sensitive language
@@ -3607,7 +3702,7 @@ topics:
   status: proposed
   evidence:
     size: 20
-    score: 3.059
+    score: 3.073
     specificity: 1.0
     phrase_keys:
     - contextual
@@ -3659,7 +3754,7 @@ topics:
   status: proposed
   evidence:
     size: 11
-    score: 2.542
+    score: 2.565
     specificity: 1.0
     phrase_keys:
     - contextual grammar
@@ -3776,7 +3871,7 @@ topics:
   status: proposed
   evidence:
     size: 12
-    score: 2.241
+    score: 2.272
     specificity: 1.0
     phrase_keys:
     - cooperating
@@ -3834,7 +3929,7 @@ topics:
   status: proposed
   evidence:
     size: 8
-    score: 1.946
+    score: 1.988
     specificity: 1.0
     phrase_keys:
     - cooperating distributed grammar system
@@ -3947,7 +4042,7 @@ topics:
   status: proposed
   evidence:
     size: 9
-    score: 2.293
+    score: 2.322
     specificity: 1.0
     phrase_keys:
     - counter machine
@@ -4050,7 +4145,7 @@ topics:
   status: proposed
   evidence:
     size: 70
-    score: 4.034
+    score: 4.06
     specificity: 1.0
     phrase_keys:
     - decidability
@@ -4098,7 +4193,7 @@ topics:
   status: proposed
   evidence:
     size: 83
-    score: 3.109
+    score: 3.122
     specificity: 1.0
     phrase_keys:
     - decidable
@@ -4207,8 +4302,8 @@ topics:
   status: proposed
   evidence:
     size: 48
-    score: 4.231
-    specificity: 0.9876999855041504
+    score: 4.248
+    specificity: 0.9879000186920166
     phrase_keys:
     - decision problem
     clusters: []
@@ -4360,8 +4455,8 @@ topics:
   status: proposed
   evidence:
     size: 92
-    score: 4.664
-    specificity: 0.9957000017166138
+    score: 4.675
+    specificity: 0.9958000183105469
     phrase_keys:
     - descriptional complexity
     clusters: []
@@ -4406,7 +4501,7 @@ topics:
   status: proposed
   evidence:
     size: 17
-    score: 3.02
+    score: 3.049
     specificity: 1.0
     phrase_keys:
     - determinism
@@ -4518,7 +4613,7 @@ topics:
   status: proposed
   evidence:
     size: 42
-    score: 3.215
+    score: 3.25
     specificity: 1.0
     phrase_keys:
     - deterministic automaton
@@ -4634,7 +4729,7 @@ topics:
   status: proposed
   evidence:
     size: 95
-    score: 3.742
+    score: 3.757
     specificity: 1.0
     phrase_keys:
     - deterministic finite automaton
@@ -4750,7 +4845,7 @@ topics:
   status: proposed
   evidence:
     size: 7
-    score: 2.14
+    score: 2.175
     specificity: 1.0
     phrase_keys:
     - deterministic restarting automaton
@@ -4914,7 +5009,7 @@ topics:
   status: proposed
   evidence:
     size: 102
-    score: 3.789
+    score: 3.809
     specificity: 1.0
     phrase_keys:
     - dfa
@@ -5135,7 +5230,7 @@ topics:
   status: proposed
   evidence:
     size: 30
-    score: 2.322
+    score: 2.351
     specificity: 1.0
     phrase_keys:
     - emptiness
@@ -5235,7 +5330,7 @@ topics:
   status: proposed
   evidence:
     size: 9
-    score: 2.701
+    score: 2.76
     specificity: 1.0
     phrase_keys:
     - equivalence problem
@@ -5275,8 +5370,8 @@ topics:
   status: proposed
   evidence:
     size: 6
-    score: 2.156
-    specificity: 0.9535999894142151
+    score: 2.217
+    specificity: 0.9562000036239624
     phrase_keys:
     - exponential time
     clusters: []
@@ -5325,7 +5420,7 @@ topics:
   status: proposed
   evidence:
     size: 24
-    score: 1.988
+    score: 2.067
     specificity: 1.0
     phrase_keys:
     - expressive power
@@ -5480,7 +5575,7 @@ topics:
   status: proposed
   evidence:
     size: 17
-    score: 2.312
+    score: 2.342
     specificity: 1.0
     phrase_keys:
     - family of language
@@ -5594,7 +5689,7 @@ topics:
   status: proposed
   evidence:
     size: 319
-    score: 5.906
+    score: 5.913
     specificity: 1.0
     phrase_keys:
     - finite automaton
@@ -5698,7 +5793,7 @@ topics:
   status: proposed
   evidence:
     size: 5
-    score: 2.549
+    score: 2.573
     specificity: 1.0
     phrase_keys:
     - finite semigroup
@@ -5727,6 +5822,50 @@ topics:
       title: Operations on Weakly Recognizing Morphisms
     - work: WHRAGVTF6A7
       title: Logics for Reversible Regular Languages and Semigroups with Involution
+- id: finite-set
+  name: Finite set
+  aliases:
+  - finite sets
+  description: ''
+  parents: []
+  xref:
+    ccs: []
+    msc: []
+    openalex:
+    - T11269
+  include_phrases:
+  - finite set
+  - finite sets
+  exclude_phrases: []
+  seed_works: []
+  origin: mined
+  reviewed: false
+  status: proposed
+  evidence:
+    size: 23
+    score: 1.984
+    specificity: 0.9455999732017517
+    phrase_keys:
+    - finite set
+    clusters: []
+    seeds: []
+    openalex_topics:
+    - id: T11269
+      name: Algorithms and Data Compression
+      share: 0.565
+    parent_links: []
+    examples:
+    - work: WMUMQJ6WVZ6
+      title: State Complexity and the Monoid of Transformations of a Finite Set
+    - work: WYC25SZK5XV
+      title: Well Quasi Orders and the Shuffle Closure of Finite Sets
+    - work: WN7HXMYOIA6
+      title: Automata to Recognize Finite and Infinite Words with at Least Two Factorizations on a Given
+        Finite Set
+    - work: WWXSHBHVMDA
+      title: The Average State Complexity of the Star of a Finite Set of Words Is Linear
+    - work: WOECMVFNDLE
+      title: Finding Common Motifs with Gaps Using Finite Automata
 - id: finite-state
   name: Finite-state
   aliases:
@@ -5749,8 +5888,8 @@ topics:
   status: proposed
   evidence:
     size: 123
-    score: 4.725
-    specificity: 0.9887999892234802
+    score: 4.738
+    specificity: 0.9889000058174133
     phrase_keys:
     - finite state
     clusters: []
@@ -5806,7 +5945,7 @@ topics:
   status: proposed
   evidence:
     size: 44
-    score: 3.804
+    score: 3.811
     specificity: 1.0
     phrase_keys:
     - finite state automaton
@@ -6278,7 +6417,7 @@ topics:
   status: proposed
   evidence:
     size: 12
-    score: 3.726
+    score: 3.74
     specificity: 1.0
     phrase_keys:
     - formal language theory
@@ -6350,7 +6489,7 @@ topics:
   status: proposed
   evidence:
     size: 52
-    score: 4.997
+    score: 5.011
     specificity: 1.0
     phrase_keys:
     - formal language
@@ -6461,7 +6600,7 @@ topics:
   status: proposed
   evidence:
     size: 5
-    score: 3.364
+    score: 3.343
     specificity: 1.0
     phrase_keys:
     - formal system
@@ -6548,7 +6687,7 @@ topics:
   status: proposed
   evidence:
     size: 6
-    score: 2.653
+    score: 2.674
     specificity: 1.0
     phrase_keys:
     - free group
@@ -6600,7 +6739,7 @@ topics:
   status: proposed
   evidence:
     size: 8
-    score: 2.681
+    score: 2.741
     specificity: 1.0
     phrase_keys:
     - free monoid
@@ -6791,7 +6930,7 @@ topics:
   status: proposed
   evidence:
     size: 13
-    score: 2.282
+    score: 2.37
     specificity: 1.0
     phrase_keys:
     - generative
@@ -6839,7 +6978,7 @@ topics:
   status: proposed
   evidence:
     size: 7
-    score: 2.728
+    score: 2.747
     specificity: 1.0
     phrase_keys:
     - glushkov
@@ -6866,6 +7005,57 @@ topics:
       title: The Average Transition Complexity of Glushkov and Partial Derivative Automata
     - work: WXWJK4J74NU
       title: Star Normal Form, Rational Expressions, and Glushkov WFAs Properties
+    - work: WVH2RG72526
+      title: From Glushkov WFAs to Rational Expressions
+- id: glushkov-automata
+  name: Glushkov automata
+  aliases:
+  - glushkov automaton
+  description: ''
+  parents:
+  - construction
+  xref:
+    ccs: []
+    msc: []
+    openalex:
+    - T11269
+  include_phrases:
+  - glushkov automata
+  - glushkov automaton
+  exclude_phrases: []
+  seed_works: []
+  origin: mined
+  reviewed: false
+  status: proposed
+  evidence:
+    size: 5
+    score: 1.96
+    specificity: 1.0
+    phrase_keys:
+    - glushkov automaton
+    clusters: []
+    seeds: []
+    openalex_topics:
+    - id: T11269
+      name: Algorithms and Data Compression
+      share: 1.0
+    parent_links:
+    - parent: construction
+      score: 2.0
+      evidence:
+        subsumption: 2.0
+      p_parent_given_child: 0.8
+      p_child_given_parent: 0.235
+      soft: false
+    examples:
+    - work: WBRKJUXBFHS
+      title: Determinization of Glushkov Automata
+    - work: WSEIVIX5TTQ
+      title: A New Quadratic Algorithm to Convert a Regular Expression into an Automaton
+    - work: WXWJK4J74NU
+      title: Star Normal Form, Rational Expressions, and Glushkov WFAs Properties
+    - work: WY3J3SE5WCF
+      title: On the Uniform Distribution of Regular Expressions
     - work: WVH2RG72526
       title: From Glushkov WFAs to Rational Expressions
 - id: grammar-systems
@@ -6957,7 +7147,7 @@ topics:
   status: proposed
   evidence:
     size: 202
-    score: 5.497
+    score: 5.501
     specificity: 1.0
     phrase_keys:
     - grammar
@@ -7267,7 +7457,7 @@ topics:
   aliases: []
   description: ''
   parents:
-  - minimal
+  - minimization
   xref:
     ccs: []
     msc: []
@@ -7282,7 +7472,7 @@ topics:
   status: proposed
   evidence:
     size: 7
-    score: 3.924
+    score: 2.079
     specificity: 1.0
     phrase_keys:
     - hopcroft
@@ -7293,7 +7483,7 @@ topics:
       name: Algorithms and Data Compression
       share: 0.857
     parent_links:
-    - parent: minimal
+    - parent: minimization
       score: 2.0
       evidence:
         subsumption: 2.0
@@ -7387,7 +7577,7 @@ topics:
   status: proposed
   evidence:
     size: 5
-    score: 2.262
+    score: 2.293
     specificity: 1.0
     phrase_keys:
     - infinite game
@@ -7440,7 +7630,7 @@ topics:
   status: proposed
   evidence:
     size: 53
-    score: 3.714
+    score: 3.735
     specificity: 1.0
     phrase_keys:
     - infinite word
@@ -7718,7 +7908,7 @@ topics:
   status: proposed
   evidence:
     size: 5
-    score: 1.96
+    score: 2.001
     specificity: 1.0
     phrase_keys:
     - invertible
@@ -7978,7 +8168,7 @@ topics:
   status: proposed
   evidence:
     size: 12
-    score: 2.351
+    score: 2.379
     specificity: 1.0
     phrase_keys:
     - language equation
@@ -8130,130 +8320,6 @@ topics:
       title: Compilation Methods of Minimal Acyclic Finite-State Automata for Large Dictionaries
     - work: WX6BMBE4LZY
       title: Constructing a BPE Tokenization DFA
-- id: language-recognition
-  name: Language recognition
-  aliases: []
-  description: ''
-  parents:
-  - languages
-  - quantum
-  xref:
-    ccs: []
-    msc: []
-    openalex:
-    - T11567
-    - T12002
-  include_phrases:
-  - language recognition
-  exclude_phrases: []
-  seed_works: []
-  origin: mined
-  reviewed: false
-  status: proposed
-  evidence:
-    size: 7
-    score: 1.946
-    specificity: 1.0
-    phrase_keys:
-    - language recognition
-    clusters: []
-    seeds: []
-    openalex_topics:
-    - id: T11567
-      name: semigroups and automata theory
-      share: 0.286
-    - id: T12002
-      name: Computability, Logic, AI Algorithms
-      share: 0.286
-    parent_links:
-    - parent: languages
-      score: 2.5
-      evidence:
-        head: 0.5
-        subsumption: 2.0
-      p_parent_given_child: 1.0
-      p_child_given_parent: 0.008
-      soft: false
-    - parent: quantum
-      score: 2.0
-      evidence:
-        subsumption: 2.0
-      p_parent_given_child: 0.714
-      p_child_given_parent: 0.049
-      soft: false
-    examples:
-    - work: WFNNEZKKI55
-      title: Energy Complexity of Regular Language Recognition
-    - work: WHUPXAM3LU3
-      title: Sublinear-Time Language Recognition and Decision by One-Dimensional Cellular Automata
-    - work: WRXK3H23WB6
-      title: Towards Robustness in Parsing - Fuzzifying Context-Free Language Recognition
-    - work: WAFHPAGWSHT
-      title: Classical Automata on Promise Problems
-    - work: W65FRN437QI
-      title: Deleting Automata with a Restart Operation
-- id: language-theory
-  name: Language theory
-  aliases: []
-  description: ''
-  parents:
-  - languages
-  xref:
-    ccs:
-    - '10003752.10003766'
-    - 10003752.10003766.10003767.10003768
-    msc:
-    - 20M35
-    openalex: []
-  include_phrases:
-  - language theory
-  exclude_phrases: []
-  seed_works: []
-  origin: mined
-  reviewed: false
-  status: proposed
-  evidence:
-    size: 19
-    score: 4.41
-    specificity: 1.0
-    phrase_keys:
-    - language theory
-    clusters: []
-    seeds:
-    - scheme: ccs
-      id: 10003752.10003766.10003767.10003768
-      label: Algebraic language theory
-      jaccard: 0.667
-    - scheme: ccs
-      id: '10003752.10003766'
-      label: Formal languages and automata theory
-      jaccard: 0.5
-    - scheme: msc
-      id: 20M35
-      label: Semigroups used in automata theory, languages and combinatorics
-      jaccard: 0.5
-    openalex_topics: []
-    parent_links:
-    - parent: languages
-      score: 2.5
-      evidence:
-        head: 0.5
-        subsumption: 2.0
-      p_parent_given_child: 1.0
-      p_child_given_parent: 0.022
-      soft: false
-    examples:
-    - work: WOQZA6E2AUY
-      title: Well Quasi-orders in Formal Language Theory
-    - work: W7FF6LCOG5F
-      title: 'Numeration Systems: A Link between Number Theory and Formal Language Theory'
-    - work: WBALOIALKOC
-      title: Can Abstract State Machines Be Useful in Language Theory?
-    - work: WBAN2WUNWCV
-      title: The Equational Theory of Fixed Points with Applications to Generalized Language Theory
-    - work: WJTCI7MUKHG
-      title: Communication Complexity Method for Proving Lower Bounds on Descriptional Complexity in Automata
-        and Formal Language Theory
 - id: languages
   name: Languages
   aliases:
@@ -8284,7 +8350,7 @@ topics:
   status: proposed
   evidence:
     size: 849
-    score: 6.589
+    score: 6.582
     specificity: 0.9957000017166138
     phrase_keys:
     - language
@@ -8343,7 +8409,7 @@ topics:
   status: proposed
   evidence:
     size: 29
-    score: 2.208
+    score: 2.241
     specificity: 1.0
     phrase_keys:
     - language accepted
@@ -8452,7 +8518,7 @@ topics:
   status: proposed
   evidence:
     size: 69
-    score: 2.89
+    score: 2.907
     specificity: 1.0
     phrase_keys:
     - letter
@@ -8756,7 +8822,7 @@ topics:
   status: proposed
   evidence:
     size: 5
-    score: 2.001
+    score: 2.041
     specificity: 1.0
     phrase_keys:
     - linear temporal logic
@@ -8807,8 +8873,8 @@ topics:
   status: proposed
   evidence:
     size: 27
-    score: 2.855
-    specificity: 0.9218000173568726
+    score: 2.869
+    specificity: 0.9225999712944031
     phrase_keys:
     - linear time
     clusters: []
@@ -8835,55 +8901,6 @@ topics:
       title: 'Linear-Time Model Checking: Automata Theory in Practice'
     - work: WDU3PMYXPKU
       title: 'Shift-Resolve Parsing: Simple, Unbounded Lookahead, Linear Time'
-- id: local-testability
-  name: Local testability
-  aliases: []
-  description: ''
-  parents:
-  - automata
-  xref:
-    ccs: []
-    msc: []
-    openalex:
-    - T11269
-  include_phrases:
-  - local testability
-  exclude_phrases: []
-  seed_works: []
-  origin: mined
-  reviewed: false
-  status: proposed
-  evidence:
-    size: 6
-    score: 1.946
-    specificity: 1.0
-    phrase_keys:
-    - local testability
-    clusters: []
-    seeds: []
-    openalex_topics:
-    - id: T11269
-      name: Algorithms and Data Compression
-      share: 1.0
-    parent_links:
-    - parent: automata
-      score: 2.0
-      evidence:
-        subsumption: 2.0
-      p_parent_given_child: 1.0
-      p_child_given_parent: 0.006
-      soft: false
-    examples:
-    - work: WI33ILSCINO
-      title: Strict Local Testability with Consensus Equals Regularity
-    - work: WQ5RZHMQ4CV
-      title: A Precise Estimation of the Order of Local Testability of a Deterministic Finite Automaton
-    - work: WZV4ZLA35BD
-      title: A Polynomial Time Algorithm for Left [Right] Local Testability
-    - work: W4R374YYU2K
-      title: From Ambiguous Regular Expressions to Deterministic Parsing Automata
-    - work: WTHRVFPRDYG
-      title: A Package TESTAS for Checking Some Kinds of Testability
 - id: logic
   name: Logic
   aliases:
@@ -8957,7 +8974,7 @@ topics:
   status: proposed
   evidence:
     size: 18
-    score: 3.472
+    score: 3.49
     specificity: 1.0
     phrase_keys:
     - logics
@@ -8986,6 +9003,66 @@ topics:
     - work: WFXF4ZLZEQ2
       title: Kleene and Büchi Theorems for Weighted Automata and Multi-valued Logics over Arbitrary Bounded
         Lattices
+- id: lyndon-words
+  name: Lyndon words
+  aliases:
+  - lyndon word
+  description: ''
+  parents:
+  - words
+  - sequences
+  xref:
+    ccs: []
+    msc: []
+    openalex:
+    - T11269
+  include_phrases:
+  - lyndon words
+  - lyndon word
+  exclude_phrases: []
+  seed_works: []
+  origin: mined
+  reviewed: false
+  status: proposed
+  evidence:
+    size: 7
+    score: 1.96
+    specificity: 1.0
+    phrase_keys:
+    - lyndon word
+    clusters: []
+    seeds: []
+    openalex_topics:
+    - id: T11269
+      name: Algorithms and Data Compression
+      share: 0.571
+    parent_links:
+    - parent: words
+      score: 3.0
+      evidence:
+        head: 1.0
+        subsumption: 2.0
+      p_parent_given_child: 1.0
+      p_child_given_parent: 0.019
+      soft: false
+    - parent: sequences
+      score: 2.0
+      evidence:
+        subsumption: 2.0
+      p_parent_given_child: 0.857
+      p_child_given_parent: 0.016
+      soft: false
+    examples:
+    - work: WEKGHMRZG3G
+      title: Suffixes, Conjugates and Lyndon Words
+    - work: WJM4IDZ6TDA
+      title: Lyndon Words Formalized in Isabelle/HOL
+    - work: WQWJUVBLNWR
+      title: Transfinite Lyndon Words
+    - work: WS6YCRI3DFV
+      title: The Average Lengths of the Factors of the Standard Factorization of Lyndon Words
+    - work: W5CL4J7RGGF
+      title: On Prefix Normal Words
 - id: machines
   name: Machines
   aliases:
@@ -9059,7 +9136,7 @@ topics:
   status: proposed
   evidence:
     size: 5
-    score: 2.272
+    score: 2.303
     specificity: 1.0
     phrase_keys:
     - magic number
@@ -9150,62 +9227,6 @@ topics:
       title: Operations on Extended Automata
     - work: WR76H5PY4NJ
       title: Minimal Adaptive Pattern-Matching Automata for Efficient Term Rewriting
-- id: minimal
-  name: Minimal
-  aliases:
-  - minimizing
-  - log
-  description: ''
-  parents:
-  - automata
-  xref:
-    ccs: []
-    msc: []
-    openalex:
-    - T11269
-  include_phrases:
-  - minimal
-  - minimizing
-  - log
-  exclude_phrases: []
-  seed_works: []
-  origin: cluster
-  reviewed: false
-  status: proposed
-  evidence:
-    size: 41
-    score: 2.99
-    specificity: null
-    phrase_keys: []
-    clusters:
-    - cluster: g30-c8
-      jaccard: 1.0
-    - cluster: g12-c13
-      jaccard: 1.0
-    seeds: []
-    openalex_topics:
-    - id: T11269
-      name: Algorithms and Data Compression
-      share: 0.634
-    parent_links:
-    - parent: automata
-      score: 2.0
-      evidence:
-        subsumption: 2.0
-      p_parent_given_child: 0.854
-      p_child_given_parent: 0.035
-      soft: false
-    examples:
-    - work: W53RGLE6YGB
-      title: FA Minimisation Heuristics for a Class of Finite Languages
-    - work: WJYGLMSVKFW
-      title: Hyper-Minimization for Deterministic Register Automata
-    - work: WNMLZO3GSMQ
-      title: Hyper-Minimization in O(n2)
-    - work: WKIRYVN3JXQ
-      title: Better Hyper-minimization - Not as Fast, But Fewer Errors
-    - work: WTSE23KLR4S
-      title: An nlogn Algorithm for Hyper-minimizing States in a (Minimized) Deterministic Automaton
 - id: minimal-acyclic
   name: Minimal acyclic
   aliases: []
@@ -9320,6 +9341,62 @@ topics:
         l?
     - work: WBVFUZGE55A
       title: Theory of Átomata
+- id: minimization
+  name: Minimization
+  aliases:
+  - minimal
+  - minimizing
+  description: ''
+  parents:
+  - automata
+  xref:
+    ccs: []
+    msc: []
+    openalex:
+    - T11269
+  include_phrases:
+  - minimization
+  - minimal
+  - minimizing
+  exclude_phrases: []
+  seed_works: []
+  origin: cluster
+  reviewed: false
+  status: proposed
+  evidence:
+    size: 41
+    score: 2.99
+    specificity: null
+    phrase_keys: []
+    clusters:
+    - cluster: g30-c8
+      jaccard: 1.0
+    - cluster: g12-c13
+      jaccard: 1.0
+    seeds: []
+    openalex_topics:
+    - id: T11269
+      name: Algorithms and Data Compression
+      share: 0.634
+    parent_links:
+    - parent: automata
+      score: 2.0
+      evidence:
+        subsumption: 2.0
+      p_parent_given_child: 0.854
+      p_child_given_parent: 0.035
+      soft: false
+    examples:
+    - work: W53RGLE6YGB
+      title: FA Minimisation Heuristics for a Class of Finite Languages
+    - work: WJYGLMSVKFW
+      title: Hyper-Minimization for Deterministic Register Automata
+    - work: WNMLZO3GSMQ
+      title: Hyper-Minimization in O(n2)
+    - work: WKIRYVN3JXQ
+      title: Better Hyper-minimization - Not as Fast, But Fewer Errors
+    - work: WTSE23KLR4S
+      title: An nlogn Algorithm for Hyper-minimizing States in a (Minimized) Deterministic Automaton
 - id: model-checking
   name: Model checking
   aliases: []
@@ -9342,8 +9419,8 @@ topics:
   status: proposed
   evidence:
     size: 18
-    score: 3.151
-    specificity: 0.9674000144004822
+    score: 3.187
+    specificity: 0.9684000015258789
     phrase_keys:
     - model checking
     clusters: []
@@ -9400,7 +9477,7 @@ topics:
   status: proposed
   evidence:
     size: 55
-    score: 3.916
+    score: 3.951
     specificity: 1.0
     phrase_keys:
     - monoid
@@ -9503,7 +9580,7 @@ topics:
   status: proposed
   evidence:
     size: 34
-    score: 3.144
+    score: 3.17
     specificity: 1.0
     phrase_keys:
     - morphism
@@ -9624,8 +9701,7 @@ topics:
       title: Serializing the Parallelism in Parallel Communicating Pushdown Automata Systems
 - id: multiplicities
   name: Multiplicities
-  aliases:
-  - minimality
+  aliases: []
   description: ''
   parents:
   - alternating
@@ -9636,7 +9712,6 @@ topics:
     - T11269
   include_phrases:
   - multiplicities
-  - minimality
   exclude_phrases: []
   seed_works: []
   origin: cluster
@@ -9938,7 +10013,7 @@ topics:
   status: proposed
   evidence:
     size: 76
-    score: 4.13
+    score: 4.149
     specificity: 1.0
     phrase_keys:
     - nfa
@@ -9988,8 +10063,8 @@ topics:
   status: proposed
   evidence:
     size: 22
-    score: 2.433
-    specificity: 0.9642000198364258
+    score: 2.458
+    specificity: 0.9649999737739563
     phrase_keys:
     - non deterministic
     clusters: []
@@ -10043,7 +10118,7 @@ topics:
   status: proposed
   evidence:
     size: 9
-    score: 2.208
+    score: 2.241
     specificity: 1.0
     phrase_keys:
     - non returning
@@ -10096,7 +10171,7 @@ topics:
   status: proposed
   evidence:
     size: 40
-    score: 4.221
+    score: 4.23
     specificity: 1.0
     phrase_keys:
     - nondeterminism
@@ -10144,8 +10219,8 @@ topics:
   status: proposed
   evidence:
     size: 175
-    score: 4.706
-    specificity: 0.9921000003814697
+    score: 4.735
+    specificity: 0.9922999739646912
     phrase_keys:
     - nondeterministic
     clusters: []
@@ -10195,7 +10270,7 @@ topics:
   status: proposed
   evidence:
     size: 17
-    score: 2.809
+    score: 2.845
     specificity: 1.0
     phrase_keys:
     - nondeterministic automaton
@@ -10250,7 +10325,7 @@ topics:
   status: proposed
   evidence:
     size: 59
-    score: 3.661
+    score: 3.691
     specificity: 1.0
     phrase_keys:
     - nondeterministic finite automaton
@@ -10436,8 +10511,8 @@ topics:
   status: proposed
   evidence:
     size: 34
-    score: 2.695
-    specificity: 0.95169997215271
+    score: 2.713
+    specificity: 0.9524999856948853
     phrase_keys:
     - normal form
     clusters: []
@@ -10488,7 +10563,7 @@ topics:
   status: proposed
   evidence:
     size: 7
-    score: 1.974
+    score: 2.015
     specificity: 1.0
     phrase_keys:
     - numeration system
@@ -10597,7 +10672,7 @@ topics:
   status: proposed
   evidence:
     size: 11
-    score: 2.573
+    score: 2.526
     specificity: 1.0
     phrase_keys:
     - omega language
@@ -10650,8 +10725,8 @@ topics:
   status: proposed
   evidence:
     size: 10
-    score: 2.134
-    specificity: 0.9527000188827515
+    score: 2.197
+    specificity: 0.9553999900817871
     phrase_keys:
     - one counter
     clusters: []
@@ -10680,6 +10755,59 @@ topics:
       title: On One-Counter Positive Cones of Free Groups
     - work: WVZJNJEBLJ7
       title: Global One-Counter Tree Automata
+- id: one-letter
+  name: One-letter
+  aliases: []
+  description: ''
+  parents:
+  - alphabet
+  xref:
+    ccs: []
+    msc: []
+    openalex:
+    - T11269
+    - T12002
+  include_phrases:
+  - one-letter
+  exclude_phrases: []
+  seed_works: []
+  origin: mined
+  reviewed: false
+  status: proposed
+  evidence:
+    size: 10
+    score: 2.175
+    specificity: 1.0
+    phrase_keys:
+    - one letter
+    clusters: []
+    seeds: []
+    openalex_topics:
+    - id: T11269
+      name: Algorithms and Data Compression
+      share: 0.4
+    - id: T12002
+      name: Computability, Logic, AI Algorithms
+      share: 0.4
+    parent_links:
+    - parent: alphabet
+      score: 2.0
+      evidence:
+        subsumption: 2.0
+      p_parent_given_child: 1.0
+      p_child_given_parent: 0.055
+      soft: false
+    examples:
+    - work: WPQEL5OSVY4
+      title: The Power of One-Letter Rational Languages
+    - work: WDCPP4V6Z52
+      title: Unambiguous Conjunctive Grammars over a One-Letter Alphabet
+    - work: WFFUHEE3TBA
+      title: Regular Expressions for Two-Dimensional Languages Over One-Letter Alphabet
+    - work: W4ZOKB7LFN5
+      title: Describing Periodicity in Two-Way Deterministic Finite Automata Using Transformation Semigroups
+    - work: W2W6RW4MXBR
+      title: Limited Automata and Regular Languages
 - id: one-way
   name: One-way
   aliases: []
@@ -10701,8 +10829,8 @@ topics:
   status: proposed
   evidence:
     size: 53
-    score: 3.75
-    specificity: 0.9896000027656555
+    score: 3.77
+    specificity: 0.989799976348877
     phrase_keys:
     - one way
     clusters: []
@@ -11252,7 +11380,7 @@ topics:
   status: proposed
   evidence:
     size: 42
-    score: 3.89
+    score: 3.908
     specificity: 1.0
     phrase_keys:
     - parsing
@@ -11304,7 +11432,7 @@ topics:
   status: proposed
   evidence:
     size: 7
-    score: 2.332
+    score: 2.361
     specificity: 1.0
     phrase_keys:
     - partial derivative automaton
@@ -11372,7 +11500,7 @@ topics:
   status: proposed
   evidence:
     size: 12
-    score: 3.135
+    score: 3.148
     specificity: 1.0
     phrase_keys:
     - partial derivative
@@ -11460,6 +11588,60 @@ topics:
       title: Squares in Binary Partial Words
     - work: WRT7MEF5KZQ
       title: Ternary Square-Free Partial Words with Many Wildcards
+- id: pattern-languages
+  name: Pattern languages
+  aliases: []
+  description: ''
+  parents:
+  - languages
+  xref:
+    ccs: []
+    msc: []
+    openalex:
+    - T11269
+    - T12002
+  include_phrases:
+  - pattern languages
+  exclude_phrases: []
+  seed_works: []
+  origin: mined
+  reviewed: false
+  status: proposed
+  evidence:
+    size: 12
+    score: 1.988
+    specificity: 1.0
+    phrase_keys:
+    - pattern language
+    clusters: []
+    seeds: []
+    openalex_topics:
+    - id: T11269
+      name: Algorithms and Data Compression
+      share: 0.417
+    - id: T12002
+      name: Computability, Logic, AI Algorithms
+      share: 0.417
+    parent_links:
+    - parent: languages
+      score: 3.0
+      evidence:
+        head: 1.0
+        subsumption: 2.0
+      p_parent_given_child: 1.0
+      p_child_given_parent: 0.014
+      soft: false
+    examples:
+    - work: WQJXNJH32FH
+      title: Regular and Context-Free Pattern Languages over Small Alphabets
+    - work: W3Y4U3H5JBJ
+      title: Closure Properties of Pattern Languages
+    - work: WLPMFTMWPI5
+      title: The Teaching Complexity of Erasing Pattern Languages with Bounded Variable Frequency
+    - work: WVD23O6SBOJ
+      title: Bad News on Decision Problems for Patterns
+    - work: WQRBS2EOYSS
+      title: Unambiguous Morphic Images of Strings
 - id: pattern-matching
   name: Pattern matching
   aliases: []
@@ -11481,7 +11663,7 @@ topics:
   status: proposed
   evidence:
     size: 29
-    score: 3.592
+    score: 3.583
     specificity: 1.0
     phrase_keys:
     - pattern matching
@@ -11638,7 +11820,7 @@ topics:
   status: proposed
   evidence:
     size: 23
-    score: 3.247
+    score: 3.303
     specificity: 1.0
     phrase_keys:
     - picture
@@ -11695,7 +11877,7 @@ topics:
   status: proposed
   evidence:
     size: 12
-    score: 2.734
+    score: 2.809
     specificity: 1.0
     phrase_keys:
     - picture language
@@ -12028,7 +12210,7 @@ topics:
   status: proposed
   evidence:
     size: 6
-    score: 2.681
+    score: 2.701
     specificity: 1.0
     phrase_keys:
     - probabilistic automaton
@@ -12186,7 +12368,7 @@ topics:
   status: proposed
   evidence:
     size: 92
-    score: 4.672
+    score: 4.689
     specificity: 1.0
     phrase_keys:
     - pushdown
@@ -12238,7 +12420,7 @@ topics:
   status: proposed
   evidence:
     size: 68
-    score: 4.359
+    score: 4.371
     specificity: 1.0
     phrase_keys:
     - pushdown automaton
@@ -12574,7 +12756,7 @@ topics:
   status: proposed
   evidence:
     size: 8
-    score: 2.332
+    score: 2.361
     specificity: 1.0
     phrase_keys:
     - random generation
@@ -12677,7 +12859,7 @@ topics:
   status: proposed
   evidence:
     size: 6
-    score: 1.988
+    score: 2.028
     specificity: 1.0
     phrase_keys:
     - rational language
@@ -12726,8 +12908,8 @@ topics:
   status: proposed
   evidence:
     size: 20
-    score: 2.313
-    specificity: 0.8980000019073486
+    score: 2.335
+    specificity: 0.8996000289916992
     phrase_keys:
     - real time
     clusters: []
@@ -12771,7 +12953,7 @@ topics:
   status: proposed
   evidence:
     size: 9
-    score: 2.37
+    score: 2.398
     specificity: 1.0
     phrase_keys:
     - recognizability
@@ -12815,7 +12997,7 @@ topics:
   status: proposed
   evidence:
     size: 40
-    score: 3.526
+    score: 3.544
     specificity: 1.0
     phrase_keys:
     - recognizable
@@ -13158,7 +13340,7 @@ topics:
   status: proposed
   evidence:
     size: 95
-    score: 4.865
+    score: 4.872
     specificity: 1.0
     phrase_keys:
     - regular expression
@@ -13211,7 +13393,7 @@ topics:
   status: proposed
   evidence:
     size: 246
-    score: 5.38
+    score: 5.394
     specificity: 1.0
     phrase_keys:
     - regular language
@@ -13267,7 +13449,7 @@ topics:
   status: proposed
   evidence:
     size: 10
-    score: 2.839
+    score: 2.856
     specificity: 1.0
     phrase_keys:
     - regular set
@@ -13503,7 +13685,7 @@ topics:
   status: proposed
   evidence:
     size: 13
-    score: 2.939
+    score: 2.955
     specificity: 1.0
     phrase_keys:
     - repetition
@@ -13668,7 +13850,7 @@ topics:
   status: proposed
   evidence:
     size: 34
-    score: 3.514
+    score: 3.523
     specificity: 1.0
     phrase_keys:
     - restarting automaton
@@ -13773,7 +13955,7 @@ topics:
   status: proposed
   evidence:
     size: 5
-    score: 2.128
+    score: 2.163
     specificity: 1.0
     phrase_keys:
     - reversible automaton
@@ -13877,7 +14059,7 @@ topics:
   status: proposed
   evidence:
     size: 5
-    score: 2.028
+    score: 2.104
     specificity: 1.0
     phrase_keys:
     - schema
@@ -13976,8 +14158,8 @@ topics:
   status: proposed
   evidence:
     size: 10
-    score: 2.357
-    specificity: 0.9616000056266785
+    score: 2.433
+    specificity: 0.9642000198364258
     phrase_keys:
     - second order logic
     - monadic second order
@@ -14087,7 +14269,7 @@ topics:
   status: proposed
   evidence:
     size: 11
-    score: 2.015
+    score: 2.128
     specificity: 1.0
     phrase_keys:
     - semilinear
@@ -14490,7 +14672,7 @@ topics:
   status: proposed
   evidence:
     size: 5
-    score: 2.104
+    score: 2.14
     specificity: 1.0
     phrase_keys:
     - space bounded
@@ -14592,7 +14774,7 @@ topics:
   status: proposed
   evidence:
     size: 6
-    score: 3.025
+    score: 3.04
     specificity: 1.0
     phrase_keys:
     - speech
@@ -14763,7 +14945,7 @@ topics:
   status: proposed
   evidence:
     size: 7
-    score: 2.477
+    score: 2.549
     specificity: 1.0
     phrase_keys:
     - stack automaton
@@ -14878,7 +15060,7 @@ topics:
   status: proposed
   evidence:
     size: 12
-    score: 2.442
+    score: 2.468
     specificity: 1.0
     phrase_keys:
     - star free
@@ -14987,7 +15169,7 @@ topics:
   status: proposed
   evidence:
     size: 156
-    score: 5.092
+    score: 5.096
     specificity: 1.0
     phrase_keys:
     - state complexity
@@ -15091,7 +15273,7 @@ topics:
   status: proposed
   evidence:
     size: 5
-    score: 2.389
+    score: 2.442
     specificity: 1.0
     phrase_keys:
     - state complexity of operation
@@ -15149,7 +15331,7 @@ topics:
   status: proposed
   evidence:
     size: 12
-    score: 2.549
+    score: 2.66
     specificity: 1.0
     phrase_keys:
     - state set
@@ -15203,7 +15385,7 @@ topics:
   status: proposed
   evidence:
     size: 7
-    score: 2.028
+    score: 2.067
     specificity: 1.0
     phrase_keys:
     - stateless
@@ -15262,7 +15444,7 @@ topics:
   status: proposed
   evidence:
     size: 142
-    score: 4.638
+    score: 4.65
     specificity: 0.9955999851226807
     phrase_keys:
     - string
@@ -15371,7 +15553,7 @@ topics:
   status: proposed
   evidence:
     size: 18
-    score: 3.314
+    score: 3.336
     specificity: 1.0
     phrase_keys:
     - sturmian
@@ -15422,7 +15604,7 @@ topics:
   status: proposed
   evidence:
     size: 12
-    score: 2.89
+    score: 2.923
     specificity: 1.0
     phrase_keys:
     - sturmian word
@@ -15740,7 +15922,7 @@ topics:
   status: proposed
   evidence:
     size: 12
-    score: 2.485
+    score: 2.557
     specificity: 1.0
     phrase_keys:
     - succinctness
@@ -16004,7 +16186,7 @@ topics:
   status: proposed
   evidence:
     size: 9
-    score: 2.526
+    score: 2.549
     specificity: 1.0
     phrase_keys:
     - synchronizing word
@@ -16093,6 +16275,70 @@ topics:
       title: Syntactic Complexity of - and -Trivial Regular Languages
     - work: WUOR7FOAOLP
       title: Upper Bounds on Syntactic Complexity of Left and Two-Sided Ideals
+- id: syntactic-monoid
+  name: Syntactic monoid
+  aliases:
+  - syntactic monoids
+  description: ''
+  parents:
+  - monoids
+  - languages
+  xref:
+    ccs: []
+    msc: []
+    openalex:
+    - T11269
+    - T11727
+  include_phrases:
+  - syntactic monoid
+  - syntactic monoids
+  exclude_phrases: []
+  seed_works: []
+  origin: mined
+  reviewed: false
+  status: proposed
+  evidence:
+    size: 12
+    score: 1.974
+    specificity: 1.0
+    phrase_keys:
+    - syntactic monoid
+    clusters: []
+    seeds: []
+    openalex_topics:
+    - id: T11269
+      name: Algorithms and Data Compression
+      share: 0.5
+    - id: T11727
+      name: Advanced Algebra and Logic
+      share: 0.417
+    parent_links:
+    - parent: monoids
+      score: 3.0
+      evidence:
+        head: 1.0
+        subsumption: 2.0
+      p_parent_given_child: 1.0
+      p_child_given_parent: 0.218
+      soft: false
+    - parent: languages
+      score: 2.0
+      evidence:
+        subsumption: 2.0
+      p_parent_given_child: 0.833
+      p_child_given_parent: 0.012
+      soft: false
+    examples:
+    - work: WLGOE5QUBGZ
+      title: On Deterministic Finite Automata and Syntactic Monoid Size
+    - work: WT3RVXI3MMN
+      title: On Deterministic Finite Automata and Syntactic Monoid Size, Continued
+    - work: W3TELLLEUJ5
+      title: 'Partially-Ordered Two-Way Automata: A New Characterization of DA'
+    - work: W2SNICVJWAA
+      title: Descriptional Complexity of Biautomata
+    - work: WINZQCD6DUG
+      title: Biautomata for k-Piecewise Testable Languages
 - id: syntactic-semigroups
   name: Syntactic semigroups
   aliases:
@@ -16144,6 +16390,58 @@ topics:
       title: Complexity of Proper Prefix-Convex Regular Languages
     - work: WEIS5VYEHS5
       title: Most Complex Non-returning Regular Languages
+- id: syntax
+  name: Syntax
+  aliases: []
+  description: ''
+  parents:
+  - automata
+  xref:
+    ccs: []
+    msc: []
+    openalex:
+    - T11269
+    - T10126
+  include_phrases:
+  - syntax
+  exclude_phrases: []
+  seed_works: []
+  origin: mined
+  reviewed: false
+  status: proposed
+  evidence:
+    size: 10
+    score: 2.028
+    specificity: 1.0
+    phrase_keys:
+    - syntax
+    clusters: []
+    seeds: []
+    openalex_topics:
+    - id: T11269
+      name: Algorithms and Data Compression
+      share: 0.4
+    - id: T10126
+      name: Logic, programming, and type systems
+      share: 0.3
+    parent_links:
+    - parent: automata
+      score: 0.0
+      evidence: {}
+      p_parent_given_child: 0.6
+      p_child_given_parent: 0.006
+      soft: true
+    examples:
+    - work: WJ7KSUS5EWJ
+      title: On the Syntax, Semantics, and Implementation of a Graph-Based Computational Environment
+    - work: WL5W3WXQECJ
+      title: Syntax Checking Either Way
+    - work: WXQVXMJH7WZ
+      title: Reversible Top-Down Syntax Analysis
+    - work: W4R374YYU2K
+      title: From Ambiguous Regular Expressions to Deterministic Parsing Automata
+    - work: WYOOX63FL3D
+      title: 'Yakyak: parsing with logical side constraints'
 - id: systems
   name: Systems
   aliases: []
@@ -16271,7 +16569,7 @@ topics:
   status: proposed
   evidence:
     size: 17
-    score: 2.912
+    score: 2.928
     specificity: 1.0
     phrase_keys:
     - tape
@@ -16323,7 +16621,7 @@ topics:
   status: proposed
   evidence:
     size: 5
-    score: 2.646
+    score: 2.688
     specificity: 1.0
     phrase_keys:
     - taxonomy
@@ -16377,8 +16675,8 @@ topics:
   status: proposed
   evidence:
     size: 11
-    score: 3.083
-    specificity: 0.9804999828338623
+    score: 3.134
+    specificity: 0.9814000129699707
     phrase_keys:
     - temporal logic
     clusters: []
@@ -16590,7 +16888,7 @@ topics:
   status: proposed
   evidence:
     size: 5
-    score: 2.981
+    score: 2.934
     specificity: 1.0
     phrase_keys:
     - theoretical computer science
@@ -16646,8 +16944,8 @@ topics:
   status: proposed
   evidence:
     size: 22
-    score: 2.187
-    specificity: 0.9549999833106995
+    score: 2.217
+    specificity: 0.9562000036239624
     phrase_keys:
     - tight bound
     clusters: []
@@ -16759,7 +17057,7 @@ topics:
   status: proposed
   evidence:
     size: 7
-    score: 2.251
+    score: 2.282
     specificity: 1.0
     phrase_keys:
     - timed automaton
@@ -16800,10 +17098,10 @@ topics:
     - work: WT5LTFK7GYN
       title: New Complexity Results for Some Linear Counting Problems Using Minimal Solutions to Linear
         Diophantine Equations
-- id: toolkit
-  name: Toolkit
+- id: toolkits
+  name: Toolkits
   aliases:
-  - toolkits
+  - toolkit
   description: ''
   parents:
   - automata
@@ -16814,8 +17112,8 @@ topics:
     - T11269
     - T11567
   include_phrases:
-  - toolkit
   - toolkits
+  - toolkit
   exclude_phrases: []
   seed_works: []
   origin: mined
@@ -16823,7 +17121,7 @@ topics:
   status: proposed
   evidence:
     size: 5
-    score: 2.61
+    score: 2.632
     specificity: 1.0
     phrase_keys:
     - toolkit
@@ -16876,7 +17174,7 @@ topics:
   status: proposed
   evidence:
     size: 28
-    score: 2.996
+    score: 3.025
     specificity: 1.0
     phrase_keys:
     - top down
@@ -16927,7 +17225,7 @@ topics:
   status: proposed
   evidence:
     size: 19
-    score: 2.701
+    score: 2.741
     specificity: 1.0
     phrase_keys:
     - top down tree
@@ -16978,7 +17276,7 @@ topics:
   status: proposed
   evidence:
     size: 15
-    score: 2.389
+    score: 2.442
     specificity: 1.0
     phrase_keys:
     - top down tree transducer
@@ -17141,7 +17439,7 @@ topics:
   status: proposed
   evidence:
     size: 133
-    score: 4.886
+    score: 4.89
     specificity: 1.0
     phrase_keys:
     - transducer
@@ -17297,7 +17595,7 @@ topics:
   status: proposed
   evidence:
     size: 58
-    score: 4.299
+    score: 4.303
     specificity: 1.0
     phrase_keys:
     - tree automaton
@@ -17350,7 +17648,7 @@ topics:
   status: proposed
   evidence:
     size: 23
-    score: 3.157
+    score: 3.17
     specificity: 1.0
     phrase_keys:
     - tree language
@@ -17466,7 +17764,7 @@ topics:
   status: proposed
   evidence:
     size: 28
-    score: 3.398
+    score: 3.418
     specificity: 1.0
     phrase_keys:
     - tree transducer
@@ -17578,7 +17876,7 @@ topics:
   status: proposed
   evidence:
     size: 33
-    score: 3.447
+    score: 3.466
     specificity: 1.0
     phrase_keys:
     - turing machine
@@ -17629,8 +17927,8 @@ topics:
   status: proposed
   evidence:
     size: 33
-    score: 3.107
-    specificity: 0.9437999725341797
+    score: 3.118
+    specificity: 0.9442999958992004
     phrase_keys:
     - two dimensional
     clusters: []
@@ -17742,8 +18040,8 @@ topics:
   status: proposed
   evidence:
     size: 64
-    score: 4.329
-    specificity: 0.9940999746322632
+    score: 4.363
+    specificity: 0.9943000078201294
     phrase_keys:
     - two way
     clusters: []
@@ -17793,7 +18091,7 @@ topics:
   status: proposed
   evidence:
     size: 12
-    score: 3.049
+    score: 3.091
     specificity: 1.0
     phrase_keys:
     - two way automaton
@@ -17849,7 +18147,7 @@ topics:
   status: proposed
   evidence:
     size: 10
-    score: 2.272
+    score: 2.303
     specificity: 1.0
     phrase_keys:
     - two way deterministic
@@ -17914,7 +18212,7 @@ topics:
   status: proposed
   evidence:
     size: 10
-    score: 3.307
+    score: 3.381
     specificity: 1.0
     phrase_keys:
     - two way finite automaton
@@ -18037,7 +18335,7 @@ topics:
   status: proposed
   evidence:
     size: 41
-    score: 3.463
+    score: 3.481
     specificity: 1.0
     phrase_keys:
     - unambiguous
@@ -18087,7 +18385,7 @@ topics:
   status: proposed
   evidence:
     size: 77
-    score: 4.316
+    score: 4.332
     specificity: 1.0
     phrase_keys:
     - unary
@@ -18138,7 +18436,7 @@ topics:
   status: proposed
   evidence:
     size: 5
-    score: 2.667
+    score: 2.747
     specificity: 1.0
     phrase_keys:
     - unary automaton
@@ -18201,7 +18499,7 @@ topics:
   status: proposed
   evidence:
     size: 25
-    score: 3.691
+    score: 3.699
     specificity: 1.0
     phrase_keys:
     - unary language
@@ -18251,7 +18549,7 @@ topics:
   status: proposed
   evidence:
     size: 28
-    score: 2.981
+    score: 3.025
     specificity: 1.0
     phrase_keys:
     - undecidability
@@ -18299,7 +18597,7 @@ topics:
   status: proposed
   evidence:
     size: 47
-    score: 2.747
+    score: 2.821
     specificity: 1.0
     phrase_keys:
     - undecidable
@@ -18350,7 +18648,7 @@ topics:
   status: proposed
   evidence:
     size: 6
-    score: 2.041
+    score: 2.079
     specificity: 1.0
     phrase_keys:
     - unranked tree
@@ -18533,7 +18831,7 @@ topics:
   status: proposed
   evidence:
     size: 25
-    score: 3.463
+    score: 3.481
     specificity: 1.0
     phrase_keys:
     - weighted automaton
@@ -18800,7 +19098,7 @@ topics:
   status: proposed
   evidence:
     size: 8
-    score: 2.303
+    score: 2.361
     specificity: 1.0
     phrase_keys:
     - word equation
@@ -18864,8 +19162,8 @@ topics:
   status: proposed
   evidence:
     size: 18
-    score: 3.024
-    specificity: 0.9793999791145325
+    score: 3.038
+    specificity: 0.9797000288963318
     phrase_keys:
     - word problem
     clusters: []
@@ -18927,7 +19225,7 @@ topics:
   status: proposed
   evidence:
     size: 373
-    score: 5.761
+    score: 5.767
     specificity: 0.9958000183105469
     phrase_keys:
     - word

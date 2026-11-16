@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import random
 
+import pytest
+
 from flatatlas.text.composite import (
     MAX_REFERENCES,
     Reference,
@@ -12,6 +14,7 @@ from flatatlas.text.composite import (
     choose_references,
     clean,
     compose,
+    reference_title,
 )
 
 
@@ -94,3 +97,108 @@ def test_compose_of_parts_is_the_text_property():
     p = build_parts(work(references=(ref(1),)))
     assert compose(p) == p.text
     assert build_parts(work(references=(ref(1),))).text == p.text  # same on every run
+
+
+# -- reference title cleaning (D-86) --------------------------------------------------------------
+
+
+def titled(i: int, title: str, **kw) -> Reference:
+    return Reference(f"W{i:04d}", title, kw.pop("in_corpus", False), kw.pop("cited", 0), **kw)
+
+
+def test_trailing_dots_and_quotes_are_stripped():
+    refs = [titled(1, "Time-Bounded Parallel Rewriting."), titled(2, '"Quoted title"  ')]
+    titles, _, _ = choose_references(refs)
+    assert sorted(titles) == ["Quoted title", "Time-Bounded Parallel Rewriting"]
+
+
+def test_record_types_that_are_not_works_are_dropped_but_books_and_reviews_of_books_stay():
+    refs = [
+        titled(1, "Editor's note", type="editorial"),
+        titled(2, "Front matter", type="paratext"),
+        titled(3, "Correction to X", type="erratum"),
+        titled(4, "Automata and Computability", type="book"),
+        titled(5, "Formal Languages and Their Relation to Automata", type="book-review"),
+        titled(6, "An article", type="article"),
+    ]
+    titles, n_refs, n_titled = choose_references(refs)
+    assert sorted(titles) == [
+        "An article",
+        "Automata and Computability",
+        "Formal Languages and Their Relation to Automata",
+    ]
+    assert (n_refs, n_titled) == (6, 3)  # the count of titled references is the usable ones
+
+
+@pytest.mark.parametrize(
+    "title",
+    [
+        'Review of "Automatic sequences"',
+        "Book review of Introduction to Automata",
+        "Erratum: a proof of the pumping lemma",
+        "Errata for Chapter 3",
+    ],
+)
+def test_reviews_and_errata_are_dropped_by_title(title):
+    assert reference_title(titled(1, title)) is None
+
+
+def test_a_title_that_merely_says_review_is_kept():
+    assert (
+        reference_title(titled(1, "A Review of Pushdown Automata"))
+        == "A Review of Pushdown Automata"
+    )
+
+
+@pytest.mark.parametrize(
+    "title",
+    [
+        "Developments in Language Theory: 5th International Conference, DLT 2001 Wien, Austria",
+        "Lecture Notes in Computer Science 1205",
+        "Proceedings of the symposium on mathematical theory of Automata",
+        "Implementation and Application of Automata: Revised Selected Papers",
+    ],
+)
+def test_titles_of_proceedings_volumes_are_dropped(title):
+    assert reference_title(titled(1, title)) is None
+
+
+def test_international_in_an_ordinary_title_is_not_a_volume():
+    assert reference_title(titled(1, "International aspects of regular languages")) is not None
+
+
+@pytest.mark.parametrize(
+    "title",
+    [
+        "Об одном алгоритме синтеза абстрактных автоматов",
+        'J.E.Hopcroft, J.D. Ullman 著, "Introduction to Automata Theory", Addison-Wesley, 変形版',
+    ],
+)
+def test_non_latin_and_east_asian_listings_are_dropped(title):
+    assert reference_title(titled(1, title)) is None
+
+
+def test_greek_and_accented_latin_titles_are_kept():
+    assert reference_title(titled(1, "ω-automata and Büchi's theorem")) is not None
+
+
+def test_near_duplicate_titles_keep_the_better_ranked_one():
+    refs = [
+        titled(2, "Introduction to automata theory, languages, and computation", cited=3),
+        titled(1, "Introduction to Automata Theory, Languages and Computation.", cited=9),
+        titled(
+            3, "Introduction to automata theory, languages and computation: 2nd edition", cited=1
+        ),
+    ]
+    titles, _, n_titled = choose_references(refs)
+    assert titles[0] == "Introduction to Automata Theory, Languages and Computation"  # cited most
+    assert len(titles) == 2 and n_titled == 3  # the edition title differs enough to stay
+
+
+def test_distinct_titles_are_not_merged():
+    refs = [
+        titled(1, "Regular languages"),
+        titled(2, "Regular expressions"),
+        titled(3, "Regular sets"),
+    ]
+    assert len(choose_references(refs)[0]) == 3

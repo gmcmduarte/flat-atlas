@@ -15,11 +15,26 @@ caller can weigh them (reference titles count less than the work's own title).
 from __future__ import annotations
 
 import re
+import unicodedata
 from collections.abc import Iterable, Sequence
 from dataclasses import dataclass, field
 
+from rapidfuzz import fuzz
+
 MAX_REFERENCES = 10
 SEPARATOR = " · "
+NEAR_DUPLICATE = 95  # fuzz.ratio of two normalised reference titles (0 to 100)
+MAX_NON_LATIN_SHARE = 0.2
+# OpenAlex record types that are not a piece of work (journal front matter, errata). Types such as
+# "reference-entry" or "software" hold real books and tools, so they stay.
+NON_WORK_TYPES = frozenset({"paratext", "editorial", "erratum"})
+_REVIEW = re.compile(r"^\s*(book\s+)?reviews?\s+of\b|^\s*(erratum|errata|corrigendum)\b", re.I)
+_VOLUME = re.compile(
+    r"\bproceedings\b|\blecture notes in\b|\brevised (selected )?papers\b"
+    r"|\b\d+(st|nd|rd|th) (international|annual)\b",
+    re.I,
+)
+_NOT_ALNUM = re.compile(r"[^\w]+")
 _FORMULA = re.compile(r"\[Formula: see text\]", re.IGNORECASE)
 _SPACES = re.compile(r"\s+")
 
@@ -39,6 +54,7 @@ class Reference:
     title: str | None
     in_corpus: bool  # the cited work is itself a pilot work
     n_citing_in_corpus: int  # how many pilot works cite it
+    type: str | None = None  # OpenAlex work type, when known
 
 
 @dataclass(frozen=True)
@@ -81,30 +97,70 @@ class CompositeParts:
         return bool(self.tldr)
 
 
+_EAST_ASIAN = ("CJK", "HIRAGANA", "KATAKANA", "HANGUL")
+
+
+def _has_east_asian(text: str) -> bool:
+    return any(unicodedata.name(c, "").startswith(_EAST_ASIAN) for c in text)
+
+
+def _non_latin_share(text: str) -> float:
+    letters = [c for c in text if c.isalpha()]
+    if not letters:
+        return 0.0
+    other = [c for c in letters if not unicodedata.name(c, "").startswith(("LATIN", "GREEK"))]
+    return len(other) / len(letters)
+
+
+def reference_title(ref: Reference) -> str | None:
+    """The title to show for a reference, or None when it is not worth showing.
+
+    Dropped (D-86): record types that are not a piece of work (paratext, editorials, errata);
+    reviews and errata by title; titles of proceedings volumes and series; titles written mostly
+    in a non-Latin script or with any Chinese, Japanese or Korean character (library listings
+    such as a textbook's catalogue entry; the model reads English). Trailing dots and quotes
+    are stripped.
+    """
+    if ref.type in NON_WORK_TYPES:
+        return None
+    title = clean(ref.title).strip(" .\"'")
+    if not title or _REVIEW.search(title) or _VOLUME.search(title):
+        return None
+    if _non_latin_share(title) > MAX_NON_LATIN_SHARE or _has_east_asian(title):
+        return None
+    return title
+
+
+def _norm(title: str) -> str:
+    return _NOT_ALNUM.sub(" ", title.casefold()).strip()
+
+
 def choose_references(
     references: Iterable[Reference], limit: int = MAX_REFERENCES
 ) -> tuple[list[str], int, int]:
     """The titles of up to ``limit`` references by the fixed rule, with the counts.
 
-    Rule (PLAN §9.3): references with a title only; in-corpus first; then by how many corpus
-    papers cite them, most first; ties by OpenAlex ID. Duplicate IDs and duplicate titles count
-    once. Returns ``(titles, n_references, n_references_with_title)`` over the distinct IDs.
+    Rule (PLAN §9.3): references with a usable title only (``reference_title``); in-corpus first;
+    then by how many corpus papers cite them, most first; ties by OpenAlex ID. A title that is
+    nearly the same as one already chosen (case, punctuation or a small word apart) is skipped.
+    Returns ``(titles, n_references, n_references_with_title)``: the first counts the distinct
+    IDs, the second those with a usable title.
     """
     distinct = {r.openalex_id: r for r in references}
-    titled = [r for r in distinct.values() if clean(r.title)]
-    titled.sort(key=lambda r: (not r.in_corpus, -r.n_citing_in_corpus, r.openalex_id))
+    usable = [(r, reference_title(r)) for r in distinct.values()]
+    usable = [(r, t) for r, t in usable if t]
+    usable.sort(key=lambda rt: (not rt[0].in_corpus, -rt[0].n_citing_in_corpus, rt[0].openalex_id))
     titles: list[str] = []
-    seen: set[str] = set()
-    for ref in titled:
-        title = clean(ref.title)
-        key = title.casefold()
-        if key in seen:
+    seen: list[str] = []
+    for _ref, title in usable:
+        key = _norm(title)
+        if any(fuzz.ratio(key, other) >= NEAR_DUPLICATE for other in seen):
             continue
-        seen.add(key)
+        seen.append(key)
         titles.append(title)
         if len(titles) == limit:
             break
-    return titles, len(distinct), len(titled)
+    return titles, len(distinct), len(usable)
 
 
 def build_parts(work: WorkInputs, *, max_references: int = MAX_REFERENCES) -> CompositeParts:
