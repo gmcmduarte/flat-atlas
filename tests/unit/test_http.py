@@ -66,6 +66,24 @@ def test_different_params_or_body_do_not_share_a_cache_entry(settings, clock, ht
     assert c.post("paper/batch", {"ids": ["a"]}).from_cache
 
 
+def test_post_body_is_kept_with_the_cached_answer(settings, clock, httpx_mock):
+    httpx_mock.add_response(method="POST", json=[{"corpusId": 1}, None])
+    c = client("semanticscholar", settings, clock)
+    body = {"ids": ["DOI:10.1/a", "DOI:10.1/b"]}
+    fresh = c.post("paper/batch", body)
+    assert fresh.request_body == body
+    (again,) = list(client("semanticscholar", settings, clock).iter_cached("paper/batch"))
+    assert again.request_body == body and again.data == [{"corpusId": 1}, None]
+    assert c.post("paper/batch", body).request_body == body  # a cache hit carries it too
+
+
+def test_get_answers_have_no_request_body(settings, clock, httpx_mock):
+    httpx_mock.add_response(json={"x": 1})
+    c = client("dblp", settings, clock)
+    assert c.get(DBLP, {"q": "a"}).request_body is None
+    assert c.get(DBLP, {"q": "a"}).request_body is None
+
+
 def test_refresh_older_than_refetches_old_entries(settings, clock, httpx_mock):
     httpx_mock.add_response(json={"v": 1})
     httpx_mock.add_response(json={"v": 2})

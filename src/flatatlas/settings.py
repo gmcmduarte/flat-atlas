@@ -109,6 +109,11 @@ class Paths:
         return self.root / "logs"
 
     @property
+    def cache(self) -> Path:
+        """Recomputable intermediate results (for example finished embedding batches)."""
+        return self.root / "cache"
+
+    @property
     def warehouse_db(self) -> Path:
         return self.warehouse / "flatatlas.duckdb"
 

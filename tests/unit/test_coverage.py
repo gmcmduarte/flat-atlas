@@ -60,7 +60,9 @@ def seed(con, *, with_crossref: bool = True) -> None:
         con.execute(
             """CREATE OR REPLACE TABLE local_abstract AS SELECT * FROM (VALUES
               ('c', 'W2', '10.1/c', 'openalex', 'text', 4),
-              ('g', NULL, '10.1/g', 'crossref', 'text', 4)
+              ('g', NULL, '10.1/g', 'crossref', 'text', 4),
+              ('c', NULL, '10.1/c', 's2', 'text', 4),
+              ('d', NULL, '10.1/d', 's2', 'text', 4)
             ) t(dblp_key, openalex_id, doi, source, "text", n_chars)"""
         )
 
@@ -79,7 +81,9 @@ def test_cells_count_papers_matches_abstracts_and_references(con):
     dlt10 = cell(cov, "dlt", 2010)
     assert (dlt10["papers"], dlt10["with_doi"]) == (4, 4)
     assert (dlt10["fetched"], dlt10["doi_fetched"], dlt10["doi_matched"]) == (3, 3, 2)
-    assert dlt10["abs_openalex"] == 1 and dlt10["abs_crossref"] == 0 and dlt10["abs_any"] == 1
+    # c has an OpenAlex and an S2 abstract (counted once in "any"); d only an S2 one
+    assert dlt10["abs_openalex"] == 1 and dlt10["abs_crossref"] == 0 and dlt10["abs_s2"] == 2
+    assert dlt10["abs_any"] == 2
     assert dlt10["refs_openalex"] == 1 and dlt10["has_affiliation"] == 1
     assert dlt10["has_pages"] == 2  # c from OpenAlex and f from Crossref (not matched, not fetched)
 
@@ -126,7 +130,8 @@ def test_render_states_the_headline_numbers_and_warns_about_partial_runs(con):
     assert "**Title-search match rate:** 1 of 2" in text
     assert "**Partial run:** 1 of 7 papers have not been looked up" in text
     assert "| dlt | 2010s | 4 |" in text and "| ciaa | 2010s | 1 |" in text
-    assert "Abstract OA" in text and "Refs any" in text
+    assert "Abstract OA" in text and "Abstract S2" in text and "Refs any" in text
+    assert "Semantic Scholar 2 (" in text
 
 
 def test_render_of_a_complete_run_has_no_warnings(con):

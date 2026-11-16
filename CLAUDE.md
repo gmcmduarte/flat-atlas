@@ -18,7 +18,7 @@ It links **topics, papers, authors and venues**. Solo maintainer (Guilherme), ze
 | Progress log and hand-off notes | `docs/plan/PROGRESS.md` |
 | Notes brought in from Claude chat or reading | `docs/notes/` |
 | Venue list, source settings, profiles | `config/` |
-| Topic DAG (human-reviewed), anchors | `taxonomy/` |
+| Topic DAG (human-reviewed), anchors, labelled set (`gold.yaml`) | `taxonomy/` |
 | Pipeline code (Python package `flatatlas`) | `src/flatatlas/` |
 | Tests | `tests/` |
 | Static site / frontend (SvelteKit) | `web/` |

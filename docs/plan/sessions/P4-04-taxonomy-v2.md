@@ -22,6 +22,7 @@ Extend the reviewed DAG to the whole field without disturbing what Guilherme alr
 - Find and fix structural problems with data: topics too big (> 8 % of the corpus and splittable), too small (< 15 works after tagging), siblings that the tagger cannot separate (high confusion), orphan clusters with no topic.
 - Respect `reviewed: true`: do not change reviewed names, parents or phrases; put any suggested change to a reviewed topic in a separate 'suggested edits' list with the evidence.
 - Extend `anchors.yaml` to ≥ 150 with every level-0 topic covered by ≥ 5 anchors, each resolved to an identifier in the corpus.
+- **Migrate the labelled set** (`taxonomy/gold.yaml`, PLAN §9.6): labels go stale when a level-0 or level-1 topic is merged, split or re-parented. List every affected work, propose its new labels in `taxonomy/proposals/gold-v2.yaml` (never edit reviewed entries), and extend the set with a random, stratified sample of the venues added since the pilot (about 200 works, same hash split) so that the held-out third represents the whole field. Guilherme reviews these together with the taxonomy. Cost €0.
 - Write `docs/notes/taxonomy-v2-review-guide.md`; stop for Guilherme's review (2–3 hours); apply his edits; bump `taxonomy_version`.
 
 ## Test
@@ -32,6 +33,7 @@ Extend the reviewed DAG to the whole field without disturbing what Guilherme alr
 - Reviewed fields unchanged except by Guilherme.
 - ≥ 150 anchors, all in the corpus, all level-0 topics covered.
 - Guilherme's review committed.
+- `gold.yaml` carries the new `taxonomy_version`, passes `taxonomy check`, and no label points at a removed topic.
 
 ## Out of scope
 - Tagger changes (P4-05).

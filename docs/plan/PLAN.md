@@ -47,7 +47,7 @@ flowchart LR
     EXP[9 Static export<br/>JSON shards + search index]
   end
   CFG[config/ venues.yaml] --> H
-  TAX[taxonomy/ topics.yaml, anchors.yaml] --> TAG
+  TAX[taxonomy/ topics.yaml, anchors.yaml, gold.yaml] --> TAG
   DBLP --> H
   OA --> H
   S2 --> H
@@ -106,7 +106,7 @@ Checked on 2026-11-15. Re-check limits in the first session that uses each sourc
 |---|---|---|---|---|---|
 | **DBLP** | Backbone: venues, volumes, papers, author IDs (PIDs) | Open API, no key; rate-limited (429 with empty body). **Since 2026-11-15 the API and both mirrors answer scripts with a bot challenge (HTTP 202, Anubis); it is not bypassed (D-49). DBLP data therefore comes from the XML dump (below).** Also a public SPARQL endpoint (`sparql.dblp.org`), not checked. | `dblp.xml.gz` (+ `dblp.dtd`, `.md5`) downloaded by hand into `data/raw/dblp-dump/`; 1.12 GB compressed, 128 M lines, 13.1 M records; read as a stream by `flatatlas.dblp_dump` (about 100 s for a full pass). Updated daily; monthly persistent releases since 2015; RDF dump. | **CC0 1.0** | None |
 | **OpenAlex** | Citations, references, affiliations, countries, topics, keywords, abstracts (partial) | **Free API key required** since Feb 2026. Budget **$1/day free**, resets at midnight UTC. Single-record lookups (by ID or DOI) are free. List/filter calls cost $0.10 per 1,000 calls, so $1 buys 10,000 calls (1,000,000 works at `per_page=100`). Search costs $1 per 1,000 calls. New accounts are paced at $0.10 per 5 minutes at first. Rate limit ⚠ reported as 30 requests/s with key; treat as 10/s. | Free snapshot in S3 bucket `openalex` (`--no-sign-request`), JSONL or Parquet, **about 745 GB compressed**, refreshed **quarterly**. Daily snapshots are paid. | **CC0** | As `abstract_inverted_index`. Missing for many closed-access papers: Springer non-OA removed in 2022, Elsevier reduced since 2024 (secondary sources). |
-| **Semantic Scholar** | SPECTER2 embeddings, citations with "influential" flag, abstracts (partial), TLDRs | Free API key on request; key gives **1 request/s** on all endpoints. Without key: shared anonymous pool, unreliable. `POST /paper/batch` takes many IDs per call (⚠ 500 per call, from memory). | Datasets API (key needed), release `2026-11-10` seen: `papers` (30×1.5 GB), `abstracts` (30×1.8 GB), `citations` (30×8.5 GB), `embeddings-specter_v2` (30×28 GB), `authors`, `tldrs`. Incremental diffs between releases ⚠ unverified. | Data **ODC-BY 1.0** (attribution; cite Kinney et al. 2023). Embeddings **Apache 2.0**. API licence requires "Semantic Scholar" attribution on the site. | In `abstracts` dataset and API; "selected papers" only. Redistribution of abstract text is not clearly granted. |
+| **Semantic Scholar** | SPECTER2 embeddings, citations with "influential" flag, abstracts (partial), TLDRs | Free API key on request; key gives **1 request/s** on all endpoints. Without key: shared anonymous pool, unreliable. `POST /paper/batch` takes **500** IDs per call, as `DOI:<doi>` (`DBLP:` IDs are not accepted; checked P1-03). In practice the key is throttled harder than 1 request/s (HTTP 429 on many calls; see `docs/notes/sources.md`). Springer abstracts and reference lists are mostly hidden. | Datasets API (key needed), release `2026-11-10` seen: `papers` (30×1.5 GB), `abstracts` (30×1.8 GB), `citations` (30×8.5 GB), `embeddings-specter_v2` (30×28 GB), `authors`, `tldrs`. Incremental diffs between releases ⚠ unverified. | Data **ODC-BY 1.0** (attribution; cite Kinney et al. 2023). Embeddings **Apache 2.0**. API licence requires "Semantic Scholar" attribution on the site. | In `abstracts` dataset and API; "selected papers" only. Redistribution of abstract text is not clearly granted. |
 | **Crossref** | DOI metadata, reference lists, some abstracts, ISSN/ISBN, publication dates | No key. Polite pool by adding `mailto=`. Since 21 July 2026: polite = **10 requests/s single-record, 3 requests/s list queries**; public = 5 and 1. Limits are per email address. Read the `x-rate-limit-*` headers. | Annual public data file (2026 file released March 2026) ⚠ size unverified, larger than 200 GB. Not needed. | Metadata is treated as facts (no copyright claimed by Crossref); abstracts may be copyrighted by publishers. | Some, in JATS XML. |
 | **zbMATH Open** (later phase) | Pre-1990 coverage, **MSC codes per paper**, reviews as extra signal | REST API and OAI-PMH; no numeric limit published; be slow (1 request/s). ⚠ Whether MSC codes are in the API payload is unverified (expected yes). | OAI-PMH harvesting of the open collection. | **CC BY-SA 4.0** (share-alike: see §10). | Reviews/summaries, partly restricted. |
 | **CORE / ICORE ranks** | Venue rank | Portal `portal.core.edu.au/conf-ranks`. ICORE 2026 has been released. The portal blocked automated fetching (HTTP 403) during planning. | Manual CSV export from the portal ⚠ unverified. | No licence stated ⚠. Store rank + edition + source URL per venue only. | n/a |
@@ -174,7 +174,7 @@ All tables live in `data/warehouse/` as Parquet, queried through DuckDB. Naming:
 
 **`core_stub`**: out-of-scope works that in-scope papers cite or are cited by often. Minimal fields (IDs, title, year). They help scope and propagation but have no pages.
 
-**Local-only (never in a release): `local_abstract(work_id, text, source)`**, **`local_embedding(work_id, model, vector FLOAT[768], source)`**.
+**Local-only (never in a release): `local_abstract(work_id, text, source)`** (one row per work and source; priority OpenAlex, Semantic Scholar, Crossref), **`local_embedding(work_id, model, source, vector FLOAT[768], …)`** (exactly one row per work; `source` is `s2` or `local`, S2 wins). Until P1-04 mints work IDs both tables are keyed by `dblp_key` (D-70).
 Embeddings are derived data under Apache 2.0 / our own computation and *may* be released as a separate optional file (decision D-14).
 
 ### 4.3 Topics
@@ -196,9 +196,13 @@ Embeddings are derived data under Apache 2.0 / our own computation and *may* be 
 
 ### 4.4 Tags
 
-**`tag_signal`** (wide, internal): `work_id`, `topic_id`, one column per signal score (§9.3), `tagger_version`.
+**`tag_signal`** (wide, internal): `work_id`, `topic_id`, one column per signal score (§9.3; `dm_*` and `distil` are null where the step did not run), the context features of §9.3, `shortlisted`, `tagger_version`.
 
-**`tag_work_topic`** (published): `work_id`, `topic_id`, `confidence` (0–1), `rank`, `is_primary`, `provenance` (STRUCT: `method`, `signals` used with their scores, `tagger_version`, `taxonomy_version`), `derived` (true for ancestor rows added by closure).
+**`local_decision`** (local-only cache of the decision model, §9.5): `work_id`, `question` (`l0` or a topic ID), `option_order`, `probabilities`, `model_sha256`, `prompt_version`.
+
+**`eval_gold`** (loaded from `taxonomy/gold.yaml`, §9.6): `work_id`, `topic_id`, `split` (`train`/`heldout`), `sampling`, `blind`, `taxonomy_version`. Never exported in a release as tags.
+
+**`tag_work_topic`** (published): `work_id`, `topic_id`, `confidence` (0–1), `rank`, `is_primary`, `provenance` (STRUCT: `method`, `signals` used with their scores, `models` (file hashes of the fusion, decision and distilled models that contributed), `tagger_version`, `taxonomy_version`), `derived` (true for ancestor rows added by closure).
 
 ### 4.5 Aggregates (built for the site)
 `agg_topic_year` (papers, confidence-weighted volume, citations), `agg_topic_author` (score, first/last year), `agg_topic_venue`, `agg_venue_year` (all venue metrics, §15.1), `agg_venue_overlap`, `agg_author_coauthor(author_a, author_b, year, n)`, `agg_bridge(topic_a, topic_b, work_id, score)`, `agg_reading_path`, `agg_map_layout(topic_id, parent_id, x, y, r, year)`.
@@ -232,8 +236,8 @@ One CLI, `flatatlas`, one sub-command per stage. `flatatlas run --profile pilot 
 | 4 | Scope | `scope` | core → `scope_*` columns, `core_stub` | §6. |
 | 5 | Embed | `embed` | works → `local_embedding` | S2 vectors first, local SPECTER2 for the rest. |
 | 6 | Taxonomy | `taxonomy <step>` (mine, cluster, propose, load, check) | corpus + `topics.yaml` → proposals, `core_topic` | §9.1–9.2. `propose` never edits reviewed fields. |
-| 7 | Tag | `tag [--incremental]` | works + topics → `tag_*` | §9.3–9.5. |
-| 8 | Evaluate | `evaluate` | tags → `ops_quality_report`, HTML spot-check report | §9.6. Fails the run if a hard check fails. |
+| 7 | Tag | `tag [--incremental]`, `tag decide` | works + topics → `tag_*` | §9.3–9.5, §9.7. `tag decide` is the local decision model: a long job for unsure works only. |
+| 8 | Evaluate | `evaluate` | tags → `ops_quality_report`, HTML spot-check report | §9.6, including the held-out labelled set. Fails the run if a hard check fails. |
 | 9 | Aggregate | `aggregate` | core + tags → `agg_*`, topic edges, map layout | |
 | 10 | Release | `release build` | warehouse → `releases/vX/` | Runs all data-quality checks first. |
 | 11 | Export | `export static` / `export postgres` | release → `web/static/data/` or Postgres schema | |
@@ -245,12 +249,12 @@ One module used by every source client:
 - **Budget guard** for OpenAlex: counts estimated spend per UTC day and stops cleanly before the daily budget, so a job can be relaunched the next day.
 - **Resumability**: cursor paging state stored in `ops_harvest_state` after every page; killing the process loses at most one page.
 - **Politeness**: `User-Agent` and `mailto` from `.env`; keys from `.env`; never logged.
-- **Batching**: OpenAlex `filter=doi:a|b|…` (up to 50–100 per call ⚠ verify), S2 `POST /paper/batch`, Crossref single-DOI calls.
+- **Batching**: OpenAlex `filter=doi:a|b|…` (up to 50–100 per call ⚠ verify), S2 `POST /paper/batch` (500 `DOI:` IDs), Crossref single-DOI calls.
 
 ### 5.2 Harvest order
 1. DBLP: for each venue in `venues.yaml`, list volumes/editions, then papers per volume → the paper list with DBLP keys, author PIDs, DOIs.
 2. OpenAlex: fetch works by OpenAlex source ID + by DOI for DBLP papers; fields: ids, title, year, authorships (institutions, countries), `referenced_works`, `cited_by_count`, `counts_by_year`, topics, keywords, abstract index, OA location.
-3. Semantic Scholar: batch by DOI/DBLP key: `corpusId`, abstract, `embedding.specter_v2`, citation counts, influential citations, TLDR (local use), references.
+3. Semantic Scholar: batch by DOI (500 per call), then a capped title match (`/paper/search/match`) for papers without a DOI or not returned by DOI (D-68): `corpusId`, abstract, `embedding.specter_v2`, citation counts, influential citations, TLDR (local use), references.
 4. Crossref: only for DOIs missing from OpenAlex or missing key fields (dates, pages, references, abstract).
 5. Second round (Phase 2+): metadata for stubs, i.e. works referenced by or citing in-scope works at least *k* times.
 
@@ -384,7 +388,18 @@ LNCS problem: OpenAlex often files proceedings papers under the *book series* (L
 
 ## 9. Taxonomy and tagging
 
-Fully automatic for papers. One-time human review of the topic DAG (decision D-02, confirmed by Guilherme).
+Fully automatic for papers. One-time human review of the topic DAG (decision D-02, confirmed by Guilherme). A small hand-reviewed labelled set (§9.6) trains and measures the tagger; it never tags a paper directly (D-61, D-62).
+
+Redesigned on 2026-11-16 (D-61 to D-66, approved; D-67 drafted and inactive; reasons in `docs/notes/tagging-redesign-brief.md`). The tagger is a **cascade from cheap to expensive**: every paper gets the cheap steps, and only the papers the cheap steps are unsure about get the slow one.
+
+| Step | What | Applies to | Running cost | Where and how long |
+|---|---|---|---|---|
+| 1 | Signals and shortlist (§9.3) | all works | €0 | laptop, minutes |
+| 2 | Learned fusion and calibration (§9.4) | all works | €0 | laptop, seconds |
+| 3 | Local decision model (§9.5) | unsure works only (expected 30–40 % ⚠ estimate) | €0 (open weights, local) | laptop or server, background job, overnight |
+| 4 | Distilled classifier (§9.7) | new works after the full run | €0 | seconds per week |
+
+**Cost rule for this section.** Every step runs on local models, the laptop (Apple M1, 16 GB) or the university server, and free API tiers. Nothing here may cost money per paper, per page view or per user. A paid decision-model API is **not part of this plan**; it exists only as the proposed, inactive exception D-67 and needs Guilherme's separate approval before any code calls it.
 
 ### 9.1 Building the topic DAG
 
@@ -394,7 +409,7 @@ Fully automatic for papers. One-time human review of the topic DAG (decision D-0
 - Licence care: MSC2020 is CC BY-NC-SA; ACM holds copyright on CCS. We store **codes as cross-references** and write our own names and descriptions. We do not copy either scheme's text wholesale.
 - OpenAlex topics and keywords that Tier A papers receive (CC0) give a third seed list.
 
-**Step 2 — phrase mining** (`taxonomy mine`). On titles (+ abstracts where present): noun-phrase and n-gram extraction, scored by c-TF-IDF against a background corpus of non-FLAT theory titles; author keywords from OpenAlex/Crossref where present. Variants are merged by lemmatisation, hyphen/spacing/spelling normalisation ("ω-automata" / "omega automata", "synchronising" / "synchronizing") and by embedding similarity. Output: candidate terms with frequency, first year, example papers.
+**Step 2 — phrase mining** (`taxonomy mine`). On titles, abstracts where present and the titles of each work's references (the composite text of §9.3; reference titles are counted with a lower weight than the work's own title): noun-phrase and n-gram extraction, scored by c-TF-IDF against a background corpus of non-FLAT theory titles. Author and OpenAlex keywords are **not trusted by default** (machine-generated or sparse); they are listed as candidates only and their precision is measured on the labelled set later. Variants are merged by lemmatisation, hyphen/spacing/spelling normalisation ("ω-automata" / "omega automata", "synchronising" / "synchronizing") and by embedding similarity. Output: candidate terms with frequency, first year, example papers.
 
 **Step 3 — clustering** (BERTopic-style, but with our own embeddings). SPECTER2 vectors → UMAP (fixed seed) → HDBSCAN at two or three granularities → c-TF-IDF labels per cluster. Clusters that match no seed become candidate topics; clusters that split a seed become candidate children.
 
@@ -403,6 +418,8 @@ Fully automatic for papers. One-time human review of the topic DAG (decision D-0
 **Step 5 — proposal file.** `taxonomy propose` writes `taxonomy/proposals/vN.yaml` plus a readable review document (`docs/notes/taxonomy-review-vN.md`): each topic with name, aliases, parents, 5 example papers, size, and the evidence. Target size: 15–25 level-0 topics, 150–300 topics in the pilot, 400–900 for the whole field.
 
 **Step 6 — one-time review (2–4 hours, Guilherme).** Edit names, merge, re-parent, delete. Save as `taxonomy/topics.yaml` with `reviewed: true` on touched topics. From then on the pipeline only *proposes* (new topics, splits) into `taxonomy/proposals/`; applying a proposal is an explicit command and a commit.
+
+All of §9.1 is free: local computation plus cached metadata.
 
 **Topic entry format**
 ```yaml
@@ -420,50 +437,139 @@ Fully automatic for papers. One-time human review of the topic DAG (decision D-0
 ```
 
 ### 9.2 Per-topic artefacts (built automatically, cached, versioned)
-For each topic: (1) **phrase dictionary**: `include_phrases` + aliases + mined variants + nearest phrases by embedding (each with a weight; ambiguous phrases need a context word); (2) **seed set**: `seed_works` plus the highest-precision dictionary matches (title match); (3) **centroid(s)**: mean SPECTER2 vector of the seed set (up to 3 centroids if the seeds are multi-modal), and the embedding of `name + description`; (4) mapped OpenAlex topics/keywords and MSC codes.
+For each topic: (1) **phrase dictionary**: `include_phrases` + aliases + mined variants + nearest phrases by embedding (each with a weight; ambiguous phrases need a context word); (2) **seed set**: `seed_works` plus the highest-precision dictionary matches (title match); (3) **centroid(s)**: mean SPECTER2 vector of the seed set (up to 3 centroids if the seeds are multi-modal), and the embedding of `name + description`; (4) mapped OpenAlex topics/keywords and MSC codes; (5) **topic context features** for the fusion model: `level`, number of children, seed-set size, spread of the seed vectors (mean distance to the centroid), and the per-topic score distributions used for calibration (§9.3). Cost: free, seconds.
 
-### 9.3 Signals (per work × topic)
+### 9.3 Paper text, signals and shortlist (cascade step 1)
+
+**Composite text.** Only 6 % of pilot papers have an abstract, while 88 % have a reference list (P1-02), so the text given to any model is built from what exists:
+
+`title · venue · year · titles of up to 10 references · abstract if present · Semantic Scholar TLDR if present`
+
+- The 10 references are chosen by a fixed rule (in-corpus references first, then the most cited within the corpus, ties by ID), so the text is deterministic.
+- Abstract and TLDR are local-use data (rule 2): they are read from `local_abstract` and the local S2 table, used in memory, and never exported. The composite text itself is stored only under `warehouse/local/`.
+- Reference titles are public metadata, but only IDs are harvested so far. P1-05 fetches the missing titles through `flatatlas.http` within the free budgets (⚠ route to verify: `references.title` in the S2 batch, or OpenAlex ID batches of 100).
+- **Embeddings:** the Semantic Scholar SPECTER2 vector when there is one (it may have used text we cannot get); otherwise a local SPECTER2 embedding. Whether the local vector of title-only works improves when the reference titles are appended is one small experiment in P1-07, judged on gold-train.
+
+**Signals (per work × topic).** All free.
+
 | Signal | Computation | Strength |
 |---|---|---|
 | `lex_title` | weighted phrase match in title | high precision |
-| `lex_abstract` | weighted phrase match in abstract (if any), TF-normalised | medium |
-| `emb_seed` | cosine to topic centroid(s), calibrated against the distribution for random works | medium, good recall |
-| `emb_desc` | cosine between the work and the topic description (ad-hoc query adapter or a small general sentence model; chosen by experiment in P1-07) | weak–medium |
-| `src_openalex` | OpenAlex topic/keyword mapped to the topic, scaled by OpenAlex's own score | medium |
+| `lex_abstract` | weighted phrase match in abstract or TLDR (if any), TF-normalised | medium |
+| `lex_refs` | share of the work's reference titles that match the topic's phrases | medium; the substitute for the missing abstract |
+| `emb_seed` | cosine to topic centroid(s), turned into a **per-topic** percentile against that topic's own distribution for random works | medium, good recall |
+| `emb_desc` | cosine between the work and the topic description (ad-hoc query adapter or a small general sentence model; chosen by experiment in P1-07), per-topic percentile | weak–medium |
+| `src_openalex` | OpenAlex topic mapped to the topic, scaled by OpenAlex's own score (keywords excluded until measured, §9.1 step 2) | medium |
 | `src_msc` | MSC code from zbMATH mapped to the topic (Phase 6) | high precision, coarse |
 | `prop_cite` | label propagation over citations: weighted mean of topic vectors of references and citers (references count more) | high once neighbours are tagged |
 | `prop_author` | author prior: the authors' topic distribution in the ±5-year window, excluding the work itself | weak, tie-breaker |
 | `venue_prior` | topic distribution of the venue (weak prior, never sufficient alone) | weak |
-| `llm` (optional) | local LLM verdict for low-confidence works only (§9.5) | optional |
+| `dm_l0`, `dm_child` | calibrated probabilities from the local decision model, unsure works only (§9.5); null elsewhere | to be measured |
+| `distil` | probability from the distilled classifier, new works only (§9.7) | to be measured |
 
-### 9.4 Fusion
-- **v1 (pilot): transparent weighted fusion.** `confidence = noisy_or(wᵢ · sᵢ)` with weights in `config/tagger.yaml`, plus an agreement bonus when ≥ 2 independent signal families agree (lexical, embedding, source, propagation).
-- **v2 (after the pilot gate): weakly supervised.** Silver labels: positives = `lex_title` exact matches agreeing with `src_openalex` or `src_msc`; negatives = works in distant top-level topics. Train one logistic regression on pair features (the signals, *excluding* the ones used to build the silver label for that pair) and calibrate with isotonic regression. Kept only if it beats v1 on anchors and coherence.
-- **Two passes.** Pass 1 without propagation → pass 2 adds `prop_*` using pass-1 tags → stop (no iteration to convergence; it keeps runs deterministic and incremental).
-- **Hierarchy.** Assign the most specific topics. If only a parent is supported, tag the parent. Ancestors are added as `derived: true` rows with the max child confidence.
-- **Selection.** Keep topics with confidence ≥ 0.35, at most 6 non-derived topics per work; mark the top one `is_primary`. Works with no topic ≥ 0.35 are tagged to their best level-0 topic with a low-confidence flag, or left `untagged` (reported).
-- **Volume for bubbles** = sum of confidences of non-derived tags, rolled up the DAG without double counting a work inside one ancestor.
+Raw cosines are not comparable across topics (a broad topic is spread out, a narrow one is tight), so embedding signals are always stored as per-topic percentiles, never as raw scores.
 
-### 9.5 Optional local LLM
-Off by default (`tagger.llm.enabled: false`). When on: only works whose top confidence is in [0.25, 0.55] or whose signals disagree. The model (a small instruct model through Ollama; pick the current best 3–8 GB model at build time) gets title, abstract if any, and the 8 candidate topics with descriptions, and must return JSON choosing 0–3. Its output is one more signal (`llm`), never an override. Budget estimate: on the M1 about 2–5 s per work, so about 1,000 works per hour; on the server without GPU similar per core. Not needed for any acceptance criterion.
+**Context features (per work and per topic)**, given to the fusion model so that it can learn *when* to trust each signal: `has_abstract`, `has_tldr`, `n_references`, `n_references_with_title`, `embedding_source` (s2 or local), title length, publication decade; and the topic features of §9.2.
 
-### 9.6 Evaluation without hand-tagging
-All produced by `flatatlas evaluate`, stored in `ops_quality_report`, summarised in `reports/eval-<run>.html`.
+**Shortlist.** For each work, the union of the top candidates of each signal family (lexical, embedding, source, propagation), cut to about 8 topics, plus their ancestors. Later steps only score shortlisted pairs. The shortlist's recall is measured on gold-train (share of gold labels that are in the shortlist, target ≥ 95 %); a label the shortlist misses can never be recovered.
+
+### 9.4 Fusion, hierarchy and selection (cascade step 2)
+
+Three fusion methods exist so that the choice is made by numbers (§9.6), not by taste:
+
+- **(a) Baseline: transparent weighted fusion.** `confidence = noisy_or(wᵢ · sᵢ)` with weights in `config/tagger.yaml`, plus an agreement bonus when ≥ 2 independent signal families agree. Kept as the reference and as the fallback.
+- **(b) Baseline: top-down classifier.** One small classifier per level on the embeddings, trained on gold-train (level 0, then level 1 inside the chosen parents). Built only for the comparison.
+- **(c) Learned fusion (the cascade).** One model over pair features: the signal scores, the context features, and the probability of the topic's best parent. LightGBM (missing values such as an absent `dm_*` are handled natively) or logistic regression with missing-value indicators; the simpler one is kept unless the other is clearly better. Followed by isotonic calibration, so that a confidence of 0.7 means about 70 % of such tags are right.
+  - **Training data:** gold-train pairs at levels 0 and 1 (§9.6), and **silver labels** for all levels: positives = `lex_title` exact matches agreeing with `src_openalex` or `src_msc`; negatives = works in distant top-level topics. Gold pairs are weighted higher than silver pairs.
+  - **Leak rule:** a signal that defined the silver label of a pair is not a feature for that pair.
+  - **No held-out leakage:** held-out works are excluded from training, calibration, threshold tuning and artefact seed sets.
+
+**Hierarchy is soft, never hard routing.** Topics are scored level by level from the top; a child's features include its parents' probabilities (the maximum over its parents; several parents allowed). A wrong level-0 guess lowers the scores below it but blocks nothing, which avoids the error cascade of top-down classifiers.
+
+**Two passes.** Pass 1 without propagation → pass 2 adds `prop_*` using pass-1 tags → stop (no iteration to convergence; it keeps runs deterministic and incremental, D-25).
+
+**Selection.** Assign the most specific topics. If only a parent is supported, tag the parent. Keep topics with confidence ≥ 0.35, at most 6 non-derived topics per work; mark the top one `is_primary`. Both numbers are starting values, re-tuned on gold-train (never on the held-out third). Ancestors are added as `derived: true` rows with the max child confidence. Works with no topic above the threshold are tagged to their best level-0 topic with a low-confidence flag, or left `untagged` (reported).
+
+**Volume for bubbles** = sum of confidences of non-derived tags, rolled up the DAG without double counting a work inside one ancestor.
+
+Every `tag_work_topic` row stores `confidence` and `provenance` (method, signals with scores, model file hashes, `tagger_version`, `taxonomy_version`). Cost of step 2: free; training takes seconds to minutes on the laptop.
+
+### 9.5 Local decision model (cascade step 3)
+
+A decision model does not generate text: it is asked a question with a fixed set of options and returns a probability for each. Here that is done with an **open model run locally**: a 4–9B instruct model (default candidate: an open Qwen model in a quantised build ⚠ pick the current best that fits 16 GB at build time; check its licence) through llama.cpp or MLX, reading the probabilities of the option tokens after one forward pass. No text is generated, no network is used, and the cost is €0. This replaces the earlier design (an LLM writing JSON, D-26), which was slower and hard to calibrate.
+
+- **Which works:** only the unsure ones after step 2: top confidence inside a middle band (start: 0.25–0.55), or signal families that disagree on the best topic. Band and rule live in `config/tagger.yaml`; the share of works sent is reported.
+- **Question 1 (choice):** the composite text and the level-0 topics (name + one-line description); the model returns a probability per topic.
+- **Question 2 (yes/no):** for each child of the two most probable level-0 topics, and for shortlisted candidates below them (capped per work), "does this topic fit this paper?". Yes/no per topic handles several labels and several parents; keeping two parents limits cascade errors.
+- **Order effects:** options are shuffled (3 fixed orders by default) and the probabilities averaged.
+- **Calibration:** vendor or model calibration is not trusted; isotonic regression on gold-train per question type.
+- **Output is one more signal** (`dm_l0`, `dm_child`), fed to the fusion model of §9.4 for a final score. It is never an override.
+- **Reproducibility:** the model file name and its SHA-256, the quantisation, the runtime version and the prompt version are stored in provenance; no `latest` aliases.
+- **Speed:** ⚠ unmeasured. Rough estimate for the M1: 1–2 hours for all 2,339 pilot works, 30–70 hours for the unsure share of a 300,000-work field. P1-07b measures it with `--limit` before any long run. Prompts put the shared part first so that it is cached.
+- **Long job:** resumable, cached per (work, question, model hash, prompt version), launched by Guilherme (rule 7).
+- **Kept only if it earns its place:** the decision model stays in the tagger only if step 3 improves the held-out numbers over step 2 alone (§9.6). Otherwise `tagger.decision_model.enabled` is set to `false` and the cascade stops at step 2.
+
+> **Paid API variant: not active.** A hosted decision model (for example Microsoft-Decision-1 on Azure, ⚠ price and terms unverified) could play the same role. Hard rule 3 forbids it today. It may only be tried under the conditions of the proposed decision D-67, after Guilherme approves that decision. No session may add an API client for it before then.
+
+### 9.6 Evaluation
+All produced by `flatatlas evaluate`, stored in `ops_quality_report`, summarised in `reports/eval-<run>.html`. Free.
+
+**The labelled set (`taxonomy/gold.yaml`, D-61).**
+- **Size and depth:** 400–600 works labelled at **level 0 and level 1** with every topic that applies (multi-label). Deeper levels are judged by the other checks below.
+- **Sampling:** drawn at random with a fixed seed, stratified by venue, decade and has-abstract. **Never chosen by tagger output**, otherwise the numbers flatter the tagger the way famous anchor papers do. A separate top-up of at most 100 works may be added for level-1 topics with fewer than 5 examples; top-up works are marked `sampling: topup` and are **training only**.
+- **Labelling:** Claude drafts from the composite text; Guilherme reviews every work (2–3 hours at about 15 s each). To measure how much the draft steers the reviewer, 50 of the works are labelled by Guilherme *before* he sees the draft (`blind: true`); the agreement between blind and drafted labels is reported.
+- **Split:** fixed by a hash of the work ID: two thirds `train`, one third `heldout` (about 130–200 works). The held-out third is the referee for method choices and is used for nothing else.
+- **Format:** a human-edited file versioned with `taxonomy_version`; reviewed entries are never overwritten by the pipeline (rule 6). `taxonomy check` validates it. A `taxonomy_version` bump requires migrating the labels of merged or split topics.
+
+```yaml
+taxonomy_version: 1
+works:
+  - work: WT3SYS5P77T        # Atlas work ID
+    title: "…"               # for the reader; not authoritative
+    labels: [regular-languages, descriptional-complexity]   # level 0 and 1, all that apply
+    split: heldout           # train | heldout, set by hash
+    sampling: random         # random | topup
+    blind: false
+    reviewed: true
+    note: ""
+```
+
+**Method comparison (P1-08, repeated in P4-05).** Methods (a), (b) and (c) of §9.4, and (c) with and without the decision model, on the held-out third: precision, recall and F1 at level 0 and level 1 (micro and macro), with bootstrap 90 % intervals. With 130–200 held-out works a difference of a few points is noise: **a more complex method is adopted only if the interval of the paired difference excludes zero and no hard check below gets worse; otherwise the simpler method stays.** The table is recorded in `docs/notes/tagger-experiments.md` and the choice in `DECISIONS.md`.
 
 | Check | What | Hard threshold (pilot) |
 |---|---|---|
-| **Anchor papers** | `taxonomy/anchors.yaml`: about 100–200 well-known papers with the topic they must land in (top 3). Drafted by Opus from the literature, verified to exist in the data, reviewed by Guilherme together with the taxonomy. Examples: Rabin & Scott 1959 → finite automata; Büchi 1962 → ω-automata; Brzozowski 1964 → derivatives of regular expressions; Angluin 1987 → grammatical inference; Yu, Zhuang & Salomaa 1994 → state complexity; Păun 2000 → membrane computing. | ≥ 90 % of anchors present in the corpus hit |
+| **Held-out labelled set** | precision, recall, F1 at levels 0 and 1 on `split: heldout`, with intervals; calibration curve (stated confidence against observed precision) | reported; the floor is set at gate G1 from the first measured numbers |
+| **Anchor papers** | `taxonomy/anchors.yaml`: about 100–200 well-known papers with the topic they must land in (top 3). Drafted by Opus from the literature, verified to exist in the data, reviewed by Guilherme together with the taxonomy. Examples: Rabin & Scott 1959 → finite automata; Büchi 1962 → ω-automata; Brzozowski 1964 → derivatives of regular expressions; Angluin 1987 → grammatical inference; Yu, Zhuang & Salomaa 1994 → state complexity; Păun 2000 → membrane computing. Anchors are easy cases: they catch breakage and check deep levels, they do not measure precision. | ≥ 90 % of anchors present in the corpus hit |
 | **Method agreement** | Jaccard / top-1 agreement between lexical-only, embedding-only and source-only taggings; per-topic table | report; topics with agreement < 0.2 are flagged |
-| **Coverage** | share of in-scope works with ≥ 1 non-derived tag ≥ 0.35 | ≥ 85 % |
+| **Coverage** | share of in-scope works with ≥ 1 non-derived tag above the threshold | ≥ 85 % |
 | **Topic coherence** | NPMI of top title terms per topic; mean intra-topic cosine vs random baseline | flagged if below baseline + margin |
 | **Venue sanity** | expected top topics per venue (config): DCFS → descriptional complexity; WORDS → combinatorics on words; CMC → membrane computing | all listed expectations hold |
 | **Citation consistency** | share of a work's in-corpus references that share a level-0 topic with it | report trend, flag drops |
 | **Stability** | re-run with another seed: share of primary tags unchanged | ≥ 95 % |
 | **Hold-out leak test** | hide `lex_title` for a sample; do the other signals recover the tag? | report |
+| **By paper type** | held-out F1 and coverage split by has-abstract, number of references and decade | report; a gap shows where the tagger is weak |
 | **Spot-check report** | per topic: 10 random works, 10 lowest-confidence, 10 strongest disagreements, with links; a 15-minute read, not labelling | produced |
 
-### 9.7 Incremental tagging
-Topic artefacts (dictionaries, centroids, mappings, fusion weights) are frozen per `tagger_version`. A new work needs only its own signals against frozen artefacts plus `prop_*` from its references, so tagging a week's worth of new papers takes seconds. Citers of a new work are not re-tagged. A scheduled monthly job recomputes centroids and propagation; a `taxonomy_version` bump triggers a full re-tag (minutes for the pilot, under a few hours for the full field on the server).
+### 9.7 Incremental tagging and the distilled classifier (cascade step 4)
+Topic artefacts (dictionaries, centroids, mappings, calibration tables, the fusion model, the distilled classifier) are frozen per `tagger_version`. A new work needs only its own signals against frozen artefacts plus `prop_*` from its references, so tagging a week's worth of new papers takes seconds. Citers of a new work are not re-tagged.
+
+**Distilled classifier.** After a full run, a small local classifier (GLiClass or SetFit ⚠ weights and licences to check; the choice is made on held-out numbers) is trained on the decision model's answers plus gold-train. For new works it supplies the `distil` signal in place of `dm_*`, so the weekly run never loads the large model. It is adopted only if the incremental tagger with `distil` stays within the noise of the full cascade on the held-out third. Built in P4-05; the pilot does not need it.
+
+A scheduled monthly job recomputes centroids and propagation; a `taxonomy_version` bump triggers a full re-tag: steps 1–2 take minutes for the pilot and under a few hours for the full field on the server; step 3 is re-run only for works that are unsure under the new taxonomy and whose cached answers no longer apply.
+
+### 9.8 Cost model
+Assumptions: about 1,000 tokens per work for the decision model (about 250 of paper text, about 700 of options and questions); field ≈ 300,000 works; unsure share 35 %. ⚠ All numbers are estimates until P1-07b measures them.
+
+| Scenario | Local decision model (the plan) | Money |
+|---|---|---|
+| Pilot, all 2,339 works | about 1–2 h on the M1 | €0 |
+| Field, unsure works only (35 % of 300,000) | about 30–70 h, overnight runs on the server or the M1 | €0 |
+| Field, all 300,000 works | about 85–200 h | €0 |
+| Options shuffled 3 times | hours × 3 (less with prefix caching) | €0 |
+| Full re-tag after a taxonomy change | steps 1–2: minutes to hours; step 3: as the unsure-only run | €0 |
+| Weekly new works (about 5,000 a year), after step 4 | minutes | €0 |
+
+Steps 1, 2 and 4 are negligible. Electricity is negligible. Model weights are open downloads (3–6 GB of disk each). The **inactive** paid variant of D-67 would cost roughly $0.10 for the pilot and $4–13 for one field run at the unverified price of $0.042 per million input tokens; it is listed only so that the comparison is on record.
 
 ---
 
@@ -556,7 +662,7 @@ Sized for the whole field (estimated 150,000–300,000 in-scope works plus about
 | CPU | 4 cores | **8 cores** | embeddings for works missing from Semantic Scholar, UMAP/HDBSCAN, Postgres, API |
 | RAM | 16 GB | **32 GB** | UMAP on 300,000 × 768 vectors, DuckDB joins on citation tables, Postgres cache |
 | Disk | 200 GB SSD | **500 GB SSD** (1 TB if a filtered OpenAlex snapshot is kept; 2 TB only if the full 745 GB snapshot is mirrored) | raw cache (30–60 GB), S2 dataset slices while filtering (up to 255 GB for citations, deleted after filtering), warehouse + releases (20 GB), Postgres (20 GB), Docker images |
-| GPU | **not required** | optional: any 8–16 GB GPU | only speeds up local embeddings and the optional local LLM. Without GPU: SPECTER2 on 8 cores is roughly 10–20 works/s ⚠ estimate, so 100,000 missing works take about 2–3 hours |
+| GPU | **not required** | optional: any 8–16 GB GPU | only speeds up local embeddings and the local decision model (§9.5), which also runs on CPU, more slowly. Without GPU: SPECTER2 on 8 cores is roughly 10–20 works/s ⚠ estimate, so 100,000 missing works take about 2–3 hours |
 | OS | Linux (Ubuntu LTS or Debian), Docker + Compose, SSH access with sudo or a Docker-capable user |
 | Network | outbound HTTPS; inbound 80/443 on a public hostname (e.g. `flat-atlas.<university>`); permission to run a public website |
 | Other | daily VM snapshot or a backup location; a contact for firewall/DNS requests; expected uptime policy |
@@ -614,7 +720,7 @@ Pilot: `SuggestButton` builds a URL to `github.com/<owner>/flat-atlas/issues/new
 ```
 CLAUDE.md  README.md  LICENSE  pyproject.toml  uv.lock  compose.yaml  .env.example  .pre-commit-config.yaml
 config/      venues.yaml  venue_facts.yaml  sources.yaml  scope.yaml  resolve.yaml  tagger.yaml  profiles/{pilot,server}.yaml
-taxonomy/    topics.yaml  anchors.yaml  seeds/  proposals/
+taxonomy/    topics.yaml  anchors.yaml  gold.yaml  seeds/  proposals/
 src/flatatlas/
   cli.py  settings.py  http.py  ids.py  db.py
   sources/{dblp,openalex,s2,crossref,zbmath}.py     # harvest + parse per source
@@ -636,10 +742,12 @@ data/        (git-ignored) raw/  warehouse/  releases/  reports/  logs/
 1. CORE/ICORE ranks of every venue, and whether the portal offers a CSV export and under which terms (portal returned 403 to automated fetch).
 2. Venue years, predecessor relations and DBLP stream keys in §7 for venues other than DLT, CIAA, DCFS (those three are verified, P0-03).
 3. ~~OpenAlex batch size and `from_updated_date`~~ (verified in P1-02: 100 DOIs, not available). Still open: the per-second rate with a free key (docs say 30/s; the config keeps 10/s) and the exact no-key allowance.
-4. Semantic Scholar: `POST /paper/batch` size limit (500), the exact field name `embedding.specter_v2`, incremental dataset diffs.
+4. ~~Semantic Scholar: batch size limit, field name `embedding.specter_v2`~~ (verified in P1-03: 500, `DOI:` prefix only, name confirmed; per-edge `isInfluential` is not available in batch calls). Still open: incremental dataset diffs.
 5. Size of the Crossref public data file. (`dblp.xml.gz`: 1.12 GB, measured 2026-11-15.)
 6. zbMATH Open: MSC codes in the API payload; any numeric rate limit.
 7. ACM CCS reuse terms and the exact node list of the FLAT subtree; MSC code wording.
 8. ~~Abstract coverage for DLT/CIAA/DCFS~~ measured in P1-02: 6 % of pilot papers have an abstract from OpenAlex, none from Crossref (`reports/coverage-pilot.md`).
-9. Size of the whole field (150,000–300,000 works) and CPU embedding throughput: estimates.
+9. Size of the whole field (150,000–300,000 works): estimate. ~~CPU embedding throughput~~ measured in P1-03 (M1: 9 to 19 texts/s with abstracts, 82 to 119 texts/s titles only).
 10. Current Claude plan limits for Opus vs Sonnet (see WORKFLOW.md §2).
+11. Tagging cascade (§9): option-scoring throughput of a 4–9B model on the M1 and on the server; the share of unsure works; licences and availability of the Qwen, GLiClass, SetFit and SciEmbed weights; ~~whether the S2 batch accepts `references.title`~~ (yes, checked in P1-03; see `docs/notes/sources.md`). Measured or checked in P1-05, P1-07 and P1-07b.
+12. Hosted decision models (inactive, D-67): Microsoft-Decision-1 price, free tier, context length, batch API and data terms are from secondary sources; check Microsoft's own pages before any proposal to use it.

@@ -14,7 +14,7 @@ If reality has moved away from a prompt (a file was renamed, a decision changed)
 | Phase | Files |
 |---|---|
 | 0 Foundations | `P0-00` (manual), `P0-01` … `P0-04` |
-| 1 Pilot | `P1-01` … `P1-12`, then gate G1 |
+| 1 Pilot | `P1-01` … `P1-12` (with `P1-06b` after `P1-06` and `P1-07b` after `P1-07`), then gate G1 |
 | 2 Widen | `P2-01` … `P2-04`, then gate G2 |
 | 3 Server | `P3-00` (manual), `P3-01` … `P3-05`, then gate G3 |
 | 4 Mass import | `P4-01` … `P4-05`, then gate G4 |
