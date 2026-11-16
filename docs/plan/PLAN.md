@@ -390,7 +390,7 @@ LNCS problem: OpenAlex often files proceedings papers under the *book series* (L
 
 Fully automatic for papers. One-time human review of the topic DAG (decision D-02, confirmed by Guilherme). A small hand-reviewed labelled set (§9.6) trains and measures the tagger; it never tags a paper directly (D-61, D-62).
 
-Redesigned on 2026-11-16 (D-61 to D-67; reasons in `docs/notes/tagging-redesign-brief.md`). The tagger is a **cascade from cheap to expensive**: every paper gets the cheap steps, and only the papers the cheap steps are unsure about get the slow one.
+Redesigned on 2026-11-16 (D-61 to D-66, approved; D-67 drafted and inactive; reasons in `docs/notes/tagging-redesign-brief.md`). The tagger is a **cascade from cheap to expensive**: every paper gets the cheap steps, and only the papers the cheap steps are unsure about get the slow one.
 
 | Step | What | Applies to | Running cost | Where and how long |
 |---|---|---|---|---|
