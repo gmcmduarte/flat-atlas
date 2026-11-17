@@ -13,6 +13,7 @@ from flatatlas.log import setup_logging
 from flatatlas.settings import load_settings
 from flatatlas.taxonomy import check as tcheck
 from flatatlas.taxonomy import load as tload
+from flatatlas.venues import load_venues
 
 ProfileOption = Annotated[
     str | None, typer.Option(help="Profile name (default: FLATATLAS_PROFILE or pilot).")
@@ -25,6 +26,10 @@ TopicsOption = Annotated[
 ]
 GoldOption = Annotated[
     Path | None, typer.Option("--gold", help="Labelled set (default: taxonomy/gold.yaml).")
+]
+AnchorsOption = Annotated[
+    Path | None,
+    typer.Option("--anchors", help="Anchor papers (default: taxonomy/anchors.yaml)."),
 ]
 
 
@@ -46,6 +51,7 @@ def _read_only(settings) -> duckdb.DuckDBPyConnection | None:
 def check(
     topics: TopicsOption = None,
     gold: GoldOption = None,
+    anchors: AnchorsOption = None,
     allow_reviewed_edits: Annotated[
         bool, typer.Option(help="Allow changes to entries with reviewed: true (against git HEAD).")
     ] = False,
@@ -98,9 +104,169 @@ def check(
     else:
         typer.echo(f"{gold_path.name}: not found (written by P1-06b); nothing to check")
 
+    # The repository's anchors and venue expectations refer to the repository's topics file;
+    # a draft or proposal given with --topics is checked against them only when asked.
+    repo_topics = topics_path.resolve() == tcheck.TOPICS_FILE.resolve()
+    anchors_path = anchors or tcheck.ANCHORS_FILE
+    if anchors is not None or repo_topics:
+        problems += _check_anchors_file(anchors_path, topics_file, allow_reviewed_edits)
+
+    if topics_file is not None and repo_topics:
+        expected = {v.id: v.expected_topics for v in load_venues().venues if v.expected_topics}
+        problems += tcheck.check_expected_topics(expected, topics_file)
+        if expected:
+            typer.echo(f"venues.yaml: expected topics of {len(expected)} venues")
+
     if problems:
         raise _fail(problems)
     typer.echo("OK")
+
+
+def _check_anchors_file(path: Path, topics_file, allow_reviewed_edits: bool) -> list[str]:
+    if not path.exists():
+        typer.echo(f"{path.name}: not found; nothing to check")
+        return []
+    if topics_file is None:
+        return [f"{path.name} needs a valid topics file to check against"]
+    try:
+        anchors_file = tcheck.load_anchors(path)
+        head_text = tcheck.git_head_text(path)
+        head = tcheck.parse_anchors(head_text, "HEAD") if head_text else None
+    except tcheck.TaxonomyFileError as exc:
+        return exc.problems
+    typer.echo(f"{path.name}: {len(anchors_file.anchors)} anchors")
+    return tcheck.check_anchors(
+        anchors_file, topics_file, head=head, allow_reviewed_edits=allow_reviewed_edits
+    )
+
+
+def anchors(
+    anchors_file: AnchorsOption = None,
+    topics: TopicsOption = None,
+    find: Annotated[
+        bool,
+        typer.Option(
+            "--find",
+            help="Propose identifiers for anchors that have none (DBLP dump, then OpenAlex "
+            "title search); prints candidates and changes no file.",
+        ),
+    ] = False,
+    estimate: Annotated[
+        bool,
+        typer.Option("--estimate", help="With --find: print the calls and the cost, then stop."),
+    ] = False,
+    max_searches: Annotated[
+        int, typer.Option(help="With --find: at most this many OpenAlex title searches.")
+    ] = 60,
+    offline: Annotated[
+        bool, typer.Option("--offline", help="Use cached OpenAlex answers only (no network).")
+    ] = False,
+    dump_dir: Annotated[
+        Path | None,
+        typer.Option(help="Folder with dblp.xml.gz and dblp.dtd (default: <data>/raw/dblp-dump)."),
+    ] = None,
+    profile: ProfileOption = None,
+) -> None:
+    """Verify every anchor's DOI or DBLP key and say whether it is in the corpus."""
+    from flatatlas.dblp_dump import DTD_FILE, DUMP_FILE
+    from flatatlas.http import SourceClient
+    from flatatlas.taxonomy import anchors as tanchors
+
+    settings = load_settings(profile=profile)
+    setup_logging(settings.paths.logs)
+    path = anchors_file or tcheck.ANCHORS_FILE
+    try:
+        file = tcheck.load_anchors(path)
+        topics_file = tcheck.load_topics(topics or tcheck.TOPICS_FILE)
+    except (OSError, tcheck.TaxonomyFileError) as exc:
+        problems = exc.problems if isinstance(exc, tcheck.TaxonomyFileError) else [str(exc)]
+        raise _fail(problems) from None
+    static = tcheck.check_anchors(file, topics_file)
+    if static and not find:
+        raise _fail(static)
+
+    con = _read_only(settings)
+    try:
+        corpus = tanchors.load_corpus(con)
+    finally:
+        if con is not None:
+            con.close()
+    folder = dump_dir or settings.paths.raw / "dblp-dump"
+    dump, dtd = folder / DUMP_FILE, folder / DTD_FILE
+    client = SourceClient("openalex", settings)
+
+    def read_dump(keys=(), titles=()):
+        if not dump.exists():
+            typer.echo(f"note: no DBLP dump at {dump}; DBLP keys outside the corpus stay unchecked")
+            return None, {}
+        typer.echo("reading the DBLP dump (about two minutes) ...")
+        return tanchors.scan_dump(dump, dtd, keys=keys, titles=titles)
+
+    if find:
+        _find(file.anchors, tanchors, client, read_dump, estimate, max_searches)
+        return
+
+    keys = tanchors.needs_dump(file.anchors, corpus)
+    dump_records = read_dump(keys=keys)[0] if keys else {}
+    statuses = tanchors.verify(
+        file.anchors,
+        corpus,
+        doi_lookup=lambda doi: tanchors.lookup_doi(client, doi, offline=offline),
+        dump_records=dump_records,
+    )
+    for s in statuses:
+        a = s.anchor
+        where = s.work_id or "-"
+        mark = "ok " if s.ok else "BAD"
+        typer.echo(f"{mark} {a.id:34} {a.kind:7} {where:12} {a.topic}")
+        for p in s.problems:
+            typer.echo(f"      ! {p}")
+        for n in s.notes:
+            typer.echo(f"      note: {n}")
+    n_ok = sum(s.ok for s in statuses)
+    n_in = sum(s.work_id is not None for s in statuses)
+    typer.echo(
+        f"{len(statuses)} anchors: {n_ok} verified, {n_in} in the corpus "
+        f"({sum(s.anchor.kind == 'pilot' for s in statuses)} marked pilot)"
+    )
+    if n_ok < len(statuses):
+        raise _fail([f"{len(statuses) - n_ok} anchors could not be verified"])
+
+
+def _find(anchors_list, tanchors, client, read_dump, estimate: bool, max_searches: int) -> None:
+    todo = [a for a in anchors_list if a.doi is None and a.dblp is None]
+    if not todo:
+        typer.echo("every anchor has an identifier; nothing to find")
+        return
+    typer.echo(f"{len(todo)} anchors without identifiers")
+    _, by_title = (None, {}) if estimate else read_dump(titles=[a.title for a in todo])
+    rest = []
+    for a in todo:
+        cands = tanchors.candidates(a, by_title.get(tanchors.normalize_title(a.title), []))
+        if cands:
+            _print_candidates(a, cands)
+        else:
+            rest.append(a)
+    searches = rest[:max_searches]
+    cost = len(searches) * tanchors.SEARCH_COST_USD
+    typer.echo(f"OpenAlex title searches: {len(searches)} (at most USD {cost:.3f})")
+    if estimate:
+        return
+    for a in searches:
+        cands = tanchors.candidates(a, tanchors.search_title(client, a.title, a.year))
+        if cands:
+            _print_candidates(a, cands)
+        else:
+            typer.echo(f"- {a.id}: nothing found")
+
+
+def _print_candidates(anchor, cands) -> None:
+    typer.echo(f"- {anchor.id}:")
+    for sim, f in cands[:3]:
+        typer.echo(
+            f"    {sim:.2f} {f.source:9} dblp={f.dblp or '-'} doi={f.doi or '-'} "
+            f"{f.year} {f.title[:80]}"
+        )
 
 
 def load(

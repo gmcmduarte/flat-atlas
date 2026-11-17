@@ -18,6 +18,7 @@ from pydantic import ValidationError
 
 from flatatlas.settings import PROJECT_ROOT
 from flatatlas.taxonomy.schema import (
+    AnchorsFile,
     GoldFile,
     TopicEntry,
     TopicsFile,
@@ -30,6 +31,8 @@ from flatatlas.taxonomy.schema import (
 
 TOPICS_FILE = PROJECT_ROOT / "taxonomy" / "topics.yaml"
 GOLD_FILE = PROJECT_ROOT / "taxonomy" / "gold.yaml"
+ANCHORS_FILE = PROJECT_ROOT / "taxonomy" / "anchors.yaml"
+ALLOW_FLAG = "use --allow-reviewed-edits"
 MAX_GOLD_LEVEL = 1  # labels are level 0 and level 1 only (PLAN §9.6)
 
 
@@ -76,6 +79,18 @@ def parse_gold(text: str, origin: str = "gold") -> GoldFile:
         return GoldFile.model_validate(data)
     except ValidationError as exc:
         raise TaxonomyFileError(_validation_problems(exc, origin)) from None
+
+
+def parse_anchors(text: str, origin: str = "anchors") -> AnchorsFile:
+    data = _parse(text, origin)
+    try:
+        return AnchorsFile.model_validate(data)
+    except ValidationError as exc:
+        raise TaxonomyFileError(_validation_problems(exc, origin)) from None
+
+
+def load_anchors(path: Path = ANCHORS_FILE) -> AnchorsFile:
+    return parse_anchors(path.read_text(encoding="utf-8"), path.name)
 
 
 def load_topics(path: Path = TOPICS_FILE) -> TopicsFile:
@@ -246,6 +261,71 @@ def _reviewed_problems(
                 "use --allow-reviewed-edits"
             )
     return out
+
+
+# -- anchors and venue expectations ---------------------------------------------------------------
+
+
+def check_anchors(
+    anchors: AnchorsFile,
+    topics: TopicsFile,
+    *,
+    head: AnchorsFile | None = None,
+    allow_reviewed_edits: bool = False,
+) -> list[str]:
+    """Offline rules for ``anchors.yaml``; whether the identifiers exist is checked by
+    ``flatatlas taxonomy anchors``, which needs the sources."""
+    problems: list[str] = []
+    known = topics.by_id()
+    if anchors.taxonomy_version != topics.taxonomy_version:
+        problems.append(
+            f"anchors: taxonomy_version is {anchors.taxonomy_version} but topics.yaml has "
+            f"{topics.taxonomy_version}"
+        )
+    seen: dict[str, str] = {}
+    for a in anchors.anchors:
+        if a.id in seen:
+            problems.append(f"anchor {a.id}: listed twice")
+        seen[a.id] = a.id
+        if a.doi is None and a.dblp is None:
+            problems.append(f"anchor {a.id}: needs a doi or a dblp key")
+        if a.topic not in known:
+            problems.append(f"anchor {a.id}: topic {a.topic!r} is not a topic")
+        elif known[a.topic].status == "deprecated":
+            problems.append(f"anchor {a.id}: topic {a.topic!r} is deprecated")
+    for field in ("doi", "dblp"):
+        owners: dict[str, list[str]] = defaultdict(list)
+        for a in anchors.anchors:
+            value = getattr(a, field)
+            if value:
+                owners[value].append(a.id)
+        for value, ids in sorted(owners.items()):
+            if len(ids) > 1:
+                problems.append(f"{field} {value} is used by several anchors: {', '.join(ids)}")
+    if head is not None and not allow_reviewed_edits:
+        now = {a.id: a for a in anchors.anchors}
+        for old in head.anchors:
+            if not old.reviewed:
+                continue
+            new = now.get(old.id)
+            if new is None:
+                problems.append(f"anchor {old.id}: reviewed anchor removed ({ALLOW_FLAG})")
+            elif new.model_dump() != old.model_dump():
+                problems.append(f"anchor {old.id}: reviewed anchor changed ({ALLOW_FLAG})")
+    return problems
+
+
+def check_expected_topics(expected: dict[str, list[str]], topics: TopicsFile) -> list[str]:
+    """``expected_topics`` of each venue in ``config/venues.yaml`` must name active topics."""
+    known = topics.by_id()
+    problems = []
+    for venue, ids in sorted(expected.items()):
+        for topic in ids:
+            if topic not in known:
+                problems.append(f"venue {venue}: expected topic {topic!r} is not a topic")
+            elif known[topic].status != "active":
+                problems.append(f"venue {venue}: expected topic {topic!r} is {known[topic].status}")
+    return problems
 
 
 # -- labelled set ---------------------------------------------------------------------------------

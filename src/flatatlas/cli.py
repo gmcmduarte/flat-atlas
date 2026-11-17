@@ -88,6 +88,7 @@ for _group in groups.values():
 
 
 groups["taxonomy"].command("check")(taxonomy_commands.check)
+groups["taxonomy"].command("anchors")(taxonomy_commands.anchors)
 groups["taxonomy"].command("load")(taxonomy_commands.load)
 groups["taxonomy"].command("seeds")(taxonomy_commands.seeds)
 groups["taxonomy"].command("composite")(taxonomy_commands.composite)
