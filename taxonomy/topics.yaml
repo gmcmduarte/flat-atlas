@@ -1,0 +1,3972 @@
+# The FLAT Atlas topic DAG, version 1 (P1-06). Human-edited (CLAUDE.md rules 5 and 6).
+#
+# Drafted by Claude from taxonomy/proposals/v1.yaml, the seeds in taxonomy/seeds/ and the titles of
+# the pilot corpus; to be reviewed by Guilherme (docs/notes/taxonomy-v1-review-guide.md).
+# Names and descriptions are our own wording; CCS and MSC appear only as codes in `xref`.
+#
+# Levels: a topic with `parents: []` is level 0; a topic's level is its shortest distance to a root.
+# Levels 0 and 1 are what the labelled set (P1-06b) uses, so their descriptions tell siblings apart.
+# Phrases: plain strings, or {phrase: "...", context: [words]} when the phrase is ambiguous.
+# Check after every edit:  uv run flatatlas taxonomy check
+
+taxonomy_version: 1
+topics:
+
+# ================================================================================================
+# 1. Finite automata and regular languages
+# ================================================================================================
+- id: regular-languages
+  name: "Finite automata and regular languages"
+  aliases: []
+  description: >-
+    Classical finite automata on finite words and the regular languages they define: deterministic
+    and nondeterministic automata, regular expressions, minimisation, synchronisation and the
+    classes inside the regular languages. Size bounds belong to descriptional complexity, and
+    algebraic or logical characterisations to their own areas.
+  parents: []
+  xref: {ccs: ["10003752.10003766.10003776"], msc: ["68Q45"], openalex: []}
+  include_phrases:
+    - "finite automata"
+    - "finite automaton"
+    - "finite-state automata"
+    - "finite state automata"
+    - "finite-state automaton"
+    - "regular languages"
+    - "regular language"
+    - "regular sets"
+    - "rational languages"
+  exclude_phrases: []
+  seed_works: []
+  origin: ccs
+  reviewed: false
+  status: active
+- id: deterministic-finite-automata
+  name: "Deterministic finite automata"
+  aliases: ["dfa", "dfas"]
+  description: >-
+    Deterministic finite automata as objects of study: their structure and transition graphs,
+    special classes such as permutation, monotonic or bideterministic automata, and the subset
+    construction that produces them. Minimisation and synchronisation have their own topics.
+  parents: [regular-languages]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "deterministic finite automata"
+    - "deterministic finite automaton"
+    - "subset construction"
+    - "bideterministic"
+    - "permutation automata"
+    - "monotonic automata"
+    - "multiple-entry dfa"
+  exclude_phrases: []
+  seed_works: [WLECRTZ6Y7L, WH7GQE64ZGB, W3ZUJU2HV66, WCTI6M3XM5P]
+  origin: mined
+  reviewed: false
+  status: active
+- id: nondeterministic-finite-automata
+  name: "Nondeterministic finite automata"
+  aliases: ["nfa", "nfas"]
+  description: >-
+    Nondeterministic finite automata and their variants (ε-moves, several initial states, self-
+    verifying or symmetric-difference acceptance) studied for their structure and power. How much
+    smaller they are than deterministic automata is a descriptional-complexity question.
+  parents: [regular-languages]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "nondeterministic finite automata"
+    - "nondeterministic finite automaton"
+    - "non-deterministic finite automata"
+    - "self-verifying"
+    - "symmetric difference automata"
+    - "symmetric difference nfa"
+    - "epsilon-transitions"
+  exclude_phrases: []
+  seed_works: [WZKA4CZTTGG, WJMWRJ4H274, WVVK5YDUD2S, WDOGUGNMGBD]
+  origin: mined
+  reviewed: false
+  status: active
+- id: unambiguous-finite-automata
+  name: "Unambiguous finite automata"
+  aliases: ["ufa"]
+  description: >-
+    Automata with at most one accepting run per word, and the classes between unambiguous and
+    fully nondeterministic automata.
+  parents: [nondeterministic-finite-automata]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "unambiguous finite automata"
+    - "unambiguous automata"
+    - "unambiguous finite automaton"
+    - "structurally unambiguous"
+    - "unambiguity"
+  exclude_phrases: []
+  seed_works: [WBQUX5BPSNA, W4MX4SGNDSY, WBQPCWAONPV, W2IVXUTIXAB]
+  origin: mined
+  reviewed: false
+  status: active
+- id: regular-expressions
+  name: "Regular expressions"
+  aliases: []
+  description: >-
+    Regular expressions and their variants as a notation for regular languages: syntax, semantics,
+    normal forms, derivatives and conversions to and from automata. Matching engines used in
+    practice are under implementation and applications.
+  parents: [regular-languages]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "regular expression"
+    - "regular expressions"
+    - "rational expression"
+    - "rational expressions"
+    - "star normal form"
+    - "star height"
+  exclude_phrases: []
+  seed_works: [WSEIVIX5TTQ, WNW5KEWG234, WD4P33UBFJA, WKGFM35WFGY]
+  origin: mined
+  reviewed: false
+  status: active
+- id: automata-from-regular-expressions
+  name: "Automata constructions from regular expressions"
+  aliases: []
+  description: >-
+    Constructions of automata from expressions: position (Glushkov), follow, Thompson, equation
+    and partial-derivative automata, and comparisons of their size.
+  parents: [regular-expressions]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "glushkov automata"
+    - "glushkov automaton"
+    - "position automaton"
+    - "follow automaton"
+    - "thompson construction"
+    - "partial derivative automaton"
+    - "partial derivative automata"
+    - "equation automaton"
+    - "glushkov construction"
+    - "glushkov"
+    - "glushkovization"
+  exclude_phrases: []
+  seed_works: [WELYEL6N5JM, W2MWZTNJJJI, WDOKNIDCHI7, WEARD3ACO5N]
+  origin: mined
+  reviewed: false
+  status: active
+- id: regular-expressions-from-automata
+  name: "Regular expressions from automata"
+  aliases: []
+  description: >-
+    Converting automata into short regular expressions: state elimination, ordering heuristics and
+    lower bounds on the size of the result.
+  parents: [regular-expressions]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "state elimination"
+    - "short regular expressions"
+    - "shorter regular expressions"
+    - "regular expressions from deterministic finite automata"
+    - "expressions from finite automata"
+  exclude_phrases: []
+  seed_works: [WQ7YWDCVFY2, WA7ZOU2QRTX, WOMILZ477XV, WT2HVIFBAWH]
+  origin: manual
+  reviewed: false
+  status: active
+- id: derivatives-of-regular-expressions
+  name: "Derivatives of regular expressions"
+  aliases: []
+  description: >-
+    Brzozowski derivatives, Antimirov partial derivatives and their extensions to weighted,
+    extended and multi-tape expressions, used for matching, equivalence and automaton
+    construction.
+  parents: [regular-expressions]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "brzozowski derivatives"
+    - "brzozowski's derivatives"
+    - "partial derivatives"
+    - "partial derivative"
+    - "antimirov"
+    - "derivatives"
+    - "canonical derivatives"
+    - "derived-term"
+  exclude_phrases: []
+  seed_works: [WK44AOUT4KH, W33OBZLL7DT, WT2OWETSSQG, W46UZV4GSWF]
+  origin: cluster
+  reviewed: false
+  status: active
+- id: extended-regular-expressions
+  name: "Extended regular expressions"
+  aliases: []
+  description: >-
+    Expressions with operators beyond union, concatenation and star (intersection, complement,
+    shuffle, counting, back-references, capture) and the language classes they define.
+  parents: [regular-expressions]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "extended regular expressions"
+    - "extended regular expression"
+    - "regex languages"
+    - "back-references"
+    - "backreferences"
+    - "regular expressions with counting"
+    - "semi-extended regular expressions"
+    - "factor-referencing"
+  exclude_phrases: []
+  seed_works: [WAD3SDCVJRX, WUNVZ5GE6KP, WTSMPS4KGKI, WKST7NLOK5V]
+  origin: mined
+  reviewed: false
+  status: active
+- id: deterministic-regular-expressions
+  name: "Deterministic and ambiguous regular expressions"
+  aliases: []
+  description: >-
+    One-unambiguous (deterministic) expressions, as required by XML schema languages, deciding
+    determinism, and the ambiguity of expressions.
+  parents: [regular-expressions]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "one-unambiguous"
+    - "one-unambiguity"
+    - "deterministic regular expressions"
+    - "ambiguous regular expressions"
+    - "determinism of regular expressions"
+    - "regular expression ambiguity"
+  exclude_phrases: []
+  seed_works: [W3QHXZOIOSZ, W6MDY6VEN3I, WGWOXU7O4QG, W4R374YYU2K]
+  origin: manual
+  reviewed: false
+  status: active
+- id: minimisation-of-automata
+  name: "Minimisation of automata"
+  aliases: ["automata minimization", "dfa minimization"]
+  description: >-
+    Algorithms and theory for reducing automata to minimal equivalent ones: Moore, Hopcroft and
+    Brzozowski minimisation, incremental and approximate variants, and reduction of
+    nondeterministic automata.
+  parents: [regular-languages]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "minimization"
+    - "minimisation"
+    - "hopcroft's algorithm"
+    - "brzozowski's algorithm"
+    - "minimal automata"
+    - "minimal dfa"
+    - "minimizing automata"
+    - "minimal deterministic"
+    - "minimality"
+  exclude_phrases: []
+  seed_works: [W7DOQV5M4EG, WOVQA6OKRKN, WIF6KCI5NAN, WMYVBLVCVOJ]
+  origin: cluster
+  reviewed: false
+  status: active
+- id: hyper-minimisation
+  name: "Hyper-minimisation and minimisation with errors"
+  aliases: []
+  description: >-
+    Minimising automata up to a finite (or bounded) set of errors: hyper-minimisation, almost-
+    equivalence and related relaxed notions of minimality.
+  parents: [minimisation-of-automata]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "hyper-minimization"
+    - "hyper-minimizing"
+    - "hyper-minimal"
+    - "almost-equivalence"
+    - "minimizing automata with errors"
+    - "hyper-optimization"
+  exclude_phrases: []
+  seed_works: [WTSE23KLR4S, WNMLZO3GSMQ, WKIRYVN3JXQ, WUIARTXBJVA]
+  origin: manual
+  reviewed: false
+  status: active
+- id: cover-automata
+  name: "Cover automata for finite languages"
+  aliases: []
+  description: >-
+    Deterministic automata that agree with a finite language on all words up to its longest
+    length, their minimisation and state complexity.
+  parents: [minimisation-of-automata]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "cover automata"
+    - "cover-automata"
+    - "cover automaton"
+    - "finite cover automata"
+    - "deterministic cover automata"
+  exclude_phrases: []
+  seed_works: [W34S3SCSJRI, WYZLIGGL22C, WIESB4RNUWR, WLQREGQS7AP]
+  origin: mined
+  reviewed: false
+  status: active
+- id: minimal-acyclic-automata
+  name: "Minimal acyclic automata and dictionaries"
+  aliases: []
+  description: >-
+    Building minimal acyclic automata for finite sets of strings, incremental and semi-incremental
+    algorithms, and their use as compact dictionaries.
+  parents: [minimisation-of-automata]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "minimal acyclic"
+    - "acyclic dfas"
+    - "acyclic deterministic finite automata"
+    - "acyclic automata"
+    - "pseudo-minimal"
+    - "large dictionaries"
+  exclude_phrases: []
+  seed_works: [WKMWQV6CKBV, WLGXS2Q5ZKP, WIAVSCXCQHK, WVEGO2H3EV5]
+  origin: mined
+  reviewed: false
+  status: active
+- id: nfa-reduction
+  name: "Reduction of nondeterministic automata"
+  aliases: []
+  description: >-
+    Making nondeterministic automata smaller: reduction by simulations or inequalities, the
+    universal automaton, and the hardness of finding minimal NFAs.
+  parents: [minimisation-of-automata, nondeterministic-finite-automata]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "nfa reduction"
+    - "reducing nondeterminism"
+    - "universal automaton"
+    - "minimal nfa"
+    - "minimalizations of nfa"
+    - "small nfa"
+  exclude_phrases: []
+  seed_works: [WAWY4CIQLNM, WBL5PIEZYQM, WMHSO63OPXZ, WQMSP6QAAIZ]
+  origin: manual
+  reviewed: false
+  status: active
+- id: two-way-and-alternating-automata
+  name: "Two-way and alternating finite automata"
+  aliases: []
+  description: >-
+    Finite automata that move both ways on the input, sweep or rotate, or combine existential and
+    universal branching (alternating and Boolean automata); all of them still accept only regular
+    languages.
+  parents: [regular-languages]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "two-way finite automata"
+    - "two-way automata"
+    - "two-way deterministic finite automata"
+    - "two-way nondeterministic"
+    - "2nfa"
+    - "2nfas"
+    - "2dfa"
+    - "alternating finite automata"
+    - "boolean automata"
+    - "sweeping automata"
+    - "rotating automata"
+    - "unary afas"
+  exclude_phrases: []
+  seed_works: [WYCQ32GRVTE, WVEOWFHSMUF, WK647IFYX5Y, WOFWACPW5V4, WOHBDWH5SJB]
+  origin: mined
+  reviewed: false
+  status: active
+- id: synchronizing-automata
+  name: "Synchronizing automata"
+  aliases: ["synchronising"]
+  description: >-
+    Automata with a reset word that sends every state to a single state: reset thresholds, the
+    Černý conjecture, road colouring, collapsing words and constrained or careful synchronisation.
+  parents: [regular-languages]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "synchronizing automata"
+    - "synchronizing word"
+    - "synchronizing words"
+    - "reset word"
+    - "reset words"
+    - "road coloring"
+    - "collapsing words"
+    - "synchronising automata"
+    - "synchronization of automata"
+    - "careful synchronization"
+    - "reset complexity"
+    - "automata synchronization"
+    - "synchronizing colorings"
+    - "reset sequences"
+    - "synchronization"
+  exclude_phrases: []
+  seed_works: [WPV5XJYBWOT, WOHHUVYOVJZ, W6ZWSTDJWMD, WWL4CWU6QTS]
+  origin: mined
+  reviewed: false
+  status: active
+- id: cerny-conjecture
+  name: "Černý conjecture and reset thresholds"
+  aliases: []
+  description: >-
+    Bounds on the length of shortest reset words, the Černý conjecture and its special cases and
+    extremal families.
+  parents: [synchronizing-automata]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "cerny conjecture"
+    - "černý conjecture"
+    - "cerny"
+    - "černý"
+    - "reset threshold"
+    - "reset thresholds"
+    - "shortest synchronizing word"
+    - "cerny-pin"
+  exclude_phrases: []
+  seed_works: [WPL62FCI6LT, WOPPJPBUCEX, WNUFOPSLI4V, WKP3SVY3QAD]
+  origin: mined
+  reviewed: false
+  status: active
+- id: completely-reachable-automata
+  name: "Completely reachable automata"
+  aliases: []
+  description: >-
+    Automata in which every non-empty set of states is reachable from the full set, and related
+    subset-reachability questions.
+  parents: [synchronizing-automata]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases: ["completely reachable", "subset reachability", "don's conjecture"]
+  exclude_phrases: []
+  seed_works: [W7TT7SRKIDG, WRXUCISJ3GK, WAN5Z5WD7M7, WX3I3BKC6HW]
+  origin: mined
+  reviewed: false
+  status: active
+- id: subregular-languages
+  name: "Subregular language classes"
+  aliases: []
+  description: >-
+    Families strictly inside the regular languages defined by structural conditions (prefix-,
+    suffix- or infix-freeness, ideals and closures, convexity, union-freeness), and how properties
+    of automata change inside them.
+  parents: [regular-languages]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "subregular"
+    - "subregular languages"
+    - "subregular language families"
+    - "subregular classes"
+  exclude_phrases: []
+  seed_works: [WV54TUFRWAK, W4MO3YC6BVY, WE67R4YAJEM]
+  origin: mined
+  reviewed: false
+  status: active
+- id: prefix-and-suffix-free-languages
+  name: "Prefix-, suffix-, bifix- and infix-free languages"
+  aliases: []
+  description: >-
+    Regular languages in which no word is a proper prefix, suffix or factor of another, and non-
+    returning languages.
+  parents: [subregular-languages]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "prefix-free"
+    - "suffix-free"
+    - "bifix-free"
+    - "infix-free"
+    - "non-returning"
+    - "factor-free"
+  exclude_phrases: []
+  seed_works: [WR2J2247G5K, WXCQWUVSRGD, WCZ2TVD7MTU, WUC3S66OHNO]
+  origin: mined
+  reviewed: false
+  status: active
+- id: ideal-and-convex-languages
+  name: "Ideal, closed and convex languages"
+  aliases: []
+  description: >-
+    Right, left and two-sided ideals, prefix-, suffix- and factor-closed languages, and prefix-,
+    suffix- and factor-convex languages.
+  parents: [subregular-languages]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "ideal languages"
+    - "right-ideal"
+    - "two-sided ideals"
+    - "closed languages"
+    - "prefix-convex"
+    - "suffix-convex"
+    - "convex languages"
+    - "free and ideal"
+  exclude_phrases: []
+  seed_works: [WJRZ3JI6YY7, WH2JU2SAEJX, WC2DFT7WO6R, W2UB4637RRA]
+  origin: mined
+  reviewed: false
+  status: active
+- id: union-free-languages
+  name: "Union-free languages"
+  aliases: []
+  description: >-
+    Languages given by expressions without union, their deterministic variant and the union-
+    complexity of regular languages.
+  parents: [subregular-languages]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases: ["union-free", "union-freeness", "union-complexity", "union-complexities"]
+  exclude_phrases: []
+  seed_works: [WZ5TTPOARVI, WPAPWXCPMZ3, W37MKA6YTBF]
+  origin: manual
+  reviewed: false
+  status: active
+- id: unary-languages
+  name: "Unary languages"
+  aliases: []
+  description: >-
+    Languages over a one-letter alphabet, where questions about automata, grammars and expressions
+    take a number-theoretic form (Chrobak normal form, periodicity).
+  parents: [regular-languages]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "unary languages"
+    - "unary language"
+    - "unary alphabet"
+    - "one-letter alphabet"
+    - "unary nfas"
+    - "unary automata"
+    - "chrobak normal form"
+    - "unary regular languages"
+  exclude_phrases: []
+  seed_works: [WEJJILTBXHT, WHX4X5RMS7V, WGEG6QIQNF3, WPQEL5OSVY4]
+  origin: mined
+  reviewed: false
+  status: active
+- id: decision-problems-for-finite-automata
+  name: "Decision problems for finite automata"
+  aliases: []
+  description: >-
+    Decidability and computational complexity of questions about finite automata and regular
+    expressions: membership, emptiness, universality, inclusion, equivalence, intersection non-
+    emptiness and word separation, including fine-grained and parameterised bounds.
+  parents: [regular-languages]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "intersection non-emptiness"
+    - "non-emptiness of intersection"
+    - "nfa universality"
+    - "separating words"
+    - "exponential time hypothesis"
+    - "fine grained complexity"
+    - "problems on finite automata"
+    - "equivalence of regular languages"
+    - "membership problems"
+  exclude_phrases: []
+  seed_works: [WR73TWE6VSC, W2MKZ2324IZ, WUKV3CTV53C, WQVAPASPRV5, WRFNJ2VNPDJ]
+  origin: manual
+  reviewed: false
+  status: active
+
+# ================================================================================================
+# 2. Grammars and context-free languages
+# ================================================================================================
+- id: grammars-and-context-free-languages
+  name: "Grammars and context-free languages"
+  aliases: []
+  description: >-
+    Context-free grammars and pushdown automata, the families around them up to the context-
+    sensitive and recursively enumerable languages, and parsing. Grammars with regulated,
+    cooperating or parallel rewriting have their own area.
+  parents: []
+  xref: {ccs: ["10003752.10003766.10003771"], msc: ["68Q45", "68Q42"], openalex: []}
+  include_phrases: ["context-free", "phrase-structure grammars", "chomsky", "grammars"]
+  exclude_phrases: []
+  seed_works: []
+  origin: ccs
+  reviewed: false
+  status: active
+- id: context-free-grammars
+  name: "Context-free grammars and languages"
+  aliases: ["cfg", "cfl"]
+  description: >-
+    The structure of context-free grammars and languages and their decision problems: normal
+    forms, ambiguity, Parikh images, the Chomsky–Schützenberger theorem, iteration lemmas,
+    equivalence and inclusion.
+  parents: [grammars-and-context-free-languages]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "context-free grammars"
+    - "context-free grammar"
+    - "context-free languages"
+    - "context-free language"
+    - "chomsky-schützenberger"
+    - "parikh's theorem"
+    - "linear context-free"
+    - "bounded context-free"
+  exclude_phrases: []
+  seed_works: [WZC27XPHQOI, WT3SJECKEGV, W2KIYNDCYV6, WNBQFD5AW5B]
+  origin: mined
+  reviewed: false
+  status: active
+- id: ambiguity-of-context-free-grammars
+  name: "Ambiguity of context-free grammars"
+  aliases: []
+  description: >-
+    Ambiguous and inherently ambiguous grammars and languages, degrees of ambiguity and ambiguity
+    detection.
+  parents: [context-free-grammars]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "ambiguity of context-free grammars"
+    - "ambiguity detection"
+    - "inherent ambiguity"
+    - "exponential ambiguity"
+    - "unambiguous context-free"
+    - "context-free ambiguity"
+  exclude_phrases: []
+  seed_works: [WZ5T77O5DZY, WE432Z6IM4V, WLRDEWXQBNC, W74NODXCNJV]
+  origin: manual
+  reviewed: false
+  status: active
+- id: pumping-lemmas
+  name: "Pumping and iteration lemmas"
+  aliases: []
+  description: >-
+    Pumping, Ogden-type and other iteration lemmas for regular, context-free and wider classes,
+    and the complexity of deciding pumping properties.
+  parents: [context-free-grammars]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "pumping lemma"
+    - "pumping lemmas"
+    - "ogden lemma"
+    - "iteration lemma"
+    - "iteration conditions"
+    - "pumping problem"
+    - "pumping-problem"
+  exclude_phrases: []
+  seed_works: [WIFWBXGEXIW, WNJX2X5G53L, WRNOOLPLVXJ, WGM46GD4QDD]
+  origin: mined
+  reviewed: false
+  status: active
+- id: normal-forms-of-grammars
+  name: "Normal forms of grammars"
+  aliases: []
+  description: >-
+    Normal forms for context-free and related grammars (Chomsky, Greibach and others), algorithms
+    to reach them and their size.
+  parents: [context-free-grammars]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "normal form algorithms"
+    - "greibach normal form"
+    - "chomsky normal form"
+    - "context-free normal forms"
+    - "normal form for grammars"
+    - "meta-normal form"
+  exclude_phrases: []
+  seed_works: [W75UDWO2EQG, WMYJHTMDT7G, WNCV746DJF4, WH5236IEX7W]
+  origin: manual
+  reviewed: false
+  status: active
+- id: pushdown-automata
+  name: "Pushdown automata"
+  aliases: ["pda", "pdas"]
+  description: >-
+    Automata with one stack: deterministic and nondeterministic pushdown automata, restricted and
+    extended stack disciplines, and the language families they accept.
+  parents: [grammars-and-context-free-languages]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "pushdown automata"
+    - "pushdown automaton"
+    - "push-down automata"
+    - "pushdown store"
+    - "pushdown machines"
+    - "npdas"
+  exclude_phrases: []
+  seed_works: [W566VKUES3R, WP4IDDRQORT, WNGLKKQUXFE, W6HM65W2GUH]
+  origin: mined
+  reviewed: false
+  status: active
+- id: visibly-pushdown-automata
+  name: "Visibly pushdown and input-driven automata"
+  aliases: []
+  description: >-
+    Pushdown automata whose stack moves are fixed by the input symbol, nested words and operator-
+    precedence languages.
+  parents: [pushdown-automata]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "visibly pushdown"
+    - "input-driven"
+    - "nested words"
+    - "nested word"
+    - "operator precedence"
+    - "well-nested"
+    - "idpda"
+    - "nesting structure"
+  exclude_phrases: []
+  seed_works: [WFHBMIXMZJ6, WSH4SALMIAY, W3EYAEWAV5T, WJPJQBLB5IG]
+  origin: mined
+  reviewed: false
+  status: active
+- id: deterministic-context-free-languages
+  name: "Deterministic context-free languages"
+  aliases: []
+  description: >-
+    Languages of deterministic pushdown automata, their closure, equivalence and structure.
+  parents: [pushdown-automata]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "deterministic context-free"
+    - "deterministic pushdown automata"
+    - "deterministic pushdown"
+    - "dpda"
+    - "dpdas"
+    - "superdeterministic"
+  exclude_phrases: []
+  seed_works: [WEDMK4IH4XC, WNKUSW2BJXX, WJFAG4AK3VH, WQIGRE3U7IM]
+  origin: mined
+  reviewed: false
+  status: active
+- id: constant-height-pushdown-automata
+  name: "Constant-height pushdown automata"
+  aliases: []
+  description: >-
+    Pushdown automata whose stack height is bounded by a constant, as succinct descriptions of
+    regular languages, and non-self-embedding grammars.
+  parents: [pushdown-automata]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases: ["constant height", "constant-height", "non-self-embedding"]
+  exclude_phrases: []
+  seed_works: [W4IGXT7ZUNI, W2WAPKWM67F, WGMBAG4C7VC]
+  origin: mined
+  reviewed: false
+  status: active
+- id: multi-pushdown-automata
+  name: "Multi-pushdown and scope-bounded systems"
+  aliases: []
+  description: >-
+    Automata with several stacks under restrictions (ordered, scope- or phase-bounded) that keep
+    emptiness decidable.
+  parents: [pushdown-automata, infinite-state-verification]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "multi-pushdown"
+    - "multi-stack"
+    - "scope-bounded"
+    - "ordered multi-pushdown"
+    - "2-visibly pushdown"
+  exclude_phrases: []
+  seed_works: [WJWEHPJ7ZA6, WR5IFMRXBXG, WDF4TV3KG5O, WTGEREOKEP2]
+  origin: manual
+  reviewed: false
+  status: active
+- id: parsing
+  name: "Parsing"
+  aliases: []
+  description: >-
+    Algorithms that recover derivations from strings: LL, LR and generalised LR parsing, Earley
+    and chart parsing, parsing expression grammars, error repair and parser generators.
+  parents: [grammars-and-context-free-languages]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "parsing"
+    - "parser"
+    - "parsers"
+    - "lr parsing"
+    - "earley"
+    - "error repair"
+    - "parser generator"
+    - "lalr"
+    - "ll-languages"
+    - "lr languages"
+    - "ll(k)"
+  exclude_phrases: []
+  seed_works: [W4Z4SFQDRE2, WN5ZAC7E2QE, WDU3PMYXPKU, WFE5BRPIGFV]
+  origin: mined
+  reviewed: false
+  status: active
+- id: parsing-expression-grammars
+  name: "Parsing expression grammars"
+  aliases: []
+  description: >-
+    Recognition-based grammars with ordered choice and their languages.
+  parents: [parsing]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "parsing expression grammars"
+    - "parsing expression languages"
+    - "parsing expression"
+  exclude_phrases: []
+  seed_works: [WTR3FH7TCWJ, WKKNOYUT6OG]
+  origin: manual
+  reviewed: false
+  status: active
+- id: conjunctive-and-boolean-grammars
+  name: "Conjunctive and Boolean grammars"
+  aliases: []
+  description: >-
+    Grammars that add intersection (and negation) to context-free rules, grammars with contexts
+    and GF(2)-grammars: parsing, normal forms and unary languages.
+  parents: [grammars-and-context-free-languages]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "conjunctive grammars"
+    - "conjunctive grammar"
+    - "boolean grammars"
+    - "boolean grammar"
+    - "linear conjunctive"
+    - "gf(2)-grammars"
+    - "grammars with one-sided contexts"
+    - "conjunctive languages"
+  exclude_phrases: []
+  seed_works: [WXNKLAPJQ66, WO2UNLQFPJM, WQTSL7WA65Q, WUIV2533EME]
+  origin: mined
+  reviewed: false
+  status: active
+- id: mildly-context-sensitive-grammars
+  name: "Mildly context-sensitive grammar formalisms"
+  aliases: []
+  description: >-
+    Formalisms between context-free and context-sensitive motivated by natural language: tree-
+    adjoining, multiple context-free, displacement, categorial and dependency grammars.
+  parents: [grammars-and-context-free-languages]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "mildly context-sensitive"
+    - "tree-adjoining"
+    - "tree adjoining"
+    - "multiple context-free"
+    - "categorial grammars"
+    - "dependency grammars"
+    - "displacement context-free"
+    - "head grammar"
+    - "global index"
+    - "mcfls"
+  exclude_phrases: []
+  seed_works: [WJPVCU763VR, WVKLGNUEIWN, WYU7X6LZEU6, WS3C6H7UZZK]
+  origin: manual
+  reviewed: false
+  status: active
+- id: language-families
+  name: "Language families and hierarchies"
+  aliases: ["afl theory"]
+  description: >-
+    Families of languages as objects: the Chomsky hierarchy, context-sensitive and recursively
+    enumerable languages, abstract families of languages and full trios, and hierarchy results
+    across families.
+  parents: [grammars-and-context-free-languages]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "chomsky hierarchy"
+    - "full trio"
+    - "full trios"
+    - "abstract families"
+    - "families of languages"
+    - "language families"
+    - "recursively enumerable"
+    - "context-sensitive languages"
+    - "growing context-sensitive"
+    - "linear bounded automata"
+  exclude_phrases: []
+  seed_works: [WT2VSEUTEN5, WCDDGK22VVJ, WLXOZN35CZB, WHCJVGCE2KO]
+  origin: mined
+  reviewed: false
+  status: active
+
+# ================================================================================================
+# 3. Regulated rewriting, grammar systems and string rewriting
+# ================================================================================================
+- id: rewriting-systems
+  name: "Regulated rewriting, grammar systems and string rewriting"
+  aliases: []
+  description: >-
+    Generative devices beyond plain context-free rules: grammars with control on rule application,
+    systems of cooperating grammars, contextual and parallel (Lindenmayer) rewriting, and string
+    and term rewriting systems.
+  parents: []
+  xref: {ccs: ["10003752.10003766.10003767.10003769"], msc: ["68Q42"], openalex: []}
+  include_phrases:
+    - "rewriting systems"
+    - "rewriting system"
+    - "regulated rewriting"
+    - "grammar systems"
+  exclude_phrases: []
+  seed_works: []
+  origin: ccs
+  reviewed: false
+  status: active
+- id: regulated-rewriting
+  name: "Regulated rewriting"
+  aliases: []
+  description: >-
+    Context-free rules whose application is controlled: matrix, programmed, random-context,
+    forbidding and permitting, semi-conditional, scattered-context, valence and tree- or graph-
+    controlled grammars.
+  parents: [rewriting-systems]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "regulated rewriting"
+    - "matrix grammars"
+    - "programmed grammars"
+    - "random context"
+    - "forbidding grammars"
+    - "semi-conditional"
+    - "valence grammars"
+    - "tree controlled"
+    - "graph-controlled grammars"
+    - "permitting"
+    - "control mechanisms"
+  exclude_phrases: []
+  seed_works: [WPCI2BHPYCL, WBMN42PPQR7, WQA6YWQLRDQ, W6FXV3WWOFK]
+  origin: mined
+  reviewed: false
+  status: active
+- id: scattered-context-grammars
+  name: "Scattered context grammars"
+  aliases: []
+  description: >-
+    Grammars that rewrite several scattered nonterminals at once, their generative power and
+    nonterminal complexity.
+  parents: [regulated-rewriting]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "scattered context grammars"
+    - "scattered context"
+    - "scattered context generators"
+  exclude_phrases: []
+  seed_works: [WHW5JSTMPYD, WLK24PM7W2S, WV63TWUYWXH]
+  origin: manual
+  reviewed: false
+  status: active
+- id: grammar-systems
+  name: "Grammar systems"
+  aliases: []
+  description: >-
+    Several grammars working together on a shared or exchanged sentential form: cooperating
+    distributed and parallel communicating grammar systems, eco-grammar systems and colonies.
+  parents: [rewriting-systems]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases: ["grammar systems", "grammar system", "colonies", "eco-grammar"]
+  exclude_phrases: []
+  seed_works: [WKJXLVIJHQW, WXM4X5U5G4W, WJBOHWCQH5R]
+  origin: mined
+  reviewed: false
+  status: active
+- id: cd-grammar-systems
+  name: "Cooperating distributed grammar systems"
+  aliases: []
+  description: >-
+    Grammar systems whose components take turns on one sentential form under derivation modes and
+    competence conditions.
+  parents: [grammar-systems]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "cooperating distributed"
+    - "cd grammar systems"
+    - "cd grammar system"
+    - "competence"
+  exclude_phrases: []
+  seed_works: [W3RURPMXNTU, WEEX66EXMT6, WSWKKAMOHI6, WR6A3MUXNIV]
+  origin: mined
+  reviewed: false
+  status: active
+- id: pc-grammar-systems
+  name: "Parallel communicating grammar systems"
+  aliases: []
+  description: >-
+    Grammar systems whose components rewrite in parallel and exchange strings by communication
+    requests.
+  parents: [grammar-systems]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "parallel communicating grammar systems"
+    - "pc grammar systems"
+    - "pcgs"
+    - "non-returning pc"
+  exclude_phrases: []
+  seed_works: [WAVCQYVLU6C, WCX4UZKTDTW, WXLBC72WLAW, WNBBMSBUOZR]
+  origin: mined
+  reviewed: false
+  status: active
+- id: contextual-grammars
+  name: "Contextual grammars"
+  aliases: []
+  description: >-
+    Marcus contextual grammars, which grow words by adjoining contexts, internal and external,
+    with selection languages and other restrictions.
+  parents: [rewriting-systems]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "contextual grammars"
+    - "contextual grammar"
+    - "internal contextual"
+    - "external contextual"
+    - "contextual languages"
+    - "marcus grammars"
+  exclude_phrases: []
+  seed_works: [WYEDOQDTYHL, WNJKKTKNILJ, WTTPGEXANMN, WVYB4V3BYNX]
+  origin: mined
+  reviewed: false
+  status: active
+- id: lindenmayer-systems
+  name: "Lindenmayer systems"
+  aliases: []
+  description: >-
+    Parallel rewriting systems (L systems: D0L, ET0L, tabled and limited variants), their
+    languages, growth functions and uses in modelling and graphics.
+  parents: [rewriting-systems, natural-computing]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "lindenmayer"
+    - "l-systems"
+    - "et0l"
+    - "etol"
+    - "d0l"
+    - "0l systems"
+    - "ol-systems"
+    - "parallel rewriting"
+    - "dtol"
+    - "lindenmayerian"
+  exclude_phrases: []
+  seed_works: [WLJMENRP7XZ, WHDJ5G2DE3U, WAMJEEGHPH7, WS76T24D77K]
+  origin: mined
+  reviewed: false
+  status: active
+- id: string-rewriting
+  name: "String and term rewriting"
+  aliases: []
+  description: >-
+    Rewriting systems on strings and terms as language descriptions and computation models:
+    Church–Rosser and McNaughton languages, confluence and termination, monadic and length-
+    reducing systems.
+  parents: [rewriting-systems]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "string rewriting"
+    - "term rewriting"
+    - "church-rosser"
+    - "mcnaughton"
+    - "confluence"
+    - "termination of string rewriting"
+    - "context-sensitive rewriting"
+  exclude_phrases: []
+  seed_works: [WCMEVJBQSKV, WM46VWQS4OD, W5G43BKLIM4, WEC4FLAMVOL]
+  origin: manual
+  reviewed: false
+  status: active
+
+# ================================================================================================
+# 4. Descriptional complexity
+# ================================================================================================
+- id: descriptional-complexity
+  name: "Descriptional complexity"
+  aliases: []
+  description: >-
+    How succinctly languages can be described: the size of automata, grammars and expressions
+    (states, transitions, nonterminals), its behaviour under operations and conversions, and other
+    measures of description such as Kolmogorov complexity.
+  parents: []
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "descriptional complexity"
+    - "state complexity"
+    - "succinctness"
+    - "descriptional power"
+    - "succinct"
+  exclude_phrases: []
+  seed_works: []
+  origin: mined
+  reviewed: false
+  status: active
+- id: state-complexity-of-operations
+  name: "State complexity of operations"
+  aliases: []
+  description: >-
+    The number of states needed for the result of an operation (Boolean operations, concatenation,
+    star, reversal, quotients, shuffle and others) as a function of the operands' sizes, with
+    witness languages and most complex languages.
+  parents: [descriptional-complexity]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "state complexity of operations"
+    - "state complexity of basic operations"
+    - "operational state complexity"
+    - "operational complexity"
+    - "quotient complexity"
+    - "most complex"
+    - "universal witnesses"
+    - "atoms of regular languages"
+    - "accepting state complexity"
+    - "átomata"
+    - "atomata"
+  exclude_phrases: []
+  seed_works: [WQY4YXS5DWY, WRV6UDNVFL4, W3X7DOBUVQJ, W2QVNU2UZND]
+  origin: mined
+  reviewed: false
+  status: active
+- id: nondeterministic-state-complexity
+  name: "Nondeterministic state complexity"
+  aliases: []
+  description: >-
+    State complexity of operations measured on nondeterministic automata.
+  parents: [state-complexity-of-operations]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "nondeterministic state complexity"
+    - "nondeterministic complexity of operations"
+    - "state complexity of basic operations on nondeterministic"
+  exclude_phrases: []
+  seed_works: [WCX7SDKVXT3, WH22LATR6XT, WMV6REXBNE7, WYW2RIDO6W5]
+  origin: mined
+  reviewed: false
+  status: active
+- id: combined-operations
+  name: "State complexity of combined operations"
+  aliases: []
+  description: >-
+    Exact and estimated state complexity of compositions of operations.
+  parents: [state-complexity-of-operations]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "combined operations"
+    - "combined with star"
+    - "combined with reversal"
+    - "state complexity approximation"
+    - "estimation of state complexity"
+  exclude_phrases: []
+  seed_works: [WXO5KVUFVKX, WMIFKM7UVLH, WKQYG7HV5WX, WLZGR7YN6U5]
+  origin: mined
+  reviewed: false
+  status: active
+- id: transition-complexity
+  name: "Transition complexity"
+  aliases: []
+  description: >-
+    The number of transitions, rather than states, needed by automata and for operations on them.
+  parents: [state-complexity-of-operations]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "transition complexity"
+    - "number of transitions"
+    - "transition minimality"
+    - "incomplete dfas"
+    - "transition function complexity"
+  exclude_phrases: []
+  seed_works: [WSYXCAPR3EY, WZGPB7PHDSI, WP42CPGHC66, WDOEMPVU6OZ]
+  origin: mined
+  reviewed: false
+  status: active
+- id: conversions-and-trade-offs
+  name: "Size trade-offs between descriptions"
+  aliases: []
+  description: >-
+    How much smaller one kind of description can be than another: determinisation blow-up, two-way
+    to one-way conversion, expressions versus automata, magic numbers and non-recursive trade-
+    offs.
+  parents: [descriptional-complexity]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "trade-off"
+    - "trade-offs"
+    - "nfa to dfa"
+    - "nfa-to-dfa"
+    - "determinization blow-up"
+    - "deterministic blow-ups"
+    - "number of states of dfa's"
+    - "lower bounds on the size"
+  exclude_phrases: []
+  seed_works: [W42MJXEJOQI, WNU6C3SFWLW, WYCGUUSC5DI, WS7UP5BXJA7]
+  origin: mined
+  reviewed: false
+  status: active
+- id: magic-numbers
+  name: "Magic numbers"
+  aliases: []
+  description: >-
+    Which state counts of a minimal deterministic automaton cannot be reached from an n-state
+    nondeterministic automaton.
+  parents: [conversions-and-trade-offs]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases: ["magic number", "magic numbers", "magic number problem"]
+  exclude_phrases: []
+  seed_works: [W6APAIWI5EX, W5Z472W275Q, WE67R4YAJEM]
+  origin: mined
+  reviewed: false
+  status: active
+- id: non-recursive-trade-offs
+  name: "Non-recursive trade-offs"
+  aliases: []
+  description: >-
+    Pairs of description systems between which no recursive function bounds the size blow-up.
+  parents: [conversions-and-trade-offs]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "non-recursive trade-offs"
+    - "non-recursive trade-off"
+    - "nonrecursive trade-off"
+    - "descriptive trade-off is non-recursive"
+    - "recursive and non-recursive trade-offs"
+  exclude_phrases: []
+  seed_works: [WBRSVUBEH2X, WDC25E22OHF, WTSM3WLTMOV, W27CE7KFVAR]
+  origin: manual
+  reviewed: false
+  status: active
+- id: size-of-two-way-automata
+  name: "Size of two-way automata"
+  aliases: []
+  description: >-
+    State costs of simulating two-way automata by one-way ones and of operations on two-way
+    automata, including the Sakoda–Sipser question.
+  parents: [conversions-and-trade-offs, two-way-and-alternating-automata]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "sakoda"
+    - "two-way to one-way"
+    - "one-way simulation of two-way"
+    - "size complexity of two-way"
+    - "shortest accepted strings"
+    - "size of two-way"
+  exclude_phrases: []
+  seed_works: [WVEOWFHSMUF, WXU3MVIFXR3, WWIWAHEQDIQ, WMS5BT4FSZR]
+  origin: manual
+  reviewed: false
+  status: active
+- id: size-of-regular-expressions
+  name: "Size of regular expressions"
+  aliases: []
+  description: >-
+    Lower and upper bounds on the length of regular expressions for given languages and for the
+    results of operations and conversions.
+  parents: [conversions-and-trade-offs, regular-expressions]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "regular expression size"
+    - "length of regular expressions"
+    - "regular expression length"
+    - "size of regular expressions"
+    - "regular expressions of polynomial size"
+    - "smallest regular expression"
+  exclude_phrases: []
+  seed_works: [WACNORWXVUY, WJCTLKZS7DR, W6FYUOZACBH, WEUIIQTQ2IB]
+  origin: manual
+  reviewed: false
+  status: active
+- id: syntactic-complexity
+  name: "Syntactic complexity"
+  aliases: []
+  description: >-
+    The size of the syntactic semigroup or monoid of a regular language as a measure of its
+    complexity, for the whole class and for subclasses.
+  parents: [descriptional-complexity, algebraic-language-theory]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases: ["syntactic complexity", "syntactic complexities", "syntactic monoid size"]
+  exclude_phrases: []
+  seed_works: [WRFG7ZLVG7F, WJRZ3JI6YY7, W6YNLI5PUN6, WLGOE5QUBGZ]
+  origin: mined
+  reviewed: false
+  status: active
+- id: measures-of-nondeterminism
+  name: "Measures of nondeterminism and ambiguity"
+  aliases: []
+  description: >-
+    Quantifying how much nondeterminism or ambiguity an automaton uses (degrees of ambiguity,
+    limited and finite nondeterminism, branching, tree width, widths of alternation) and its
+    effect on size.
+  parents: [descriptional-complexity]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "degree of nondeterminism"
+    - "limited nondeterminism"
+    - "degrees of ambiguity"
+    - "measures of nondeterminism"
+    - "finite nondeterminism"
+    - "nondeterminism degrees"
+    - "finitely ambiguous"
+    - "tree width"
+    - "width measures"
+  exclude_phrases: []
+  seed_works: [WPQH5A4L4SK, WD7PYYINHMC, WYWCSXV7L3M, W6J5ZI7YLNN]
+  origin: mined
+  reviewed: false
+  status: active
+- id: complexity-of-grammars-and-systems
+  name: "Descriptional complexity of grammars and systems"
+  aliases: []
+  description: >-
+    Size measures for grammars and grammar-like systems: number of nonterminals, productions,
+    components, membranes or rules, and smallest grammars for finite languages.
+  parents: [descriptional-complexity, rewriting-systems]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "nonterminal complexity"
+    - "number of nonterminals"
+    - "production complexity"
+    - "number of components"
+    - "number of rules"
+    - "minimal grammar"
+    - "grammatical complexity"
+    - "number of nonterminal symbols"
+  exclude_phrases: []
+  seed_works: [WS6FYWBYSCA, WPEWKCIPALE, W4DF6A5MBVO, WGSL3IH7EIC]
+  origin: manual
+  reviewed: false
+  status: active
+- id: kolmogorov-complexity
+  name: "Kolmogorov complexity and algorithmic randomness"
+  aliases: []
+  description: >-
+    Information-based measures of description (Kolmogorov and Blum static complexity), algorithmic
+    randomness and normality, and their uses as lower-bound tools for automata.
+  parents: [descriptional-complexity]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "kolmogorov complexity"
+    - "algorithmic randomness"
+    - "randomness"
+    - "information distance"
+    - "blum static complexity"
+    - "sophistication"
+    - "borel normality"
+  exclude_phrases: []
+  seed_works: [WKGS4SVLKOZ, WNRL3RKHLKO, WF7IN57RXHB, WHGFZEFZOQU]
+  origin: mined
+  reviewed: false
+  status: active
+
+# ================================================================================================
+# 5. Operations on languages
+# ================================================================================================
+- id: operations-on-languages
+  name: "Operations on languages"
+  aliases: []
+  description: >-
+    Operations that build new words and languages from old ones, studied for closure, decision and
+    structural properties: shuffle, insertion and deletion, quotients, roots, powers,
+    decompositions, distances and language equations. Their state complexity belongs to
+    descriptional complexity.
+  parents: []
+  xref: {ccs: [], msc: ["68Q45"], openalex: []}
+  include_phrases:
+    - "language operations"
+    - "operations on languages"
+    - "language operation"
+    - "closure under"
+  exclude_phrases: []
+  seed_works: []
+  origin: cluster
+  reviewed: false
+  status: active
+- id: closure-properties
+  name: "Closure properties and closure operators"
+  aliases: []
+  description: >-
+    Whether language families are closed under given operations, operations that preserve
+    regularity or other classes, closure operators and Kuratowski algebras.
+  parents: [operations-on-languages]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "closure properties"
+    - "closure property"
+    - "kuratowski"
+    - "preserving classes of languages"
+    - "preserve regularity"
+    - "regularity-preserving"
+    - "closure operations"
+  exclude_phrases: []
+  seed_works: [WGAPQDFTOOM, WQG33AKHC6A, W3FS47FAF5Q, WCMEVJBQSKV]
+  origin: mined
+  reviewed: false
+  status: active
+- id: shuffle-and-interleaving
+  name: "Shuffle and interleaving"
+  aliases: []
+  description: >-
+    Shuffle (interleaving) of words and languages, iterated shuffle, shuffle on trajectories and
+    literal or synchronised variants, with their closure, decision and decomposition questions.
+  parents: [operations-on-languages, combinatorics-on-words]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "shuffle"
+    - "shuffle product"
+    - "shuffle on trajectories"
+    - "trajectories"
+    - "shuffle languages"
+    - "iterated shuffle"
+    - "interleaving"
+    - "shuffle ideals"
+  exclude_phrases: ["card shuffl", "perfect shuffle network"]
+  seed_works: [WJN6GUHJIZF, WLWEUW7IZZ3, W3VD5VSSHIS, WGLE567AMVB]
+  origin: mined
+  reviewed: false
+  status: active
+- id: insertion-and-deletion-operations
+  name: "Insertion, deletion and duplication operations"
+  aliases: []
+  description: >-
+    Operations inspired by DNA processing that insert, delete, duplicate or complete parts of
+    words: site-directed insertion and deletion, duplication, hairpin completion and overlap
+    assembly.
+  parents: [operations-on-languages, natural-computing]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "site-directed insertion"
+    - "site-directed deletion"
+    - "bounded duplication"
+    - "duplication"
+    - "hairpin completion"
+    - "overlap assembly"
+    - "deletion closure"
+    - "outfix-guided insertion"
+    - "hairpin"
+  exclude_phrases: []
+  seed_works: [WE3OI6RN2SV, WZBJA3RA5XH, WMON4OS6G7R, WJCWITLDGYM]
+  origin: manual
+  reviewed: false
+  status: active
+- id: language-equations
+  name: "Language equations"
+  aliases: []
+  description: >-
+    Equations and inequalities whose unknowns are languages or sets of numbers: solutions,
+    decidability and expressive power.
+  parents: [operations-on-languages]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "language equations"
+    - "language equation"
+    - "equations over sets of numbers"
+    - "language inequalities"
+    - "systems of language equations"
+  exclude_phrases: []
+  seed_works: [WZ2CCQJA3TN, W6CAQW26YOD, WQ4QVBJQSEP, WT7DPBA4LKE]
+  origin: mined
+  reviewed: false
+  status: active
+- id: roots-powers-and-decompositions
+  name: "Roots, powers and decompositions of languages"
+  aliases: []
+  description: >-
+    Decomposing languages into products, unions or shuffles of simpler ones; roots and powers of
+    languages; primality and factorisation of languages.
+  parents: [operations-on-languages]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "decomposition of finite languages"
+    - "prime decompositions"
+    - "roots and powers"
+    - "root of a language"
+    - "powers of regular languages"
+    - "language decompositions"
+    - "factorization in formal languages"
+    - "primality"
+  exclude_phrases: []
+  seed_works: [WD7KQHAKCP5, WCXC5M7TD23, WI3I3MNSY2C, WECQMLOHD5R]
+  origin: manual
+  reviewed: false
+  status: active
+- id: distances-and-neighbourhoods
+  name: "Distances and neighbourhoods of languages"
+  aliases: []
+  description: >-
+    Edit, prefix and other distances between words and languages, neighbourhoods and approximate
+    versions of languages, and how to compute them.
+  parents: [operations-on-languages]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "edit distance"
+    - "edit-distance"
+    - "prefix distance"
+    - "suffix distance"
+    - "neighbourhoods"
+    - "neighborhood"
+    - "levenshtein"
+    - "relative distance"
+  exclude_phrases: []
+  seed_works: [WNBBCKQJU5F, WFFYU26EZZY, WZU6MCAYFZW, WV23XV4RZY3]
+  origin: mined
+  reviewed: false
+  status: active
+
+# ================================================================================================
+# 6. Algebraic theory of languages and automata
+# ================================================================================================
+- id: algebraic-language-theory
+  name: "Algebraic theory of languages and automata"
+  aliases: []
+  description: >-
+    Semigroups, monoids and other algebras that recognise languages: syntactic monoids, varieties
+    and the Eilenberg correspondence, star-free and testable classes, decompositions of automata,
+    and automata in group and semigroup theory.
+  parents: []
+  xref: {ccs: ["10003752.10003766.10003767.10003768"], msc: ["68Q70", "20M35"], openalex: []}
+  include_phrases:
+    - "algebraic theory"
+    - "syntactic semigroup"
+    - "semigroups"
+    - "monoids"
+    - "algebraic approach"
+  exclude_phrases: []
+  seed_works: []
+  origin: ccs
+  reviewed: false
+  status: active
+- id: syntactic-monoids-and-varieties
+  name: "Syntactic monoids and varieties"
+  aliases: []
+  description: >-
+    Recognition of languages by finite monoids, the syntactic monoid, varieties and
+    pseudovarieties of languages and semigroups, Eilenberg-type correspondences, profinite methods
+    and separation.
+  parents: [algebraic-language-theory]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "syntactic monoid"
+    - "syntactic monoids"
+    - "varieties"
+    - "varieties of languages"
+    - "pseudovarieties"
+    - "eilenberg"
+    - "profinite"
+    - "pointlike"
+    - "recognizing morphisms"
+    - "positive varieties"
+  exclude_phrases: []
+  seed_works: [WLE75NVHQTE, WXIQ5HZNMNG, W52B6AAXYCF, WD6WYG7B6AE]
+  origin: mined
+  reviewed: false
+  status: active
+- id: star-free-languages
+  name: "Star-free languages and concatenation hierarchies"
+  aliases: []
+  description: >-
+    Star-free (aperiodic) languages, Schützenberger's theorem, dot-depth and Straubing–Thérien
+    hierarchies, polynomial closure and the class DA and its relatives.
+  parents: [algebraic-language-theory, logic-and-automata]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "star-free"
+    - "dot-depth"
+    - "dot depth"
+    - "straubing-thérien"
+    - "straubing-therien"
+    - "concatenation hierarchies"
+    - "polynomial closure"
+    - "counter-free"
+    - {phrase: "aperiodic", context: ["monoid", "monoids", "semigroup", "semigroups", "languages"]}
+  exclude_phrases: []
+  seed_works: [W2G7IQXUUQE, WJPH3ISKE26, WJRAG7Q26ET, W4AKYYA6GBQ]
+  origin: mined
+  reviewed: false
+  status: active
+- id: testable-languages
+  name: "Locally and piecewise testable languages"
+  aliases: []
+  description: >-
+    Classes defined by the factors or subwords a word contains (locally, threshold and piecewise
+    testable languages, definite and generalised definite languages) and testing membership in
+    them.
+  parents: [algebraic-language-theory, subregular-languages]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "piecewise testable"
+    - "locally testable"
+    - "local testability"
+    - "threshold testability"
+    - "testable languages"
+    - "definite languages"
+    - "generalized definite"
+    - "generalised definite"
+    - "testability"
+  exclude_phrases: []
+  seed_works: [WRKWI5SQPLT, WINZQCD6DUG, WTHRVFPRDYG, WQ5RZHMQ4CV]
+  origin: mined
+  reviewed: false
+  status: active
+- id: transformation-semigroups
+  name: "Transformation semigroups and decompositions of automata"
+  aliases: []
+  description: >-
+    Automata viewed through their transformation semigroups: Krohn–Rhodes and cascade
+    decompositions, products of automata, permutation groups and ranks of transformations.
+  parents: [algebraic-language-theory]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "krohn-rhodes"
+    - "cascade decomposition"
+    - "cascade product"
+    - "transformation semigroups"
+    - "transformation semigroup"
+    - "transformation monoids"
+    - "wreath product"
+    - "products of automata"
+  exclude_phrases: []
+  seed_works: [W6JJ2UN47J7, WMUMQJ6WVZ6, WESKYTM2DVR, WIJVLZW6ORC]
+  origin: manual
+  reviewed: false
+  status: active
+- id: automata-and-groups
+  name: "Automata and groups"
+  aliases: []
+  description: >-
+    Automata in combinatorial group and semigroup theory: groups generated by Mealy automata,
+    automatic and Cayley-automatic groups, word problems as formal languages, and group languages.
+  parents: [algebraic-language-theory]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "automaton groups"
+    - "automaton semigroups"
+    - "automatic groups"
+    - "word problem"
+    - "word problems"
+    - "cayley automatic"
+    - "group languages"
+    - "free groups"
+    - "burnside"
+    - "graph groups"
+    - "groups and automata"
+    - "permutation groups"
+  exclude_phrases: []
+  seed_works: [WK6QIPPK43X, WEYDTXP7DHP, WB2O2O6GWWR, WNXMJ5OZDFN, W32MJZ5DASR]
+  origin: cluster
+  reviewed: false
+  status: active
+- id: kleene-algebra
+  name: "Kleene algebras and equational theories"
+  aliases: []
+  description: >-
+    Axiomatic and equational treatments of regular languages and expressions: Kleene algebra and
+    its extensions, iteration semirings and theories, and equational logics of language
+    operations.
+  parents: [algebraic-language-theory]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "kleene algebra"
+    - "kleene algebras"
+    - "equational theory"
+    - "equational theories"
+    - "iteration semirings"
+    - "axiomatization"
+    - "kleene ω-algebras"
+  exclude_phrases: []
+  seed_works: [WABW53G6OEB, WBAN2WUNWCV, WFIVUNDZ7J7, WQ5PAXTZCFC]
+  origin: manual
+  reviewed: false
+  status: active
+- id: rational-and-recognisable-subsets
+  name: "Rational and recognisable subsets of monoids"
+  aliases: []
+  description: >-
+    Rational and recognisable sets beyond free monoids: in trace and other monoids, over algebras
+    and monads, and automatic monoids.
+  parents: [algebraic-language-theory]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "rational sets"
+    - "recognizable sets"
+    - "recognisable sets"
+    - "rational subsets"
+    - "automatic monoids"
+    - "monads"
+    - "mezei-wright"
+    - "recognisable languages over"
+  exclude_phrases: []
+  seed_works: [W5RWOYIFBGS, WCQKHIOZHJF, WZNU7JBI5H6, WKXPVSIWFNA]
+  origin: manual
+  reviewed: false
+  status: active
+
+# ================================================================================================
+# 7. Logic and automata
+# ================================================================================================
+- id: logic-and-automata
+  name: "Logic and automata"
+  aliases: []
+  description: >-
+    The correspondence between logics and automata: monadic second-order and first-order
+    definability on words, trees and other structures, temporal logics, decidable logical theories
+    via automata, and automatic structures.
+  parents: []
+  xref: {ccs: [], msc: ["03D05"], openalex: []}
+  include_phrases:
+    - "logic"
+    - "logics"
+    - "definability"
+    - "definable"
+    - "logical characterization"
+    - "logical characterisation"
+  exclude_phrases: []
+  seed_works: []
+  origin: msc
+  reviewed: false
+  status: active
+- id: monadic-second-order-logic
+  name: "Monadic second-order logic and automata"
+  aliases: []
+  description: >-
+    Equivalences between monadic second-order logic and automata on words, trees and graphs
+    (Büchi–Elgot–Trakhtenbrot), weak MSO tools such as MONA, and decidability of MSO theories.
+  parents: [logic-and-automata]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "monadic second-order"
+    - "mso"
+    - "ws1s"
+    - "second-order logic"
+    - "mso logic"
+    - "mso-definable"
+    - "monadically axiomatizable"
+    - "mona"
+  exclude_phrases: []
+  seed_works: [WHYX3KIYVKN, WQKVR2VM2TU, WQHRJRAEF2V, WPFAP2N3ZI3]
+  origin: mined
+  reviewed: false
+  status: active
+- id: first-order-fragments
+  name: "First-order logic on words"
+  aliases: []
+  description: >-
+    First-order definability on words and traces: two-variable logic, quantifier alternation,
+    modular, majority and counting quantifiers, and their algebraic counterparts.
+  parents: [logic-and-automata]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "first-order logic"
+    - "first order logic"
+    - "fo2"
+    - "two-variable"
+    - "quantifier alternation"
+    - "majority quantifiers"
+    - "modular quantifiers"
+    - "first-order fragments"
+  exclude_phrases: []
+  seed_works: [W7O55M3RNZH, WJDPLQOX37Z, WRBSOT6MTBG, WPPFJQU6O66]
+  origin: mined
+  reviewed: false
+  status: active
+- id: temporal-logics
+  name: "Temporal logics and automata"
+  aliases: []
+  description: >-
+    Translations between linear and branching temporal logics (LTL, LTLf, CTL, the μ-calculus) and
+    automata, used for satisfiability, model checking and synthesis.
+  parents: [logic-and-automata, automata-for-verification]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "temporal logic"
+    - "temporal logics"
+    - "ltl"
+    - "linear temporal logic"
+    - "ltlf"
+    - "mu-calculus"
+    - "µ-calculus"
+    - "ctl"
+  exclude_phrases: []
+  seed_works: [WM7WBFWPCW6, WYJFVEY4O3P, WRC2G644DZK, WNJMPRMWGXJ]
+  origin: mined
+  reviewed: false
+  status: active
+- id: automatic-structures
+  name: "Automatic structures and decidable theories"
+  aliases: []
+  description: >-
+    Structures and arithmetic theories whose relations are recognised by automata: automatic
+    graphs and structures, Presburger and Büchi arithmetic, number decision diagrams and string
+    constraints.
+  parents: [logic-and-automata]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "automatic structures"
+    - "automatic graphs"
+    - "presburger"
+    - "büchi arithmetic"
+    - "buchi arithmetic"
+    - "arithmetic theories"
+    - "string constraints"
+    - "number decision diagrams"
+    - "automatic transitive graphs"
+  exclude_phrases: []
+  seed_works: [WHLYS774DX4, WONZX4LRQGJ, WY54KCS7HME, WVRKXRBQGJJ]
+  origin: manual
+  reviewed: false
+  status: active
+
+# ================================================================================================
+# 8. Automata on infinite words and games
+# ================================================================================================
+- id: automata-on-infinite-words
+  name: "Automata on infinite words and games"
+  aliases: []
+  description: >-
+    Automata and languages over infinite words and other infinite objects: ω-automata and their
+    acceptance conditions, ω-regular languages and their topology, words indexed by linear
+    orderings, and infinite games used for verification and synthesis.
+  parents: []
+  xref: {ccs: ["10003752.10003766.10003770"], msc: [], openalex: []}
+  include_phrases:
+    - "omega-automata"
+    - "ω-automata"
+    - "omega-languages"
+    - "ω-languages"
+    - "omega-regular"
+    - "ω-regular"
+    - "büchi automata"
+    - "buchi automata"
+    - "infinite games"
+  exclude_phrases: []
+  seed_works: []
+  origin: ccs
+  reviewed: false
+  status: active
+- id: omega-automata
+  name: "ω-automata"
+  aliases: ["omega automata"]
+  description: >-
+    Büchi, Muller, Rabin, Streett and parity automata on infinite words: complementation,
+    determinisation, minimisation, ambiguity and history-determinism.
+  parents: [automata-on-infinite-words]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "büchi automata"
+    - "buchi automata"
+    - "büchi automaton"
+    - "muller automata"
+    - "parity automata"
+    - "rabin automata"
+    - "streett"
+    - "history-determinism"
+    - "omega-automata"
+    - "ω-automata"
+  exclude_phrases: []
+  seed_works: [WNASMN6IPB7, WFCSFCRVHYK, WNOOV5OOS2X, WJMXTYNFZFZ]
+  origin: mined
+  reviewed: false
+  status: active
+- id: complementation-and-determinisation
+  name: "Complementation and determinisation of ω-automata"
+  aliases: []
+  description: >-
+    Constructions and lower bounds for complementing and determinising Büchi and other ω-automata.
+  parents: [omega-automata]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "büchi complementation"
+    - "complementation of büchi"
+    - "determinization of büchi"
+    - "deterministic omega-automata"
+    - "deterministic ω-automata"
+    - "complementing büchi"
+  exclude_phrases: []
+  seed_works: [WCRZKQKYUGK, WO6U6FHFGEE, W6F45CE7LZK, WFYSSWZNS5E]
+  origin: manual
+  reviewed: false
+  status: active
+- id: omega-regular-languages
+  name: "ω-regular languages and their hierarchies"
+  aliases: ["omega-regular languages"]
+  description: >-
+    Properties of ω-regular languages: acceptance conditions, topological and Wagner–Wadge
+    hierarchies, ω-powers, liveness and safety classes, and measures.
+  parents: [automata-on-infinite-words]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "omega-regular"
+    - "ω-regular"
+    - "omega-languages"
+    - "ω-languages"
+    - "omega-power"
+    - "ω-power"
+    - "wadge"
+    - "liveness"
+    - "acceptance conditions"
+    - "omega-generators"
+  exclude_phrases: []
+  seed_works: [WROXOFA7XA3, WE4SK76JHK5, WIKMDBHDMQH, WFSIZPKXO2Z]
+  origin: mined
+  reviewed: false
+  status: active
+- id: infinite-games
+  name: "Infinite games and synthesis"
+  aliases: []
+  description: >-
+    Two-player games of infinite duration on graphs (parity, reachability, energy, poset games),
+    their algorithms and strategies, and synthesis of systems from specifications.
+  parents: [automata-on-infinite-words, automata-for-verification]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "infinite games"
+    - "reachability games"
+    - "winning strategies"
+    - "energy games"
+    - "poset games"
+    - "game-theoretic"
+    - "games"
+    - {phrase: "synthesis", context: ["game", "games", "controller", "specification", "strategy", "ltlf"]}
+  exclude_phrases: []
+  seed_works: [WBKXNVB23GK, WJGOK2R52HB, WV6K5KY54IU, WXYIHSPJ6EK]
+  origin: mined
+  reviewed: false
+  status: active
+- id: parity-games
+  name: "Parity games"
+  aliases: []
+  description: >-
+    Algorithms, complexity and simulation relations for parity games.
+  parents: [infinite-games]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases: ["parity games", "parity game", "strategy improvement"]
+  exclude_phrases: []
+  seed_works: [WA2XMCWKOZK, WDRQJPEHMXJ, WRG5G4SIDAP, WP5MKEXGLLY]
+  origin: mined
+  reviewed: false
+  status: active
+- id: linear-orderings
+  name: "Automata on linear orderings"
+  aliases: []
+  description: >-
+    Automata and rational expressions for words indexed by countable and scattered linear
+    orderings and ordinals, and for series-parallel posets.
+  parents: [automata-on-infinite-words]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "linear orderings"
+    - "linear ordering"
+    - "scattered words"
+    - "ordinals"
+    - "countable scattered"
+    - "series-parallel"
+    - "scattered and countable"
+  exclude_phrases: []
+  seed_works: [WGIUGGNN27S, WYDAGJLRBUV, WM3FVKN4UEO, WAY7C757HJT]
+  origin: mined
+  reviewed: false
+  status: active
+
+# ================================================================================================
+# 9. Automata for verification
+# ================================================================================================
+- id: automata-for-verification
+  name: "Automata for verification"
+  aliases: []
+  description: >-
+    Automata-based methods for checking and constructing systems: model checking with automata,
+    timed and hybrid automata, infinite-state systems such as pushdown and counter systems, and
+    supervisory control. Pure logic–automata correspondences are under logic and automata.
+  parents: []
+  xref: {ccs: [], msc: ["68Q60"], openalex: ["T10142"]}
+  include_phrases:
+    - "verification"
+    - "model checking"
+    - "model-checking"
+    - "reachability analysis"
+    - "formal verification"
+  exclude_phrases: []
+  seed_works: []
+  origin: msc
+  reviewed: false
+  status: active
+- id: automata-based-model-checking
+  name: "Automata-based model checking"
+  aliases: []
+  description: >-
+    Checking finite-state systems against specifications through automata: emptiness and inclusion
+    checking, antichains and simulations, symbolic and on-the-fly methods, and monitoring.
+  parents: [automata-for-verification]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "model checking"
+    - "model-checking"
+    - "antichain"
+    - "inclusion testing"
+    - "linear-time model checking"
+    - "monitors"
+    - "symbolic model checking"
+    - "on-the-fly"
+  exclude_phrases: []
+  seed_works: [W2KPLBSXJ5M, W4ANYFHSZUG, WNNNHETQG3K, WSS737PHMEC]
+  origin: mined
+  reviewed: false
+  status: active
+- id: timed-and-hybrid-automata
+  name: "Timed and hybrid automata"
+  aliases: []
+  description: >-
+    Automata with real-valued clocks or continuous dynamics, their languages, decision problems
+    and logics such as MTL and TCTL.
+  parents: [automata-for-verification]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "timed automata"
+    - "timed automaton"
+    - "timed languages"
+    - "event clock"
+    - "hybrid systems"
+    - "tctl"
+    - "mtl"
+    - "dense-time"
+    - "timers"
+  exclude_phrases: []
+  seed_works: [WQYXPQFEZRB, WYN77MDQVRT, WDQXHAXXDCF, WMKU64DIUDN]
+  origin: mined
+  reviewed: false
+  status: active
+- id: infinite-state-verification
+  name: "Infinite-state systems and regular model checking"
+  aliases: []
+  description: >-
+    Verification of systems with unbounded data or control: pushdown and counter systems, queue
+    systems, regular model checking and tree-automata completion, termination and bisimilarity.
+  parents: [automata-for-verification]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "infinite-state"
+    - "regular model checking"
+    - "pushdown systems"
+    - "regular reachability"
+    - "tree automata completion"
+    - "parameterized transition systems"
+    - "bisimilarity"
+    - "termination proofs"
+    - "queue systems"
+    - "infinite systems"
+  exclude_phrases: []
+  seed_works: [W5WWQEVGI5J, WODUABG7UM6, WNSXQU5WKD5, WGFQLPFIW2N]
+  origin: manual
+  reviewed: false
+  status: active
+- id: supervisory-control
+  name: "Supervisory control and controller synthesis"
+  aliases: []
+  description: >-
+    Discrete-event systems and their control: supervisory control, synthesis of controllers and
+    protocol converters from automata specifications, and component interfaces.
+  parents: [automata-for-verification]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "supervisory control"
+    - "discrete-event"
+    - "discrete event"
+    - "controller synthesis"
+    - "protocol converter"
+    - "finite-state controllers"
+    - "component interfaces"
+  exclude_phrases: []
+  seed_works: [WFHDD2BZXEE, WPI3UWUBF74, WFVQFT5YX24, W4YC3IBHM62]
+  origin: manual
+  reviewed: false
+  status: active
+
+# ================================================================================================
+# 10. Weighted and probabilistic automata
+# ================================================================================================
+- id: weighted-and-probabilistic-automata
+  name: "Weighted and probabilistic automata"
+  aliases: []
+  description: >-
+    Automata whose transitions carry weights from a semiring or probabilities: rational series,
+    semirings, weighted logics, probabilistic and stochastic automata, cost and distance automata.
+  parents: []
+  xref: {ccs: ["10003752.10003766.10003773.10003775"], msc: [], openalex: []}
+  include_phrases:
+    - "weighted automata"
+    - "weighted automaton"
+    - "probabilistic automata"
+    - "semiring"
+    - "semirings"
+    - "quantitative"
+    - "multiplicities"
+  exclude_phrases: []
+  seed_works: []
+  origin: ccs
+  reviewed: false
+  status: active
+- id: weighted-automata
+  name: "Weighted automata and rational series"
+  aliases: ["rational power series"]
+  description: >-
+    Weighted finite automata over semirings and the series they realise: Kleene–Schützenberger
+    theorems, determinisation, disambiguation, ε-removal, equivalence, semiring theory and fixed-
+    point equations.
+  parents: [weighted-and-probabilistic-automata]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "weighted automata"
+    - "weighted finite automata"
+    - "weighted automaton"
+    - "rational series"
+    - "recognizable series"
+    - "formal power series"
+    - "multiplicities"
+    - "k-expressions"
+    - "weighted expressions"
+    - "fixpoint equations"
+    - "omega-continuous semirings"
+    - "rational formal series"
+    - "k-automaton"
+    - "multiplicity equivalence"
+  exclude_phrases: []
+  seed_works: [WMJQ2MAFROL, WLWTEZDFJAR, WDJNMGIDXQ6, WNYJU4D2GB3]
+  origin: mined
+  reviewed: false
+  status: active
+- id: weighted-logics
+  name: "Weighted logics and quantitative specifications"
+  aliases: []
+  description: >-
+    Weighted and multi-valued MSO, temporal and μ-calculus logics and their equivalence with
+    weighted automata, including discounting.
+  parents: [weighted-and-probabilistic-automata, logic-and-automata]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "weighted logics"
+    - "weighted logic"
+    - "weighted mso"
+    - "weighted ltl"
+    - "multi-valued logics"
+    - "weight assignment logic"
+    - "discounting"
+    - "probabilistic logics"
+  exclude_phrases: []
+  seed_works: [W2Y7GBY53CO, WTZYA2VCLSO, WZ5NBOIKHR6, WRMPN56DLQL]
+  origin: manual
+  reviewed: false
+  status: active
+- id: probabilistic-automata
+  name: "Probabilistic and stochastic automata"
+  aliases: []
+  description: >-
+    Automata with probabilistic transitions, stochastic languages and grammars, distances between
+    the distributions they define, and pattern statistics in rational stochastic models.
+  parents: [weighted-and-probabilistic-automata]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "probabilistic automata"
+    - "probabilistic finite automata"
+    - "stochastic"
+    - "pfa"
+    - "pfas"
+    - "probabilistic pushdown"
+    - "pattern statistics"
+    - "stochastic models"
+    - "rational models"
+  exclude_phrases: []
+  seed_works: [WAKBRCPOKCO, WSEIIHV3GJZ, WM3CECUD2W3, WE6ERJK3RO2]
+  origin: mined
+  reviewed: false
+  status: active
+- id: cost-and-distance-automata
+  name: "Cost, distance and register automata"
+  aliases: []
+  description: >-
+    Automata computing numerical values under min-plus or cost semantics: distance automata and
+    limitedness, max-plus automata, cost register automata and boundedness.
+  parents: [weighted-and-probabilistic-automata]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "distance automata"
+    - "cost register"
+    - "limitedness"
+    - "max-plus"
+    - "costs"
+    - "cost register automata"
+  exclude_phrases: []
+  seed_works: [W5TUTW3MHYI, WVNCC2W2KVT, WUVK34OFJZC, WMQND4FQYTZ]
+  origin: manual
+  reviewed: false
+  status: active
+
+# ================================================================================================
+# 11. Machine models and computational power
+# ================================================================================================
+- id: machine-models
+  name: "Machine models and computational power"
+  aliases: []
+  description: >-
+    Automata with extra memory or unusual ways of reading input, compared by power and resources:
+    Turing machines, counter, stack and queue automata, multi-head and restarting automata,
+    jumping, quantum, reversible and communicating models, and links between automata and
+    complexity classes.
+  parents: []
+  xref: {ccs: ["10003752.10003766.10003773", "10003752.10003753"], msc: [], openalex: []}
+  include_phrases:
+    - "computational power"
+    - "automata models"
+    - "automaton model"
+    - "language acceptors"
+    - "acceptors"
+    - "models of computation"
+  exclude_phrases: []
+  seed_works: []
+  origin: ccs
+  reviewed: false
+  status: active
+- id: turing-machines
+  name: "Turing machines and resource bounds"
+  aliases: []
+  description: >-
+    Turing machines and their small universal versions, space and time bounds (sublogarithmic
+    space, linear and real time), alternation and the power of resource-bounded machines.
+  parents: [machine-models]
+  xref: {ccs: ["10003752.10003753.10003754"], msc: [], openalex: []}
+  include_phrases:
+    - "turing machines"
+    - "turing machine"
+    - "universal turing"
+    - "sublogarithmic"
+    - "space-bounded"
+    - "one-tape"
+    - "alternating machines"
+    - "useful space"
+    - "tag systems"
+  exclude_phrases: []
+  seed_works: [WAI26MCZDRS, WFU2AN5DNCI, WSD573EI7DX, WZQ2LWL3YK2]
+  origin: mined
+  reviewed: false
+  status: active
+- id: counter-automata
+  name: "Counter automata and counter machines"
+  aliases: []
+  description: >-
+    Automata and machines with counters: one-counter, blind and partially blind, reversal-bounded
+    counters, Parikh automata and their decision problems.
+  parents: [machine-models]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "counter automata"
+    - "counter machines"
+    - "one-counter"
+    - "reversal-bounded"
+    - "blind counter"
+    - "parikh automata"
+    - "multicounter"
+    - "counter languages"
+    - "multi-counter"
+  exclude_phrases: []
+  seed_works: [WQC7AXNDCND, WEXMKGKWSH2, WAHBPMXYJCY, WOCH4PCUX77]
+  origin: mined
+  reviewed: false
+  status: active
+- id: multi-head-and-multitape-automata
+  name: "Multi-head, multitape and pebble automata"
+  aliases: []
+  description: >-
+    Automata with several reading heads or tapes, synchronised or not, and pebble automata, with
+    hierarchy and decidability results.
+  parents: [machine-models]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "multi-head"
+    - "multihead"
+    - "multitape"
+    - "multi-tape"
+    - "pebble"
+    - "pebbles"
+    - "two-tape"
+  exclude_phrases: []
+  seed_works: [W5TCPZCKQYV, WBWQCSF4B5Q, WPCQBKT7J4F, W2LAH2DABAR]
+  origin: mined
+  reviewed: false
+  status: active
+- id: storage-automata
+  name: "Stack, queue and other storage automata"
+  aliases: []
+  description: >-
+    Automata with storage other than one pushdown or counter: stack and checking-stack automata,
+    queue and deque automata, set automata and other auxiliary data structures.
+  parents: [machine-models]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "stack automata"
+    - "checking stack"
+    - "queue automata"
+    - "deque"
+    - "set automata"
+    - "auxiliary data structures"
+    - "flip-pushdown"
+    - "queue machines"
+    - "data storage"
+  exclude_phrases: []
+  seed_works: [W6PH4MOCEHJ, WAWRBCDASCH, WWM5MYSSMHM, WNQ6WVLB55N]
+  origin: mined
+  reviewed: false
+  status: active
+- id: restarting-automata
+  name: "Restarting automata"
+  aliases: []
+  description: >-
+    Automata that rewrite inside a window and restart, modelling analysis by reduction: RRWW,
+    ordered and clearing variants, monotonicity, their place among the Chomsky classes, and
+    forgetting and deleting automata.
+  parents: [machine-models]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "restarting automata"
+    - "restarting automaton"
+    - "rrww"
+    - "ordered restarting"
+    - "clearing restarting"
+    - "forgetting automata"
+    - "deleting automata"
+    - "restart-delete"
+    - "rw-automata"
+    - "rl-automata"
+  exclude_phrases: []
+  seed_works: [W3PTH7LH5YO, WPFYRA65KHJ, WJEFHCHF4DO, WBWUWJX3RXN]
+  origin: mined
+  reviewed: false
+  status: active
+- id: limited-automata
+  name: "Limited automata"
+  aliases: []
+  description: >-
+    Linear-bounded automata that may rewrite a cell only during its first few visits (d-limited
+    automata): their power, size and variants.
+  parents: [machine-models]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases: ["limited automata", "d-limited", "1-limited", "limited automaton"]
+  exclude_phrases: []
+  seed_works: [W2W6RW4MXBR, WBHHRWCB2FR, WI6LJILKYBW, WOYPU4NMTLX]
+  origin: mined
+  reviewed: false
+  status: active
+- id: jumping-automata
+  name: "Jumping automata and discontinuous input"
+  aliases: []
+  description: >-
+    Automata that read the input out of order: jumping finite automata, right one-way jumping
+    automata, automata with translucent letters and other discontinuous reading.
+  parents: [machine-models]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "jumping finite automata"
+    - "jumping automata"
+    - "right one-way jumping"
+    - "translucent letters"
+    - "translucent"
+    - "discontinuous input"
+    - "jumping"
+  exclude_phrases: []
+  seed_works: [WXVKRK5Q3YQ, WIXKTRZY4UW, WB2A2RT3SIJ, WQBQKCSIHRK]
+  origin: mined
+  reviewed: false
+  status: active
+- id: quantum-automata
+  name: "Quantum automata"
+  aliases: ["qfas"]
+  description: >-
+    Quantum finite and counter automata, quantum branching programs and other small-space quantum
+    models, compared with classical and probabilistic ones.
+  parents: [machine-models, weighted-and-probabilistic-automata]
+  xref: {ccs: [], msc: [], openalex: ["T10682"]}
+  include_phrases:
+    - "quantum automata"
+    - "quantum finite automata"
+    - "quantum"
+    - "qfa"
+    - "quantum computation"
+    - "quantum obdds"
+    - "promise problems"
+  exclude_phrases: []
+  seed_works: [W5FYGQM5PKE, W2LI7GSSMZP, WOYBU4VHFSE, WC7HQI6CBBY]
+  origin: cluster
+  reviewed: false
+  status: active
+- id: reversible-automata
+  name: "Reversible automata"
+  aliases: []
+  description: >-
+    Automata and machines whose computation steps can be undone: reversible finite and pushdown
+    automata and transducers, and degrees of irreversibility.
+  parents: [machine-models]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "reversible"
+    - "reversible automata"
+    - "reversible finite automata"
+    - "irreversibility"
+    - "reversible pushdown"
+    - "reversibly"
+  exclude_phrases: []
+  seed_works: [WPPHX67RFID, WYD3AJRBJXJ, WQUHJNOODEO, W5FJ5G4IJBH]
+  origin: mined
+  reviewed: false
+  status: active
+- id: automata-systems
+  name: "Systems of cooperating automata"
+  aliases: []
+  description: >-
+    Several automata working together, such as parallel communicating finite or pushdown automata
+    and distributed pushdown systems, and the cost of their communication.
+  parents: [machine-models]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "parallel communicating finite automata"
+    - "pc systems"
+    - "centralized pc"
+    - "automata systems"
+    - "distributed pushdown"
+    - "parallel communicating pushdown"
+  exclude_phrases: []
+  seed_works: [W57H4SYWUQW, WWLZVRZSINA, WLQNUKSXUDT, WUF2DNPS2X6]
+  origin: mined
+  reviewed: false
+  status: active
+- id: infinite-alphabet-automata
+  name: "Automata over infinite alphabets"
+  aliases: []
+  description: >-
+    Automata for data words and large or infinite alphabets: register and nominal automata,
+    symbolic automata with predicates as labels, and variable automata.
+  parents: [machine-models]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "infinite alphabets"
+    - "register automata"
+    - "nominal automata"
+    - "data words"
+    - "symbolic automata"
+    - "symbolic finite automata"
+    - "infinite alphabet"
+    - "variable automata"
+  exclude_phrases: []
+  seed_works: [WC4KTVQ5NBJ, WDZDFOFO75C, W36SWQU3B3C, WAKSHLFOSOD]
+  origin: manual
+  reviewed: false
+  status: active
+- id: automata-and-complexity-classes
+  name: "Automata and complexity classes"
+  aliases: []
+  description: >-
+    Connections between automata or language theory and computational complexity:
+    characterisations of complexity classes, branching programs and OBDDs, circuits, proof
+    complexity and lower-bound methods.
+  parents: [machine-models]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "complexity classes"
+    - "branching programs"
+    - "obdds"
+    - "circuit complexity"
+    - "proof complexity"
+    - "nl/poly"
+    - "polynomial hierarchy"
+    - "ac0"
+    - "communication complexity"
+    - "complexity class"
+    - "circuits"
+    - "delegated computation"
+  exclude_phrases: []
+  seed_works: [WF4QUHQ4QJL, WEEPNE2YEFO, W5AHOPZEJNS, WYU7ATZWY7P]
+  origin: mined
+  reviewed: false
+  status: active
+
+# ================================================================================================
+# 12. Transducers and transductions
+# ================================================================================================
+- id: transducers
+  name: "Transducers and transductions"
+  aliases: []
+  description: >-
+    Automata with output and the relations and functions they compute: finite-state, sequential,
+    two-way and streaming transducers on strings, and transducers on trees.
+  parents: []
+  xref: {ccs: ["10003752.10003766.10003773.10003774"], msc: [], openalex: []}
+  include_phrases:
+    - "transducers"
+    - "transducer"
+    - "transductions"
+    - "transduction"
+    - "mealy"
+    - "moore automata"
+  exclude_phrases: []
+  seed_works: []
+  origin: ccs
+  reviewed: false
+  status: active
+- id: finite-state-transducers
+  name: "Finite-state transducers and rational relations"
+  aliases: []
+  description: >-
+    One-way finite transducers and the rational relations and functions they define:
+    sequentiality, valuedness, ambiguity, equivalence, uniformisation, bimachines and synchronous
+    relations.
+  parents: [transducers]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "finite-state transducers"
+    - "finite state transducers"
+    - "finite transducers"
+    - "rational relations"
+    - "rational functions"
+    - "sequential transducers"
+    - "subsequential"
+    - "bimachines"
+    - "synchronous relations"
+    - "valuedness"
+    - "sequentiable"
+    - "twinning property"
+  exclude_phrases: []
+  seed_works: [W655CRPX6WP, WVL7CHN2TYN, WN6BU2R4ZXV, W66VHN2KROA]
+  origin: mined
+  reviewed: false
+  status: active
+- id: weighted-transducers
+  name: "Weighted finite-state transducers"
+  aliases: []
+  description: >-
+    Transducers with weights, their composition, determinisation and libraries.
+  parents: [finite-state-transducers, weighted-automata]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "weighted finite-state transducers"
+    - "weighted finite-state transducer"
+    - "weighted transducers"
+    - "openfst"
+    - "failure transitions"
+    - "transducer library"
+  exclude_phrases: []
+  seed_works: [WJKFIFYQGL6, WZGLGP4E63D, WYFPSYT6GMF, WAULLMAKGUX]
+  origin: manual
+  reviewed: false
+  status: active
+- id: two-way-and-streaming-transducers
+  name: "Two-way, streaming and polyregular transducers"
+  aliases: []
+  description: >-
+    Transducers that move both ways or use registers: two-way and streaming string transducers,
+    regular and polyregular functions, and their logical and expression characterisations.
+  parents: [transducers]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "two-way transducers"
+    - "two-way finite transducers"
+    - "streaming string transducers"
+    - "polyregular"
+    - "regular function expressions"
+    - "streaming"
+    - "two-way output"
+  exclude_phrases: []
+  seed_works: [W4L5BMPBYR6, WPX2R3I4DSW, WGIXRGJMVMX, W2SD6NYTCT2]
+  origin: manual
+  reviewed: false
+  status: active
+- id: tree-transducers
+  name: "Tree transducers"
+  aliases: []
+  description: >-
+    Top-down, bottom-up, macro, multi bottom-up and attributed tree transducers and tree-to-word
+    or tree-to-graph translations: composition, hierarchies, equivalence and definability.
+  parents: [transducers, tree-languages]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "tree transducers"
+    - "tree transducer"
+    - "top-down tree"
+    - "bottom-up tree"
+    - "macro tree"
+    - "tree-to-word"
+    - "attributed tree"
+    - "tree bimorphisms"
+    - "tree series transducers"
+    - "tree-to-graph"
+    - "tree translation"
+  exclude_phrases: []
+  seed_works: [WIXL5QRUWN5, WOAEQFIUR23, WA7B34WDGDK, WUSZFEVRRGW]
+  origin: mined
+  reviewed: false
+  status: active
+
+# ================================================================================================
+# 13. Tree languages and tree automata
+# ================================================================================================
+- id: tree-languages
+  name: "Tree languages and tree automata"
+  aliases: []
+  description: >-
+    Languages of trees and the automata, grammars and transducers that define them: ranked and
+    unranked tree automata, tree grammars, weighted tree automata and automata on infinite trees.
+  parents: []
+  xref: {ccs: ["10003752.10003766.10003772"], msc: [], openalex: []}
+  include_phrases:
+    - "tree automata"
+    - "tree languages"
+    - "tree language"
+    - "tree automaton"
+    - "regular tree"
+  exclude_phrases: []
+  seed_works: []
+  origin: ccs
+  reviewed: false
+  status: active
+- id: finite-tree-automata
+  name: "Finite tree automata"
+  aliases: []
+  description: >-
+    Bottom-up and top-down automata on finite ranked trees and the regular tree languages:
+    determinism, minimisation, closure and decision problems, tree-walking automata.
+  parents: [tree-languages]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "tree automata"
+    - "finite tree automata"
+    - "regular tree languages"
+    - "regular tree language"
+    - "bottom-up tree automata"
+    - "top-down tree automata"
+    - "tree walking"
+    - "tree-walking"
+    - "tree automata minimization"
+  exclude_phrases: []
+  seed_works: [WBD3HWYNCYQ, WLUYV4A6Y5A, WCHL2B3FCTI, W46VJ765A2O]
+  origin: mined
+  reviewed: false
+  status: active
+- id: unranked-tree-automata
+  name: "Unranked tree and hedge automata"
+  aliases: []
+  description: >-
+    Automata on unranked trees and hedges, as used for XML-like documents.
+  parents: [finite-tree-automata]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases: ["unranked tree", "unranked trees", "hedge automata", "hedge", "stepwise hedge"]
+  exclude_phrases: []
+  seed_works: [WSIYFEAFBGH, WCB7DOD4DFV, WSJVTVM6HF5, WZEAMDMOHSC]
+  origin: mined
+  reviewed: false
+  status: active
+- id: tree-automata-with-constraints
+  name: "Tree automata with constraints"
+  aliases: []
+  description: >-
+    Tree automata that test equality or disequality of subtrees, globally or between siblings.
+  parents: [finite-tree-automata]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "global constraints"
+    - "tree automata with constraints"
+    - "constraints between siblings"
+    - "hom-disequalities"
+  exclude_phrases: []
+  seed_works: [WW4CMANWVYZ, WC54WY7HESM, WAFHYN6MBAC]
+  origin: manual
+  reviewed: false
+  status: active
+- id: tree-grammars
+  name: "Tree grammars and context-free tree languages"
+  aliases: []
+  description: >-
+    Grammars that generate trees (regular and context-free tree grammars, tree substitution and
+    bag-context grammars) and grammar-based tree compression.
+  parents: [tree-languages]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "tree grammars"
+    - "context-free tree"
+    - "tree substitution grammars"
+    - "bag context"
+    - "grammar-based tree compression"
+    - "regular tree grammars"
+    - "forests"
+    - "tree grammar"
+  exclude_phrases: []
+  seed_works: [WEDQJIUGQFA, WJJONLEXYSY, WBMGNJF3SEM, WEM5WKPADL5]
+  origin: manual
+  reviewed: false
+  status: active
+- id: weighted-tree-automata
+  name: "Weighted tree automata and tree series"
+  aliases: []
+  description: >-
+    Weighted automata on trees and the tree series they recognise: minimisation, ambiguity,
+    determinisation, N-best extraction and toolkits.
+  parents: [tree-languages, weighted-and-probabilistic-automata]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "weighted tree automata"
+    - "weighted tree automaton"
+    - "tree series"
+    - "recognizable tree series"
+    - "formal power series over trees"
+  exclude_phrases: []
+  seed_works: [WGLULYGP2RJ, WJ2MMI45TNF, WAQXYMAFY6P, W44HQEAGZ5J]
+  origin: mined
+  reviewed: false
+  status: active
+- id: automata-on-infinite-trees
+  name: "Automata on infinite trees"
+  aliases: []
+  description: >-
+    Rabin, Büchi and parity automata on infinite trees, their emptiness and index problems, and
+    links to games and MSO.
+  parents: [tree-languages, automata-on-infinite-words]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "infinite trees"
+    - "rabin tree automata"
+    - "büchi tree automata"
+    - "buchi tree automata"
+    - "weak rabin"
+    - "index problem"
+  exclude_phrases: []
+  seed_works: [WN5X527FBDO, WAFHYN6MBAC, WKKUIH2FBND]
+  origin: manual
+  reviewed: false
+  status: active
+
+# ================================================================================================
+# 14. Picture, array and graph languages
+# ================================================================================================
+- id: picture-and-graph-languages
+  name: "Picture, array and graph languages"
+  aliases: []
+  description: >-
+    Languages of two-dimensional pictures and arrays and of graphs, and the automata and grammars
+    that define them; also polyominoes and the description of fractals and images.
+  parents: []
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases: ["two-dimensional", "pictures", "graph languages", "picture"]
+  exclude_phrases: []
+  seed_works: []
+  origin: mined
+  reviewed: false
+  status: active
+- id: two-dimensional-languages
+  name: "Two-dimensional languages and picture automata"
+  aliases: []
+  description: >-
+    Recognisable picture languages and their grammars: tiling systems and REC, on-line
+    tessellation, sgraffito and other two-dimensional automata, array and tile-rewriting grammars,
+    picture codes and picture pattern matching.
+  parents: [picture-and-graph-languages]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "two-dimensional languages"
+    - "picture languages"
+    - "tiling systems"
+    - "tiling recognizable"
+    - "two-dimensional automata"
+    - "sgraffito"
+    - "online tessellation"
+    - "on-line tessellation"
+    - "array grammars"
+    - "tile rewriting grammars"
+    - "two-dimensional pattern matching"
+  exclude_phrases: []
+  seed_works: [W5ZE27JNCNJ, WEQWGQTWNW7, WPZOCSS6NS7, WBWWWHH65YS, WWZ4R4E5BTW]
+  origin: mined
+  reviewed: false
+  status: active
+- id: graph-grammars
+  name: "Graph grammars and graph languages"
+  aliases: []
+  description: >-
+    Grammars and transformation systems that generate graphs and hypergraphs (node-label
+    controlled, hyperedge replacement, contextual hypergraph grammars) and the graph languages
+    they define.
+  parents: [picture-and-graph-languages]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "graph grammars"
+    - "hypergraph"
+    - "graph transformation"
+    - "nlc"
+    - "bnlc"
+    - "hyperedge replacement"
+    - "graph grammar"
+    - "families of graphs"
+    - "collage grammars"
+  exclude_phrases: []
+  seed_works: [WBX77R54JF7, WL7ROKR2GOW, WNKRYWRTBVM, WOPYAMQHPUX]
+  origin: manual
+  reviewed: false
+  status: active
+- id: automata-on-graphs
+  name: "Automata on graphs, DAGs and relational structures"
+  aliases: []
+  description: >-
+    Automata that read graphs, DAGs, posets or other relational structures, graph-walking
+    automata, recognisable sets of graphs and graph classes defined by regular languages.
+  parents: [picture-and-graph-languages]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "graph-walking"
+    - "dags"
+    - "recognizable sets of graphs"
+    - "spanning tree automata"
+    - "relational structures"
+    - "graph classes"
+    - "dag languages"
+  exclude_phrases: []
+  seed_works: [W6EO526GGFS, WCBIMD7JUWR, WIW4FIH2E5M, WDOR2WJ7OAL]
+  origin: manual
+  reviewed: false
+  status: active
+- id: polyominoes
+  name: "Polyominoes and discrete geometry"
+  aliases: []
+  description: >-
+    Combinatorics and encodings of polyominoes and other discrete figures, discrete tomography and
+    the languages describing them.
+  parents: [picture-and-graph-languages]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "polyominoes"
+    - "polyomino"
+    - "discrete tomography"
+    - "parallelogram polyominoes"
+    - "directed animals"
+    - "floorplans"
+  exclude_phrases: []
+  seed_works: [WMCQTDBK3VX, W46UWMKF6JS, W2TNYE7SNIE, WCTELSWL6XO]
+  origin: manual
+  reviewed: false
+  status: active
+- id: fractals-and-images
+  name: "Fractals and image description"
+  aliases: []
+  description: >-
+    Languages, L systems and weighted automata used to describe and compress images and fractals,
+    and the dimensions of the sets they define.
+  parents: [picture-and-graph-languages]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "fractals"
+    - "fractal"
+    - "image compression"
+    - "images"
+    - "hausdorff"
+    - "iterated function systems"
+    - "image generation"
+    - "raster"
+  exclude_phrases: []
+  seed_works: [WABMG5LY4WG, WLVU3FGIIKA, WSOY5JDBNXB, WX4X3FHK2JN]
+  origin: manual
+  reviewed: false
+  status: active
+
+# ================================================================================================
+# 15. Combinatorics on words
+# ================================================================================================
+- id: combinatorics-on-words
+  name: "Combinatorics on words"
+  aliases: []
+  description: >-
+    Combinatorial properties of finite and infinite words: repetitions and avoidability,
+    periodicity, factor and abelian complexity, Sturmian, morphic and automatic sequences,
+    numeration, palindromes, word equations, codes and orderings of words.
+  parents: []
+  xref: {ccs: [], msc: ["68R15"], openalex: []}
+  include_phrases:
+    - "combinatorics on words"
+    - "infinite words"
+    - "finite words"
+    - "infinite word"
+    - "combinatorics of words"
+  exclude_phrases: []
+  seed_works: []
+  origin: msc
+  reviewed: false
+  status: active
+- id: repetitions-and-avoidability
+  name: "Repetitions and avoidability"
+  aliases: []
+  description: >-
+    Squares, cubes, overlaps and fractional powers in words, power-free and repetition-free words,
+    repetition thresholds and critical exponents, and counting repetitions and runs.
+  parents: [combinatorics-on-words]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "repetitions"
+    - "repetition-free"
+    - "square-free"
+    - "cube-free"
+    - "power-free"
+    - "overlap-free"
+    - "critical exponent"
+    - "repetition threshold"
+    - "dejean"
+    - "number of runs"
+    - "squares"
+    - "avoidability"
+    - "repetition"
+    - "avoidance"
+    - "avoiding"
+    - "powers"
+  exclude_phrases: []
+  seed_works: [WR2AHOD7KQQ, WZUUIOGMI45, WDBHNU44I4P, WLLHKFDALXV]
+  origin: mined
+  reviewed: false
+  status: active
+- id: pattern-avoidance
+  name: "Avoidable patterns and formulas"
+  aliases: []
+  description: >-
+    Which patterns and formulas with variables can be avoided by infinite words over small
+    alphabets, and unavoidable sets.
+  parents: [repetitions-and-avoidability]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "avoidable patterns"
+    - "pattern avoidance"
+    - "avoidability of formulas"
+    - "avoiding patterns"
+    - "unavoidable sets"
+    - "avoidable sets"
+  exclude_phrases: []
+  seed_works: [WKE65AN6NIE, WIZQAQTRDTG, WDBGUZWP4SE, W6VXGFKQSLJ]
+  origin: manual
+  reviewed: false
+  status: active
+- id: periodicity-and-borders
+  name: "Periodicity, borders and primitivity"
+  aliases: []
+  description: >-
+    Periods, borders and primitive words, Fine–Wilf type theorems, quasiperiods and pseudoperiods.
+  parents: [combinatorics-on-words]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "periodicity"
+    - "periods"
+    - "fine and wilf"
+    - "borders"
+    - "bordered"
+    - "primitive words"
+    - "quasiperiodic"
+    - "pseudoperiodic"
+    - "unbordered"
+    - "quasiperiods"
+  exclude_phrases: []
+  seed_works: [WHCJBO3R2XA, WV553LPMGLG, WWWJOAILLEG, WL7UY7UEHAY]
+  origin: mined
+  reviewed: false
+  status: active
+- id: abelian-properties-of-words
+  name: "Abelian and k-abelian properties of words"
+  aliases: []
+  description: >-
+    Properties of words up to letter or factor counts: abelian and k-abelian equivalence,
+    repetitions and complexity.
+  parents: [combinatorics-on-words]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "abelian"
+    - "k-abelian"
+    - "abelian complexity"
+    - "abelian powers"
+    - "abelian repetitions"
+    - "abelian equivalence"
+    - "additive cubes"
+  exclude_phrases: []
+  seed_works: [WEUMSTP5I47, WXUCEO256GI, WGLYW4OZ2UM, WSS2BTBYI4B]
+  origin: cluster
+  reviewed: false
+  status: active
+- id: subwords-and-scattered-factors
+  name: "Subwords, scattered factors and well quasi-orders"
+  aliases: []
+  description: >-
+    Scattered subwords (subsequences) of words: Simon's congruence, binomial coefficients of
+    words, Parikh matrices, scattered-factor universality, Higman's lemma and other well quasi-
+    orders on words.
+  parents: [combinatorics-on-words]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "scattered factors"
+    - "scattered factor"
+    - "subwords"
+    - "subsequences"
+    - "simon's congruence"
+    - "binomial coefficients"
+    - "k-binomial"
+    - "parikh matrices"
+    - "parikh matrix"
+    - "well quasi-orders"
+    - "well quasi orders"
+    - "well quasi-order"
+    - "higman"
+  exclude_phrases: []
+  seed_works: [WJ6KAAGQ4S3, WCHNWQDGTIM, WHCNWX6XF5N, WQXXUD5374W, WOQZA6E2AUY]
+  origin: mined
+  reviewed: false
+  status: active
+- id: sturmian-words
+  name: "Sturmian and episturmian words"
+  aliases: []
+  description: >-
+    Sturmian, episturmian, balanced and billiard words, their characterisations and factors, and
+    generalisations to higher dimensions and interval exchanges.
+  parents: [combinatorics-on-words]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "sturmian"
+    - "episturmian"
+    - "balanced words"
+    - "billiard words"
+    - "interval exchange"
+    - "standard words"
+    - "sturmian words"
+  exclude_phrases: []
+  seed_works: [WT7ZUWUXTSD, WPR4MSR4PGT, WENIJYSNLYP, WFD5MRSOCWJ]
+  origin: mined
+  reviewed: false
+  status: active
+- id: morphic-and-automatic-sequences
+  name: "Morphic and automatic sequences"
+  aliases: []
+  description: >-
+    Infinite words generated by morphisms or by automata reading number representations: fixed
+    points of morphisms, Thue–Morse and Fibonacci words, k-automatic and regular sequences, and
+    automated proofs about them.
+  parents: [combinatorics-on-words]
+  xref: {ccs: [], msc: ["11B85"], openalex: []}
+  include_phrases:
+    - "morphic"
+    - "automatic sequences"
+    - "fixed points of morphisms"
+    - "thue-morse"
+    - "fibonacci word"
+    - "fibonacci-automatic"
+    - "k-automatic"
+    - "automatic theorem-proving"
+    - "pure morphic"
+    - "paperfolding"
+  exclude_phrases: []
+  seed_works: [WZXVBS2BKMO, WLN5JDMWH4Y, WLNMQIA6VJ6, WTLYGHHDRKG]
+  origin: mined
+  reviewed: false
+  status: active
+- id: numeration-systems
+  name: "Numeration systems"
+  aliases: []
+  description: >-
+    Representations of numbers by words (integer bases, Fibonacci and Bertrand systems,
+    β-expansions, negative and alternate bases) and automata that recognise sets of numbers and
+    arithmetic operations in them.
+  parents: [combinatorics-on-words]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "numeration systems"
+    - "numeration system"
+    - "beta-expansions"
+    - "beta-integers"
+    - "negative bases"
+    - "base-b"
+    - "b-recognisable"
+    - "representation of numbers"
+    - "representations of numbers"
+    - "odometers"
+    - "alternate base"
+    - "writing of numbers"
+  exclude_phrases: []
+  seed_works: [W7FF6LCOG5F, WIOYE6YTAP7, W4YXWQBYZKG, WDYOY6PDXUT]
+  origin: mined
+  reviewed: false
+  status: active
+- id: factor-complexity-and-growth
+  name: "Factor complexity, growth and entropy"
+  aliases: []
+  description: >-
+    Counting factors of infinite words and words of languages: factor (subword) complexity,
+    special factors, growth rates of factorial and power-free languages, density and entropy.
+  parents: [combinatorics-on-words]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "factor complexity"
+    - "subword complexity"
+    - "special factors"
+    - "bispecial"
+    - "intermediate complexity"
+    - "growth rate"
+    - "growth rates"
+    - "growth properties"
+    - "entropy"
+    - "density"
+    - "counting functions"
+  exclude_phrases: []
+  seed_works: [WYP5QPQV3NW, WFD54KWAWON, WKFXP3ZZPC5, WJK4QNCKWJY]
+  origin: mined
+  reviewed: false
+  status: active
+- id: palindromes-and-richness
+  name: "Palindromes and palindromic richness"
+  aliases: []
+  description: >-
+    Palindromic factors, rich and poor words, palindromic length and closures, and generalised
+    (θ-) palindromes.
+  parents: [combinatorics-on-words]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "palindromes"
+    - "palindromic"
+    - "rich words"
+    - "palindromic length"
+    - "palindrome"
+    - "θ-palindromes"
+    - "pseudopalindromes"
+  exclude_phrases: []
+  seed_works: [WK3C4BEO5B7, WSZPGPSNIE6, WOTDO6DBULT, WPFAC3HZU43]
+  origin: cluster
+  reviewed: false
+  status: active
+- id: word-equations
+  name: "Word equations"
+  aliases: []
+  description: >-
+    Equations between words with variables: solvability, solution sets, recompression, one-unknown
+    and constrained equations, and their use in string solving.
+  parents: [combinatorics-on-words]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "word equations"
+    - "word equation"
+    - "equations over words"
+    - "recompression"
+    - "hmelevskii"
+    - "string solving"
+    - "unknown word equations"
+  exclude_phrases: []
+  seed_works: [WJ5MYR65TDB, WZCR7YA76LL, WAWCQIS6SIE, WVZCKSO5PXQ]
+  origin: mined
+  reviewed: false
+  status: active
+- id: morphisms-and-pcp
+  name: "Morphisms and the Post correspondence problem"
+  aliases: []
+  description: >-
+    Morphisms of free monoids and decision problems about them: the Post correspondence problem
+    and its variants, equality sets, ambiguity of morphisms, and matrix problems such as mortality
+    that reduce to them.
+  parents: [combinatorics-on-words]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "post correspondence"
+    - "pcp"
+    - "equality sets"
+    - "equality words"
+    - "morphisms"
+    - "erasing morphisms"
+    - "unambiguous morphic"
+    - "matrix mortality"
+    - "integer matrices"
+    - "matrix semigroups"
+    - "mortality"
+  exclude_phrases: []
+  seed_works: [WQYHDMPM764, WKWBBOGEFDH, WUIILUCW4CQ, WBHCFRCSRG4, WZMDPTFW6XU]
+  origin: mined
+  reviewed: false
+  status: active
+- id: lyndon-words-and-bwt
+  name: "Lyndon words, necklaces and the Burrows–Wheeler transform"
+  aliases: []
+  description: >-
+    Lyndon words and factorisations, necklaces and de Bruijn words, conjugacy classes, and the
+    combinatorics of the Burrows–Wheeler transform and its variants.
+  parents: [combinatorics-on-words]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "lyndon words"
+    - "lyndon"
+    - "necklaces"
+    - "de bruijn"
+    - "burrows-wheeler"
+    - "bwt"
+    - "circular words"
+    - "circular suffixes"
+    - "conjugates"
+  exclude_phrases: []
+  seed_works: [WEKGHMRZG3G, WS6YCRI3DFV, WYZTD2M6L2H, W2W7C6UXEEP]
+  origin: mined
+  reviewed: false
+  status: active
+- id: partial-words
+  name: "Partial words"
+  aliases: []
+  description: >-
+    Words with holes (wildcards): periodicity, avoidability, squares and automata for partial
+    words.
+  parents: [combinatorics-on-words]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases: ["partial words", "partial word", "wildcards", "words with holes"]
+  exclude_phrases: []
+  seed_works: [W3SUKXRHMW3, WDUBQTWJLE3, WUQWBAGRUAI, WRT7MEF5KZQ]
+  origin: mined
+  reviewed: false
+  status: active
+- id: codes
+  name: "Codes"
+  aliases: ["theory of codes"]
+  description: >-
+    Variable-length codes and their relatives: prefix, comma-free, bifix and circular codes,
+    deciphering delay, completion and maximality, and code properties described by transducers.
+  parents: [combinatorics-on-words, algebraic-language-theory]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "codes"
+    - "code properties"
+    - "prefix codes"
+    - "comma-free"
+    - "deciphering delay"
+    - "circular codes"
+    - "coding partitions"
+    - "variable-length codes"
+    - "maximal codes"
+    - "dyck code"
+    - "codings"
+    - "code languages"
+  exclude_phrases: []
+  seed_works: [WA5UOIBCPYK, WMWF7VX4E2W, WB43II24T7J, WG5ROK26GYY]
+  origin: manual
+  reviewed: false
+  status: active
+- id: pattern-languages
+  name: "Pattern languages"
+  aliases: []
+  description: >-
+    Languages generated by patterns with variables (erasing and non-erasing): inclusion and
+    equivalence problems, descriptive patterns and learnability.
+  parents: [combinatorics-on-words, grammatical-inference]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "pattern languages"
+    - "pattern language"
+    - "e-pattern"
+    - "erasing pattern"
+    - "descriptive patterns"
+    - "patterns with variables"
+    - "decision problems for patterns"
+    - "inclusion problems for patterns"
+    - "unary patterns"
+  exclude_phrases: []
+  seed_works: [WVD23O6SBOJ, W6TYBPPQRMH, WP462K6GDDL, WR45ERMXSOS]
+  origin: mined
+  reviewed: false
+  status: active
+- id: word-representable-graphs
+  name: "Word-representable graphs"
+  aliases: []
+  description: >-
+    Graphs whose edges are encoded by the alternation of letters in a word, and related
+    representations of graphs by words.
+  parents: [combinatorics-on-words]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "word-representable"
+    - "word-representability"
+    - "representable graphs"
+    - "alternations in words"
+    - "representability of line graphs"
+  exclude_phrases: []
+  seed_works: [WWWU3NDIMQA, WMDSZCPJ2VQ, WID2SCRMU7J, WTATYGK45B7]
+  origin: cluster
+  reviewed: false
+  status: active
+
+# ================================================================================================
+# 16. Cellular automata, symbolic dynamics and tilings
+# ================================================================================================
+- id: cellular-automata-and-symbolic-dynamics
+  name: "Cellular automata, symbolic dynamics and tilings"
+  aliases: []
+  description: >-
+    Cellular automata as computing devices and as dynamical systems, shift spaces and subshifts,
+    and tilings of the plane, including undecidability results such as the domino problem.
+  parents: []
+  xref: {ccs: [], msc: ["68Q80", "37B10"], openalex: ["T12162"]}
+  include_phrases:
+    - "cellular automata"
+    - "cellular automaton"
+    - "subshifts"
+    - "symbolic dynamics"
+    - "tilings"
+  exclude_phrases: ["quantum-dot cellular"]
+  seed_works: []
+  origin: msc
+  reviewed: false
+  status: active
+- id: cellular-automata-computation
+  name: "Cellular automata as language recognisers"
+  aliases: []
+  description: >-
+    Cellular automata (one-way, real-time, with sparse communication or few cells) that accept
+    languages or compute, with time hierarchies, firing-squad synchronisation and descriptional
+    complexity.
+  parents: [cellular-automata-and-symbolic-dynamics]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "real-time cellular"
+    - "one-way cellular"
+    - "firing squad"
+    - "sparse communication"
+    - "cellular time"
+    - "iterative arrays"
+    - "cellular array"
+    - "language recognition"
+  exclude_phrases: []
+  seed_works: [WP7XGEE47E7, W6EX7GCRKY6, WM4P5KV42E3, WHUPXAM3LU3]
+  origin: mined
+  reviewed: false
+  status: active
+- id: dynamics-of-cellular-automata
+  name: "Dynamics of cellular automata"
+  aliases: []
+  description: >-
+    Cellular automata as dynamical systems: reversibility, topological and measure-theoretic
+    behaviour, asynchronous and probabilistic rules, particles and self-organisation; also
+    cellular-automaton models of physical and social systems.
+  parents: [cellular-automata-and-symbolic-dynamics]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "reversible cellular automata"
+    - "dynamics of cellular automata"
+    - "asynchronous cellular"
+    - "probabilistic cellular"
+    - "shift-invariant"
+    - "besicovitch"
+    - "self-organization"
+    - "car traffic"
+    - "crowd dynamics"
+  exclude_phrases: []
+  seed_works: [WJYOBP4U7PN, WCC4XH5FB2A, WANCDVK55RW, WBJURQAPPKT]
+  origin: mined
+  reviewed: false
+  status: active
+- id: symbolic-dynamics
+  name: "Symbolic dynamics and subshifts"
+  aliases: []
+  description: >-
+    Shift spaces over finite alphabets (finite type, sofic, Dyck, dendric and S-adic), their
+    languages, conjugacy and entropy.
+  parents: [cellular-automata-and-symbolic-dynamics]
+  xref: {ccs: [], msc: ["37B10"], openalex: []}
+  include_phrases:
+    - "subshifts"
+    - "subshift"
+    - "symbolic dynamics"
+    - "symbolic dynamical"
+    - "shifts of finite type"
+    - "sofic"
+    - "dendric"
+    - "s-adic"
+    - "sliding block"
+    - "beta-shifts"
+    - "dyck shifts"
+  exclude_phrases: []
+  seed_works: [WAWYHV3PKAT, WYTW5PWYO7K, WEXBXDJBMOT, WDCV7RCJS4D]
+  origin: mined
+  reviewed: false
+  status: active
+- id: tilings
+  name: "Tilings and the domino problem"
+  aliases: []
+  description: >-
+    Tilings of the plane by Wang tiles or polygons: aperiodicity, periodicity, low complexity and
+    the decidability of tiling problems.
+  parents: [cellular-automata-and-symbolic-dynamics]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "tilings"
+    - "tiling"
+    - "wang tiles"
+    - "aperiodic tilings"
+    - "domino problem"
+    - "snake tiling"
+    - "tilings of the plane"
+  exclude_phrases: []
+  seed_works: [W5DPJ3TSOWJ, W7ORTAA2MF3, WOJCEDEKJQ7, WWG6CHYXOKU]
+  origin: cluster
+  reviewed: false
+  status: active
+
+# ================================================================================================
+# 17. Natural computing
+# ================================================================================================
+- id: natural-computing
+  name: "Natural computing"
+  aliases: []
+  description: >-
+    Models of computation inspired by biology and chemistry, studied with formal-language tools:
+    membrane systems, DNA computing and splicing, gene assembly in ciliates, insertion-deletion
+    systems, networks of evolutionary processors, reaction systems and molecular self-assembly.
+  parents: []
+  xref: {ccs: [], msc: ["68Q07"], openalex: ["T12029"]}
+  include_phrases:
+    - "natural computing"
+    - "bio-inspired"
+    - "biologically inspired"
+    - "molecular computing"
+    - "unconventional computing"
+    - "living cells"
+  exclude_phrases: []
+  seed_works: []
+  origin: msc
+  reviewed: false
+  status: active
+- id: membrane-computing
+  name: "Membrane computing"
+  aliases: ["p-systems"]
+  description: >-
+    P systems (cell-like, tissue-like and spiking neural): their computational power, complexity
+    and descriptional complexity.
+  parents: [natural-computing]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "p systems"
+    - "p system"
+    - "membrane systems"
+    - "membrane computing"
+    - "tissue p systems"
+    - "active membranes"
+    - "symport"
+    - "antiport"
+    - "catalytic"
+    - "membrane division"
+    - "membranes"
+  exclude_phrases: []
+  seed_works: [WSNFMN4DQEJ, WIPB67224WG, WNXKLQNX44E, WQEL5ZCFPB7]
+  origin: mined
+  reviewed: false
+  status: active
+- id: spiking-neural-p-systems
+  name: "Spiking neural P systems"
+  aliases: []
+  description: >-
+    P systems in which neurons exchange spikes, as acceptors, generators and transducers.
+  parents: [membrane-computing]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases: ["spiking neural p systems", "spiking neural p system", "spiking neural"]
+  exclude_phrases: []
+  seed_works: [W2RLXYTAHW4, WXNJQJNZOXC, WOXYD5LUT4R]
+  origin: manual
+  reviewed: false
+  status: active
+- id: dna-computing-and-splicing
+  name: "DNA computing and splicing systems"
+  aliases: []
+  description: >-
+    Formal models of DNA recombination and computation: splicing (H) systems, test tubes, sticker
+    systems, Watson–Crick automata and complementarity.
+  parents: [natural-computing]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "splicing"
+    - "splicing systems"
+    - "h systems"
+    - "test tube"
+    - "sticker systems"
+    - "watson-crick"
+    - "dna computing"
+    - "dna recombination"
+    - "dna"
+  exclude_phrases: []
+  seed_works: [WBMXNLPQ7XD, WPS5Y3NGPIB, WPUR3766GXA, WO3ICDEPVIU]
+  origin: cluster
+  reviewed: false
+  status: active
+- id: ciliate-gene-assembly
+  name: "Gene assembly in ciliates"
+  aliases: []
+  description: >-
+    Formal models of the gene unscrambling performed by ciliates and the operations and graphs
+    they lead to.
+  parents: [natural-computing]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases: ["ciliates", "ciliate", "gene assembly", "gene unscrambling", "reduction graphs"]
+  exclude_phrases: []
+  seed_works: [WXBEY7OXKJR, W377OPYHNI3, WN63F37AF6R, WFXMLFY5BOM]
+  origin: mined
+  reviewed: false
+  status: active
+- id: insertion-deletion-systems
+  name: "Insertion-deletion systems"
+  aliases: []
+  description: >-
+    Generative systems that only insert and delete strings in context, with graph or matrix
+    control, and their computational completeness.
+  parents: [natural-computing, rewriting-systems]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "insertion-deletion"
+    - "insertion deletion systems"
+    - "insertion-deletion systems"
+    - "insertion systems"
+    - "insertion grammars"
+  exclude_phrases: []
+  seed_works: [WDKPKDQRWBP, WBV5DVGPMNE, WWWIE57N7WV, W62NFK2DPKY]
+  origin: mined
+  reviewed: false
+  status: active
+- id: networks-of-evolutionary-processors
+  name: "Networks of evolutionary processors"
+  aliases: []
+  description: >-
+    Networks of simple string processors that rewrite and filter words, as generators and
+    acceptors, and their size for universality.
+  parents: [natural-computing]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "networks of evolutionary processors"
+    - "evolutionary processors"
+    - "accepting networks"
+    - "hybrid networks"
+  exclude_phrases: []
+  seed_works: [WVJI4DSDFY5, WB5VI7X25OI, W5B2YU3GCQ2, WC3NWPW33FZ]
+  origin: manual
+  reviewed: false
+  status: active
+- id: reaction-systems
+  name: "Reaction systems and chemical reaction networks"
+  aliases: []
+  description: >-
+    Computation models based on biochemical reactions: reaction systems and chemical reaction
+    networks.
+  parents: [natural-computing]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases: ["reaction systems", "chemical reaction", "biochemical reactions", "biochemistry"]
+  exclude_phrases: []
+  seed_works: [WPTD4OM67UJ, W2ZQMA53MKT, WYYTB3ZQ2HC, WHN2VWNCTGX]
+  origin: manual
+  reviewed: false
+  status: active
+- id: molecular-self-assembly
+  name: "Self-assembly and molecular folding"
+  aliases: []
+  description: >-
+    Algorithmic self-assembly of tiles and strings, oritatami and cotranscriptional folding.
+  parents: [natural-computing]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "self-assembly"
+    - "self-assembled"
+    - "oritatami"
+    - "cotranscriptional folding"
+    - "tile self-assembly"
+  exclude_phrases: []
+  seed_works: [WLAX3BUTUZE, WDAK4FHRJXD, WJPJMD6D745, WDHVLODNPGP]
+  origin: manual
+  reviewed: false
+  status: active
+
+# ================================================================================================
+# 18. Grammatical inference
+# ================================================================================================
+- id: grammatical-inference
+  name: "Grammatical inference"
+  aliases: []
+  description: >-
+    Learning automata, grammars and other language descriptions from examples, queries or other
+    data, and the relation between automata and learned models such as neural networks. General
+    learning theory is out of scope.
+  parents: []
+  xref: {ccs: [], msc: ["68Q32"], openalex: []}
+  include_phrases:
+    - "grammatical inference"
+    - "learnability"
+    - "learning"
+    - "identification"
+    - "inference"
+  exclude_phrases: ["learning software", "e-learning", "machine learning"]
+  seed_works: []
+  origin: msc
+  reviewed: false
+  status: active
+- id: learning-regular-languages
+  name: "Learning finite automata"
+  aliases: []
+  description: >-
+    Active and passive learning of finite automata and regular languages: query learning in the
+    style of L*, residual automata, identification in the limit and DFA identification with extra
+    information.
+  parents: [grammatical-inference]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "learning regular languages"
+    - "active learning"
+    - "membership queries"
+    - "learning dfas"
+    - "learning residual"
+    - "dfa identification"
+    - "rfsas"
+    - "observation tables"
+    - "regular languages inference"
+    - "learning unary automata"
+  exclude_phrases: []
+  seed_works: [WEQSXCHTEON, WRTNYMZHN6I, WXJEL27Q2R2, WAPQKIBFGCR]
+  origin: mined
+  reviewed: false
+  status: active
+- id: learning-grammars-and-trees
+  name: "Learning context-free and tree languages"
+  aliases: []
+  description: >-
+    Learning context-free grammars, tree languages and mildly context-sensitive languages from
+    data or queries.
+  parents: [grammatical-inference]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "learning context-free"
+    - "learning a regular tree language"
+    - "tree adjunct languages"
+    - "syntactic concept lattices"
+    - "residual finite-state tree automata"
+    - "learning string adjunct"
+  exclude_phrases: []
+  seed_works: [WYXXMSLZRJU, WJ7NHBP64E4, WAFJHV67YMB, WUPGSTUS6CF]
+  origin: manual
+  reviewed: false
+  status: active
+- id: learning-transducers-and-weighted-automata
+  name: "Learning transducers and probabilistic automata"
+  aliases: []
+  description: >-
+    Learning rational functions, sequential transducers, register, symbolic, stochastic and
+    weighted automata.
+  parents: [grammatical-inference]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "learning rational functions"
+    - "learning of sequential transducers"
+    - "learning stochastic"
+    - "pdfa distillation"
+    - "learning register automata"
+    - "passive learning of symbolic"
+  exclude_phrases: []
+  seed_works: [WBIAOVK56VA, W563AWJIFZT, WDTWMECUS5Q, WTH2THH23RR]
+  origin: manual
+  reviewed: false
+  status: active
+- id: automata-and-neural-networks
+  name: "Automata and neural models"
+  aliases: []
+  description: >-
+    Relations between automata or formal languages and neural networks and language models:
+    extraction and verification of automata from networks, and formal-language analyses of NLP
+    models.
+  parents: [grammatical-inference]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "neural networks"
+    - "neural network"
+    - "nlp black box"
+    - "neural language acceptors"
+    - "interpreting neural"
+  exclude_phrases: []
+  seed_works: [WVAYYC4A43K, WOSF2HCEJHX, WXM24KHTIUM]
+  origin: manual
+  reviewed: false
+  status: active
+
+# ================================================================================================
+# 19. Implementation and applications of automata
+# ================================================================================================
+- id: implementation-and-applications
+  name: "Implementation and applications of automata"
+  aliases: []
+  description: >-
+    Making automata work in software and hardware and using them elsewhere: libraries and tools,
+    efficient representations, string matching, regular-expression engines, natural-language
+    processing, documents and databases, testing of state machines, and random generation.
+  parents: []
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "implementation"
+    - "implementations"
+    - "implementing"
+    - "applications of automata"
+    - "practical"
+    - "application"
+  exclude_phrases: []
+  seed_works: []
+  origin: manual
+  reviewed: false
+  status: active
+- id: automata-software-tools
+  name: "Automata software, libraries and teaching tools"
+  aliases: []
+  description: >-
+    Software for building and manipulating automata, transducers and expressions (Vaucanson, FAdo,
+    OpenFst, Grail, FIRE and others), visualisation, and tools for teaching automata.
+  parents: [implementation-and-applications]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "toolkit"
+    - "toolbox"
+    - "library"
+    - "package"
+    - "vaucanson"
+    - "fado"
+    - "grail"
+    - "fire station"
+    - "visualization"
+    - "visualizing"
+    - "teaching"
+    - "animation"
+    - "applet"
+    - "environment"
+  exclude_phrases: []
+  seed_works: [WSAMEITWDAC, WHGQDXFM46L, WCTAEXPRB66, WV2EYUCHFMM]
+  origin: mined
+  reviewed: false
+  status: active
+- id: efficient-representations
+  name: "Efficient representation and parallel implementation"
+  aliases: []
+  description: >-
+    Data structures and techniques for fast or compact automata: compression of transition tables,
+    bit-parallel and hardware implementations, BDD-like representations and parallel recognition.
+  parents: [implementation-and-applications]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "compressed"
+    - "compression"
+    - "compact representation"
+    - "bit-parallel"
+    - "bit parallelism"
+    - "hardware"
+    - "parallel implementations"
+    - "bdd"
+    - "decision diagrams"
+    - "hardcoding"
+    - "table compression"
+    - "memory-efficient"
+  exclude_phrases: []
+  seed_works: [WSPVXYTYEON, WTDUAOROWS2, WAWTISXLQSG, WEE743R2HA7]
+  origin: manual
+  reviewed: false
+  status: active
+- id: string-matching
+  name: "String matching and text indexing"
+  aliases: []
+  description: >-
+    Automata-based algorithms for searching and indexing text: exact and approximate pattern
+    matching, suffix automata and DAWGs, Aho–Corasick, factor oracles, absent words and
+    applications to biological sequences.
+  parents: [implementation-and-applications]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "pattern matching"
+    - "string matching"
+    - "suffix automata"
+    - "suffix automaton"
+    - "dawg"
+    - "aho-corasick"
+    - "factor oracle"
+    - "approximate pattern matching"
+    - "indexing"
+    - "absent words"
+    - "boyer moore"
+    - "bioinformatics"
+    - "sequence alignment"
+    - "longest common subsequence"
+    - "maximal exact matches"
+    - "factor automata"
+    - "motifs"
+    - "directed acyclic word graphs"
+    - "dasg"
+    - "wheeler automata"
+  exclude_phrases: []
+  seed_works: [W6W3T6TVFXU, WRWIZ5VDEYC, W2WKJES7NRL, WOECMVFNDLE]
+  origin: mined
+  reviewed: false
+  status: active
+- id: regex-engines
+  name: "Regular-expression matching in practice"
+  aliases: []
+  description: >-
+    How regular expressions are matched and parsed in real tools: backtracking matchers, ReDoS,
+    POSIX and greedy parsing, practical extensions, benchmarks and DFA-based scanners.
+  parents: [implementation-and-applications, regular-expressions]
+  xref: {ccs: [], msc: [], openalex: ["T12326"]}
+  include_phrases:
+    - "regular expression matching"
+    - "regex"
+    - "redos"
+    - "backtracking"
+    - "regular expression parsing"
+    - "greedy"
+    - "packet scanning"
+    - "matching time"
+    - "regular expressions matching"
+  exclude_phrases: []
+  seed_works: [W56HB3TOXZ6, WRQWKS63XVE, WLQRAZ735YI, WXTDK4SV7DC]
+  origin: mined
+  reviewed: false
+  status: active
+- id: finite-state-nlp
+  name: "Finite-state natural language processing"
+  aliases: []
+  description: >-
+    Finite-state automata and transducers for language and speech: morphology, lexicons,
+    tokenisation, tagging, spelling correction, information extraction from text and compilation
+    of linguistic rules.
+  parents: [implementation-and-applications]
+  xref: {ccs: [], msc: [], openalex: ["T10181"]}
+  include_phrases:
+    - "natural language"
+    - "natural language processing"
+    - "nlp"
+    - "morphology"
+    - "part-of-speech"
+    - "spelling correction"
+    - "lexicon"
+    - "lexical"
+    - "tokenization"
+    - "speech"
+    - "linguistic"
+    - "proper names"
+    - "multi-word units"
+    - "chunker"
+  exclude_phrases: []
+  seed_works: [WQ6N4ZKUOPW, W3IFKL264ZO, WHPPCNMCAQK, WX6BMBE4LZY]
+  origin: mined
+  reviewed: false
+  status: active
+- id: documents-and-databases
+  name: "Automata for XML, documents and databases"
+  aliases: []
+  description: >-
+    Automata and grammars for structured documents and data: XML schemas and types, XPath and
+    streaming queries, regular path queries, graph databases and information extraction.
+  parents: [implementation-and-applications]
+  xref: {ccs: [], msc: [], openalex: ["T10317"]}
+  include_phrases:
+    - "xml"
+    - "xpath"
+    - "dtd"
+    - "xml schema"
+    - "regular path queries"
+    - "graph databases"
+    - "information extraction"
+    - "query answering"
+    - "xslt"
+    - "regular queries"
+  exclude_phrases: []
+  seed_works: [WDNN4Z4M5YL, W3RTTOAXY6U, WWCPVORCYKF, WVUCCZIMP3R]
+  origin: cluster
+  reviewed: false
+  status: active
+- id: random-generation-and-enumeration
+  name: "Enumeration, random generation and average-case analysis"
+  aliases: []
+  description: >-
+    Counting and uniformly generating automata, expressions and languages, and average-case
+    analysis of algorithms and constructions on random inputs.
+  parents: [implementation-and-applications]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "random generation"
+    - "enumeration"
+    - "enumerating"
+    - "average complexity"
+    - "average case"
+    - "on average"
+    - "random automata"
+    - "random dfas"
+    - "uniform distribution"
+    - "exhaustively generate"
+    - "exact generation"
+  exclude_phrases: []
+  seed_works: [WCNIQTXT3FR, WVYJ2AUIVY5, WQTYQPRDA7Z, WBZVSSNF5AI]
+  origin: mined
+  reviewed: false
+  status: active
+- id: state-machine-testing
+  name: "Testing and experiments on state machines"
+  aliases: []
+  description: >-
+    Experiments on finite-state machines: homing, distinguishing and checking sequences,
+    conformance and event-based testing, and fault detection.
+  parents: [implementation-and-applications]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "homing sequences"
+    - "homing sequence"
+    - "distinguishing sequences"
+    - "homing experiments"
+    - "event-based testing"
+    - "checking sequences"
+    - "fsm equations"
+  exclude_phrases: []
+  seed_works: [WLPXR6BQTT3, WOKB7W3XZM6, WE27M265HXF, WIV7C6BIMCH]
+  origin: manual
+  reviewed: false
+  status: active
+
+# ================================================================================================
+# 20. Concurrency: traces, Petri nets and communicating automata
+# ================================================================================================
+- id: concurrency-and-traces
+  name: "Concurrency: traces, Petri nets and communicating automata"
+  aliases: []
+  description: >-
+    Languages and automata for concurrent behaviour: Mazurkiewicz traces and asynchronous
+    automata, Petri-net languages, communicating and message-passing automata, and partial-order
+    models.
+  parents: []
+  xref: {ccs: [], msc: ["68Q85"], openalex: ["T11125"]}
+  include_phrases:
+    - "concurrency"
+    - "concurrent systems"
+    - "traces"
+    - "petri nets"
+    - "petri net"
+    - "asynchronous automata"
+    - "communicating automata"
+    - "message sequence"
+  exclude_phrases: []
+  seed_works: []
+  origin: msc
+  reviewed: false
+  status: active
+- id: trace-languages
+  name: "Trace languages and asynchronous automata"
+  aliases: []
+  description: >-
+    Mazurkiewicz traces and trace monoids, asynchronous automata and Zielonka's theorem, and
+    logics and rational sets of traces.
+  parents: [concurrency-and-traces]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "trace languages"
+    - "trace monoids"
+    - "mazurkiewicz traces"
+    - "mazurkiewicz"
+    - "asynchronous automata"
+    - "zielonka"
+    - "trace theory"
+    - "trace group"
+    - "trace equations"
+    - "over traces"
+  exclude_phrases: []
+  seed_works: [W3K4O3AH3TL, WBN2Z5ZDOSI, WOG3C235OMM, WKOL6CMWG3I]
+  origin: manual
+  reviewed: false
+  status: active
+- id: petri-net-languages
+  name: "Petri-net languages"
+  aliases: []
+  description: >-
+    Languages of Petri nets and vector addition systems, their hierarchies, normal forms and
+    decision problems.
+  parents: [concurrency-and-traces]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "petri net languages"
+    - "petri nets"
+    - "petri net"
+    - "p/t systems"
+    - "vector languages"
+    - "inhibitor arcs"
+    - "jumping petri nets"
+  exclude_phrases: []
+  seed_works: [WNTFWDW3PH3, WFODKEQ4DIC, WUATUGGYHS5, WY735H54AWQ]
+  origin: manual
+  reviewed: false
+  status: active
+- id: communicating-automata
+  name: "Communicating automata and message passing"
+  aliases: []
+  description: >-
+    Automata that communicate through channels or shared actions: communicating finite-state
+    machines and their synchronizability, conversation protocols, branching automata on posets and
+    higher-dimensional automata.
+  parents: [concurrency-and-traces]
+  xref: {ccs: [], msc: [], openalex: []}
+  include_phrases:
+    - "communicating automata"
+    - "synchronizability"
+    - "conversation protocols"
+    - "branching automata"
+    - "higher-dimensional automata"
+    - "shared-memory systems"
+    - "concurrent systems"
+  exclude_phrases: []
+  seed_works: [WK5U2XVZ7LF, WXZWO6FZLI7, W4ZSBAIBK4J, WFSAUHVY776]
+  origin: manual
+  reviewed: false
+  status: active
