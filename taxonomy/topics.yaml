@@ -38,7 +38,7 @@ topics:
   exclude_phrases: []
   seed_works: []
   origin: ccs
-  reviewed: false
+  reviewed: true
   status: active
 - id: deterministic-finite-automata
   name: "Deterministic finite automata"
@@ -61,7 +61,7 @@ topics:
   exclude_phrases: []
   seed_works: [WLECRTZ6Y7L, WH7GQE64ZGB, W3ZUJU2HV66, WCTI6M3XM5P]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: nondeterministic-finite-automata
   name: "Nondeterministic finite automata"
@@ -83,7 +83,7 @@ topics:
   exclude_phrases: []
   seed_works: [WZKA4CZTTGG, WJMWRJ4H274, WVVK5YDUD2S, WDOGUGNMGBD]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: unambiguous-finite-automata
   name: "Unambiguous finite automata"
@@ -102,7 +102,7 @@ topics:
   exclude_phrases: []
   seed_works: [WBQUX5BPSNA, W4MX4SGNDSY, WBQPCWAONPV, W2IVXUTIXAB]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: regular-expressions
   name: "Regular expressions"
@@ -123,7 +123,7 @@ topics:
   exclude_phrases: []
   seed_works: [WSEIVIX5TTQ, WNW5KEWG234, WD4P33UBFJA, WKGFM35WFGY]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: automata-from-regular-expressions
   name: "Automata constructions from regular expressions"
@@ -148,7 +148,7 @@ topics:
   exclude_phrases: []
   seed_works: [WELYEL6N5JM, W2MWZTNJJJI, WDOKNIDCHI7, WEARD3ACO5N]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: regular-expressions-from-automata
   name: "Regular expressions from automata"
@@ -167,7 +167,7 @@ topics:
   exclude_phrases: []
   seed_works: [WQ7YWDCVFY2, WA7ZOU2QRTX, WOMILZ477XV, WT2HVIFBAWH]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 - id: derivatives-of-regular-expressions
   name: "Derivatives of regular expressions"
@@ -190,7 +190,7 @@ topics:
   exclude_phrases: []
   seed_works: [WK44AOUT4KH, W33OBZLL7DT, WT2OWETSSQG, W46UZV4GSWF]
   origin: cluster
-  reviewed: false
+  reviewed: true
   status: active
 - id: extended-regular-expressions
   name: "Extended regular expressions"
@@ -212,7 +212,7 @@ topics:
   exclude_phrases: []
   seed_works: [WAD3SDCVJRX, WUNVZ5GE6KP, WTSMPS4KGKI, WKST7NLOK5V]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: deterministic-regular-expressions
   name: "Deterministic and ambiguous regular expressions"
@@ -232,7 +232,7 @@ topics:
   exclude_phrases: []
   seed_works: [W3QHXZOIOSZ, W6MDY6VEN3I, WGWOXU7O4QG, W4R374YYU2K]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 - id: minimisation-of-automata
   name: "Minimisation of automata"
@@ -256,7 +256,7 @@ topics:
   exclude_phrases: []
   seed_works: [W7DOQV5M4EG, WOVQA6OKRKN, WIF6KCI5NAN, WMYVBLVCVOJ]
   origin: cluster
-  reviewed: false
+  reviewed: true
   status: active
 - id: hyper-minimisation
   name: "Hyper-minimisation and minimisation with errors"
@@ -276,7 +276,7 @@ topics:
   exclude_phrases: []
   seed_works: [WTSE23KLR4S, WNMLZO3GSMQ, WKIRYVN3JXQ, WUIARTXBJVA]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 - id: cover-automata
   name: "Cover automata for finite languages"
@@ -295,7 +295,7 @@ topics:
   exclude_phrases: []
   seed_works: [W34S3SCSJRI, WYZLIGGL22C, WIESB4RNUWR, WLQREGQS7AP]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: minimal-acyclic-automata
   name: "Minimal acyclic automata and dictionaries"
@@ -315,7 +315,7 @@ topics:
   exclude_phrases: []
   seed_works: [WKMWQV6CKBV, WLGXS2Q5ZKP, WIAVSCXCQHK, WVEGO2H3EV5]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: nfa-reduction
   name: "Reduction of nondeterministic automata"
@@ -335,7 +335,7 @@ topics:
   exclude_phrases: []
   seed_works: [WAWY4CIQLNM, WBL5PIEZYQM, WMHSO63OPXZ, WQMSP6QAAIZ]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 - id: two-way-and-alternating-automata
   name: "Two-way and alternating finite automata"
@@ -362,7 +362,7 @@ topics:
   exclude_phrases: []
   seed_works: [WYCQ32GRVTE, WVEOWFHSMUF, WK647IFYX5Y, WOFWACPW5V4, WOHBDWH5SJB]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: synchronizing-automata
   name: "Synchronizing automata"
@@ -391,7 +391,7 @@ topics:
   exclude_phrases: []
   seed_works: [WPV5XJYBWOT, WOHHUVYOVJZ, W6ZWSTDJWMD, WWL4CWU6QTS]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: cerny-conjecture
   name: "Černý conjecture and reset thresholds"
@@ -413,7 +413,7 @@ topics:
   exclude_phrases: []
   seed_works: [WPL62FCI6LT, WOPPJPBUCEX, WNUFOPSLI4V, WKP3SVY3QAD]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: completely-reachable-automata
   name: "Completely reachable automata"
@@ -427,7 +427,7 @@ topics:
   exclude_phrases: []
   seed_works: [W7TT7SRKIDG, WRXUCISJ3GK, WAN5Z5WD7M7, WX3I3BKC6HW]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: subregular-languages
   name: "Subregular language classes"
@@ -446,7 +446,7 @@ topics:
   exclude_phrases: []
   seed_works: [WV54TUFRWAK, W4MO3YC6BVY, WE67R4YAJEM]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: prefix-and-suffix-free-languages
   name: "Prefix-, suffix-, bifix- and infix-free languages"
@@ -466,7 +466,7 @@ topics:
   exclude_phrases: []
   seed_works: [WR2J2247G5K, WXCQWUVSRGD, WCZ2TVD7MTU, WUC3S66OHNO]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: ideal-and-convex-languages
   name: "Ideal, closed and convex languages"
@@ -488,7 +488,7 @@ topics:
   exclude_phrases: []
   seed_works: [WJRZ3JI6YY7, WH2JU2SAEJX, WC2DFT7WO6R, W2UB4637RRA]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: union-free-languages
   name: "Union-free languages"
@@ -502,7 +502,7 @@ topics:
   exclude_phrases: []
   seed_works: [WZ5TTPOARVI, WPAPWXCPMZ3, W37MKA6YTBF]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 - id: unary-languages
   name: "Unary languages"
@@ -524,7 +524,7 @@ topics:
   exclude_phrases: []
   seed_works: [WEJJILTBXHT, WHX4X5RMS7V, WGEG6QIQNF3, WPQEL5OSVY4]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: decision-problems
   name: "Decision problems and their complexity"
@@ -559,7 +559,7 @@ topics:
   exclude_phrases: []
   seed_works: [WR73TWE6VSC, W2MKZ2324IZ, WT3SJECKEGV, WCY4FAJSTS6, W7PUPVLFLUV]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 
 # ================================================================================================
@@ -578,7 +578,7 @@ topics:
   exclude_phrases: []
   seed_works: []
   origin: ccs
-  reviewed: false
+  reviewed: true
   status: active
 - id: context-free-grammars
   name: "Context-free grammars and languages"
@@ -601,7 +601,7 @@ topics:
   exclude_phrases: []
   seed_works: [WZC27XPHQOI, WT3SJECKEGV, W2KIYNDCYV6, WNBQFD5AW5B]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: ambiguity-of-context-free-grammars
   name: "Ambiguity of context-free grammars"
@@ -621,7 +621,7 @@ topics:
   exclude_phrases: []
   seed_works: [WZ5T77O5DZY, WE432Z6IM4V, WLRDEWXQBNC, W74NODXCNJV]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 - id: pumping-lemmas
   name: "Pumping and iteration lemmas"
@@ -642,7 +642,7 @@ topics:
   exclude_phrases: []
   seed_works: [WIFWBXGEXIW, WNJX2X5G53L, WRNOOLPLVXJ, WGM46GD4QDD]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: normal-forms-of-grammars
   name: "Normal forms of grammars"
@@ -662,7 +662,7 @@ topics:
   exclude_phrases: []
   seed_works: [W75UDWO2EQG, WMYJHTMDT7G, WNCV746DJF4, WH5236IEX7W]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 - id: pushdown-automata
   name: "Pushdown automata"
@@ -682,7 +682,7 @@ topics:
   exclude_phrases: []
   seed_works: [W566VKUES3R, WP4IDDRQORT, WNGLKKQUXFE, W6HM65W2GUH]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: visibly-pushdown-automata
   name: "Visibly pushdown and input-driven automata"
@@ -704,7 +704,7 @@ topics:
   exclude_phrases: []
   seed_works: [WFHBMIXMZJ6, WSH4SALMIAY, W3EYAEWAV5T, WJPJQBLB5IG]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: deterministic-context-free-languages
   name: "Deterministic context-free languages"
@@ -723,7 +723,7 @@ topics:
   exclude_phrases: []
   seed_works: [WEDMK4IH4XC, WNKUSW2BJXX, WJFAG4AK3VH, WQIGRE3U7IM]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: constant-height-pushdown-automata
   name: "Constant-height pushdown automata"
@@ -737,7 +737,7 @@ topics:
   exclude_phrases: []
   seed_works: [W4IGXT7ZUNI, W2WAPKWM67F, WGMBAG4C7VC]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: multi-pushdown-automata
   name: "Multi-pushdown and scope-bounded systems"
@@ -756,7 +756,7 @@ topics:
   exclude_phrases: []
   seed_works: [WJWEHPJ7ZA6, WR5IFMRXBXG, WDF4TV3KG5O, WTGEREOKEP2]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 - id: parsing
   name: "Parsing"
@@ -781,7 +781,7 @@ topics:
   exclude_phrases: []
   seed_works: [W4Z4SFQDRE2, WN5ZAC7E2QE, WDU3PMYXPKU, WFE5BRPIGFV]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: parsing-expression-grammars
   name: "Parsing expression grammars"
@@ -797,7 +797,7 @@ topics:
   exclude_phrases: []
   seed_works: [WTR3FH7TCWJ, WKKNOYUT6OG]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 - id: conjunctive-and-boolean-grammars
   name: "Conjunctive and Boolean grammars"
@@ -819,7 +819,7 @@ topics:
   exclude_phrases: []
   seed_works: [WXNKLAPJQ66, WO2UNLQFPJM, WQTSL7WA65Q, WUIV2533EME]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: mildly-context-sensitive-grammars
   name: "Mildly context-sensitive grammar formalisms"
@@ -843,7 +843,7 @@ topics:
   exclude_phrases: []
   seed_works: [WJPVCU763VR, WVKLGNUEIWN, WYU7X6LZEU6, WS3C6H7UZZK]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 - id: language-families
   name: "Language families and hierarchies"
@@ -868,7 +868,7 @@ topics:
   exclude_phrases: []
   seed_works: [WT2VSEUTEN5, WCDDGK22VVJ, WLXOZN35CZB, WHCJVGCE2KO]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 
 # ================================================================================================
@@ -891,7 +891,7 @@ topics:
   exclude_phrases: []
   seed_works: []
   origin: ccs
-  reviewed: false
+  reviewed: true
   status: active
 - id: regulated-rewriting
   name: "Regulated rewriting"
@@ -917,7 +917,7 @@ topics:
   exclude_phrases: []
   seed_works: [WPCI2BHPYCL, WBMN42PPQR7, WQA6YWQLRDQ, W6FXV3WWOFK]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: scattered-context-grammars
   name: "Scattered context grammars"
@@ -934,7 +934,7 @@ topics:
   exclude_phrases: []
   seed_works: [WHW5JSTMPYD, WLK24PM7W2S, WV63TWUYWXH]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 - id: grammar-systems
   name: "Grammar systems"
@@ -948,7 +948,7 @@ topics:
   exclude_phrases: []
   seed_works: [WKJXLVIJHQW, WXM4X5U5G4W, WJBOHWCQH5R]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: cd-grammar-systems
   name: "Cooperating distributed grammar systems"
@@ -966,7 +966,7 @@ topics:
   exclude_phrases: []
   seed_works: [W3RURPMXNTU, WEEX66EXMT6, WSWKKAMOHI6, WR6A3MUXNIV]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: pc-grammar-systems
   name: "Parallel communicating grammar systems"
@@ -984,7 +984,7 @@ topics:
   exclude_phrases: []
   seed_works: [WAVCQYVLU6C, WCX4UZKTDTW, WXLBC72WLAW, WNBBMSBUOZR]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: contextual-grammars
   name: "Contextual grammars"
@@ -1004,7 +1004,7 @@ topics:
   exclude_phrases: []
   seed_works: [WYEDOQDTYHL, WNJKKTKNILJ, WTTPGEXANMN, WVYB4V3BYNX]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: lindenmayer-systems
   name: "Lindenmayer systems"
@@ -1028,7 +1028,7 @@ topics:
   exclude_phrases: []
   seed_works: [WLJMENRP7XZ, WHDJ5G2DE3U, WAMJEEGHPH7, WS76T24D77K]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: string-rewriting
   name: "String and term rewriting"
@@ -1050,7 +1050,7 @@ topics:
   exclude_phrases: []
   seed_works: [WCMEVJBQSKV, WM46VWQS4OD, W5G43BKLIM4, WEC4FLAMVOL]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 
 # ================================================================================================
@@ -1074,7 +1074,7 @@ topics:
   exclude_phrases: []
   seed_works: []
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: state-complexity-of-operations
   name: "State complexity of operations"
@@ -1100,7 +1100,7 @@ topics:
   exclude_phrases: []
   seed_works: [WQY4YXS5DWY, WRV6UDNVFL4, W3X7DOBUVQJ, W2QVNU2UZND]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: nondeterministic-state-complexity
   name: "Nondeterministic state complexity"
@@ -1116,7 +1116,7 @@ topics:
   exclude_phrases: []
   seed_works: [WCX7SDKVXT3, WH22LATR6XT, WMV6REXBNE7, WYW2RIDO6W5]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: combined-operations
   name: "State complexity of combined operations"
@@ -1134,7 +1134,7 @@ topics:
   exclude_phrases: []
   seed_works: [WXO5KVUFVKX, WMIFKM7UVLH, WKQYG7HV5WX, WLZGR7YN6U5]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: transition-complexity
   name: "Transition complexity"
@@ -1152,7 +1152,7 @@ topics:
   exclude_phrases: []
   seed_works: [WSYXCAPR3EY, WZGPB7PHDSI, WP42CPGHC66, WDOEMPVU6OZ]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: conversions-and-trade-offs
   name: "Size trade-offs between descriptions"
@@ -1175,7 +1175,7 @@ topics:
   exclude_phrases: []
   seed_works: [W42MJXEJOQI, WNU6C3SFWLW, WYCGUUSC5DI, WS7UP5BXJA7]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: magic-numbers
   name: "Magic numbers"
@@ -1189,7 +1189,7 @@ topics:
   exclude_phrases: []
   seed_works: [W6APAIWI5EX, W5Z472W275Q, WE67R4YAJEM]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: non-recursive-trade-offs
   name: "Non-recursive trade-offs"
@@ -1207,7 +1207,7 @@ topics:
   exclude_phrases: []
   seed_works: [WBRSVUBEH2X, WDC25E22OHF, WTSM3WLTMOV, W27CE7KFVAR]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 - id: size-of-two-way-automata
   name: "Size of two-way automata"
@@ -1227,7 +1227,7 @@ topics:
   exclude_phrases: []
   seed_works: [WVEOWFHSMUF, WXU3MVIFXR3, WWIWAHEQDIQ, WMS5BT4FSZR]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 - id: size-of-regular-expressions
   name: "Size of regular expressions"
@@ -1247,7 +1247,7 @@ topics:
   exclude_phrases: []
   seed_works: [WACNORWXVUY, WJCTLKZS7DR, W6FYUOZACBH, WEUIIQTQ2IB]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 - id: syntactic-complexity
   name: "Syntactic complexity"
@@ -1261,7 +1261,7 @@ topics:
   exclude_phrases: []
   seed_works: [WRFG7ZLVG7F, WJRZ3JI6YY7, W6YNLI5PUN6, WLGOE5QUBGZ]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: measures-of-nondeterminism
   name: "Measures of nondeterminism and ambiguity"
@@ -1285,7 +1285,7 @@ topics:
   exclude_phrases: []
   seed_works: [WPQH5A4L4SK, WD7PYYINHMC, WYWCSXV7L3M, W6J5ZI7YLNN]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: complexity-of-grammars-and-systems
   name: "Descriptional complexity of grammars and systems"
@@ -1307,7 +1307,7 @@ topics:
   exclude_phrases: []
   seed_works: [WS6FYWBYSCA, WPEWKCIPALE, W4DF6A5MBVO, WGSL3IH7EIC]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 - id: kolmogorov-complexity
   name: "Kolmogorov complexity and algorithmic randomness"
@@ -1327,7 +1327,7 @@ topics:
   exclude_phrases: []
   seed_works: [WKGS4SVLKOZ, WNRL3RKHLKO, WF7IN57RXHB, WHGFZEFZOQU]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 
 # ================================================================================================
@@ -1351,7 +1351,7 @@ topics:
   exclude_phrases: []
   seed_works: []
   origin: cluster
-  reviewed: false
+  reviewed: true
   status: active
 - id: closure-properties
   name: "Closure properties and closure operators"
@@ -1372,7 +1372,7 @@ topics:
   exclude_phrases: []
   seed_works: [WGAPQDFTOOM, WQG33AKHC6A, W3FS47FAF5Q, WCMEVJBQSKV]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: shuffle-and-interleaving
   name: "Shuffle and interleaving"
@@ -1394,7 +1394,7 @@ topics:
   exclude_phrases: ["card shuffl", "perfect shuffle network"]
   seed_works: [WJN6GUHJIZF, WLWEUW7IZZ3, W3VD5VSSHIS, WGLE567AMVB]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: insertion-and-deletion-operations
   name: "Insertion, deletion and duplication operations"
@@ -1419,7 +1419,7 @@ topics:
   exclude_phrases: []
   seed_works: [WE3OI6RN2SV, WZBJA3RA5XH, WMON4OS6G7R, WJCWITLDGYM]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 - id: language-equations
   name: "Language equations"
@@ -1438,7 +1438,7 @@ topics:
   exclude_phrases: []
   seed_works: [WZ2CCQJA3TN, W6CAQW26YOD, WQ4QVBJQSEP, WT7DPBA4LKE]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: roots-powers-and-decompositions
   name: "Roots, powers and decompositions of languages"
@@ -1460,7 +1460,7 @@ topics:
   exclude_phrases: []
   seed_works: [WD7KQHAKCP5, WCXC5M7TD23, WI3I3MNSY2C, WECQMLOHD5R]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 - id: distances-and-neighbourhoods
   name: "Distances and neighbourhoods of languages"
@@ -1482,7 +1482,7 @@ topics:
   exclude_phrases: []
   seed_works: [WNBBCKQJU5F, WFFYU26EZZY, WZU6MCAYFZW, WV23XV4RZY3]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 
 # ================================================================================================
@@ -1506,7 +1506,7 @@ topics:
   exclude_phrases: []
   seed_works: []
   origin: ccs
-  reviewed: false
+  reviewed: true
   status: active
 - id: syntactic-monoids-and-varieties
   name: "Syntactic monoids and varieties"
@@ -1532,7 +1532,7 @@ topics:
   exclude_phrases: []
   seed_works: [WLE75NVHQTE, WXIQ5HZNMNG, W52B6AAXYCF, WD6WYG7B6AE]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: star-free-languages
   name: "Star-free languages and concatenation hierarchies"
@@ -1555,7 +1555,7 @@ topics:
   exclude_phrases: []
   seed_works: [W2G7IQXUUQE, WJPH3ISKE26, WJRAG7Q26ET, W4AKYYA6GBQ]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: testable-languages
   name: "Locally and piecewise testable languages"
@@ -1579,7 +1579,7 @@ topics:
   exclude_phrases: []
   seed_works: [WRKWI5SQPLT, WINZQCD6DUG, WTHRVFPRDYG, WQ5RZHMQ4CV]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: transformation-semigroups
   name: "Transformation semigroups and decompositions of automata"
@@ -1601,7 +1601,7 @@ topics:
   exclude_phrases: []
   seed_works: [W6JJ2UN47J7, WMUMQJ6WVZ6, WESKYTM2DVR, WIJVLZW6ORC]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 - id: automata-and-groups
   name: "Automata and groups"
@@ -1627,7 +1627,7 @@ topics:
   exclude_phrases: []
   seed_works: [WK6QIPPK43X, WEYDTXP7DHP, WB2O2O6GWWR, WNXMJ5OZDFN, W32MJZ5DASR]
   origin: cluster
-  reviewed: false
+  reviewed: true
   status: active
 - id: kleene-algebra
   name: "Kleene algebras and equational theories"
@@ -1649,7 +1649,7 @@ topics:
   exclude_phrases: []
   seed_works: [WABW53G6OEB, WBAN2WUNWCV, WFIVUNDZ7J7, WQ5PAXTZCFC]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 - id: rational-and-recognisable-subsets
   name: "Rational and recognisable subsets of monoids"
@@ -1671,7 +1671,7 @@ topics:
   exclude_phrases: []
   seed_works: [W5RWOYIFBGS, WCQKHIOZHJF, WZNU7JBI5H6, WKXPVSIWFNA]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 
 # ================================================================================================
@@ -1696,7 +1696,7 @@ topics:
   exclude_phrases: []
   seed_works: []
   origin: msc
-  reviewed: false
+  reviewed: true
   status: active
 - id: monadic-second-order-logic
   name: "Monadic second-order logic and automata"
@@ -1718,7 +1718,7 @@ topics:
   exclude_phrases: []
   seed_works: [WHYX3KIYVKN, WQKVR2VM2TU, WQHRJRAEF2V, WPFAP2N3ZI3]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: first-order-fragments
   name: "First-order logic on words"
@@ -1740,7 +1740,7 @@ topics:
   exclude_phrases: []
   seed_works: [W7O55M3RNZH, WJDPLQOX37Z, WRBSOT6MTBG, WPPFJQU6O66]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: temporal-logics
   name: "Temporal logics and automata"
@@ -1762,7 +1762,7 @@ topics:
   exclude_phrases: []
   seed_works: [WM7WBFWPCW6, WYJFVEY4O3P, WRC2G644DZK, WNJMPRMWGXJ]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: automatic-structures
   name: "Automatic structures and decidable theories"
@@ -1786,7 +1786,7 @@ topics:
   exclude_phrases: []
   seed_works: [WHLYS774DX4, WONZX4LRQGJ, WY54KCS7HME, WVRKXRBQGJJ]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 
 # ================================================================================================
@@ -1814,7 +1814,7 @@ topics:
   exclude_phrases: []
   seed_works: []
   origin: ccs
-  reviewed: false
+  reviewed: true
   status: active
 - id: omega-automata
   name: "ω-automata"
@@ -1838,7 +1838,7 @@ topics:
   exclude_phrases: []
   seed_works: [WNASMN6IPB7, WFCSFCRVHYK, WNOOV5OOS2X, WJMXTYNFZFZ]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: complementation-and-determinisation
   name: "Complementation and determinisation of ω-automata"
@@ -1857,7 +1857,7 @@ topics:
   exclude_phrases: []
   seed_works: [WCRZKQKYUGK, WO6U6FHFGEE, W6F45CE7LZK, WFYSSWZNS5E]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 - id: omega-regular-languages
   name: "ω-regular languages and their hierarchies"
@@ -1881,7 +1881,7 @@ topics:
   exclude_phrases: []
   seed_works: [WROXOFA7XA3, WE4SK76JHK5, WIKMDBHDMQH, WFSIZPKXO2Z]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: infinite-games
   name: "Infinite games and synthesis"
@@ -1903,7 +1903,7 @@ topics:
   exclude_phrases: []
   seed_works: [WBKXNVB23GK, WJGOK2R52HB, WV6K5KY54IU, WXYIHSPJ6EK]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: parity-games
   name: "Parity games"
@@ -1916,7 +1916,7 @@ topics:
   exclude_phrases: []
   seed_works: [WA2XMCWKOZK, WDRQJPEHMXJ, WRG5G4SIDAP, WP5MKEXGLLY]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: linear-orderings
   name: "Automata on linear orderings"
@@ -1937,7 +1937,7 @@ topics:
   exclude_phrases: []
   seed_works: [WGIUGGNN27S, WYDAGJLRBUV, WM3FVKN4UEO, WAY7C757HJT]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 
 # ================================================================================================
@@ -1961,7 +1961,7 @@ topics:
   exclude_phrases: []
   seed_works: []
   origin: msc
-  reviewed: false
+  reviewed: true
   status: active
 - id: automata-based-model-checking
   name: "Automata-based model checking"
@@ -1983,7 +1983,7 @@ topics:
   exclude_phrases: []
   seed_works: [W2KPLBSXJ5M, W4ANYFHSZUG, WNNNHETQG3K, WSS737PHMEC]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: timed-and-hybrid-automata
   name: "Timed and hybrid automata"
@@ -2006,7 +2006,7 @@ topics:
   exclude_phrases: []
   seed_works: [WQYXPQFEZRB, WYN77MDQVRT, WDQXHAXXDCF, WMKU64DIUDN]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: infinite-state-verification
   name: "Infinite-state systems and regular model checking"
@@ -2033,7 +2033,7 @@ topics:
   exclude_phrases: []
   seed_works: [W5WWQEVGI5J, WODUABG7UM6, WNSXQU5WKD5, WGFQLPFIW2N]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 - id: supervisory-control
   name: "Supervisory control and controller synthesis"
@@ -2055,7 +2055,7 @@ topics:
   exclude_phrases: []
   seed_works: [WFHDD2BZXEE, WPI3UWUBF74, WFVQFT5YX24, W4YC3IBHM62]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 
 # ================================================================================================
@@ -2082,7 +2082,7 @@ topics:
   exclude_phrases: ["syntactic semiring"]
   seed_works: []
   origin: ccs
-  reviewed: false
+  reviewed: true
   status: active
 - id: weighted-automata
   name: "Weighted automata and rational series"
@@ -2116,7 +2116,7 @@ topics:
   exclude_phrases: []
   seed_works: [WMJQ2MAFROL, WLWTEZDFJAR, WDJNMGIDXQ6, WNYJU4D2GB3, W5TUTW3MHYI]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: weighted-logics
   name: "Weighted logics and quantitative specifications"
@@ -2138,7 +2138,7 @@ topics:
   exclude_phrases: []
   seed_works: [W2Y7GBY53CO, WTZYA2VCLSO, WZ5NBOIKHR6, WRMPN56DLQL]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 - id: probabilistic-automata
   name: "Probabilistic and stochastic automata"
@@ -2161,7 +2161,7 @@ topics:
   exclude_phrases: []
   seed_works: [WAKBRCPOKCO, WSEIIHV3GJZ, WM3CECUD2W3, WE6ERJK3RO2]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 
 # ================================================================================================
@@ -2187,7 +2187,7 @@ topics:
   exclude_phrases: []
   seed_works: []
   origin: ccs
-  reviewed: false
+  reviewed: true
   status: active
 - id: turing-machines
   name: "Turing machines and resource bounds"
@@ -2210,7 +2210,7 @@ topics:
   exclude_phrases: []
   seed_works: [WAI26MCZDRS, WFU2AN5DNCI, WSD573EI7DX, WZQ2LWL3YK2]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: counter-automata
   name: "Counter automata and counter machines"
@@ -2233,7 +2233,7 @@ topics:
   exclude_phrases: []
   seed_works: [WQC7AXNDCND, WEXMKGKWSH2, WAHBPMXYJCY, WOCH4PCUX77]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: multi-head-and-multitape-automata
   name: "Multi-head, multitape and pebble automata"
@@ -2254,7 +2254,7 @@ topics:
   exclude_phrases: []
   seed_works: [W5TCPZCKQYV, WBWQCSF4B5Q, WPCQBKT7J4F, W2LAH2DABAR]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: storage-automata
   name: "Stack, queue and other storage automata"
@@ -2277,7 +2277,7 @@ topics:
   exclude_phrases: []
   seed_works: [W6PH4MOCEHJ, WAWRBCDASCH, WWM5MYSSMHM, WNQ6WVLB55N]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: restarting-automata
   name: "Restarting automata"
@@ -2302,7 +2302,7 @@ topics:
   exclude_phrases: []
   seed_works: [W3PTH7LH5YO, WPFYRA65KHJ, WJEFHCHF4DO, WBWUWJX3RXN]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: limited-automata
   name: "Limited automata"
@@ -2316,7 +2316,7 @@ topics:
   exclude_phrases: []
   seed_works: [W2W6RW4MXBR, WBHHRWCB2FR, WI6LJILKYBW, WOYPU4NMTLX]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: jumping-automata
   name: "Jumping automata and discontinuous input"
@@ -2337,7 +2337,7 @@ topics:
   exclude_phrases: []
   seed_works: [WXVKRK5Q3YQ, WIXKTRZY4UW, WB2A2RT3SIJ, WQBQKCSIHRK]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: reversible-automata
   name: "Reversible automata"
@@ -2357,7 +2357,7 @@ topics:
   exclude_phrases: ["reversible cellular automata"]
   seed_works: [WPPHX67RFID, WYD3AJRBJXJ, WQUHJNOODEO, W5FJ5G4IJBH]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: automata-systems
   name: "Systems of cooperating automata"
@@ -2378,7 +2378,7 @@ topics:
   exclude_phrases: []
   seed_works: [W57H4SYWUQW, WWLZVRZSINA, WLQNUKSXUDT, WUF2DNPS2X6]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: infinite-alphabet-automata
   name: "Automata over infinite alphabets"
@@ -2400,7 +2400,7 @@ topics:
   exclude_phrases: []
   seed_works: [WC4KTVQ5NBJ, WDZDFOFO75C, W36SWQU3B3C, WAKSHLFOSOD]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 - id: automata-and-complexity-classes
   name: "Automata and complexity classes"
@@ -2426,7 +2426,7 @@ topics:
   exclude_phrases: []
   seed_works: [WF4QUHQ4QJL, WEEPNE2YEFO, W5AHOPZEJNS, WYU7ATZWY7P]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 
 # ================================================================================================
@@ -2445,7 +2445,7 @@ topics:
   exclude_phrases: ["quantum-dot"]
   seed_works: []
   origin: cluster
-  reviewed: false
+  reviewed: true
   status: active
 - id: quantum-finite-automata
   name: "Quantum finite automata"
@@ -2468,7 +2468,7 @@ topics:
   exclude_phrases: []
   seed_works: [W5FYGQM5PKE, W2LI7GSSMZP, WOYBU4VHFSE, WC7HQI6CBBY]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: quantum-branching-programs-and-queries
   name: "Quantum branching programs, queries and hashing"
@@ -2490,7 +2490,7 @@ topics:
   exclude_phrases: []
   seed_works: [W5AHOPZEJNS, WMWFKM3HMTA, W2MZ5MECN6M, WPRHEHF5BVF]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 
 # ================================================================================================
@@ -2514,7 +2514,7 @@ topics:
   exclude_phrases: []
   seed_works: []
   origin: ccs
-  reviewed: false
+  reviewed: true
   status: active
 - id: finite-state-transducers
   name: "Finite-state transducers and rational relations"
@@ -2541,7 +2541,7 @@ topics:
   exclude_phrases: []
   seed_works: [W655CRPX6WP, WVL7CHN2TYN, WN6BU2R4ZXV, W66VHN2KROA]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: weighted-transducers
   name: "Weighted finite-state transducers"
@@ -2560,7 +2560,7 @@ topics:
   exclude_phrases: []
   seed_works: [WJKFIFYQGL6, WZGLGP4E63D, WYFPSYT6GMF, WAULLMAKGUX]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 - id: two-way-and-streaming-transducers
   name: "Two-way, streaming and polyregular transducers"
@@ -2581,7 +2581,7 @@ topics:
   exclude_phrases: []
   seed_works: [W4L5BMPBYR6, WPX2R3I4DSW, WGIXRGJMVMX, W2SD6NYTCT2]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 - id: tree-transducers
   name: "Tree transducers"
@@ -2606,7 +2606,7 @@ topics:
   exclude_phrases: []
   seed_works: [WIXL5QRUWN5, WOAEQFIUR23, WA7B34WDGDK, WUSZFEVRRGW]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 
 # ================================================================================================
@@ -2629,7 +2629,7 @@ topics:
   exclude_phrases: []
   seed_works: []
   origin: ccs
-  reviewed: false
+  reviewed: true
   status: active
 - id: finite-tree-automata
   name: "Finite tree automata"
@@ -2653,7 +2653,7 @@ topics:
   exclude_phrases: []
   seed_works: [WBD3HWYNCYQ, WLUYV4A6Y5A, WCHL2B3FCTI, W46VJ765A2O]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: unranked-tree-automata
   name: "Unranked tree and hedge automata"
@@ -2666,7 +2666,7 @@ topics:
   exclude_phrases: []
   seed_works: [WSIYFEAFBGH, WCB7DOD4DFV, WSJVTVM6HF5, WZEAMDMOHSC]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: tree-automata-with-constraints
   name: "Tree automata with constraints"
@@ -2683,7 +2683,7 @@ topics:
   exclude_phrases: []
   seed_works: [WW4CMANWVYZ, WC54WY7HESM, WAFHYN6MBAC]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 - id: tree-grammars
   name: "Tree grammars and context-free tree languages"
@@ -2705,7 +2705,7 @@ topics:
   exclude_phrases: []
   seed_works: [WEDQJIUGQFA, WJJONLEXYSY, WBMGNJF3SEM, WEM5WKPADL5]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 - id: weighted-tree-automata
   name: "Weighted tree automata and tree series"
@@ -2724,7 +2724,7 @@ topics:
   exclude_phrases: []
   seed_works: [WGLULYGP2RJ, WJ2MMI45TNF, WAQXYMAFY6P, W44HQEAGZ5J]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: automata-on-infinite-trees
   name: "Automata on infinite trees"
@@ -2744,7 +2744,7 @@ topics:
   exclude_phrases: []
   seed_works: [WN5X527FBDO, WAFHYN6MBAC, WKKUIH2FBND]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 
 # ================================================================================================
@@ -2762,7 +2762,7 @@ topics:
   exclude_phrases: []
   seed_works: []
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: two-dimensional-languages
   name: "Two-dimensional languages and picture automata"
@@ -2788,7 +2788,7 @@ topics:
   exclude_phrases: []
   seed_works: [W5ZE27JNCNJ, WEQWGQTWNW7, WPZOCSS6NS7, WBWWWHH65YS, WWZ4R4E5BTW]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: graph-grammars
   name: "Graph grammars and graph languages"
@@ -2812,7 +2812,7 @@ topics:
   exclude_phrases: []
   seed_works: [WBX77R54JF7, WL7ROKR2GOW, WNKRYWRTBVM, WOPYAMQHPUX]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 - id: automata-on-graphs
   name: "Automata on graphs, DAGs and relational structures"
@@ -2833,7 +2833,7 @@ topics:
   exclude_phrases: []
   seed_works: [W6EO526GGFS, WCBIMD7JUWR, WIW4FIH2E5M, WDOR2WJ7OAL]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 - id: polyominoes
   name: "Polyominoes and discrete geometry"
@@ -2853,7 +2853,7 @@ topics:
   exclude_phrases: []
   seed_works: [WMCQTDBK3VX, W46UWMKF6JS, W2TNYE7SNIE, WCTELSWL6XO]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 - id: fractals-and-images
   name: "Fractals and image description"
@@ -2875,7 +2875,7 @@ topics:
   exclude_phrases: []
   seed_works: [WABMG5LY4WG, WLVU3FGIIKA, WSOY5JDBNXB, WX4X3FHK2JN]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 
 # ================================================================================================
@@ -2899,7 +2899,7 @@ topics:
   exclude_phrases: []
   seed_works: []
   origin: msc
-  reviewed: false
+  reviewed: true
   status: active
 - id: repetitions-and-avoidability
   name: "Repetitions and avoidability"
@@ -2928,7 +2928,7 @@ topics:
   exclude_phrases: []
   seed_works: [WR2AHOD7KQQ, WZUUIOGMI45, WDBHNU44I4P, WLLHKFDALXV]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: pattern-avoidance
   name: "Avoidable patterns and formulas"
@@ -2948,7 +2948,7 @@ topics:
   exclude_phrases: []
   seed_works: [WKE65AN6NIE, WIZQAQTRDTG, WDBGUZWP4SE, W6VXGFKQSLJ]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 - id: periodicity-and-borders
   name: "Periodicity, borders and primitivity"
@@ -2971,7 +2971,7 @@ topics:
   exclude_phrases: []
   seed_works: [WHCJBO3R2XA, WV553LPMGLG, WWWJOAILLEG, WL7UY7UEHAY]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: abelian-properties-of-words
   name: "Abelian and k-abelian properties of words"
@@ -2992,7 +2992,7 @@ topics:
   exclude_phrases: ["abelian groups", "abelian g-automata"]
   seed_works: [WEUMSTP5I47, WXUCEO256GI, WGLYW4OZ2UM, WSS2BTBYI4B]
   origin: cluster
-  reviewed: false
+  reviewed: true
   status: active
 - id: subwords-and-scattered-factors
   name: "Subwords, scattered factors and well quasi-orders"
@@ -3020,7 +3020,7 @@ topics:
   exclude_phrases: []
   seed_works: [WJ6KAAGQ4S3, WCHNWQDGTIM, WHCNWX6XF5N, WQXXUD5374W, WOQZA6E2AUY]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: sturmian-words
   name: "Sturmian and episturmian words"
@@ -3041,7 +3041,7 @@ topics:
   exclude_phrases: []
   seed_works: [WT7ZUWUXTSD, WPR4MSR4PGT, WENIJYSNLYP, WFD5MRSOCWJ]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: morphic-and-automatic-sequences
   name: "Morphic and automatic sequences"
@@ -3066,7 +3066,7 @@ topics:
   exclude_phrases: []
   seed_works: [WZXVBS2BKMO, WLN5JDMWH4Y, WLNMQIA6VJ6, WTLYGHHDRKG]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: numeration-systems
   name: "Numeration systems"
@@ -3093,7 +3093,7 @@ topics:
   exclude_phrases: []
   seed_works: [W7FF6LCOG5F, WIOYE6YTAP7, W4YXWQBYZKG, WDYOY6PDXUT]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: factor-complexity-and-growth
   name: "Factor complexity, growth and entropy"
@@ -3118,7 +3118,7 @@ topics:
   exclude_phrases: []
   seed_works: [WYP5QPQV3NW, WFD54KWAWON, WKFXP3ZZPC5, WJK4QNCKWJY]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: palindromes-and-richness
   name: "Palindromes and palindromic richness"
@@ -3139,7 +3139,7 @@ topics:
   exclude_phrases: []
   seed_works: [WK3C4BEO5B7, WSZPGPSNIE6, WOTDO6DBULT, WPFAC3HZU43]
   origin: cluster
-  reviewed: false
+  reviewed: true
   status: active
 - id: word-equations
   name: "Word equations"
@@ -3160,7 +3160,7 @@ topics:
   exclude_phrases: []
   seed_works: [WJ5MYR65TDB, WZCR7YA76LL, WAWCQIS6SIE, WVZCKSO5PXQ]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: morphisms-and-pcp
   name: "Morphisms and the Post correspondence problem"
@@ -3186,7 +3186,7 @@ topics:
   exclude_phrases: []
   seed_works: [WQYHDMPM764, WKWBBOGEFDH, WUIILUCW4CQ, WBHCFRCSRG4, WZMDPTFW6XU]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: lyndon-words-and-bwt
   name: "Lyndon words, necklaces and the Burrows–Wheeler transform"
@@ -3209,7 +3209,7 @@ topics:
   exclude_phrases: []
   seed_works: [WEKGHMRZG3G, WS6YCRI3DFV, WYZTD2M6L2H, W2W7C6UXEEP]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: partial-words
   name: "Partial words"
@@ -3223,7 +3223,7 @@ topics:
   exclude_phrases: []
   seed_works: [W3SUKXRHMW3, WDUBQTWJLE3, WUQWBAGRUAI, WRT7MEF5KZQ]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: codes
   name: "Codes"
@@ -3249,7 +3249,7 @@ topics:
   exclude_phrases: []
   seed_works: [WA5UOIBCPYK, WMWF7VX4E2W, WB43II24T7J, WG5ROK26GYY]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 - id: pattern-languages
   name: "Pattern languages"
@@ -3272,7 +3272,7 @@ topics:
   exclude_phrases: []
   seed_works: [WVD23O6SBOJ, W6TYBPPQRMH, WP462K6GDDL, WR45ERMXSOS]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: word-representable-graphs
   name: "Word-representable graphs"
@@ -3291,7 +3291,7 @@ topics:
   exclude_phrases: []
   seed_works: [WWWU3NDIMQA, WMDSZCPJ2VQ, WID2SCRMU7J, WTATYGK45B7]
   origin: cluster
-  reviewed: false
+  reviewed: true
   status: active
 
 # ================================================================================================
@@ -3314,7 +3314,7 @@ topics:
   exclude_phrases: ["quantum-dot cellular"]
   seed_works: []
   origin: msc
-  reviewed: false
+  reviewed: true
   status: active
 - id: cellular-automata-computation
   name: "Cellular automata as language recognisers"
@@ -3337,7 +3337,7 @@ topics:
   exclude_phrases: []
   seed_works: [WP7XGEE47E7, W6EX7GCRKY6, WM4P5KV42E3, WHUPXAM3LU3]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: dynamics-of-cellular-automata
   name: "Dynamics of cellular automata"
@@ -3361,7 +3361,7 @@ topics:
   exclude_phrases: []
   seed_works: [WJYOBP4U7PN, WCC4XH5FB2A, WANCDVK55RW, WBJURQAPPKT]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: symbolic-dynamics
   name: "Symbolic dynamics and subshifts"
@@ -3386,7 +3386,7 @@ topics:
   exclude_phrases: []
   seed_works: [WAWYHV3PKAT, WYTW5PWYO7K, WEXBXDJBMOT, WDCV7RCJS4D]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: tilings
   name: "Tilings and the domino problem"
@@ -3412,7 +3412,7 @@ topics:
     - "tile rewriting"
   seed_works: [W5DPJ3TSOWJ, W7ORTAA2MF3, WOJCEDEKJQ7, WWG6CHYXOKU]
   origin: cluster
-  reviewed: false
+  reviewed: true
   status: active
 
 # ================================================================================================
@@ -3437,7 +3437,7 @@ topics:
   exclude_phrases: []
   seed_works: []
   origin: msc
-  reviewed: false
+  reviewed: true
   status: active
 - id: membrane-computing
   name: "Membrane computing"
@@ -3462,7 +3462,7 @@ topics:
   exclude_phrases: []
   seed_works: [WSNFMN4DQEJ, WIPB67224WG, WNXKLQNX44E, WQEL5ZCFPB7]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: spiking-neural-p-systems
   name: "Spiking neural P systems"
@@ -3475,7 +3475,7 @@ topics:
   exclude_phrases: []
   seed_works: [W2RLXYTAHW4, WXNJQJNZOXC, WOXYD5LUT4R]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 - id: dna-computing-and-splicing
   name: "DNA computing and splicing systems"
@@ -3498,7 +3498,7 @@ topics:
   exclude_phrases: []
   seed_works: [WBMXNLPQ7XD, WPS5Y3NGPIB, WPUR3766GXA, WO3ICDEPVIU]
   origin: cluster
-  reviewed: false
+  reviewed: true
   status: active
 - id: ciliate-gene-assembly
   name: "Gene assembly in ciliates"
@@ -3512,7 +3512,7 @@ topics:
   exclude_phrases: []
   seed_works: [WXBEY7OXKJR, W377OPYHNI3, WN63F37AF6R, WFXMLFY5BOM]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: insertion-deletion-systems
   name: "Insertion-deletion systems"
@@ -3531,7 +3531,7 @@ topics:
   exclude_phrases: []
   seed_works: [WDKPKDQRWBP, WBV5DVGPMNE, WWWIE57N7WV, W62NFK2DPKY]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: networks-of-evolutionary-processors
   name: "Networks of evolutionary processors"
@@ -3549,7 +3549,7 @@ topics:
   exclude_phrases: []
   seed_works: [WVJI4DSDFY5, WB5VI7X25OI, W5B2YU3GCQ2, WC3NWPW33FZ]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 - id: reaction-systems
   name: "Reaction systems and chemical reaction networks"
@@ -3563,7 +3563,7 @@ topics:
   exclude_phrases: []
   seed_works: [WPTD4OM67UJ, W2ZQMA53MKT, WYYTB3ZQ2HC, WHN2VWNCTGX]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 - id: molecular-self-assembly
   name: "Self-assembly and molecular folding"
@@ -3581,7 +3581,7 @@ topics:
   exclude_phrases: []
   seed_works: [WLAX3BUTUZE, WDAK4FHRJXD, WJPJMD6D745, WDHVLODNPGP]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 
 # ================================================================================================
@@ -3605,7 +3605,7 @@ topics:
   exclude_phrases: ["learning software", "e-learning", "machine learning"]
   seed_works: []
   origin: msc
-  reviewed: false
+  reviewed: true
   status: active
 - id: learning-regular-languages
   name: "Learning finite automata"
@@ -3630,7 +3630,7 @@ topics:
   exclude_phrases: []
   seed_works: [WEQSXCHTEON, WRTNYMZHN6I, WXJEL27Q2R2, WAPQKIBFGCR]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: learning-beyond-finite-automata
   name: "Learning grammars, tree languages and transducers"
@@ -3657,7 +3657,7 @@ topics:
   exclude_phrases: []
   seed_works: [WYXXMSLZRJU, WJ7NHBP64E4, WBIAOVK56VA, W563AWJIFZT, WDTWMECUS5Q]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 - id: automata-and-neural-networks
   name: "Automata and neural models"
@@ -3677,7 +3677,7 @@ topics:
   exclude_phrases: []
   seed_works: [WVAYYC4A43K, WOSF2HCEJHX, WXM24KHTIUM]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 
 # ================================================================================================
@@ -3700,7 +3700,7 @@ topics:
   exclude_phrases: []
   seed_works: []
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 - id: automata-software-tools
   name: "Automata software, libraries and teaching tools"
@@ -3728,7 +3728,7 @@ topics:
   exclude_phrases: []
   seed_works: [WSAMEITWDAC, WHGQDXFM46L, WCTAEXPRB66, WV2EYUCHFMM]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: efficient-representations
   name: "Efficient representation and parallel implementation"
@@ -3754,7 +3754,7 @@ topics:
   exclude_phrases: []
   seed_works: [WSPVXYTYEON, WTDUAOROWS2, WAWTISXLQSG, WEE743R2HA7]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 - id: string-matching
   name: "String matching and text indexing"
@@ -3789,7 +3789,7 @@ topics:
   exclude_phrases: []
   seed_works: [W6W3T6TVFXU, WRWIZ5VDEYC, W2WKJES7NRL, WOECMVFNDLE]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: regex-engines
   name: "Regular-expression matching in practice"
@@ -3813,7 +3813,7 @@ topics:
   exclude_phrases: []
   seed_works: [W56HB3TOXZ6, WRQWKS63XVE, WLQRAZ735YI, WXTDK4SV7DC]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: finite-state-nlp
   name: "Finite-state natural language processing"
@@ -3842,7 +3842,7 @@ topics:
   exclude_phrases: []
   seed_works: [WQ6N4ZKUOPW, W3IFKL264ZO, WHPPCNMCAQK, WX6BMBE4LZY]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: documents-and-databases
   name: "Automata for XML, documents and databases"
@@ -3866,7 +3866,7 @@ topics:
   exclude_phrases: []
   seed_works: [WDNN4Z4M5YL, W3RTTOAXY6U, WWCPVORCYKF, WVUCCZIMP3R]
   origin: cluster
-  reviewed: false
+  reviewed: true
   status: active
 - id: random-generation-and-enumeration
   name: "Enumeration, random generation and average-case analysis"
@@ -3891,7 +3891,7 @@ topics:
   exclude_phrases: []
   seed_works: [WCNIQTXT3FR, WVYJ2AUIVY5, WQTYQPRDA7Z, WBZVSSNF5AI]
   origin: mined
-  reviewed: false
+  reviewed: true
   status: active
 - id: state-machine-testing
   name: "Testing and experiments on state machines"
@@ -3912,7 +3912,7 @@ topics:
   exclude_phrases: []
   seed_works: [WLPXR6BQTT3, WOKB7W3XZM6, WE27M265HXF, WIV7C6BIMCH]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 
 # ================================================================================================
@@ -3939,7 +3939,7 @@ topics:
   exclude_phrases: []
   seed_works: []
   origin: msc
-  reviewed: false
+  reviewed: true
   status: active
 - id: trace-languages
   name: "Trace languages and asynchronous automata"
@@ -3963,7 +3963,7 @@ topics:
   exclude_phrases: []
   seed_works: [W3K4O3AH3TL, WBN2Z5ZDOSI, WOG3C235OMM, WKOL6CMWG3I]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 - id: petri-net-languages
   name: "Petri-net languages"
@@ -3984,7 +3984,7 @@ topics:
   exclude_phrases: []
   seed_works: [WNTFWDW3PH3, WFODKEQ4DIC, WUATUGGYHS5, WY735H54AWQ]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
 - id: communicating-automata
   name: "Communicating automata and message passing"
@@ -4006,5 +4006,5 @@ topics:
   exclude_phrases: []
   seed_works: [WK5U2XVZ7LF, WXZWO6FZLI7, W4ZSBAIBK4J, WFSAUHVY776]
   origin: manual
-  reviewed: false
+  reviewed: true
   status: active
