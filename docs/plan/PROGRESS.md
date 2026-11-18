@@ -1,17 +1,17 @@
 # Progress
 
 ## Current state (keep this section under 30 lines)
-- **Phase:** 0 (P0-00 open; P0-04 done), 1 started (P1-01 to P1-05 done)
-- **Last merged session:** P1-04 (PR #10); P1-05 is in a PR awaiting review
-- **Next:** Guilherme names five works for the composite-text check and reads `docs/notes/taxonomy-review-v1.md`; he merges the P1-05 PR and finishes `sessions/P0-00-manual-setup.md`; then `P1-06` (Opus)
+- **Phase:** 0 (P0-00 open; P0-04 done), 1 started (P1-01 to P1-06 done)
+- **Last merged session:** P1-05 (PR #11); P1-06 is in a PR awaiting review
+- **Next:** Guilherme merges the P1-06 PR and finishes `sessions/P0-00-manual-setup.md`; then `P1-06b` (Opus, the labelled set; it needs the reviewed topic ids in `main`)
 - **Live site:** https://gmcmduarte.github.io/flat-atlas/ (fixture data only; redeploys on every push to `main`)
 - **Latest release:** none
 - **Known problems:** Semantic Scholar throttles our key far below the documented 1 request/s (HTTP 429 on 15 to 25 % of calls or more); a full title-match pass takes about 2 hours (D-72, `docs/notes/sources.md`). The DBLP API is behind a bot challenge (HTTP 202, Anubis); DBLP data comes from the dump Guilherme downloads by hand (D-49). Refreshing it is manual. After a new dump, run `venues scan-dump` and then `parse dblp` again.
-- **Waiting on Guilherme:** the rest of P0-00 (branch protection, secret scanning, tmux, pre-commit install; S2 key is set in `.env`); reading the P1-04 report (a "done when" line of P1-04); the five works for P1-05
+- **Waiting on Guilherme:** the rest of P0-00 (branch protection, secret scanning, tmux, pre-commit install; S2 key is set in `.env`); reading the P1-04 report (a "done when" line of P1-04); merging the P1-06 PR
 
 ## Checklist
 **Phase 0** — [ ] P0-00 · [x] P0-01 · [x] P0-02 · [x] P0-03 · [x] P0-04
-**Phase 1** — [x] P1-01 · [x] P1-02 · [x] P1-03 · [x] P1-04 · [x] P1-05 · [ ] P1-06 · [ ] P1-06b · [ ] P1-07 · [ ] P1-07b · [ ] P1-08 · [ ] P1-09 · [ ] P1-10 · [ ] P1-11 · [ ] P1-12 · [ ] G1
+**Phase 1** — [x] P1-01 · [x] P1-02 · [x] P1-03 · [x] P1-04 · [x] P1-05 · [x] P1-06 · [ ] P1-06b · [ ] P1-07 · [ ] P1-07b · [ ] P1-08 · [ ] P1-09 · [ ] P1-10 · [ ] P1-11 · [ ] P1-12 · [ ] G1
 **Phase 2** — [ ] P2-01 · [ ] P2-02 · [ ] P2-03 · [ ] P2-04 · [ ] G2
 **Phase 3** — [ ] P3-00 · [ ] P3-01 · [ ] P3-02 · [ ] P3-03 · [ ] P3-04 · [ ] P3-05 · [ ] G3
 **Phase 4** — [ ] P4-01 · [ ] P4-02 · [ ] P4-03 · [ ] P4-04 · [ ] P4-05 · [ ] G4
@@ -19,6 +19,26 @@
 **Phase 6** — [ ] P6-01 · [ ] P6-02 · [ ] P6-03 · [ ] G6
 
 ## Log (newest first)
+
+### 2026-11-18 — P1-06 Taxonomy v1 and anchor papers (branch `s/P1-06-taxonomy-v1`)
+- **Built:** `taxonomy/topics.yaml` (181 topics: 21 level 0, 119 level 1, 41 level 2; all `reviewed: true`), `taxonomy/anchors.yaml` (278 anchors, all verified, `reviewed: true`), `expected_topics` for the five pilot venues in `config/venues.yaml`, `docs/notes/taxonomy-v1-review-guide.md` (the cut and its reasons, the ten open questions and who decided each, what round 2 changed, confusable topics, multi-parent list, shallow areas, how to edit). Code: `AnchorEntry`/`AnchorsFile` in `taxonomy/schema.py`; `check_anchors` and `check_expected_topics` in `taxonomy/check.py` (run by `taxonomy check`); new module `taxonomy/anchors.py` and command `flatatlas taxonomy anchors [--find] [--estimate] [--offline]` (verifies each DOI by OpenAlex ID lookup and each DBLP key in the warehouse or the local dump, says whether the anchor is in the corpus). 22 new tests (480 in all). Decisions D-87 to D-89.
+- **Review:** round 1 was Claude's draft (2026-11-17). In round 2 Guilherme decided that decision problems are one general level-1 topic under three roots and that quantum automata are a root, and asked Claude to answer the other open questions and to review names, descriptions, level 2, phrases and every anchor; he approved the result on 2026-11-18 and all entries were then marked reviewed.
+- **Not built:** tagger code; `taxonomy/gold.yaml` (P1-06b). No topic is `proposed`: every one has pilot evidence. Changes to the proposal tools: none.
+- **Surprises:** (1) Wrapping descriptions with `textwrap` broke lines after hyphens, which YAML folding turns into "self- verifying"; 11 descriptions fixed. (2) Many phrases are false friends once abstracts are read: "synchronization" (firing squad), "verification" (interactive-proof verifiers), "Eilenberg" (Eilenberg machines), "images" (homomorphic images), "non-returning" (a PC grammar-system mode), "liveness" (a two-way automata problem); 31 fixes by context words, narrowing, removal or exclusion. (3) Büchi 1962, an example in PLAN §9.6, has no DOI and no DBLP record and was dropped. (4) OpenAlex gives other years than the anchor for 4 works (LNCS printed two years later, online-first dates), so a year difference is a note, not a failure; DBLP lists Brüggemann-Klein and Wood 1998 twice with two DOIs. (5) No classic anchor is in the pilot corpus. (6) The session scratchpad was emptied overnight; the drafting scripts were lost, but the YAML files were already the committed artefacts, so round 2 edited them directly.
+- **Done when (evidence):**
+  - `topics.yaml` passes the check; 15–25 level-0 topics; every topic has a description and ≥ 3 phrases or ≥ 2 seed works: **pass**. `taxonomy check` prints OK; 21 roots; every topic has at least 3 include phrases and 2 to 5 seed works.
+  - ≥ 80 anchors, all resolved to real identifiers; ≥ 40 in the pilot corpus: **pass**. 278 anchors, `taxonomy anchors` reports 278 verified, 157 in the corpus. Spend: 23 OpenAlex title searches (USD 0.023); DOI lookups are free.
+  - Guilherme's review is committed and topics carry `reviewed: true`: **pass**. All 181 topics and 278 anchors; Guilherme's two decisions and his approval are recorded in D-87 and the review guide.
+  - The DAG has no cycles and multi-parent topics are intentional (listed): **pass**. The check finds no cycle; the 24 multi-parent topics are listed in the review guide.
+  - Every level-0 and level-1 topic has a one-line description that distinguishes it from its siblings: **pass**. All 140 were reread against their siblings in round 2; boundaries are now stated for the confusable pairs.
+- **Numbers (2026-11-18):** include phrases match some topic in the own text (title, abstract, TLDR) of 2,186 of 2,333 pilot works (94 %), some level-1 topic in 2,018; a rough lexical proxy, not the tagger.
+- **Checks:** `uv run pytest` 480 passed; `uv run ruff check .` and `ruff format --check .` clean; `uv run flatatlas taxonomy check` OK; `uv run flatatlas venues check` OK.
+- **Hand-off to P1-06b (Opus):**
+  - Label at **level 0 (21 topics) and level 1 (119 topics)**; `taxonomy check` rejects deeper labels and unknown ids. Topic ids, names and descriptions are in `taxonomy/topics.yaml`; every entry is reviewed, so do not edit it (rule 6): proposals go to `taxonomy/proposals/`.
+  - `decision-problems` is a level-1 topic with three parents (finite automata, grammars, machine models): a paper deciding a property of a model gets it **and** the model's topic. Quantum automata are their own root (`quantum-computing-models`).
+  - Topics expected to be hard to tell apart (sibling overlap of phrase hits in the pilot): `deterministic-finite-automata` / `minimisation-of-automata` / `unary-languages`; `context-free-grammars` / `mildly-context-sensitive-grammars` / `conjunctive-and-boolean-grammars`; `finite-tree-automata` / `weighted-tree-automata`; `weighted-automata` / `weighted-logics` / `monadic-second-order-logic`; `repetitions-and-avoidability` / `periodicity-and-borders` / `abelian-properties-of-words`; `state-complexity-of-operations` with the subregular classes (intended double labels). At level 0, `regular-languages` overlaps every root.
+  - Shallow level-1 topics (≤ 10 pilot works) are listed in the review guide; the top-up of PLAN §9.6 is meant for them.
+  - Anchors: `uv run flatatlas taxonomy anchors --offline` re-verifies from the cache; the corpus-hit check of PLAN §9.6 uses the 157 pilot anchors (D-88).
 
 ### 2026-11-16 — P1-05 Taxonomy tooling: seeds, mining, clustering, proposals (branch `s/P1-05-taxonomy-tools`)
 - **Built:** `flatatlas taxonomy check | load | seeds | composite | mine | cluster | propose`, `harvest reference-titles | background-titles` and their `parse` commands (`--estimate` prints calls and cost first). Package `taxonomy/`: `schema` (topic and labelled-set models, the one `split_for` rule), `check` (all rules, reviewed entries against git HEAD), `load` (`core_topic`, `core_topic_edge`, `eval_gold`), `seeds` (CCS SKOS parser and subtree filter, MSC, OpenAlex topics), `phrases` (extraction and variant keys), `mine`, `cluster`, `propose`, `review`, `stage`, `config`; `text/composite.py` and `text/store.py` (composite text, table `local_work_text`); `sources/reftitles.py`. `config/taxonomy.yaml` holds every knob. Seeds: `taxonomy/seeds/ccs.yaml` (13 concepts of the formal-languages subtree, from the SKOS file Guilherme saved by hand: ACM answers HTTP 403 to scripts), `msc.yaml` (13 codes, own wording) and `openalex_topics.yaml` (83 topics, 1,126 keywords marked untrusted). `taxonomy/proposals/v1.yaml` (354 topics; 29 matched an MSC or CCS entry, 7 seed entries matched none) and `docs/notes/taxonomy-review-v1.md`. 122 new tests (458 in all). Decisions D-80 to D-86 (D-86: reference-title cleaning, added after the five-work check); PLAN §4.2, §4.3, §9.3, §17 and `docs/notes/sources.md` updated.
@@ -196,3 +216,5 @@
 - Reference titles still include textbooks and handbooks (generic, not topic-specific); measure on gold-train in P1-07 whether dropping type `book` helps.
 - `core_stub` for works that in-corpus papers cite often (reference candidates are in `stg_reference_candidates`).
 - `core_edition.location` from the proceedings front matter or a source; `venue_facts.yaml` is still empty.
+- Split `cellular-automata-and-symbolic-dynamics` into cellular automata and symbolic dynamics/tilings when the AUTOMATA venue is added (P2-01; D-87).
+- Define how the tagger matches phrases (word boundaries, the window for context words, hyphen and plural variants) before P1-07; the P1-06 review used whole-word matching on folded text.

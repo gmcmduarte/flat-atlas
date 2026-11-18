@@ -192,3 +192,66 @@ class GoldFile(BaseModel):
 
     taxonomy_version: int = Field(ge=1)
     works: list[GoldWork]
+
+
+DOI = re.compile(r"^10\.\d{4,9}/\S+$")
+DBLP_KEY = re.compile(r"^[a-z]+(?:/[A-Za-z0-9_.:+-]+){2,}$")
+_DOI_RESOLVER = re.compile(r"^(?:https?://(?:dx\.)?doi\.org/|doi:)", re.IGNORECASE)
+AnchorKind = Literal["classic", "pilot"]
+
+
+class AnchorEntry(BaseModel):
+    """One anchor paper (PLAN §9.6): a well-known work and the topic it must land in.
+
+    ``kind: pilot`` marks works of the pilot corpus, ``classic`` the literature beyond it. An
+    anchor needs a DOI or a DBLP key (``taxonomy check`` reports one with neither), and every
+    identifier is verified against a source by ``flatatlas taxonomy anchors``.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    id: str
+    title: str = Field(min_length=1)
+    authors: str = ""
+    year: int = Field(ge=1900, le=2100)
+    doi: str | None = None
+    dblp: str | None = None
+    topic: str
+    kind: AnchorKind
+    reviewed: bool = False
+    note: str = ""
+
+    @field_validator("id")
+    @classmethod
+    def _slug(cls, value: str) -> str:
+        if not TOPIC_ID.match(value):
+            raise ValueError("an anchor id is a lower-case slug (letters, digits, single hyphens)")
+        return value
+
+    @field_validator("doi")
+    @classmethod
+    def _doi(cls, value: str | None) -> str | None:
+        if value is None:
+            return None
+        doi = _DOI_RESOLVER.sub("", value.strip()).lower()
+        if not DOI.match(doi):
+            raise ValueError(f"not a DOI: {value!r}")
+        return doi
+
+    @field_validator("dblp")
+    @classmethod
+    def _dblp(cls, value: str | None) -> str | None:
+        if value is None:
+            return None
+        if not DBLP_KEY.match(value):
+            raise ValueError(f"not a DBLP key (like conf/dlt/Yu01): {value!r}")
+        return value
+
+
+class AnchorsFile(BaseModel):
+    """``taxonomy/anchors.yaml``."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    taxonomy_version: int = Field(ge=1)
+    anchors: list[AnchorEntry]

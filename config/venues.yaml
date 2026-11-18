@@ -15,6 +15,9 @@
 # excluded_editions  keys inside the stream that are not editions of the venue; their papers are left out.
 # openalex_source_ids  OpenAlex files LNCS proceedings under the book series (S106296714), not the
 #                conference, so these lists are short and DBLP defines membership (PLAN §8.4).
+# expected_topics  level-0 topics (taxonomy/topics.yaml) that must be among the venue's top topics
+#                (venue sanity check, PLAN §9.6). Chosen in P1-06 from title-phrase counts of the
+#                pilot: the share of the venue's works whose titles hit each topic is in the comment.
 
 - id: dlt
   acronym: DLT
@@ -27,6 +30,8 @@
   first_year: 1993
   excluded_editions: [conf/dlt/2000]   # another meeting's proceedings (Kyoto), see notes
   successor_of: []
+  expected_topics:                 # title hits: 22 %, 18 %, 13 %
+    [combinatorics-on-words, regular-languages, grammars-and-context-free-languages]
   verified: {dblp: 2026-11-15, openalex: 2026-11-15}
   notes: >
     Editions 1993 to 2026 (30th); biennial until 1999. Early volumes were World Scientific, 2001 on Springer LNCS.
@@ -46,6 +51,7 @@
   first_year: 1996
   last_year: 1999
   successor_of: []
+  expected_topics: [regular-languages, implementation-and-applications]  # 36 %, 36 %
   verified: {dblp: 2026-11-15, openalex: null}
   notes: >
     The 1st to 4th workshops (London ON 1996 and 1997, Rouen 1998, Potsdam 1999). DBLP keeps
@@ -61,6 +67,7 @@
   publisher: Springer
   first_year: 2000                 # the 5th meeting, in London ON; 30th is CIAA 2026
   successor_of: [wia]
+  expected_topics: [regular-languages, implementation-and-applications]  # 35 %, 20 %
   verified: {dblp: 2026-11-15, openalex: 2026-11-15}
   notes: >
     No edition in 2020 (24th in 2019, 25th in 2021). The OpenAlex source holds only 2002 papers
@@ -76,6 +83,7 @@
   first_year: 2001                 # first edition in DBLP; the series itself started earlier
   last_year: 2001
   successor_of: []
+  expected_topics: [descriptional-complexity]  # 37 % of 19 works
   verified: {dblp: 2026-11-15, openalex: null}
   notes: >
     DBLP has one record for this name: conf/dcfs/2001, "Third International Workshop ... DCAGRS
@@ -95,6 +103,7 @@
     - {key: journals/corr/abs-0907-5257, year: 2009, note: "11th workshop, Magdeburg; EPTCS 3"}
     - {key: journals/corr/abs-1008-1270, year: 2010, note: "12th workshop, Saskatoon; EPTCS 31"}
   successor_of: [dcagrs]
+  expected_topics: [descriptional-complexity, regular-languages]  # 34 %, 30 %
   verified: {dblp: 2026-11-15, openalex: 2026-11-15}
   notes: >
     Gaps in the DBLP stream: no 2009 and 2010 (the 11th and 12th workshops appear in DBLP only

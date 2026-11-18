@@ -1,0 +1,2473 @@
+# Anchor papers (PLAN §9.6): well-known works and the topic each must land in (top 3).
+# Human-edited (CLAUDE.md rules 5 and 6). Drafted by Claude in P1-06; every identifier was
+# verified with `uv run flatatlas taxonomy anchors` (OpenAlex by DOI, warehouse, DBLP dump).
+# kind: pilot = in the pilot corpus; classic = the wider literature (may be outside it).
+# Anchors are easy cases: they catch breakage and check deep levels; they do not measure
+# precision (that is the labelled set, gold.yaml).
+taxonomy_version: 1
+anchors:
+
+  # --- pilot --------------------------------------------------------------------------------------
+  - id: baburin-2025-close-analysis-subset
+    title: "A Close Analysis of the Subset Construction"
+    authors: "Baburin, Cotterell"
+    year: 2025
+    doi: "10.1007/978-3-031-97100-6_2"
+    dblp: conf/dcfs/BaburinC25
+    topic: deterministic-finite-automata
+    kind: pilot
+    reviewed: true
+  - id: holzer-2008-nondeterministic-finite-automata
+    title: "Nondeterministic Finite Automata-Recent Results on the Descriptional and Computational Complexity"
+    authors: "Holzer, Kutrib"
+    year: 2008
+    doi: "10.1007/978-3-540-70844-5_1"
+    dblp: conf/wia/HolzerK08
+    topic: nondeterministic-finite-automata
+    kind: pilot
+    reviewed: true
+  - id: colcombet-2015-unambiguity-automata-theory
+    title: "Unambiguity in Automata Theory"
+    authors: "Colcombet"
+    year: 2015
+    doi: "10.1007/978-3-319-19225-3_1"
+    dblp: conf/dcfs/Colcombet15
+    topic: unambiguous-finite-automata
+    kind: pilot
+    reviewed: true
+  - id: ellul-2002-regular-expressions-results
+    title: "Regular Expressions: New Results and Open Problems"
+    authors: "Ellul, Shallit, Wang"
+    year: 2002
+    dblp: conf/dcfs/EllulSW02
+    topic: regular-expressions
+    kind: pilot
+    reviewed: true
+  - id: ponty-1996-quadratic-algorithm-convert
+    title: "A New Quadratic Algorithm to Convert a Regular Expression into an Automaton"
+    authors: "Ponty, Ziadi, Champarnaud"
+    year: 1996
+    doi: "10.1007/3-540-63174-7_9"
+    dblp: conf/wia/PontyZC96
+    topic: automata-from-regular-expressions
+    kind: pilot
+    reviewed: true
+  - id: gruber-2009-short-regular-expressions
+    title: "Short Regular Expressions from Finite Automata: Empirical Results"
+    authors: "Gruber, Holzer, Tautschnig"
+    year: 2009
+    doi: "10.1007/978-3-642-02979-0_22"
+    dblp: conf/wia/GruberHT09
+    topic: regular-expressions-from-automata
+    kind: pilot
+    reviewed: true
+  - id: moreira-2022-manipulation-regular-expressions
+    title: "Manipulation of Regular Expressions Using Derivatives: An Overview"
+    authors: "Moreira, Reis"
+    year: 2022
+    doi: "10.1007/978-3-031-07469-1_2"
+    dblp: conf/wia/MoreiraR22
+    topic: derivatives-of-regular-expressions
+    kind: pilot
+    reviewed: true
+  - id: schmid-2012-inside-class-regex
+    title: "Inside the Class of REGEX Languages"
+    authors: "Schmid"
+    year: 2012
+    doi: "10.1007/978-3-642-31653-1_8"
+    dblp: conf/dlt/Schmid12
+    topic: extended-regular-expressions
+    kind: pilot
+    reviewed: true
+  - id: caron-2011-generalized-one-unambiguity
+    title: "Generalized One-Unambiguity"
+    authors: "Caron, Han, Mignot"
+    year: 2011
+    doi: "10.1007/978-3-642-22321-1_12"
+    dblp: conf/dlt/CaronHM11
+    topic: deterministic-regular-expressions
+    kind: pilot
+    reviewed: true
+  - id: berstel-2004-complexity-hopcroft-s
+    title: "On the Complexity of Hopcroft's State Minimization Algorithm"
+    authors: "Berstel, Carton"
+    year: 2004
+    doi: "10.1007/978-3-540-30500-2_4"
+    dblp: conf/wia/BerstelC04
+    topic: minimisation-of-automata
+    kind: pilot
+    reviewed: true
+  - id: badr-2008-hyper-minimization-o
+    title: "Hyper-Minimization in O(n2)"
+    authors: "Badr"
+    year: 2008
+    doi: "10.1007/978-3-540-70844-5_23"
+    dblp: conf/wia/Badr08
+    topic: hyper-minimisation
+    kind: pilot
+    reviewed: true
+  - id: campeanu-1998-minimal-cover-automata
+    title: "Minimal Cover-Automata for Finite Languages"
+    authors: "Câmpeanu, Santean, Yu"
+    year: 1998
+    doi: "10.1007/3-540-48057-9_4"
+    dblp: conf/wia/CampeanuSY98
+    topic: cover-automata
+    kind: pilot
+    reviewed: true
+  - id: watson-1998-fast-semi-incremental
+    title: "A Fast New Semi-incremental Algorithm for the Construction of Minimal Acyclic DFAs"
+    authors: "Watson"
+    year: 1998
+    doi: "10.1007/3-540-48057-9_11"
+    dblp: conf/wia/Watson98
+    topic: minimal-acyclic-automata
+    kind: pilot
+    reviewed: true
+  - id: champarnaud-2003-nfa-reduction-algorithms
+    title: "NFA Reduction Algorithms by Means of Regular Inequalities"
+    authors: "Champarnaud, Coulon"
+    year: 2003
+    doi: "10.1007/3-540-45007-6_15"
+    dblp: conf/dlt/ChamparnaudC03
+    topic: nfa-reduction
+    kind: pilot
+    reviewed: true
+  - id: geffert-2005-complementing-two-way
+    title: "Complementing Two-Way Finite Automata"
+    authors: "Geffert, Mereghetti, Pighizzini"
+    year: 2005
+    doi: "10.1007/11505877_23"
+    dblp: conf/dlt/GeffertMP05
+    topic: two-way-and-alternating-automata
+    kind: pilot
+    reviewed: true
+  - id: ananichev-2003-synchronizing-monotonic-automata
+    title: "Synchronizing Monotonic Automata"
+    authors: "Ananichev, Volkov"
+    year: 2003
+    doi: "10.1007/3-540-45007-6_8"
+    dblp: conf/dlt/AnanichevV03
+    topic: synchronizing-automata
+    kind: pilot
+    reviewed: true
+  - id: beal-2009-quadratic-upper-bound
+    title: "A Quadratic Upper Bound on the Size of a Synchronizing Word in One-Cluster Automata"
+    authors: "Béal, Perrin"
+    year: 2009
+    doi: "10.1007/978-3-642-02737-6_6"
+    dblp: conf/dlt/BealP09
+    topic: cerny-conjecture
+    kind: pilot
+    reviewed: true
+  - id: bondar-2016-completely-reachable-automata
+    title: "Completely Reachable Automata"
+    authors: "Bondar, Volkov"
+    year: 2016
+    doi: "10.1007/978-3-319-41114-9_1"
+    dblp: conf/dcfs/BondarV16
+    topic: completely-reachable-automata
+    kind: pilot
+    reviewed: true
+  - id: jiraskova-2010-complexity-prefix-free
+    title: "Complexity in Prefix-Free Regular Languages"
+    authors: "Jirásková, Krausová"
+    year: 2010
+    doi: "10.4204/eptcs.31.22"
+    dblp: journals/corr/abs-1008-1662
+    topic: prefix-and-suffix-free-languages
+    kind: pilot
+    reviewed: true
+  - id: brzozowski-2017-complexity-proper-prefix
+    title: "Complexity of Proper Prefix-Convex Regular Languages"
+    authors: "Brzozowski, Sinnamon"
+    year: 2017
+    doi: "10.1007/978-3-319-60134-2_5"
+    dblp: conf/wia/BrzozowskiS17
+    topic: ideal-and-convex-languages
+    kind: pilot
+    reviewed: true
+  - id: jiraskova-2010-complexity-union-free
+    title: "Complexity in Union-Free Regular Languages"
+    authors: "Jirásková, Masopust"
+    year: 2010
+    doi: "10.1007/978-3-642-14455-4_24"
+    dblp: conf/dlt/JiraskovaM10
+    topic: union-free-languages
+    kind: pilot
+    reviewed: true
+  - id: gawrychowski-2011-chrobak-normal-form
+    title: "Chrobak Normal Form Revisited, with Applications"
+    authors: "Gawrychowski"
+    year: 2011
+    doi: "10.1007/978-3-642-22256-6_14"
+    dblp: conf/wia/Gawrychowski11
+    topic: unary-languages
+    kind: pilot
+    reviewed: true
+  - id: fernau-2016-problems-finite-automata
+    title: "Problems on Finite Automata and the Exponential Time Hypothesis"
+    authors: "Fernau, Krebs"
+    year: 2016
+    doi: "10.1007/978-3-319-40946-7_8"
+    dblp: conf/wia/FernauK16
+    topic: decision-problems
+    kind: pilot
+    reviewed: true
+  - id: brabrand-2007-analyzing-ambiguity-context
+    title: "Analyzing Ambiguity of Context-Free Grammars"
+    authors: "Brabrand, Giegerich, Møller"
+    year: 2007
+    doi: "10.1007/978-3-540-76336-9_21"
+    dblp: conf/wia/BrabrandGM07
+    topic: ambiguity-of-context-free-grammars
+    kind: pilot
+    reviewed: true
+  - id: gruber-2024-pumping-lemma-context
+    title: "The Pumping Lemma for Context-Free Languages is Undecidable"
+    authors: "Gruber, Holzer, Rauch"
+    year: 2024
+    doi: "10.1007/978-3-031-66159-4_11"
+    dblp: conf/dlt/GruberHR24
+    topic: pumping-lemmas
+    kind: pilot
+    reviewed: true
+  - id: alur-2006-adding-nesting-structure
+    title: "Adding Nesting Structure to Words"
+    authors: "Alur, Madhusudan"
+    year: 2006
+    doi: "10.1007/11779148_1"
+    dblp: conf/dlt/AlurM06
+    topic: visibly-pushdown-automata
+    kind: pilot
+    reviewed: true
+  - id: rubtsov-2018-structural-lemma-deterministic
+    title: "A Structural Lemma for Deterministic Context-Free Languages"
+    authors: "Rubtsov"
+    year: 2018
+    doi: "10.1007/978-3-319-98654-8_45"
+    dblp: conf/dlt/Rubtsov18
+    topic: deterministic-context-free-languages
+    kind: pilot
+    reviewed: true
+  - id: bednarova-2012-removing-nondeterminism-constant
+    title: "Removing Nondeterminism in Constant Height Pushdown Automata"
+    authors: "Bednárová, Geffert, Mereghetti, Palano"
+    year: 2012
+    doi: "10.1007/978-3-642-31623-4_6"
+    dblp: conf/dcfs/BednarovaGMP12
+    topic: constant-height-pushdown-automata
+    kind: pilot
+    reviewed: true
+  - id: atig-2008-emptiness-multi-pushdown
+    title: "Emptiness of Multi-pushdown Automata Is 2ETIME-Complete"
+    authors: "Atig, Bollig, Habermehl"
+    year: 2008
+    doi: "10.1007/978-3-540-85780-8_9"
+    dblp: conf/dlt/AtigBH08
+    topic: multi-pushdown-automata
+    kind: pilot
+    reviewed: true
+  - id: alonso-1997-construction-efficient-generalized
+    title: "Construction of Efficient Generalized LR Parsers"
+    authors: "Alonso, Souto, Ferro"
+    year: 1997
+    doi: "10.1007/bfb0031377"
+    dblp: conf/wia/AlonsoCF97
+    topic: parsing
+    kind: pilot
+    reviewed: true
+  - id: okhotin-2003-boolean-grammars
+    title: "Boolean Grammars"
+    authors: "Okhotin"
+    year: 2003
+    doi: "10.1007/3-540-45007-6_32"
+    dblp: conf/dlt/Okhotin03
+    topic: conjunctive-and-boolean-grammars
+    kind: pilot
+    reviewed: true
+  - id: jez-2007-conjunctive-grammars-can
+    title: "Conjunctive Grammars Can Generate Non-regular Unary Languages"
+    authors: "Jez"
+    year: 2007
+    doi: "10.1007/978-3-540-73208-2_24"
+    dblp: conf/dlt/Jez07
+    topic: conjunctive-and-boolean-grammars
+    kind: pilot
+    reviewed: true
+  - id: denkinger-2016-automata-characterisation-multiple
+    title: "An Automata Characterisation for Multiple Context-Free Languages"
+    authors: "Denkinger"
+    year: 2016
+    doi: "10.1007/978-3-662-53132-7_12"
+    dblp: conf/dlt/Denkinger16
+    topic: mildly-context-sensitive-grammars
+    kind: pilot
+    reviewed: true
+  - id: kortelainen-2011-there-exist-minimal
+    title: "There Does Not Exist a Minimal Full Trio with Respect to Bounded Context-Free Languages"
+    authors: "Kortelainen, Salmi"
+    year: 2011
+    doi: "10.1007/978-3-642-22321-1_27"
+    dblp: conf/dlt/KortelainenS11
+    topic: language-families
+    kind: pilot
+    reviewed: true
+  - id: hoogeboom-2001-context-free-valence
+    title: "Context-Free Valence Grammars - Revisited"
+    authors: "Hoogeboom"
+    year: 2001
+    doi: "10.1007/3-540-46011-x_25"
+    dblp: conf/dlt/Hoogeboom01
+    topic: regulated-rewriting
+    kind: pilot
+    reviewed: true
+  - id: masopust-2009-descriptional-complexity-three
+    title: "Descriptional Complexity of Three-Nonterminal Scattered Context Grammars: An Improvement"
+    authors: "Masopust, Meduna"
+    year: 2009
+    doi: "10.4204/eptcs.3.17"
+    dblp: journals/corr/abs-0907-5132
+    topic: scattered-context-grammars
+    kind: pilot
+    reviewed: true
+  - id: beek-2004-competence-cd-grammar
+    title: "On Competence in CD Grammar Systems"
+    authors: "Beek, Csuhaj-Varjú, Holzer, Vaszil"
+    year: 2004
+    doi: "10.1007/978-3-540-30550-7_7"
+    dblp: conf/dlt/BeekCHV04
+    topic: cd-grammar-systems
+    kind: pilot
+    reviewed: true
+  - id: vaszil-2005-non-returning-pc
+    title: "Non-returning PC Grammar Systems Generate Any Recursively Enumerable Language with Eight Context-free Components"
+    authors: "Vaszil"
+    year: 2005
+    dblp: conf/dcfs/Vaszil05
+    topic: pc-grammar-systems
+    kind: pilot
+    reviewed: true
+  - id: paun-1993-contextual-grammars-erasing
+    title: "Contextual Grammars: Erasing, Determinism, One-Side Contexts"
+    authors: "Paun, Rozenberg, Salomaa"
+    year: 1993
+    dblp: conf/dlt/PaunRS93
+    topic: contextual-grammars
+    kind: pilot
+    reviewed: true
+  - id: freund-1993-aspects-n-dimensional
+    title: "Aspects of N-Dimensional Lindenmayer Systems"
+    authors: "Freund"
+    year: 1993
+    dblp: conf/dlt/Freund93
+    topic: lindenmayer-systems
+    kind: pilot
+    reviewed: true
+  - id: hofbauer-2003-deleting-string-rewriting
+    title: "Deleting String Rewriting Systems Preserve Regularity"
+    authors: "Hofbauer, Waldmann"
+    year: 2003
+    doi: "10.1007/3-540-45007-6_27"
+    dblp: conf/dlt/HofbauerW03
+    topic: string-rewriting
+    kind: pilot
+    reviewed: true
+  - id: campeanu-1999-state-complexity-basic
+    title: "State Complexity of Basic Operations on Finite Languages"
+    authors: "Câmpeanu, II, Salomaa, Yu"
+    year: 1999
+    doi: "10.1007/3-540-45526-4_6"
+    dblp: conf/wia/CampeanuCSY99
+    topic: state-complexity-of-operations
+    kind: pilot
+    reviewed: true
+  - id: brzozowski-2009-quotient-complexity-regular
+    title: "Quotient Complexity of Regular Languages"
+    authors: "Brzozowski"
+    year: 2009
+    doi: "10.4204/eptcs.3.2"
+    dblp: journals/corr/abs-0907-4547
+    topic: state-complexity-of-operations
+    kind: pilot
+    reviewed: true
+  - id: holzer-2002-state-complexity-basic
+    title: "State Complexity of Basic Operations on Nondeterministic Finite Automata"
+    authors: "Holzer, Kutrib"
+    year: 2002
+    doi: "10.1007/3-540-44977-9_14"
+    dblp: conf/wia/HolzerK02
+    topic: nondeterministic-state-complexity
+    kind: pilot
+    reviewed: true
+  - id: yu-2006-state-complexity-combined
+    title: "On the State Complexity of Combined Operations"
+    authors: "Yu"
+    year: 2006
+    doi: "10.1007/11812128_3"
+    dblp: conf/wia/Yu06
+    topic: combined-operations
+    kind: pilot
+    reviewed: true
+  - id: domaratzki-2006-transition-complexity-language
+    title: "Transition Complexity of Language Operations"
+    authors: "Domaratzki, Salomaa"
+    year: 2006
+    dblp: conf/dcfs/DomaratzkiS06
+    topic: transition-complexity
+    kind: pilot
+    reviewed: true
+  - id: jiraskova-2009-magic-numbers-ternary
+    title: "Magic Numbers and Ternary Alphabet"
+    authors: "Jirásková"
+    year: 2009
+    doi: "10.1007/978-3-642-02737-6_24"
+    dblp: conf/dlt/Jiraskova09
+    topic: magic-numbers
+    kind: pilot
+    reviewed: true
+  - id: kutrib-2004-phenomenon-non-recursive
+    title: "The Phenomenon of Non-Recursive Trade-Offs"
+    authors: "Kutrib"
+    year: 2004
+    dblp: conf/dcfs/Kutrib04
+    topic: non-recursive-trade-offs
+    kind: pilot
+    reviewed: true
+  - id: kapoutsis-2009-size-complexity-two
+    title: "Size Complexity of Two-Way Finite Automata"
+    authors: "Kapoutsis"
+    year: 2009
+    doi: "10.1007/978-3-642-02737-6_4"
+    dblp: conf/dlt/Kapoutsis09
+    topic: size-of-two-way-automata
+    kind: pilot
+    reviewed: true
+  - id: gruber-2009-tight-bounds-descriptional
+    title: "Tight Bounds on the Descriptional Complexity of Regular Expressions"
+    authors: "Gruber, Holzer"
+    year: 2009
+    doi: "10.1007/978-3-642-02737-6_22"
+    dblp: conf/dlt/GruberH09
+    topic: size-of-regular-expressions
+    kind: pilot
+    reviewed: true
+  - id: brzozowski-2012-syntactic-complexities-classes
+    title: "Syntactic Complexities of Some Classes of Star-Free Languages"
+    authors: "Brzozowski, Li"
+    year: 2012
+    doi: "10.1007/978-3-642-31623-4_9"
+    dblp: conf/dcfs/BrzozowskiL12
+    topic: syntactic-complexity
+    kind: pilot
+    reviewed: true
+  - id: palioudakis-2013-comparisons-between-measures
+    title: "Comparisons between Measures of Nondeterminism on Finite Automata"
+    authors: "Palioudakis, Salomaa, Akl"
+    year: 2013
+    doi: "10.1007/978-3-642-39310-5_21"
+    dblp: conf/dcfs/PalioudakisSA13
+    topic: measures-of-nondeterminism
+    kind: pilot
+    reviewed: true
+  - id: gruber-2018-minimal-grammar-problems
+    title: "On Minimal Grammar Problems for Finite Languages"
+    authors: "Gruber, Holzer, Wolfsteiner"
+    year: 2018
+    doi: "10.1007/978-3-319-98654-8_28"
+    dblp: conf/dlt/Gruber0W18
+    topic: complexity-of-grammars-and-systems
+    kind: pilot
+    reviewed: true
+  - id: calude-1993-borel-normality-algorithmic
+    title: "Borel Normality and Algorithmic Randomness"
+    authors: "Calude"
+    year: 1993
+    dblp: conf/dlt/Calude93
+    topic: kolmogorov-complexity
+    kind: pilot
+    reviewed: true
+  - id: brzozowski-2009-closures-formal-languages
+    title: "Closures in Formal Languages and Kuratowski's Theorem"
+    authors: "Brzozowski, Grant, Shallit"
+    year: 2009
+    doi: "10.1007/978-3-642-02737-6_10"
+    dblp: conf/dlt/BrzozowskiGS09
+    topic: closure-properties
+    kind: pilot
+    reviewed: true
+  - id: jedrzejowicz-1995-undecidable-problem-shuffle
+    title: "An Undecidable Problem for Shuffle Languages"
+    authors: "Jedrzejowicz"
+    year: 1995
+    dblp: conf/dlt/Jedrzejowicz95
+    topic: shuffle-and-interleaving
+    kind: pilot
+    reviewed: true
+  - id: kopecki-2010-iterated-hairpin-completion
+    title: "On the Iterated Hairpin Completion"
+    authors: "Kopecki"
+    year: 2010
+    doi: "10.1007/978-3-642-14455-4_42"
+    dblp: conf/dlt/Kopecki10
+    topic: insertion-and-deletion-operations
+    kind: pilot
+    reviewed: true
+  - id: kunc-2007-what-we-know
+    title: "What Do We Know About Language Equations?"
+    authors: "Kunc"
+    year: 2007
+    doi: "10.1007/978-3-540-73208-2_3"
+    dblp: conf/dlt/Kunc07
+    topic: language-equations
+    kind: pilot
+    reviewed: true
+  - id: horvath-2002-roots-powers-regular
+    title: "Roots and Powers of Regular Languages"
+    authors: "Horváth, Leupold, Lischke"
+    year: 2002
+    doi: "10.1007/3-540-45005-x_19"
+    dblp: conf/dlt/HorvathLL02
+    topic: roots-powers-and-decompositions
+    kind: pilot
+    reviewed: true
+  - id: han-2012-computing-edit-distance
+    title: "Computing the Edit-Distance between a Regular Language and a Context-Free Language"
+    authors: "Han, Ko, Salomaa"
+    year: 2012
+    doi: "10.1007/978-3-642-31653-1_9"
+    dblp: conf/dlt/HanKS12
+    topic: distances-and-neighbourhoods
+    kind: pilot
+    reviewed: true
+  - id: inoue-2025-positive-varieties-lattice
+    title: "Positive Varieties of Lattice Languages"
+    authors: "Inoue, Komatsu"
+    year: 2025
+    doi: "10.1007/978-3-032-01475-7_7"
+    dblp: conf/dlt/InoueK25
+    topic: syntactic-monoids-and-varieties
+    kind: pilot
+    reviewed: true
+  - id: lodaya-2010-around-dot-depth
+    title: "Around Dot Depth Two"
+    authors: "Lodaya, Pandya, Shah"
+    year: 2010
+    doi: "10.1007/978-3-642-14455-4_28"
+    dblp: conf/dlt/LodayaPS10
+    topic: star-free-languages
+    kind: pilot
+    reviewed: true
+  - id: klima-2008-hierarchies-piecewise-testable
+    title: "Hierarchies of Piecewise Testable Languages"
+    authors: "Klíma, Polák"
+    year: 2008
+    doi: "10.1007/978-3-540-85780-8_38"
+    dblp: conf/dlt/KlimaP08
+    topic: testable-languages
+    kind: pilot
+    reviewed: true
+  - id: egri-nagy-2004-algebraic-hierarchical-decomposition
+    title: "Algebraic Hierarchical Decomposition of Finite State Automata: Comparison of Implementations for Krohn-Rhodes Theory"
+    authors: "Egri-Nagy, Nehaniv"
+    year: 2004
+    doi: "10.1007/978-3-540-30500-2_32"
+    dblp: conf/wia/Egri-NagyN04
+    topic: transformation-semigroups
+    kind: pilot
+    reviewed: true
+  - id: klimann-2015-connected-3-state
+    title: "A Connected 3-State Reversible Mealy Automaton Cannot Generate an Infinite Burnside Group"
+    authors: "Klimann, Picantin, Savchuk"
+    year: 2015
+    doi: "10.1007/978-3-319-21500-6_25"
+    dblp: conf/dlt/KlimannPS15
+    topic: automata-and-groups
+    kind: pilot
+    reviewed: true
+  - id: broda-2015-deciding-synchronous-kleene
+    title: "Deciding Synchronous Kleene Algebra with Derivatives"
+    authors: "Broda, Cavadas, Ferreira, Moreira"
+    year: 2015
+    doi: "10.1007/978-3-319-22360-5_5"
+    dblp: conf/wia/BrodaCFM15
+    topic: kleene-algebra
+    kind: pilot
+    reviewed: true
+  - id: bojanczyk-2015-recognisable-languages-over
+    title: "Recognisable Languages over Monads"
+    authors: "Bojanczyk"
+    year: 2015
+    doi: "10.1007/978-3-319-21500-6_1"
+    dblp: conf/dlt/Bojanczyk15
+    topic: rational-and-recognisable-subsets
+    kind: pilot
+    reviewed: true
+  - id: klarlund-2000-mona-implementation-secrets
+    title: "MONA Implementation Secrets"
+    authors: "Klarlund, Møller, Schwartzbach"
+    year: 2000
+    doi: "10.1007/3-540-44674-5_15"
+    dblp: conf/wia/KlarlundMS00
+    topic: monadic-second-order-logic
+    kind: pilot
+    reviewed: true
+  - id: lodaya-2017-two-variable-first
+    title: "Two-Variable First Order Logic with Counting Quantifiers: Complexity Results"
+    authors: "Lodaya, Sreejith"
+    year: 2017
+    doi: "10.1007/978-3-319-62809-7_19"
+    dblp: conf/dlt/LodayaS17
+    topic: first-order-fragments
+    kind: pilot
+    reviewed: true
+  - id: fritz-2003-constructing-buchi-automata
+    title: "Constructing Büchi Automata from Linear Temporal Logic Using Simulation Relations for Alternating Büchi Automata"
+    authors: "Fritz"
+    year: 2003
+    doi: "10.1007/3-540-45089-0_5"
+    dblp: conf/wia/Fritz03
+    topic: temporal-logics
+    kind: pilot
+    reviewed: true
+  - id: berdinsky-2014-automatic-transitive-graphs
+    title: "On Automatic Transitive Graphs"
+    authors: "Berdinsky, Khoussainov"
+    year: 2014
+    doi: "10.1007/978-3-319-09698-8_1"
+    dblp: conf/dlt/BerdinskyK14
+    topic: automatic-structures
+    kind: pilot
+    reviewed: true
+  - id: tsai-2010-state-buchi-complementation
+    title: "State of Büchi Complementation"
+    authors: "Tsai, Fogarty, Vardi, Tsay"
+    year: 2010
+    doi: "10.1007/978-3-642-18098-9_28"
+    dblp: conf/wia/TsaiFVT10
+    topic: complementation-and-determinisation
+    kind: pilot
+    reviewed: true
+  - id: selivanov-2007-fine-hierarchy-regular
+    title: "Fine Hierarchy of Regular Aperiodic omega -Languages"
+    authors: "Selivanov"
+    year: 2007
+    doi: "10.1007/978-3-540-73208-2_37"
+    dblp: conf/dlt/Selivanov07
+    topic: omega-regular-languages
+    kind: pilot
+    reviewed: true
+  - id: holtmann-2007-memory-reduction-strategies
+    title: "Memory Reduction for Strategies in Infinite Games"
+    authors: "Holtmann, Löding"
+    year: 2007
+    doi: "10.1007/978-3-540-76336-9_24"
+    dblp: conf/wia/HoltmannL07
+    topic: infinite-games
+    kind: pilot
+    reviewed: true
+  - id: khoussainov-2018-brief-excursion-parity
+    title: "A Brief Excursion to Parity Games"
+    authors: "Khoussainov"
+    year: 2018
+    doi: "10.1007/978-3-319-98654-8_3"
+    dblp: conf/dlt/Khoussainov18
+    topic: parity-games
+    kind: pilot
+    reviewed: true
+  - id: bes-2005-kleene-theorem-languages
+    title: "A Kleene Theorem for Languages of Words Indexed by Linear Orderings"
+    authors: "Bès, Carton"
+    year: 2005
+    doi: "10.1007/11505877_14"
+    dblp: conf/dlt/BesC05
+    topic: linear-orderings
+    kind: pilot
+    reviewed: true
+  - id: gruber-2005-timed-automata-discrete
+    title: "On Timed Automata with Discrete Time - Structural and Language Theoretical Characterization"
+    authors: "Gruber, Holzer, Kiehn, König"
+    year: 2005
+    doi: "10.1007/11505877_24"
+    dblp: conf/dlt/GruberHKK05
+    topic: timed-and-hybrid-automata
+    kind: pilot
+    reviewed: true
+  - id: dreyfus-2013-enhancing-approximations-regular
+    title: "Enhancing Approximations for Regular Reachability Analysis"
+    authors: "Dreyfus, Héam, Kouchnarenko"
+    year: 2013
+    doi: "10.1007/978-3-642-39274-0_29"
+    dblp: conf/wia/DreyfusHK13
+    topic: infinite-state-verification
+    kind: pilot
+    reviewed: true
+  - id: rudie-2010-summary-discrete-event
+    title: "A Summary of Some Discrete-Event System Control Problems"
+    authors: "Rudie"
+    year: 2010
+    doi: "10.1007/978-3-642-18098-9_2"
+    dblp: conf/wia/Rudie10
+    topic: supervisory-control
+    kind: pilot
+    reviewed: true
+  - id: mohri-2000-generic-epsilon-removal
+    title: "Generic epsilon -Removal Algorithm for Weighted Automata"
+    authors: "Mohri"
+    year: 2000
+    doi: "10.1007/3-540-44674-5_19"
+    dblp: conf/wia/Mohri00
+    topic: weighted-automata
+    kind: pilot
+    reviewed: true
+  - id: droste-2006-weighted-automata-weighted
+    title: "Weighted Automata and Weighted Logics on Infinite Words"
+    authors: "Droste, Rahonis"
+    year: 2006
+    doi: "10.1007/11779148_6"
+    dblp: conf/dlt/DrosteR06
+    topic: weighted-logics
+    kind: pilot
+    reviewed: true
+  - id: freivalds-2007-non-constructive-methods
+    title: "Non-constructive Methods for Finite Probabilistic Automata"
+    authors: "Freivalds"
+    year: 2007
+    doi: "10.1007/978-3-540-73208-2_18"
+    dblp: conf/dlt/Freivalds07
+    topic: probabilistic-automata
+    kind: pilot
+    reviewed: true
+  - id: leung-2001-limitedness-problem-distance
+    title: "The Limitedness Problem on Distance Automata"
+    authors: "Leung, Podolskiy"
+    year: 2001
+    dblp: conf/dcfs/LeungP01
+    topic: weighted-automata
+    kind: pilot
+    reviewed: true
+  - id: kudlek-2001-universal-turing-machine
+    title: "A Universal Turing Machine with 3 States and 9 Symbols"
+    authors: "Kudlek, Rogozhin"
+    year: 2001
+    doi: "10.1007/3-540-46011-x_27"
+    dblp: conf/dlt/KudlekR01
+    topic: turing-machines
+    kind: pilot
+    reviewed: true
+  - id: ibarra-2014-automata-reversal-bounded
+    title: "Automata with Reversal-Bounded Counters: A Survey"
+    authors: "Ibarra"
+    year: 2014
+    doi: "10.1007/978-3-319-09704-6_2"
+    dblp: conf/dcfs/Ibarra14
+    topic: counter-automata
+    kind: pilot
+    reviewed: true
+  - id: kutrib-2012-states-heads-count
+    title: "States and Heads Do Count for Unary Multi-head Finite Automata"
+    authors: "Kutrib, Malcher, Wendlandt"
+    year: 2012
+    doi: "10.1007/978-3-642-31653-1_20"
+    dblp: conf/dlt/KutribMW12
+    topic: multi-head-and-multitape-automata
+    kind: pilot
+    reviewed: true
+  - id: ibarra-2018-generalizations-checking-stack
+    title: "Generalizations of Checking Stack Automata: Characterizations and Hierarchies"
+    authors: "Ibarra, McQuillan"
+    year: 2018
+    doi: "10.1007/978-3-319-98654-8_34"
+    dblp: conf/dlt/IbarraM18
+    topic: storage-automata
+    kind: pilot
+    reviewed: true
+  - id: otto-2003-restarting-automata-relations
+    title: "Restarting Automata and Their Relations to the Chomsky Hierarchy"
+    authors: "Otto"
+    year: 2003
+    doi: "10.1007/3-540-45007-6_5"
+    dblp: conf/dlt/Otto03
+    topic: restarting-automata
+    kind: pilot
+    reviewed: true
+  - id: pighizzini-2013-limited-automata-regular
+    title: "Limited Automata and Regular Languages"
+    authors: "Pighizzini, Pisoni"
+    year: 2013
+    doi: "10.1007/978-3-642-39310-5_24"
+    dblp: conf/dcfs/PighizziniP13
+    topic: limited-automata
+    kind: pilot
+    reviewed: true
+  - id: fernau-2015-jumping-finite-automata
+    title: "Jumping Finite Automata: Characterizations and Complexity"
+    authors: "Fernau, Paramasivan, Schmid"
+    year: 2015
+    doi: "10.1007/978-3-319-22360-5_8"
+    dblp: conf/wia/FernauPS15
+    topic: jumping-automata
+    kind: pilot
+    reviewed: true
+  - id: bertoni-2003-quantum-computing-1
+    title: "Quantum Computing: 1-Way Quantum Automata"
+    authors: "Bertoni, Mereghetti, Palano"
+    year: 2003
+    doi: "10.1007/3-540-45007-6_1"
+    dblp: conf/dlt/BertoniMP03
+    topic: quantum-finite-automata
+    kind: pilot
+    reviewed: true
+  - id: holzer-2015-minimal-reversible-deterministic
+    title: "Minimal Reversible Deterministic Finite Automata"
+    authors: "Holzer, Jakobi, Kutrib"
+    year: 2015
+    doi: "10.1007/978-3-319-21500-6_22"
+    dblp: conf/dlt/HolzerJK15
+    topic: reversible-automata
+    kind: pilot
+    reviewed: true
+  - id: bordihn-2008-computational-capacity-parallel
+    title: "On the Computational Capacity of Parallel Communicating Finite Automata"
+    authors: "Bordihn, Kutrib, Malcher"
+    year: 2008
+    doi: "10.1007/978-3-540-85780-8_11"
+    dblp: conf/dlt/BordihnKM08
+    topic: automata-systems
+    kind: pilot
+    reviewed: true
+  - id: veanes-2013-applications-symbolic-finite
+    title: "Applications of Symbolic Finite Automata"
+    authors: "Veanes"
+    year: 2013
+    doi: "10.1007/978-3-642-39274-0_3"
+    dblp: conf/wia/Veanes13
+    topic: infinite-alphabet-automata
+    kind: pilot
+    reviewed: true
+  - id: myers-2013-characterisation-nl-poly
+    title: "A Characterisation of NL/poly via Nondeterministic Finite Automata"
+    authors: "Myers, Urbat"
+    year: 2013
+    doi: "10.1007/978-3-642-39310-5_19"
+    dblp: conf/dcfs/MyersU13
+    topic: automata-and-complexity-classes
+    kind: pilot
+    reviewed: true
+  - id: souza-2008-decidability-equivalence-k
+    title: "On the Decidability of the Equivalence for k-Valued Transducers"
+    authors: "Souza"
+    year: 2008
+    doi: "10.1007/978-3-540-85780-8_20"
+    dblp: conf/dlt/Souza08
+    topic: finite-state-transducers
+    kind: pilot
+    reviewed: true
+  - id: allauzen-2007-openfst-general-efficient
+    title: "OpenFst: A General and Efficient Weighted Finite-State Transducer Library"
+    authors: "Allauzen, Riley, Schalkwyk, Skut, Mohri"
+    year: 2007
+    doi: "10.1007/978-3-540-76336-9_3"
+    dblp: conf/wia/AllauzenRSSM07
+    topic: weighted-transducers
+    kind: pilot
+    reviewed: true
+  - id: baudru-2018-two-way-transducers
+    title: "From Two-Way Transducers to Regular Function Expressions"
+    authors: "Baudru, Reynier"
+    year: 2018
+    doi: "10.1007/978-3-319-98654-8_8"
+    dblp: conf/dlt/BaudruR18
+    topic: two-way-and-streaming-transducers
+    kind: pilot
+    reviewed: true
+  - id: inaba-2008-multi-return-macro
+    title: "Multi-Return Macro Tree Transducers"
+    authors: "Inaba, Hosoya, Maneth"
+    year: 2008
+    doi: "10.1007/978-3-540-70844-5_11"
+    dblp: conf/wia/InabaHM08
+    topic: tree-transducers
+    kind: pilot
+    reviewed: true
+  - id: abdulla-2006-bisimulation-minimization-tree
+    title: "Bisimulation Minimization of Tree Automata"
+    authors: "Abdulla, Kaati, Björklund"
+    year: 2006
+    doi: "10.1007/11812128_17"
+    dblp: conf/wia/AbdullaKH06
+    topic: finite-tree-automata
+    kind: pilot
+    reviewed: true
+  - id: bjorklund-2019-z-automata-compact
+    title: "Z-Automata for Compact and Direct Representation of Unranked Tree Languages"
+    authors: "Björklund, Drewes, Satta"
+    year: 2019
+    doi: "10.1007/978-3-030-23679-3_7"
+    dblp: conf/wia/BjorklundDS19
+    topic: unranked-tree-automata
+    kind: pilot
+    reviewed: true
+  - id: filiot-2008-tree-automata-global
+    title: "Tree Automata with Global Constraints"
+    authors: "Filiot, Talbot, Tison"
+    year: 2008
+    doi: "10.1007/978-3-540-85780-8_25"
+    dblp: conf/dlt/FiliotTT08
+    topic: tree-automata-with-constraints
+    kind: pilot
+    reviewed: true
+  - id: lohrey-2015-grammar-based-tree
+    title: "Grammar-Based Tree Compression"
+    authors: "Lohrey"
+    year: 2015
+    doi: "10.1007/978-3-319-21500-6_3"
+    dblp: conf/dlt/Lohrey15
+    topic: tree-grammars
+    kind: pilot
+    reviewed: true
+  - id: bjorklund-2007-bisimulation-minimisation-weighted
+    title: "Bisimulation Minimisation for Weighted Tree Automata"
+    authors: "Björklund, Maletti, May"
+    year: 2007
+    doi: "10.1007/978-3-540-73208-2_23"
+    dblp: conf/dlt/HogbergMM07
+    topic: weighted-tree-automata
+    kind: pilot
+    reviewed: true
+  - id: neumann-2001-emptiness-problem-weak
+    title: "The Emptiness Problem for Weak Rabin Tree Automata"
+    authors: "Neumann, Szepietowski"
+    year: 2001
+    dblp: conf/dcfs/NeumannS01
+    topic: automata-on-infinite-trees
+    kind: pilot
+    reviewed: true
+  - id: anselmo-2007-determinism-non-determinism
+    title: "From Determinism to Non-determinism in Recognizable Two-Dimensional Languages"
+    authors: "Anselmo, Giammarresi, Madonia"
+    year: 2007
+    doi: "10.1007/978-3-540-73208-2_7"
+    dblp: conf/dlt/AnselmoGM07
+    topic: two-dimensional-languages
+    kind: pilot
+    reviewed: true
+  - id: dediu-2006-contextual-hypergraph-grammars
+    title: "Contextual Hypergraph Grammars - A New Approach to the Generation of Hypergraph Languages"
+    authors: "Dediu, Klempien-Hinrichs, Kreowski, Nagy"
+    year: 2006
+    doi: "10.1007/11779148_30"
+    dblp: conf/dlt/DediuKKN06
+    topic: graph-grammars
+    kind: pilot
+    reviewed: true
+  - id: okhotin-2019-graph-walking-automata
+    title: "Graph-Walking Automata: From Whence They Come, and Whither They are Bound"
+    authors: "Okhotin"
+    year: 2019
+    doi: "10.1007/978-3-030-23679-3_2"
+    dblp: conf/wia/Okhotin19
+    topic: automata-on-graphs
+    kind: pilot
+    reviewed: true
+  - id: mantaci-2011-linear-partitions-parallelogram
+    title: "From Linear Partitions to Parallelogram Polyominoes"
+    authors: "Mantaci, Massazza"
+    year: 2011
+    doi: "10.1007/978-3-642-22321-1_30"
+    dblp: conf/dlt/MantaciM11
+    topic: polyominoes
+    kind: pilot
+    reviewed: true
+  - id: merzenich-1993-fractals-dimension-formal
+    title: "Fractals, Dimension, and Formal Languages"
+    authors: "Merzenich, Staiger"
+    year: 1993
+    dblp: conf/dlt/MerzenichS93
+    topic: fractals-and-images
+    kind: pilot
+    reviewed: true
+  - id: rampersad-2004-words-avoiding-7
+    title: "Words Avoiding 7/3-Powers and the Thue-Morse Morphism"
+    authors: "Rampersad"
+    year: 2004
+    doi: "10.1007/978-3-540-30550-7_30"
+    dblp: conf/dlt/Rampersad04
+    topic: repetitions-and-avoidability
+    kind: pilot
+    reviewed: true
+  - id: ochem-2016-avoidability-formulas-two
+    title: "Avoidability of Formulas with Two Variables"
+    authors: "Ochem, Rosenfeld"
+    year: 2016
+    doi: "10.1007/978-3-662-53132-7_28"
+    dblp: conf/dlt/OchemR16
+    topic: pattern-avoidance
+    kind: pilot
+    reviewed: true
+  - id: holub-2008-relation-between-periodicity
+    title: "On the Relation between Periodicity and Unbordered Factors of Finite Words"
+    authors: "Holub, Nowotka"
+    year: 2008
+    doi: "10.1007/978-3-540-85780-8_32"
+    dblp: conf/dlt/HolubN08
+    topic: periodicity-and-borders
+    kind: pilot
+    reviewed: true
+  - id: domaratzki-2011-abelian-primitive-words
+    title: "Abelian Primitive Words"
+    authors: "Domaratzki, Rampersad"
+    year: 2011
+    doi: "10.1007/978-3-642-22321-1_18"
+    dblp: conf/dlt/DomaratzkiR11
+    topic: abelian-properties-of-words
+    kind: pilot
+    reviewed: true
+  - id: barker-2020-scattered-factor-universality
+    title: "Scattered Factor-Universality of Words"
+    authors: "Barker, Fleischmann, Harwardt, Manea, Nowotka"
+    year: 2020
+    doi: "10.1007/978-3-030-48516-0_2"
+    dblp: conf/dlt/BarkerFHMN20
+    topic: subwords-and-scattered-factors
+    kind: pilot
+    reviewed: true
+  - id: berstel-1995-recent-results-sturmian
+    title: "Recent Results on Sturmian Words"
+    authors: "Berstel"
+    year: 1995
+    dblp: conf/dlt/Berstel95
+    topic: sturmian-words
+    kind: pilot
+    reviewed: true
+  - id: charlier-2011-enumeration-decidable-properties
+    title: "Enumeration and Decidable Properties of Automatic Sequences"
+    authors: "Charlier, Rampersad, Shallit"
+    year: 2011
+    doi: "10.1007/978-3-642-22321-1_15"
+    dblp: conf/dlt/CharlierRS11
+    topic: morphic-and-automatic-sequences
+    kind: pilot
+    reviewed: true
+  - id: frougny-2009-negative-bases
+    title: "On Negative Bases"
+    authors: "Frougny, Lai"
+    year: 2009
+    doi: "10.1007/978-3-642-02737-6_20"
+    dblp: conf/dlt/FrougnyL09
+    topic: numeration-systems
+    kind: pilot
+    reviewed: true
+  - id: cassaigne-1995-special-factors-sequences
+    title: "Special Factors of Sequences with Linear Subword Complexity"
+    authors: "Cassaigne"
+    year: 1995
+    dblp: conf/dlt/Cassaigne95
+    topic: factor-complexity-and-growth
+    kind: pilot
+    reviewed: true
+  - id: rukavicka-2017-number-rich-words
+    title: "On the Number of Rich Words"
+    authors: "Rukavicka"
+    year: 2017
+    doi: "10.1007/978-3-319-62809-7_26"
+    dblp: conf/dlt/Rukavicka17
+    topic: palindromes-and-richness
+    kind: pilot
+    reviewed: true
+  - id: jez-2013-recompression-word-equations
+    title: "Recompression: Word Equations and Beyond"
+    authors: "Jez"
+    year: 2013
+    doi: "10.1007/978-3-642-38771-5_2"
+    dblp: conf/dlt/Jez13
+    topic: word-equations
+    kind: pilot
+    reviewed: true
+  - id: day-2013-dual-post-correspondence
+    title: "On the Dual Post Correspondence Problem"
+    authors: "Day, Reidenbach, Schneider"
+    year: 2013
+    doi: "10.1007/978-3-642-38771-5_16"
+    dblp: conf/dlt/DayRS13
+    topic: morphisms-and-pcp
+    kind: pilot
+    reviewed: true
+  - id: bonomo-2013-suffixes-conjugates-lyndon
+    title: "Suffixes, Conjugates and Lyndon Words"
+    authors: "Bonomo, Mantaci, Restivo, Rosone, Sciortino"
+    year: 2013
+    doi: "10.1007/978-3-642-38771-5_13"
+    dblp: conf/dlt/BonomoMRRS13
+    topic: lyndon-words-and-bwt
+    kind: pilot
+    reviewed: true
+  - id: blanchet-sadri-2012-squares-binary-partial
+    title: "Squares in Binary Partial Words"
+    authors: "Blanchet-Sadri, Jiao, Machacek"
+    year: 2012
+    doi: "10.1007/978-3-642-31653-1_36"
+    dblp: conf/dlt/Blanchet-SadriJM12
+    topic: partial-words
+    kind: pilot
+    reviewed: true
+  - id: fernau-1999-decidability-code-properties
+    title: "Decidability of code properties"
+    authors: "Fernau, Reinhardt, Staiger"
+    year: 1999
+    doi: "10.1142/9789812792464_0013"
+    dblp: conf/dlt/FernauR99
+    topic: codes
+    kind: pilot
+    reviewed: true
+  - id: freydenberger-2008-bad-news-decision
+    title: "Bad News on Decision Problems for Patterns"
+    authors: "Freydenberger, Reidenbach"
+    year: 2008
+    doi: "10.1007/978-3-540-85780-8_26"
+    dblp: conf/dlt/FreydenbergerR08
+    topic: pattern-languages
+    kind: pilot
+    reviewed: true
+  - id: kitaev-2017-comprehensive-introduction-theory
+    title: "A Comprehensive Introduction to the Theory of Word-Representable Graphs"
+    authors: "Kitaev"
+    year: 2017
+    doi: "10.1007/978-3-319-62809-7_2"
+    dblp: conf/dlt/Kitaev17
+    topic: word-representable-graphs
+    kind: pilot
+    reviewed: true
+  - id: kutrib-2009-cellular-automata-sparse
+    title: "Cellular Automata with Sparse Communication"
+    authors: "Kutrib, Malcher"
+    year: 2009
+    doi: "10.1007/978-3-642-02979-0_7"
+    dblp: conf/wia/KutribM09
+    topic: cellular-automata-computation
+    kind: pilot
+    reviewed: true
+  - id: kari-2005-reversible-cellular-automata
+    title: "Reversible Cellular Automata"
+    authors: "Kari"
+    year: 2005
+    doi: "10.1007/11505877_5"
+    dblp: conf/dlt/Kari05
+    topic: dynamics-of-cellular-automata
+    kind: pilot
+    reviewed: true
+  - id: beal-2015-deciding-proper-conjugacy
+    title: "Deciding Proper Conjugacy of Classes of One-Sided Finite-Type-Dyck Shifts"
+    authors: "Béal, Heller"
+    year: 2015
+    doi: "10.1007/978-3-319-21500-6_13"
+    dblp: conf/dlt/BealH15
+    topic: symbolic-dynamics
+    kind: pilot
+    reviewed: true
+  - id: durand-2008-fixed-point-aperiodic
+    title: "Fixed Point and Aperiodic Tilings"
+    authors: "Durand, Romashchenko, Shen"
+    year: 2008
+    doi: "10.1007/978-3-540-85780-8_22"
+    dblp: conf/dlt/DurandRS08
+    topic: tilings
+    kind: pilot
+    reviewed: true
+  - id: perez-jimenez-2003-polynomial-complexity-class
+    title: "A Polynomial Complexity Class in P Systems Using Membrane Division"
+    authors: "Pérez-Jiménez, Jiménez, Sancho"
+    year: 2003
+    dblp: conf/dcfs/Perez-JimenezJS03
+    topic: membrane-computing
+    kind: pilot
+    reviewed: true
+  - id: paun-2006-languages-membrane-computing
+    title: "Languages in Membrane Computing: Some Details for Spiking Neural P Systems"
+    authors: "Paun"
+    year: 2006
+    doi: "10.1007/11779148_3"
+    dblp: conf/dlt/Paun06
+    topic: spiking-neural-p-systems
+    kind: pilot
+    reviewed: true
+  - id: bonizzoni-2002-decision-problems-linear
+    title: "Decision Problems for Linear and Circular Splicing Systems"
+    authors: "Bonizzoni, Felice, Mauri, Zizza"
+    year: 2002
+    doi: "10.1007/3-540-45005-x_7"
+    dblp: conf/dlt/BonizzoniFMZ02
+    topic: dna-computing-and-splicing
+    kind: pilot
+    reviewed: true
+  - id: harju-2002-computational-processes-living
+    title: "Computational Processes in Living Cells: Gene Assembly in Ciliates"
+    authors: "Harju, Rozenberg"
+    year: 2002
+    doi: "10.1007/3-540-45005-x_1"
+    dblp: conf/dlt/HarjuR02
+    topic: ciliate-gene-assembly
+    kind: pilot
+    reviewed: true
+  - id: margenstern-2003-context-free-insertion
+    title: "Context-Free Insertion-Deletion Systems"
+    authors: "Margenstern, Paun, Rogozhin, Verlan"
+    year: 2003
+    dblp: conf/dcfs/MargensternPRV03
+    topic: insertion-deletion-systems
+    kind: pilot
+    reviewed: true
+  - id: alhazov-2008-computational-completeness-hybrid
+    title: "Computational Completeness of Hybrid Networks of Evolutionary Processors with Seven Nodes"
+    authors: "Alhazov, Csuhaj-Varjú, Martín-Vide, Rogozhin"
+    year: 2008
+    dblp: conf/dcfs/AlhazovCMR08
+    topic: networks-of-evolutionary-processors
+    kind: pilot
+    reviewed: true
+  - id: ehrenfeucht-2004-basic-notions-reaction
+    title: "Basic Notions of Reaction Systems"
+    authors: "Ehrenfeucht, Rozenberg"
+    year: 2004
+    doi: "10.1007/978-3-540-30550-7_3"
+    dblp: conf/dlt/EhrenfeuchtR04
+    topic: reaction-systems
+    kind: pilot
+    reviewed: true
+  - id: han-2019-general-architecture-oritatami
+    title: "A General Architecture of Oritatami Systems for Simulating Arbitrary Finite Automata"
+    authors: "Han, Kim, Masuda, Seki"
+    year: 2019
+    doi: "10.1007/978-3-030-23679-3_12"
+    dblp: conf/wia/HanKMS19
+    topic: molecular-self-assembly
+    kind: pilot
+    reviewed: true
+  - id: garcia-2008-learning-regular-languages
+    title: "Learning Regular Languages Using Nondeterministic Finite Automata"
+    authors: "García, Parga, Alvarez, Ruiz"
+    year: 2008
+    doi: "10.1007/978-3-540-70844-5_10"
+    dblp: conf/wia/GarciaPAR08
+    topic: learning-regular-languages
+    kind: pilot
+    reviewed: true
+  - id: drewes-2003-learning-regular-tree
+    title: "Learning a Regular Tree Language from a Teacher"
+    authors: "Drewes, Björklund"
+    year: 2003
+    doi: "10.1007/3-540-45007-6_22"
+    dblp: conf/dlt/DrewesH03
+    topic: learning-beyond-finite-automata
+    kind: pilot
+    reviewed: true
+  - id: boiret-2012-learning-rational-functions
+    title: "Learning Rational Functions"
+    authors: "Boiret, Lemay, Niehren"
+    year: 2012
+    doi: "10.1007/978-3-642-31653-1_25"
+    dblp: conf/dlt/BoiretLN12
+    topic: learning-beyond-finite-automata
+    kind: pilot
+    reviewed: true
+  - id: salzer-2024-verifying-interpreting-neural
+    title: "Verifying and Interpreting Neural Networks Using Finite Automata"
+    authors: "Sälzer, Alsmann, Bruse, Lange"
+    year: 2024
+    doi: "10.1007/978-3-031-66159-4_19"
+    dblp: conf/dlt/SalzerABL24
+    topic: automata-and-neural-networks
+    kind: pilot
+    reviewed: true
+  - id: lombardy-2003-introducing-vaucanson
+    title: "Introducing VAUCANSON"
+    authors: "Lombardy, Poss, Régis-Gianas, Sakarovitch"
+    year: 2003
+    doi: "10.1007/3-540-45089-0_10"
+    dblp: conf/wia/LombardyPRS03
+    topic: automata-software-tools
+    kind: pilot
+    reviewed: true
+  - id: holub-2009-parallel-implementations-deterministic
+    title: "On Parallel Implementations of Deterministic Finite Automata"
+    authors: "Holub, Stekr"
+    year: 2009
+    doi: "10.1007/978-3-642-02979-0_9"
+    dblp: conf/wia/HolubS09
+    topic: efficient-representations
+    kind: pilot
+    reviewed: true
+  - id: faro-2012-fast-suffix-automata
+    title: "A Fast Suffix Automata Based Algorithm for Exact Online String Matching"
+    authors: "Faro, Lecroq"
+    year: 2012
+    doi: "10.1007/978-3-642-31606-7_13"
+    dblp: conf/wia/FaroL12
+    topic: string-matching
+    kind: pilot
+    reviewed: true
+  - id: weideman-2016-analyzing-matching-time
+    title: "Analyzing Matching Time Behavior of Backtracking Regular Expression Matchers by Using Ambiguity of NFA"
+    authors: "Weideman, Merwe, Berglund, Watson"
+    year: 2016
+    doi: "10.1007/978-3-319-40946-7_27"
+    dblp: conf/wia/WeidemanMBW16
+    topic: regex-engines
+    kind: pilot
+    reviewed: true
+  - id: karttunen-2000-applications-finite-state
+    title: "Applications of Finite-State Transducers in Natural Language Processing"
+    authors: "Karttunen"
+    year: 2000
+    doi: "10.1007/3-540-44674-5_2"
+    dblp: conf/wia/Karttunen00
+    topic: finite-state-nlp
+    kind: pilot
+    reviewed: true
+  - id: debarbieux-2013-early-nested-word
+    title: "Early Nested Word Automata for XPath Query Answering on XML Streams"
+    authors: "Debarbieux, Gauwin, Niehren, Sebastian, Zergaoui"
+    year: 2013
+    doi: "10.1007/978-3-642-39274-0_26"
+    dblp: conf/wia/DebarbieuxGNSZ13
+    topic: documents-and-databases
+    kind: pilot
+    reviewed: true
+  - id: bassino-2007-library-randomly-exhaustively
+    title: ": A Library to Randomly and Exhaustively Generate Automata"
+    authors: "Bassino, David, Nicaud"
+    year: 2007
+    doi: "10.1007/978-3-540-76336-9_28"
+    dblp: conf/wia/BassinoDN07
+    topic: random-generation-and-enumeration
+    kind: pilot
+    reviewed: true
+  - id: kushik-2011-preset-adaptive-homing
+    title: "Preset and Adaptive Homing Experiments for Nondeterministic Finite State Machines"
+    authors: "Kushik, El-Fakih, Yevtushenko"
+    year: 2011
+    doi: "10.1007/978-3-642-22256-6_20"
+    dblp: conf/wia/KushikEY11
+    topic: state-machine-testing
+    kind: pilot
+    reviewed: true
+  - id: diekert-1995-recent-developments-trace
+    title: "Recent Developments in Trace Theory"
+    authors: "Diekert, Gastin, Petit"
+    year: 1995
+    dblp: conf/dlt/DiekertGP95
+    topic: trace-languages
+    kind: pilot
+    reviewed: true
+  - id: tiplea-1995-hierarchies-petri-net
+    title: "Hierarchies of Petri Net Languages and a Super-Normal Form"
+    authors: "Tiplea, Ene"
+    year: 1995
+    dblp: conf/dlt/TipleaE95
+    topic: petri-net-languages
+    kind: pilot
+    reviewed: true
+  - id: genest-2004-kleene-theorem-class
+    title: "A Kleene Theorem for a Class of Communicating Automata with Effective Algorithms"
+    authors: "Genest, Muscholl, Kuske"
+    year: 2004
+    doi: "10.1007/978-3-540-30550-7_4"
+    dblp: conf/dlt/GenestMK04
+    topic: communicating-automata
+    kind: pilot
+    reviewed: true
+
+  - id: bertoni-2009-inclusion-problem-context-free
+    title: "The Inclusion Problem of Context-Free Languages: Some Tractable Cases"
+    authors: "Bertoni, Choffrut, Radicioni"
+    year: 2009
+    doi: "10.1007/978-3-642-02737-6_8"
+    dblp: conf/dlt/BertoniCR09
+    topic: decision-problems
+    kind: pilot
+    reviewed: true
+  - id: ablayev-2014-very-narrow-quantum
+    title: "Very Narrow Quantum OBDDs and Width Hierarchies for Classical OBDDs"
+    authors: "Ablayev, Gainutdinova, Khadiev, Yakaryilmaz"
+    year: 2014
+    doi: "10.1007/978-3-319-09704-6_6"
+    dblp: conf/dcfs/AblayevGKY14
+    topic: quantum-branching-programs-and-queries
+    kind: pilot
+    reviewed: true
+  - id: loff-2018-computational-power-parsing
+    title: "The Computational Power of Parsing Expression Grammars"
+    authors: "Loff, Moreira, Reis"
+    year: 2018
+    doi: "10.1007/978-3-319-98654-8_40"
+    dblp: conf/dlt/LoffMR18
+    topic: parsing-expression-grammars
+    kind: pilot
+    reviewed: true
+
+  # --- classic --------------------------------------------------------------------------------------
+  - id: rabin-scott-1959
+    title: "Finite Automata and Their Decision Problems"
+    authors: "Rabin, Scott"
+    year: 1959
+    doi: "10.1147/rd.32.0114"
+    dblp: journals/ibmrd/RabinS59
+    topic: nondeterministic-finite-automata
+    kind: classic
+    reviewed: true
+  - id: kleene-1956
+    title: "Representation of Events in Nerve Nets and Finite Automata"
+    authors: "Kleene"
+    year: 1956
+    doi: "10.1515/9781400882618-002"
+    topic: regular-expressions
+    kind: classic
+    reviewed: true
+  - id: chomsky-1956
+    title: "Three models for the description of language"
+    authors: "Chomsky"
+    year: 1956
+    doi: "10.1109/tit.1956.1056813"
+    dblp: journals/tit/Chomsky56
+    topic: language-families
+    kind: classic
+    reviewed: true
+  - id: chomsky-1959
+    title: "On Certain Formal Properties of Grammars"
+    authors: "Chomsky"
+    year: 1959
+    doi: "10.1016/s0019-9958(59)90362-6"
+    dblp: journals/iandc/Chomsky59a
+    topic: language-families
+    kind: classic
+    reviewed: true
+  - id: brzozowski-1964
+    title: "Derivatives of Regular Expressions"
+    authors: "Brzozowski"
+    year: 1964
+    doi: "10.1145/321239.321249"
+    dblp: journals/jacm/Brzozowski64
+    topic: derivatives-of-regular-expressions
+    kind: classic
+    reviewed: true
+  - id: angluin-1987
+    title: "Learning Regular Sets from Queries and Counterexamples"
+    authors: "Angluin"
+    year: 1987
+    doi: "10.1016/0890-5401(87)90052-6"
+    dblp: journals/iandc/Angluin87
+    topic: learning-regular-languages
+    kind: classic
+    reviewed: true
+  - id: yu-zhuang-salomaa-1994
+    title: "The State Complexities of Some Basic Operations on Regular Languages"
+    authors: "Yu, Zhuang, Salomaa"
+    year: 1994
+    doi: "10.1016/0304-3975(92)00011-f"
+    dblp: journals/tcs/YuZS94
+    topic: state-complexity-of-operations
+    kind: classic
+    reviewed: true
+  - id: paun-2000
+    title: "Computing with Membranes"
+    authors: "Păun"
+    year: 2000
+    doi: "10.1006/jcss.1999.1693"
+    dblp: journals/jcss/Paun00
+    topic: membrane-computing
+    kind: classic
+    reviewed: true
+  - id: nerode-1958
+    title: "Linear automaton transformations"
+    authors: "Nerode"
+    year: 1958
+    doi: "10.1090/s0002-9939-1958-0135681-9"
+    topic: deterministic-finite-automata
+    kind: classic
+    reviewed: true
+  - id: schutzenberger-1965
+    title: "On Finite Monoids Having Only Trivial Subgroups"
+    authors: "Schützenberger"
+    year: 1965
+    doi: "10.1016/s0019-9958(65)90108-7"
+    dblp: journals/iandc/Schutzenberger65a
+    topic: star-free-languages
+    kind: classic
+    reviewed: true
+  - id: schutzenberger-1961
+    title: "On the Definition of a Family of Automata"
+    authors: "Schützenberger"
+    year: 1961
+    doi: "10.1016/s0019-9958(61)80020-x"
+    dblp: journals/iandc/Schutzenberger61b
+    topic: weighted-automata
+    kind: classic
+    reviewed: true
+  - id: thatcher-wright-1968
+    title: "Generalized finite automata theory with an application to a decision problem of second-order logic"
+    authors: "Thatcher, Wright"
+    year: 1968
+    doi: "10.1007/bf01691346"
+    dblp: journals/mst/ThatcherW68
+    topic: monadic-second-order-logic
+    kind: classic
+    reviewed: true
+    note: "the origin of tree automata, but the title names only second-order logic"
+  - id: doner-1970
+    title: "Tree acceptors and some of their applications"
+    authors: "Doner"
+    year: 1970
+    doi: "10.1016/s0022-0000(70)80041-1"
+    dblp: journals/jcss/Doner70
+    topic: finite-tree-automata
+    kind: classic
+    reviewed: true
+  - id: rabin-1969
+    title: "Decidability of second-order theories and automata on infinite trees"
+    authors: "Rabin"
+    year: 1969
+    doi: "10.1090/s0002-9947-1969-0246760-1"
+    topic: automata-on-infinite-trees
+    kind: classic
+    reviewed: true
+  - id: mcnaughton-1966
+    title: "Testing and generating infinite sequences by a finite automaton"
+    authors: "McNaughton"
+    year: 1966
+    doi: "10.1016/s0019-9958(66)80013-x"
+    dblp: journals/iandc/McNaughton66
+    topic: omega-automata
+    kind: classic
+    reviewed: true
+  - id: safra-1988
+    title: "On the Complexity of omega-Automata"
+    authors: "Safra"
+    year: 1988
+    doi: "10.1109/sfcs.1988.21948"
+    dblp: conf/focs/Safra88
+    topic: complementation-and-determinisation
+    kind: classic
+    reviewed: true
+  - id: vardi-wolper-1986
+    title: "An Automata-Theoretic Approach to Automatic Program Verification"
+    authors: "Vardi, Wolper"
+    year: 1986
+    dblp: conf/lics/VardiW86
+    topic: automata-based-model-checking
+    kind: classic
+    reviewed: true
+    note: "LICS 1986; the DBLP title adds (Preliminary Report)"
+  - id: alur-dill-1994
+    title: "A Theory of Timed Automata"
+    authors: "Alur, Dill"
+    year: 1994
+    doi: "10.1016/0304-3975(94)90010-8"
+    dblp: journals/tcs/AlurD94
+    topic: timed-and-hybrid-automata
+    kind: classic
+    reviewed: true
+  - id: alur-madhusudan-2004
+    title: "Visibly pushdown languages"
+    authors: "Alur, Madhusudan"
+    year: 2004
+    doi: "10.1145/1007352.1007390"
+    dblp: conf/stoc/AlurM04
+    topic: visibly-pushdown-automata
+    kind: classic
+    reviewed: true
+  - id: thompson-1968
+    title: "Regular Expression Search Algorithm"
+    authors: "Thompson"
+    year: 1968
+    doi: "10.1145/363347.363387"
+    dblp: journals/cacm/Thompson68
+    topic: automata-from-regular-expressions
+    kind: classic
+    reviewed: true
+  - id: antimirov-1996
+    title: "Partial Derivatives of Regular Expressions and Finite Automaton Constructions"
+    authors: "Antimirov"
+    year: 1996
+    doi: "10.1016/0304-3975(95)00182-4"
+    dblp: journals/tcs/Antimirov96
+    topic: derivatives-of-regular-expressions
+    kind: classic
+    reviewed: true
+  - id: meyer-fischer-1971
+    title: "Economy of Description by Automata, Grammars, and Formal Systems"
+    authors: "Meyer, Fischer"
+    year: 1971
+    doi: "10.1109/swat.1971.11"
+    dblp: conf/focs/MeyerF71
+    topic: conversions-and-trade-offs
+    kind: classic
+    reviewed: true
+  - id: sakoda-sipser-1978
+    title: "Nondeterminism and the Size of Two Way Finite Automata"
+    authors: "Sakoda, Sipser"
+    year: 1978
+    doi: "10.1145/800133.804357"
+    dblp: conf/stoc/SakodaS78
+    topic: size-of-two-way-automata
+    kind: classic
+    reviewed: true
+  - id: volkov-2008
+    title: "Synchronizing Automata and the Cerny Conjecture"
+    authors: "Volkov"
+    year: 2008
+    doi: "10.1007/978-3-540-88282-4_4"
+    dblp: conf/lata/Volkov08
+    topic: cerny-conjecture
+    kind: classic
+    reviewed: true
+  - id: trahtman-2009
+    title: "The road coloring problem"
+    authors: "Trahtman"
+    year: 2009
+    doi: "10.1007/s11856-009-0062-5"
+    topic: synchronizing-automata
+    kind: classic
+    reviewed: true
+  - id: parikh-1966
+    title: "On Context-Free Languages"
+    authors: "Parikh"
+    year: 1966
+    doi: "10.1145/321356.321364"
+    dblp: journals/jacm/Parikh66
+    topic: context-free-grammars
+    kind: classic
+    reviewed: true
+  - id: knuth-1965
+    title: "On the Translation of Languages from Left to Right"
+    authors: "Knuth"
+    year: 1965
+    doi: "10.1016/s0019-9958(65)90426-2"
+    dblp: journals/iandc/Knuth65
+    topic: parsing
+    kind: classic
+    reviewed: true
+  - id: earley-1970
+    title: "An Efficient Context-Free Parsing Algorithm"
+    authors: "Earley"
+    year: 1970
+    doi: "10.1145/362007.362035"
+    dblp: journals/cacm/Earley70
+    topic: parsing
+    kind: classic
+    reviewed: true
+  - id: joshi-levy-takahashi-1975
+    title: "Tree Adjunct Grammars"
+    authors: "Joshi, Levy, Takahashi"
+    year: 1975
+    doi: "10.1016/s0022-0000(75)80019-5"
+    dblp: journals/jcss/JoshiLT75
+    topic: mildly-context-sensitive-grammars
+    kind: classic
+    reviewed: true
+  - id: seki-et-al-1991
+    title: "On Multiple Context-Free Grammars"
+    authors: "Seki, Matsumura, Fujii, Kasami"
+    year: 1991
+    doi: "10.1016/0304-3975(91)90374-b"
+    dblp: journals/tcs/SekiMFK91
+    topic: mildly-context-sensitive-grammars
+    kind: classic
+    reviewed: true
+  - id: lindenmayer-1968
+    title: "Mathematical models for cellular interactions in development I. Filaments with one-sided inputs"
+    authors: "Lindenmayer"
+    year: 1968
+    doi: "10.1016/0022-5193(68)90079-9"
+    topic: lindenmayer-systems
+    kind: classic
+    reviewed: true
+  - id: head-1987
+    title: "Formal language theory and DNA: An analysis of the generative capacity of specific recombinant behaviors"
+    authors: "Head"
+    year: 1987
+    doi: "10.1007/bf02481771"
+    topic: dna-computing-and-splicing
+    kind: classic
+    reviewed: true
+  - id: adleman-1994
+    title: "Molecular computation of solutions to combinatorial problems"
+    authors: "Adleman"
+    year: 1994
+    doi: "10.1126/science.7973651"
+    topic: dna-computing-and-splicing
+    kind: classic
+    reviewed: true
+  - id: dejean-1972
+    title: "Sur un théorème de Thue"
+    authors: "Dejean"
+    year: 1972
+    doi: "10.1016/0097-3165(72)90011-8"
+    dblp: journals/jct/Dejean72
+    topic: repetitions-and-avoidability
+    kind: classic
+    reviewed: true
+  - id: morse-hedlund-1940
+    title: "Symbolic Dynamics II. Sturmian Trajectories"
+    authors: "Morse, Hedlund"
+    year: 1940
+    doi: "10.2307/2371431"
+    topic: sturmian-words
+    kind: classic
+    reviewed: true
+  - id: cobham-1972
+    title: "Uniform tag sequences"
+    authors: "Cobham"
+    year: 1972
+    doi: "10.1007/bf01706087"
+    topic: morphic-and-automatic-sequences
+    kind: classic
+    reviewed: true
+  - id: post-1946
+    title: "A variant of a recursively unsolvable problem"
+    authors: "Post"
+    year: 1946
+    doi: "10.1090/s0002-9904-1946-08555-9"
+    topic: morphisms-and-pcp
+    kind: classic
+    reviewed: true
+  - id: fine-wilf-1965
+    title: "Uniqueness theorems for periodic functions"
+    authors: "Fine, Wilf"
+    year: 1965
+    doi: "10.1090/s0002-9939-1965-0174934-9"
+    topic: periodicity-and-borders
+    kind: classic
+    reviewed: true
+  - id: krohn-rhodes-1965
+    title: "Algebraic theory of machines. I. Prime decomposition theorem for finite semigroups and machines"
+    authors: "Krohn, Rhodes"
+    year: 1965
+    doi: "10.1090/s0002-9947-1965-0188316-1"
+    topic: transformation-semigroups
+    kind: classic
+    reviewed: true
+  - id: brzozowski-knast-1978
+    title: "The Dot-Depth Hierarchy of Star-Free Languages is Infinite"
+    authors: "Brzozowski, Knast"
+    year: 1978
+    doi: "10.1016/0022-0000(78)90049-1"
+    dblp: journals/jcss/BrzozowskiK78
+    topic: star-free-languages
+    kind: classic
+    reviewed: true
+  - id: zielonka-1987
+    title: "Notes on finite asynchronous automata"
+    authors: "Zielonka"
+    year: 1987
+    doi: "10.1051/ita/1987210200991"
+    dblp: journals/ita/Zielonka87
+    topic: trace-languages
+    kind: classic
+    reviewed: true
+  - id: brand-zafiropulo-1983
+    title: "On Communicating Finite-State Machines"
+    authors: "Brand, Zafiropulo"
+    year: 1983
+    doi: "10.1145/322374.322380"
+    dblp: journals/jacm/BrandZ83
+    topic: communicating-automata
+    kind: classic
+    reviewed: true
+  - id: wolfram-1983
+    title: "Statistical mechanics of cellular automata"
+    authors: "Wolfram"
+    year: 1983
+    doi: "10.1103/revmodphys.55.601"
+    topic: dynamics-of-cellular-automata
+    kind: classic
+    reviewed: true
+  - id: hedlund-1969
+    title: "Endomorphisms and automorphisms of the shift dynamical system"
+    authors: "Hedlund"
+    year: 1969
+    doi: "10.1007/bf01691062"
+    topic: symbolic-dynamics
+    kind: classic
+    reviewed: true
+  - id: smith-1972
+    title: "Real-Time Language Recognition by One-Dimensional Cellular Automata"
+    authors: "Smith"
+    year: 1972
+    doi: "10.1016/s0022-0000(72)80004-7"
+    dblp: journals/jcss/Smith72
+    topic: cellular-automata-computation
+    kind: classic
+    reviewed: true
+  - id: gold-1967
+    title: "Language Identification in the Limit"
+    authors: "Gold"
+    year: 1967
+    doi: "10.1016/s0019-9958(67)91165-5"
+    dblp: journals/iandc/Gold67
+    topic: grammatical-inference
+    kind: classic
+    reviewed: true
+  - id: angluin-1980
+    title: "Finding Patterns Common to a Set of Strings"
+    authors: "Angluin"
+    year: 1980
+    doi: "10.1016/0022-0000(80)90041-0"
+    dblp: journals/jcss/Angluin80
+    topic: pattern-languages
+    kind: classic
+    reviewed: true
+  - id: elgot-1961
+    title: "Decision problems of finite automata design and related arithmetics"
+    authors: "Elgot"
+    year: 1961
+    doi: "10.1090/s0002-9947-1961-0139530-9"
+    topic: monadic-second-order-logic
+    kind: classic
+    reviewed: true
+  - id: pnueli-1977
+    title: "The Temporal Logic of Programs"
+    authors: "Pnueli"
+    year: 1977
+    doi: "10.1109/sfcs.1977.32"
+    dblp: conf/focs/Pnueli77
+    topic: temporal-logics
+    kind: classic
+    reviewed: true
+  - id: mohri-1997
+    title: "Finite-State Transducers in Language and Speech Processing"
+    authors: "Mohri"
+    year: 1997
+    dblp: journals/coling/Mohri97
+    topic: finite-state-nlp
+    kind: classic
+    reviewed: true
+  - id: kaplan-kay-1994
+    title: "Regular Models of Phonological Rule Systems"
+    authors: "Kaplan, Kay"
+    year: 1994
+    dblp: journals/coling/KaplanK94
+    topic: finite-state-nlp
+    kind: classic
+    reviewed: true
+  - id: aho-corasick-1975
+    title: "Efficient String Matching: An Aid to Bibliographic Search"
+    authors: "Aho, Corasick"
+    year: 1975
+    doi: "10.1145/360825.360855"
+    dblp: journals/cacm/AhoC75
+    topic: string-matching
+    kind: classic
+    reviewed: true
+  - id: blumer-et-al-1985
+    title: "The Smallest Automaton Recognizing the Subwords of a Text"
+    authors: "Blumer, Blumer, Haussler, Ehrenfeucht, Chen, Seiferas"
+    year: 1985
+    doi: "10.1016/0304-3975(85)90157-4"
+    dblp: journals/tcs/BlumerBHECS85
+    topic: string-matching
+    kind: classic
+    reviewed: true
+  - id: elgot-mezei-1965
+    title: "On Relations Defined by Generalized Finite Automata"
+    authors: "Elgot, Mezei"
+    year: 1965
+    doi: "10.1147/rd.91.0047"
+    dblp: journals/ibmrd/ElgotM65
+    topic: finite-state-transducers
+    kind: classic
+    reviewed: true
+  - id: engelfriet-hoogeboom-2001
+    title: "MSO definable string transductions and two-way finite-state transducers"
+    authors: "Engelfriet, Hoogeboom"
+    year: 2001
+    doi: "10.1145/371316.371512"
+    dblp: journals/tocl/EngelfrietH01
+    topic: two-way-and-streaming-transducers
+    kind: classic
+    reviewed: true
+  - id: rounds-1970
+    title: "Mappings and Grammars on Trees"
+    authors: "Rounds"
+    year: 1970
+    doi: "10.1007/bf01695769"
+    dblp: journals/mst/Rounds70
+    topic: tree-transducers
+    kind: classic
+    reviewed: true
+  - id: giammarresi-restivo-1992
+    title: "Recognizable picture languages"
+    authors: "Giammarresi, Restivo"
+    year: 1992
+    doi: "10.1142/s021800149200014x"
+    dblp: journals/ijprai/GiammarresiR92
+    topic: two-dimensional-languages
+    kind: classic
+    reviewed: true
+  - id: csuhaj-varju-dassow-1990
+    title: "On Cooperating/Distributed Grammar Systems"
+    authors: "Csuhaj-Varjú, Dassow"
+    year: 1990
+    dblp: journals/eik/Csuhaj-VarjuD90
+    topic: cd-grammar-systems
+    kind: classic
+    reviewed: true
+  - id: mcnaughton-narendran-otto-1988
+    title: "Church-Rosser Thue systems and formal languages"
+    authors: "McNaughton, Narendran, Otto"
+    year: 1988
+    doi: "10.1145/42282.42284"
+    dblp: journals/jacm/McNaughtonNO88
+    topic: string-rewriting
+    kind: classic
+    reviewed: true
+  - id: jancar-et-al-1995
+    title: "Restarting Automata"
+    authors: "Jančar, Mráz, Plátek, Vogel"
+    year: 1995
+    doi: "10.1007/3-540-60249-6_60"
+    dblp: conf/fct/JancarMPV95
+    topic: restarting-automata
+    kind: classic
+    reviewed: true
+  - id: ibarra-1978
+    title: "Reversal-Bounded Multicounter Machines and Their Decision Problems"
+    authors: "Ibarra"
+    year: 1978
+    doi: "10.1145/322047.322058"
+    dblp: journals/jacm/Ibarra78
+    topic: counter-automata
+    kind: classic
+    reviewed: true
+  - id: kondacs-watrous-1997
+    title: "On the Power of Quantum Finite State Automata"
+    authors: "Kondacs, Watrous"
+    year: 1997
+    doi: "10.1109/sfcs.1997.646094"
+    dblp: conf/focs/KondacsW97
+    topic: quantum-finite-automata
+    kind: classic
+    reviewed: true
+  - id: rabin-1963
+    title: "Probabilistic Automata"
+    authors: "Rabin"
+    year: 1963
+    doi: "10.1016/s0019-9958(63)90290-0"
+    dblp: journals/iandc/Rabin63
+    topic: probabilistic-automata
+    kind: classic
+    reviewed: true
+  - id: droste-gastin-2007
+    title: "Weighted automata and weighted logics"
+    authors: "Droste, Gastin"
+    year: 2007
+    doi: "10.1016/j.tcs.2007.02.055"
+    dblp: journals/tcs/DrosteG07
+    topic: weighted-logics
+    kind: classic
+    reviewed: true
+  - id: kaminski-francez-1994
+    title: "Finite-Memory Automata"
+    authors: "Kaminski, Francez"
+    year: 1994
+    doi: "10.1016/0304-3975(94)90242-9"
+    dblp: journals/tcs/KaminskiF94
+    topic: infinite-alphabet-automata
+    kind: classic
+    reviewed: true
+  - id: hashiguchi-1982
+    title: "Limitedness Theorem on Finite Automata with Distance Functions"
+    authors: "Hashiguchi"
+    year: 1982
+    doi: "10.1016/0022-0000(82)90051-4"
+    dblp: journals/jcss/Hashiguchi82
+    topic: weighted-automata
+    kind: classic
+    reviewed: true
+  - id: kozen-1994
+    title: "A Completeness Theorem for Kleene Algebras and the Algebra of Regular Events"
+    authors: "Kozen"
+    year: 1994
+    doi: "10.1006/inco.1994.1037"
+    dblp: journals/iandc/Kozen94
+    topic: kleene-algebra
+    kind: classic
+    reviewed: true
+  - id: ehrenfeucht-rozenberg-2007
+    title: "Reaction Systems"
+    authors: "Ehrenfeucht, Rozenberg"
+    year: 2007
+    dblp: journals/fuin/EhrenfeuchtR07
+    topic: reaction-systems
+    kind: classic
+    reviewed: true
+  - id: rothemund-winfree-2000
+    title: "The program-size complexity of self-assembled squares (extended abstract)"
+    authors: "Rothemund, Winfree"
+    year: 2000
+    doi: "10.1145/335305.335358"
+    topic: molecular-self-assembly
+    kind: classic
+    reviewed: true
+  - id: buchi-landweber-1969
+    title: "Solving Sequential Conditions by Finite-State Strategies"
+    authors: "Büchi, Landweber"
+    year: 1969
+    doi: "10.1090/s0002-9947-1969-0280205-0"
+    topic: infinite-games
+    kind: classic
+    reviewed: true
+  - id: ramadge-wonham-1987
+    title: "Supervisory control of a class of discrete event processes"
+    authors: "Ramadge, Wonham"
+    year: 1987
+    doi: "10.1137/0325013"
+    topic: supervisory-control
+    kind: classic
+    reviewed: true
+  - id: bouajjani-esparza-maler-1997
+    title: "Reachability Analysis of Pushdown Automata: Application to Model-Checking"
+    authors: "Bouajjani, Esparza, Maler"
+    year: 1997
+    doi: "10.1007/3-540-63141-0_10"
+    dblp: conf/concur/BouajjaniEM97
+    topic: infinite-state-verification
+    kind: classic
+    reviewed: true
+  - id: muller-schupp-1983
+    title: "Groups, the Theory of Ends, and Context-Free Languages"
+    authors: "Muller, Schupp"
+    year: 1983
+    doi: "10.1016/0022-0000(83)90003-x"
+    dblp: journals/jcss/MullerS83
+    topic: automata-and-groups
+    kind: classic
+    reviewed: true
+  - id: khoussainov-nerode-1994
+    title: "Automatic Presentations of Structures"
+    authors: "Khoussainov, Nerode"
+    year: 1994
+    doi: "10.1007/3-540-60178-3_93"
+    dblp: conf/lcc/KhoussainovN94
+    topic: automatic-structures
+    kind: classic
+    reviewed: true
+  - id: hibbard-1967
+    title: "A Generalization of Context-Free Determinism"
+    authors: "Hibbard"
+    year: 1967
+    doi: "10.1016/s0019-9958(67)90513-x"
+    dblp: journals/iandc/Hibbard67
+    topic: limited-automata
+    kind: classic
+    reviewed: true
+  - id: meduna-zemek-2012
+    title: "Jumping Finite Automata"
+    authors: "Meduna, Zemek"
+    year: 2012
+    doi: "10.1142/s0129054112500244"
+    dblp: journals/ijfcs/MedunaZ12
+    topic: jumping-automata
+    kind: classic
+    reviewed: true
+  - id: castellanos-et-al-2003
+    title: "Networks of evolutionary processors"
+    authors: "Castellanos, Martín-Vide, Mitrana, Sempere"
+    year: 2003
+    doi: "10.1007/s00236-003-0114-y"
+    dblp: journals/acta/CastellanosMMS03
+    topic: networks-of-evolutionary-processors
+    kind: classic
+    reviewed: true
+  - id: ionescu-paun-yokomori-2006
+    title: "Spiking Neural P Systems"
+    authors: "Ionescu, Păun, Yokomori"
+    year: 2006
+    dblp: journals/fuin/IonescuPY06
+    topic: spiking-neural-p-systems
+    kind: classic
+    reviewed: true
+  - id: mateescu-rozenberg-salomaa-1998
+    title: "Shuffle on Trajectories: Syntactic Constraints"
+    authors: "Mateescu, Rozenberg, Salomaa"
+    year: 1998
+    doi: "10.1016/s0304-3975(97)00163-1"
+    dblp: journals/tcs/MateescuRS98
+    topic: shuffle-and-interleaving
+    kind: classic
+    reviewed: true
+  - id: okhotin-2010
+    title: "Decision problems for language equations"
+    authors: "Okhotin"
+    year: 2010
+    doi: "10.1016/j.jcss.2009.08.002"
+    dblp: journals/jcss/Okhotin10
+    topic: language-equations
+    kind: classic
+    reviewed: true
+  - id: chaitin-1966
+    title: "On the Length of Programs for Computing Finite Binary Sequences"
+    authors: "Chaitin"
+    year: 1966
+    doi: "10.1145/321356.321363"
+    dblp: journals/jacm/Chaitin66
+    topic: kolmogorov-complexity
+    kind: classic
+    reviewed: true
+  - id: lee-yannakakis-1996
+    title: "Principles and methods of testing finite state machines-a survey"
+    authors: "Lee, Yannakakis"
+    year: 1996
+    doi: "10.1109/5.533956"
+    dblp: journals/pieee/LeeY96
+    topic: state-machine-testing
+    kind: classic
+    reviewed: true
+  - id: schutzenberger-1963
+    title: "On Context-Free Languages and Push-Down Automata"
+    authors: "Schützenberger"
+    year: 1963
+    doi: "10.1016/s0019-9958(63)90306-1"
+    dblp: journals/iandc/Schutzenberger63
+    topic: pushdown-automata
+    kind: classic
+    reviewed: true
+  - id: ginsburg-greibach-1966
+    title: "Deterministic Context Free Languages"
+    authors: "Ginsburg, Greibach"
+    year: 1966
+    doi: "10.1016/s0019-9958(66)80019-0"
+    dblp: journals/iandc/GinsburgG66b
+    topic: deterministic-context-free-languages
+    kind: classic
+    reviewed: true
+  - id: senizergues-2001
+    title: "L(A)=L(B)? decidability results from complete formal systems"
+    authors: "Sénizergues"
+    year: 2001
+    doi: "10.1016/s0304-3975(00)00285-1"
+    dblp: journals/tcs/Senizergues01
+    topic: deterministic-context-free-languages
+    kind: classic
+    reviewed: true
+  - id: kuroda-1964
+    title: "Classes of Languages and Linear-Bounded Automata"
+    authors: "Kuroda"
+    year: 1964
+    doi: "10.1016/s0019-9958(64)90120-2"
+    dblp: journals/iandc/Kuroda64
+    topic: language-families
+    kind: classic
+    reviewed: true
+  - id: greibach-1965
+    title: "A New Normal-Form Theorem for Context-Free Phrase Structure Grammars"
+    authors: "Greibach"
+    year: 1965
+    doi: "10.1145/321250.321254"
+    dblp: journals/jacm/Greibach65
+    topic: normal-forms-of-grammars
+    kind: classic
+    reviewed: true
+  - id: ogden-1968
+    title: "A Helpful Result for Proving Inherent Ambiguity"
+    authors: "Ogden"
+    year: 1968
+    doi: "10.1007/bf01694004"
+    dblp: journals/mst/Ogden68
+    topic: pumping-lemmas
+    kind: classic
+    reviewed: true
+  - id: rosenkrantz-1969
+    title: "Programmed Grammars and Classes of Formal Languages"
+    authors: "Rosenkrantz"
+    year: 1969
+    doi: "10.1145/321495.321504"
+    dblp: journals/jacm/Rosenkrantz69
+    topic: regulated-rewriting
+    kind: classic
+    reviewed: true
+  - id: greibach-hopcroft-1969
+    title: "Scattered Context Grammars"
+    authors: "Greibach, Hopcroft"
+    year: 1969
+    doi: "10.1016/s0022-0000(69)80015-2"
+    dblp: journals/jcss/GreibachH69
+    topic: scattered-context-grammars
+    kind: classic
+    reviewed: true
+  - id: bruggemann-klein-wood-1998
+    title: "One-Unambiguous Regular Languages"
+    authors: "Brüggemann-Klein, Wood"
+    year: 1998
+    doi: "10.1006/inco.1997.2688"
+    dblp: journals/iandc/Bruggemann-KleinW98
+    topic: deterministic-regular-expressions
+    kind: classic
+    reviewed: true
+    note: "DBLP lists the paper twice (two DOIs); the first record is used"
+  - id: ehrenfeucht-zeiger-1976
+    title: "Complexity Measures for Regular Expressions"
+    authors: "Ehrenfeucht, Zeiger"
+    year: 1976
+    doi: "10.1016/s0022-0000(76)80034-7"
+    dblp: journals/jcss/EhrenfeuchtZ76
+    topic: size-of-regular-expressions
+    kind: classic
+    reviewed: true
+  - id: mcnaughton-yamada-1960
+    title: "Regular Expressions and State Graphs for Automata"
+    authors: "McNaughton, Yamada"
+    year: 1960
+    doi: "10.1109/tec.1960.5221603"
+    dblp: journals/tc/McNaughtonY60
+    topic: regular-expressions-from-automata
+    kind: classic
+    reviewed: true
+  - id: daciuk-et-al-2000
+    title: "Incremental Construction of Minimal Acyclic Finite-State Automata"
+    authors: "Daciuk, Mihov, Watson, Watson"
+    year: 2000
+    doi: "10.1162/089120100561601"
+    dblp: journals/coling/DaciukMWW00
+    topic: minimal-acyclic-automata
+    kind: classic
+    reviewed: true
+  - id: badr-geffert-shipman-2009
+    title: "Hyper-minimizing minimized deterministic finite state automata"
+    authors: "Badr, Geffert, Shipman"
+    year: 2009
+    doi: "10.1051/ita:2007061"
+    dblp: journals/ita/BadrGS09
+    topic: hyper-minimisation
+    kind: classic
+    reviewed: true
+  - id: hartmanis-1983
+    title: "On Gödel Speed-Up and Succinctness of Language Representations"
+    authors: "Hartmanis"
+    year: 1983
+    doi: "10.1016/0304-3975(83)90016-6"
+    dblp: journals/tcs/Hartmanis83
+    topic: non-recursive-trade-offs
+    kind: classic
+    reviewed: true
+  - id: kintala-wotschke-1980
+    title: "Amounts of Nondeterminism in Finite Automata"
+    authors: "Kintala, Wotschke"
+    year: 1980
+    doi: "10.1007/bf00263994"
+    dblp: journals/acta/KintalaW80
+    topic: measures-of-nondeterminism
+    kind: classic
+    reviewed: true
+  - id: chandra-kozen-stockmeyer-1981
+    title: "Alternation"
+    authors: "Chandra, Kozen, Stockmeyer"
+    year: 1981
+    doi: "10.1145/322234.322243"
+    dblp: journals/jacm/ChandraKS81
+    topic: turing-machines
+    kind: classic
+    reviewed: true
+  - id: eilenberg-schutzenberger-1969
+    title: "Rational sets in commutative monoids"
+    authors: "Eilenberg, Schützenberger"
+    year: 1969
+    doi: "10.1016/0021-8693(69)90070-2"
+    topic: rational-and-recognisable-subsets
+    kind: classic
+    reviewed: true
+  - id: courcelle-1990
+    title: "The Monadic Second-Order Logic of Graphs. I. Recognizable Sets of Finite Graphs"
+    authors: "Courcelle"
+    year: 1990
+    doi: "10.1016/0890-5401(90)90043-h"
+    dblp: journals/iandc/Courcelle90
+    topic: monadic-second-order-logic
+    kind: classic
+    reviewed: true
+  - id: etessami-vardi-wilke-2002
+    title: "First-Order Logic with Two Variables and Unary Temporal Logic"
+    authors: "Etessami, Vardi, Wilke"
+    year: 2002
+    doi: "10.1006/inco.2001.2953"
+    dblp: journals/iandc/EtessamiVW02
+    topic: first-order-fragments
+    kind: classic
+    reviewed: true
+  - id: engelfriet-vogler-1985
+    title: "Macro Tree Transducers"
+    authors: "Engelfriet, Vogler"
+    year: 1985
+    doi: "10.1016/0022-0000(85)90066-2"
+    dblp: journals/jcss/EngelfrietV85
+    topic: tree-transducers
+    kind: classic
+    reviewed: true
+  - id: berstel-reutenauer-1982
+    title: "Recognizable Formal Power Series on Trees"
+    authors: "Berstel, Reutenauer"
+    year: 1982
+    doi: "10.1016/0304-3975(82)90019-6"
+    dblp: journals/tcs/BerstelR82
+    topic: weighted-tree-automata
+    kind: classic
+    reviewed: true
+  - id: seidl-1990
+    title: "Deciding Equivalence of Finite Tree Automata"
+    authors: "Seidl"
+    year: 1990
+    doi: "10.1137/0219027"
+    dblp: journals/siamcomp/Seidl90
+    topic: finite-tree-automata
+    kind: classic
+    reviewed: true
+  - id: blum-hewitt-1967
+    title: "Automata on a 2-Dimensional Tape"
+    authors: "Blum, Hewitt"
+    year: 1967
+    doi: "10.1109/focs.1967.6"
+    dblp: conf/focs/BlumH67
+    topic: two-dimensional-languages
+    kind: classic
+    reviewed: true
+  - id: culik-kari-1993
+    title: "Image compression using weighted finite automata"
+    authors: "Culik, Kari"
+    year: 1993
+    doi: "10.1016/0097-8493(93)90079-o"
+    dblp: journals/cg/CulikK93
+    topic: fractals-and-images
+    kind: classic
+    reviewed: true
+  - id: cassaigne-1997
+    title: "Complexité et facteurs spéciaux"
+    authors: "Cassaigne"
+    year: 1997
+    doi: "10.36045/bbms/1105730624"
+    topic: factor-complexity-and-growth
+    kind: classic
+    reviewed: true
+  - id: glen-et-al-2009
+    title: "Palindromic richness"
+    authors: "Glen, Justin, Widmer, Zamboni"
+    year: 2009
+    doi: "10.1016/j.ejc.2008.04.006"
+    dblp: journals/ejc/GlenJWZ09
+    topic: palindromes-and-richness
+    kind: classic
+    reviewed: true
+  - id: keranen-1992
+    title: "Abelian Squares are Avoidable on 4 Letters"
+    authors: "Keränen"
+    year: 1992
+    doi: "10.1007/3-540-55719-9_62"
+    dblp: conf/icalp/Keranen92
+    topic: abelian-properties-of-words
+    kind: classic
+    reviewed: true
+  - id: berstel-boasson-1999
+    title: "Partial Words and a Theorem of Fine and Wilf"
+    authors: "Berstel, Boasson"
+    year: 1999
+    doi: "10.1016/s0304-3975(98)00255-2"
+    dblp: journals/tcs/BerstelB99
+    topic: partial-words
+    kind: classic
+    reviewed: true
+  - id: higman-1952
+    title: "Ordering by Divisibility in Abstract Algebras"
+    authors: "Higman"
+    year: 1952
+    doi: "10.1112/plms/s3-2.1.326"
+    topic: subwords-and-scattered-factors
+    kind: classic
+    reviewed: true
+  - id: mateescu-et-al-2001
+    title: "A sharpening of the Parikh mapping"
+    authors: "Mateescu, Salomaa, Salomaa, Yu"
+    year: 2001
+    doi: "10.1051/ita:2001131"
+    dblp: journals/ita/MateescuSSY01
+    topic: subwords-and-scattered-factors
+    kind: classic
+    reviewed: true
+  - id: mantaci-restivo-sciortino-2003
+    title: "Burrows-Wheeler transform and Sturmian words"
+    authors: "Mantaci, Restivo, Sciortino"
+    year: 2003
+    doi: "10.1016/s0020-0190(02)00512-4"
+    dblp: journals/ipl/MantaciRS03
+    topic: lyndon-words-and-bwt
+    kind: classic
+    reviewed: true
+  - id: frougny-1992
+    title: "Representations of Numbers and Finite Automata"
+    authors: "Frougny"
+    year: 1992
+    doi: "10.1007/bf01368783"
+    dblp: journals/mst/Frougny92
+    topic: numeration-systems
+    kind: classic
+    reviewed: true
+  - id: jantzen-1979
+    title: "On the hierarchy of Petri net languages"
+    authors: "Jantzen"
+    year: 1979
+    doi: "10.1051/ita/1979130100191"
+    dblp: journals/ita/Jantzen79
+    topic: petri-net-languages
+    kind: classic
+    reviewed: true
+  - id: janssens-rozenberg-1980
+    title: "On the structure of node-label-controlled graph languages"
+    authors: "Janssens, Rozenberg"
+    year: 1980
+    doi: "10.1016/0020-0255(80)90038-9"
+    dblp: journals/isci/JanssensR80
+    topic: graph-grammars
+    kind: classic
+    reviewed: true
+  - id: kitaev-pyatkin-2008
+    title: "On Representable Graphs"
+    authors: "Kitaev, Pyatkin"
+    year: 2008
+    doi: "10.25596/jalc-2008-045"
+    dblp: journals/jalc/KitaevP08
+    topic: word-representable-graphs
+    kind: classic
+    reviewed: true
+  - id: ehrenfeucht-et-al-2003
+    title: "Formal systems for gene assembly in ciliates"
+    authors: "Ehrenfeucht, Harju, Petre, Prescott, Rozenberg"
+    year: 2003
+    doi: "10.1016/s0304-3975(01)00223-7"
+    dblp: journals/tcs/EhrenfeuchtHPPR03
+    topic: ciliate-gene-assembly
+    kind: classic
+    reviewed: true
+  - id: hunt-rosenkrantz-szymanski-1976
+    title: "On the Equivalence, Containment, and Covering Problems for the Regular and Context-Free Languages"
+    authors: "Hunt, Rosenkrantz, Szymanski"
+    year: 1976
+    doi: "10.1016/s0022-0000(76)80038-4"
+    dblp: journals/jcss/HuntRS76
+    topic: decision-problems
+    kind: classic
+    reviewed: true
+  - id: stockmeyer-meyer-1973
+    title: "Word Problems Requiring Exponential Time: Preliminary Report"
+    authors: "Stockmeyer, Meyer"
+    year: 1973
+    doi: "10.1145/800125.804029"
+    dblp: conf/stoc/StockmeyerM73
+    topic: decision-problems
+    kind: classic
+    reviewed: true
+  - id: ambainis-freivalds-1998
+    title: "1-way quantum finite automata: strengths, weaknesses and generalizations"
+    authors: "Ambainis, Freivalds"
+    year: 1998
+    doi: "10.1109/sfcs.1998.743469"
+    dblp: conf/focs/AmbainisF98
+    topic: quantum-finite-automata
+    kind: classic
+    reviewed: true

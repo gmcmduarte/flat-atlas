@@ -1,0 +1,27 @@
+# A valid anchors file against topics_valid.yaml. Identifiers: the two pilot ones are real records of
+# tests/fixtures/dblp/dblp_sample.xml.gz; the classic one is a real DOI (Rabin and Scott 1959).
+taxonomy_version: 1
+anchors:
+  - id: rabin-scott-1959
+    title: "Finite Automata and Their Decision Problems"
+    authors: "Rabin, Scott"
+    year: 1959
+    doi: "10.1147/rd.32.0114"
+    topic: regular-languages
+    kind: classic
+    reviewed: true
+  - id: jiraskova-nfa-dfa-trade-off
+    title: "NFA-to-DFA Trade-Off for Regular Operations"
+    authors: "Jirásková, Krajňáková"
+    year: 2019
+    doi: "https://doi.org/10.1007/978-3-030-23247-4_14"
+    dblp: conf/dcfs/JiraskovaK19
+    topic: descriptional-complexity
+    kind: pilot
+  - id: roder-bnlc
+    title: "Parallel BNLC Graph Grammars"
+    year: 1993
+    dblp: conf/dlt/Roder93
+    topic: context-free-languages
+    kind: pilot
+    note: "no DOI: DLT 1993 has none"
