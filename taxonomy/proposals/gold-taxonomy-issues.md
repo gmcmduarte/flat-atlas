@@ -36,4 +36,4 @@ The pilot holds a few works that are hardly FLAT: obituaries, a puzzle-complexit
 
 ## 5. Not a taxonomy problem, but related: thin level-1 topics
 
-83 of the 119 level-1 topics have fewer than 5 training works in the draft. The fault is not the topics but the ratio: 119 topics against 500 random works. The top-up cap of 100 works (PLAN §9.6, D-61) cannot close the gap. The review guide lists the options.
+79 of the 119 level-1 topics have fewer than 5 training works in the draft of all 500 works. The fault is not the topics but the ratio: 119 topics against 500 random works. The top-up cap of 100 works (PLAN §9.6, D-61) cannot close the gap. The review guide lists the options.
