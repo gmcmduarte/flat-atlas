@@ -3,8 +3,8 @@
 The record of how `taxonomy/topics.yaml` and `taxonomy/anchors.yaml` were drafted and reviewed.
 Round 1 (2026-11-17) was Claude's draft. In round 2 (2026-11-18) Guilherme decided two of the
 open questions (decision problems made general; quantum a root) and asked Claude to answer the
-rest, review the names and descriptions, the level-2 topics, the phrases and every anchor. Nothing
-carries `reviewed: true` until Guilherme approves.
+rest, review the names and descriptions, the level-2 topics, the phrases and every anchor. He
+approved the result on 2026-11-18 and every topic and anchor now carries `reviewed: true` (D-87).
 
 ## What is in the files
 
