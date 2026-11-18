@@ -2,12 +2,13 @@
 
 ## Current state (keep this section under 30 lines)
 - **Phase:** 0 (P0-00 open; P0-04 done), 1 started (P1-01 to P1-06 done)
-- **Last merged session:** P1-05 (PR #11); P1-06 is in a PR awaiting review
-- **Next:** Guilherme merges the P1-06 PR and finishes `sessions/P0-00-manual-setup.md`; then `P1-06b` (Opus, the labelled set; it needs the reviewed topic ids in `main`)
+- **Last merged session:** P1-06 (PR #12)
+- **In progress:** P1-06b (branch `s/P1-06b-labelled-set`, paused at the hand-over): sample, review sheets and draft labels are done; Guilherme labels the blind file, then reviews the draft (`docs/notes/gold-review-guide.md`)
+- **Next:** resume P1-06b (draft the 50 blind works, `gold finalise`, report, top-up decision, PR); then P1-07
 - **Live site:** https://gmcmduarte.github.io/flat-atlas/ (fixture data only; redeploys on every push to `main`)
 - **Latest release:** none
 - **Known problems:** Semantic Scholar throttles our key far below the documented 1 request/s (HTTP 429 on 15 to 25 % of calls or more); a full title-match pass takes about 2 hours (D-72, `docs/notes/sources.md`). The DBLP API is behind a bot challenge (HTTP 202, Anubis); DBLP data comes from the dump Guilherme downloads by hand (D-49). Refreshing it is manual. After a new dump, run `venues scan-dump` and then `parse dblp` again.
-- **Waiting on Guilherme:** the rest of P0-00 (branch protection, secret scanning, tmux, pre-commit install; S2 key is set in `.env`); reading the P1-04 report (a "done when" line of P1-04); merging the P1-06 PR
+- **Waiting on Guilherme:** the blind labels in `data/review/gold-blind.md` (about 20 minutes), then the review of `taxonomy/proposals/gold-draft.yaml` (about 2 hours); the rest of P0-00 (branch protection, secret scanning, tmux, pre-commit install; S2 key is set in `.env`); reading the P1-04 report (a "done when" line of P1-04)
 
 ## Checklist
 **Phase 0** — [ ] P0-00 · [x] P0-01 · [x] P0-02 · [x] P0-03 · [x] P0-04
@@ -19,6 +20,18 @@
 **Phase 6** — [ ] P6-01 · [ ] P6-02 · [ ] P6-03 · [ ] G6
 
 ## Log (newest first)
+
+### 2026-11-18 — P1-06b The labelled set, part 1: sample, sheets, draft (branch `s/P1-06b-labelled-set`, paused)
+- **Built:** `flatatlas gold sample | sheet | finalise | report` (module `taxonomy/gold.py`, commands in `taxonomy/gold_commands.py`, group `gold` in `cli.py`). The sample reads only `core_work`, `core_version` and `core_venue`; it is stratified by venue, decade and has-abstract (proportional, at least 3 per non-empty cell, largest remainder), and works are chosen inside a cell by a hash of seed and work ID. The 50 blind works are also chosen by hash. `sheet` builds the review files from `text.store.build_all` (the composite text of P1-05) and keeps drafted labels on a re-run. `finalise` refuses unknown or deeper labels, works without a level-0 label and level-1 labels without a parent. `report` reads the unreviewed draft from a git revision. Config: section `gold` in `config/taxonomy.yaml` (seed 20261118, n 500, minimum 3, 50 blind), left out of the proposal hash, which is unchanged; `Paths.review`; `git_head_text` takes a revision. 20 new tests (500 in all). Decision D-90.
+- **Run on the pilot:** frame 2,333 works in 24 cells (cells of 3 to 304); 500 sampled, 50 blind; 341 train and 159 held out by the hash rule. `gold-sample.yaml` has the same MD5 on two runs. `ops_run_log` stages `gold-sample` (seed, frame counts, quotas) and `gold-sheet`.
+- **Drafted:** labels for the 450 non-blind works in `taxonomy/proposals/gold-draft.yaml` (`reviewed: false`), from the composite text in batches of 50, with no tagger output, phrase hits or clusters. Means are 1.53 level-0 and 1.53 level-1 labels per work; 20 works have no level-1 label; 145 have a note. The 50 blind works are not drafted. Also `docs/notes/gold-review-guide.md` (order of work, meaning of a label, conventions, the 30 least sure works) and `taxonomy/proposals/gold-taxonomy-issues.md`.
+- **Not built yet:** the draft of the blind works, `taxonomy/gold.yaml`, `docs/notes/gold-v1-report.md`, the top-up. They wait for Guilherme's blind file and review.
+- **Surprises:** (1) **83 of 119 level-1 topics have fewer than 5 training works in the draft**, and 3 have none. The top-up cap of 100 works cannot close that (about 250 would be needed), so it is a decision for after the review. (2) Six level-0 topics have fewer than 5 held-out works in the draft (grammatical inference, verification, infinite words, quantum, logic, cellular automata). (3) In 9 drafted works the Semantic Scholar TLDR belongs to another paper, mostly unrelated patents in DLT 1993 to 1999 (parking lot). (4) The sample holds a few works that are hardly FLAT (two obituaries, a puzzle-complexity paper, a cryptosystem); they keep a level-0 label because `gold.yaml` requires one. (5) `decision-problems` cannot follow papers on tree grammars, ω-models, regulated rewriting or operations, because its parents are only three roots (proposal written, topics untouched).
+- **Checks:** `uv run pytest` 500 passed; `uv run ruff check .` and `ruff format --check .` clean; `uv run flatatlas taxonomy check --gold taxonomy/proposals/gold-draft.yaml` OK (500 works).
+- **Hand-off (to the resumed P1-06b session, Opus):**
+  - Wait for Guilherme's word that `data/review/gold-blind.md` is filled. Then draft the 50 blind works **without reading his blind labels**: do not open `gold-blind.md`, take the 50 IDs from `data/review/gold-sample.yaml` (`blind: true`) and print their composite text with `flatatlas taxonomy composite --no-write --work ID ...`. Write them into the blind entries of `gold-draft.yaml` and commit: that commit is the `--draft-rev` for `flatatlas gold report`.
+  - Only after that commit does Guilherme review the draft (he skips the blind entries; his blind labels are final). Then run `gold finalise`, `taxonomy check`, `gold report --draft-rev <commit>`, decide the top-up with him (see surprise 1), and complete the "At the end" list of the session prompt.
+  - `data/review/` is local and never committed (it holds abstracts). If it is lost, re-run `flatatlas gold sample` and `flatatlas gold sheet`; both are deterministic, and `sheet` keeps drafted labels and never overwrites an existing `gold-blind.md`.
 
 ### 2026-11-18 — P1-06 Taxonomy v1 and anchor papers (branch `s/P1-06-taxonomy-v1`)
 - **Built:** `taxonomy/topics.yaml` (181 topics: 21 level 0, 119 level 1, 41 level 2; all `reviewed: true`), `taxonomy/anchors.yaml` (278 anchors, all verified, `reviewed: true`), `expected_topics` for the five pilot venues in `config/venues.yaml`, `docs/notes/taxonomy-v1-review-guide.md` (the cut and its reasons, the ten open questions and who decided each, what round 2 changed, confusable topics, multi-parent list, shallow areas, how to edit). Code: `AnchorEntry`/`AnchorsFile` in `taxonomy/schema.py`; `check_anchors` and `check_expected_topics` in `taxonomy/check.py` (run by `taxonomy check`); new module `taxonomy/anchors.py` and command `flatatlas taxonomy anchors [--find] [--estimate] [--offline]` (verifies each DOI by OpenAlex ID lookup and each DBLP key in the warehouse or the local dump, says whether the anchor is in the corpus). 22 new tests (480 in all). Decisions D-87 to D-89.
@@ -217,4 +230,5 @@
 - `core_stub` for works that in-corpus papers cite often (reference candidates are in `stg_reference_candidates`).
 - `core_edition.location` from the proceedings front matter or a source; `venue_facts.yaml` is still empty.
 - Split `cellular-automata-and-symbolic-dynamics` into cellular automata and symbolic dynamics/tilings when the AUTOMATA venue is added (P2-01; D-87).
+- Semantic Scholar TLDRs that belong to other papers (unrelated patents) for at least 9 pilot works, mostly DLT 1993 to 1999 (found in P1-06b; notes in `gold-draft.yaml`). Detect a TLDR that shares no content word with title and references, and drop it from the composite text.
 - Define how the tagger matches phrases (word boundaries, the window for context words, hyphen and plural variants) before P1-07; the P1-06 review used whole-word matching on folded text.
