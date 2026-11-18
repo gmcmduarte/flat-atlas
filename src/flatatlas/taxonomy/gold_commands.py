@@ -18,6 +18,8 @@ ProfileOption = Annotated[
     str | None, typer.Option(help="Profile name (default: FLATATLAS_PROFILE or pilot).")
 ]
 DRAFT_FILE = PROJECT_ROOT / "taxonomy" / "proposals" / "gold-draft.yaml"
+TOPUP_FILE = PROJECT_ROOT / "taxonomy" / "proposals" / "gold-topup.yaml"
+TOPUP_CONTEXT_NAME = "gold-topup-context.md"
 REPORT_FILE = PROJECT_ROOT / "docs" / "notes" / "gold-v1-report.md"
 SAMPLE_NAME = "gold-sample.yaml"
 BLIND_NAME = "gold-blind.md"
@@ -183,6 +185,67 @@ def finalise(
     finally:
         con.close()
     typer.echo(f"wrote {target}: {counts}")
+
+
+def topup(
+    max_works: Annotated[
+        int | None, typer.Option("--max", help="Most works to propose (default: config).")
+    ] = None,
+    out: Annotated[
+        Path | None, typer.Option(help="Proposal (default: taxonomy/proposals/gold-topup.yaml).")
+    ] = None,
+    profile: ProfileOption = None,
+) -> None:
+    """Propose training-only works for thin level-1 topics, found by title search."""
+    from flatatlas.text import store as text_store
+
+    settings = load_settings(profile=profile)
+    setup_logging(settings.paths.logs)
+    cfg = tconfig.load_config().gold
+    limit = cfg.topup_max if max_works is None else max_works
+    topics = tcheck.load_topics()
+    gold_file = tcheck.load_gold()
+    target = out or TOPUP_FILE
+    existing = tcheck.load_gold(target) if target.exists() else None
+    con = connect(settings.paths)
+    try:
+        with run_log(con, "gold-topup") as run:
+            frame = {w.work_id: w for w in tgold.sampling_frame(con)}
+            picks, after = tgold.choose_topup(
+                list(frame.values()),
+                gold_file,
+                topics,
+                max_works=limit,
+                min_train=cfg.topup_min_train,
+                seed=cfg.seed,
+            )
+            proposal = tgold.build_topup_draft(
+                picks, frame, taxonomy_version=topics.taxonomy_version, existing=existing
+            )
+            write_text_atomic(
+                target, tgold.render_gold_yaml(proposal, frame, header=tgold.TOPUP_HEADER)
+            )
+            ids = [p.work_id for p in picks]
+            parts = {p.work_id: p for p in text_store.build_all(con, work_ids=ids)}
+            context = settings.paths.review / TOPUP_CONTEXT_NAME
+            write_text_atomic(
+                context, tgold.render_works_md("Labelled set: top-up works", ids, frame, parts)
+            )
+            still_thin = {t: n for t, n in after.items() if n < cfg.topup_min_train}
+            run.counts.update(
+                {
+                    "proposed": len(picks),
+                    "thin_topics": len(after),
+                    "thin_after_by_title": len(still_thin),
+                }
+            )
+            counts = dict(run.counts)
+    finally:
+        con.close()
+    typer.echo(f"wrote {target} and {context}: {counts}")
+    typer.echo("expected training works per thin topic after the top-up (by title match):")
+    for tid, n in after.items():
+        typer.echo(f"  {tid:<45} {n}")
 
 
 def report(

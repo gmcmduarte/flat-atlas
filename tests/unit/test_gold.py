@@ -405,3 +405,51 @@ def test_no_blind_subset_sheet_and_finalise(settings, monkeypatch, tmp_path):
     assert result.exit_code == 0, result.output
     final = tcheck.load_gold(out)
     assert len(final.works) == 60 and all(w.reviewed for w in final.works)
+
+
+# -- top-up ---------------------------------------------------------------------------------------
+
+
+def topup_topics():
+    data = yaml.safe_load((FIXTURES / "topics_valid.yaml").read_text(encoding="utf-8"))
+    return tcheck.parse_topics(yaml.safe_dump(data))
+
+
+def fw(i: int, title: str) -> tgold.FrameWork:
+    return tgold.FrameWork(f"W{i:010d}", title, "DLT", 2000, False)
+
+
+def test_title_hits_use_whole_tokens_and_context():
+    topics = topup_topics().topics
+    hits = tgold.title_hits("On the Shuffle of Regular Languages", topics)
+    assert "shuffle-of-words" in hits and "regular-languages" in hits
+    assert tgold.title_hits("Card shuffling", topics) == set()  # "shuffle of" not present
+    # "size" counts for descriptional-complexity only with a context word.
+    assert "descriptional-complexity" not in tgold.title_hits("The size of things", topics)
+    assert "descriptional-complexity" in tgold.title_hits("The size of a grammar", topics)
+
+
+def test_topup_is_train_only_capped_deterministic_and_serves_thin_topics_first():
+    topics = topup_topics()
+    frame = [fw(i, "The shuffle of words") for i in range(0, 60)]
+    frame += [fw(i, "State complexity results") for i in range(60, 120)]
+    gold = GoldFile(
+        taxonomy_version=1,
+        works=[
+            gw(f"W{i:010d}", ["regular-languages", "descriptional-complexity"])
+            for i in range(200, 220)
+        ],
+    )
+    picks, after = tgold.choose_topup(frame, gold, topics, max_works=6, min_train=5, seed=1)
+    again, _ = tgold.choose_topup(
+        list(reversed(frame)), gold, topics, max_works=6, min_train=5, seed=1
+    )
+    assert picks == again and len(picks) <= 6
+    assert all(split_for(p.work_id) == "train" for p in picks)
+    assert not {p.work_id for p in picks} & {w.work for w in gold.works}
+    # descriptional-complexity already has enough training works; shuffle-of-words is served.
+    assert all(p.topics == ("shuffle-of-words",) for p in picks)
+    assert after["shuffle-of-words"] == len(picks)
+    draft = tgold.build_topup_draft(picks, {w.work_id: w for w in frame}, taxonomy_version=1)
+    assert all(w.sampling == "topup" and w.split == "train" for w in draft.works)
+    assert tcheck.check_gold(draft, topics, resolve_work=lambda w: w) == []

@@ -100,6 +100,7 @@ groups["taxonomy"].command("propose")(taxonomy_commands.propose)
 groups["gold"].command("sample")(gold_commands.sample)
 groups["gold"].command("sheet")(gold_commands.sheet)
 groups["gold"].command("finalise")(gold_commands.finalise)
+groups["gold"].command("topup")(gold_commands.topup)
 groups["gold"].command("report")(gold_commands.report)
 
 

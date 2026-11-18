@@ -76,6 +76,8 @@ class GoldConfig(_Section):
     n: int = 500
     min_per_cell: int = 3  # every non-empty venue × decade × has-abstract cell gets at least this
     n_blind: int = 0  # D-91: the blind check of D-61 is waived
+    topup_max: int = 100  # extra training works for thin level-1 topics (D-61)
+    topup_min_train: int = 5  # a level-1 topic below this many training works is thin
 
 
 class TaxonomyConfig(_Section):

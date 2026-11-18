@@ -67,3 +67,5 @@ gold:
   n: 500
   min_per_cell: 3         # minimum per non-empty venue × decade × has-abstract cell
   n_blind: 0              # no blind subset (D-91 waives the blind check of D-61)
+  topup_max: 100          # top-up works for thin level-1 topics, training only (D-61)
+  topup_min_train: 5      # a level-1 topic with fewer training works than this is thin

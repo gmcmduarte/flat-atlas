@@ -532,6 +532,146 @@ def finalise(
     return GoldFile(taxonomy_version=draft.taxonomy_version, works=out)
 
 
+# -- top-up ---------------------------------------------------------------------------------------
+
+TOPUP_SALT = "gold-topup"
+
+
+def title_hits(title: str, topics: Sequence[TopicEntry]) -> set[str]:
+    """Topics whose include phrases occur in the title (whole tokens, folded, singular).
+
+    A phrase with context words also needs one of them in the title. Used only to *propose* top-up
+    works for thin topics (PLAN §9.6); the labels themselves are drafted and reviewed by hand.
+    """
+    from flatatlas.taxonomy.phrases import key_tokens
+    from flatatlas.taxonomy.schema import phrase_text
+
+    tokens = key_tokens(title)
+    out = set()
+    for topic in topics:
+        for phrase in topic.include_phrases:
+            key = key_tokens(phrase_text(phrase))
+            if not key or not _contains(tokens, key):
+                continue
+            context = getattr(phrase, "context", None) or []
+            if context and not any(key_tokens(c)[0] in tokens for c in context if key_tokens(c)):
+                continue
+            out.add(topic.id)
+            break
+    return out
+
+
+def _contains(tokens: tuple[str, ...], key: tuple[str, ...]) -> bool:
+    n = len(key)
+    return any(tokens[i : i + n] == key for i in range(len(tokens) - n + 1))
+
+
+@dataclass(frozen=True)
+class TopupPick:
+    work_id: str
+    topics: tuple[str, ...]  # the thin topics whose phrases matched the title
+
+
+def choose_topup(
+    frame: Sequence[FrameWork],
+    gold: GoldFile,
+    topics: TopicsFile,
+    *,
+    max_works: int,
+    min_train: int,
+    seed: int,
+) -> tuple[list[TopupPick], dict[str, int]]:
+    """Up to ``max_works`` extra training works for level-1 topics with too few examples.
+
+    Candidates are in-scope works not in the labelled set whose hash split is ``train`` (a top-up
+    work is never held out). Each round serves the thin topic with the fewest training works so
+    far (ties by id) with its next candidate in a fixed random order, and credits every thin
+    topic the title matches. Returns the picks and the expected training counts afterwards.
+    """
+    levels = topic_levels(topics.topics)
+    level1 = [t for t in topics.topics if levels.get(t.id) == 1 and t.status != "deprecated"]
+    count = Counter(x for w in gold.works if w.split == "train" for x in w.labels)
+    thin = {t.id for t in level1 if count[t.id] < min_train}
+    thin_topics = [t for t in level1 if t.id in thin]
+    taken = {w.work for w in gold.works}
+    queues: dict[str, list[str]] = defaultdict(list)
+    hits: dict[str, set[str]] = {}
+    for fw in sorted(frame, key=lambda w: rank(TOPUP_SALT, seed, w.work_id)):
+        if fw.work_id in taken or split_for(fw.work_id) != "train":
+            continue
+        matched = title_hits(fw.title, thin_topics)
+        if matched:
+            hits[fw.work_id] = matched
+            for tid in matched:
+                queues[tid].append(fw.work_id)
+    picks: list[TopupPick] = []
+    used: set[str] = set()
+    while len(picks) < max_works:
+        open_topics = [
+            tid
+            for tid in sorted(thin)
+            if count[tid] < min_train and any(w not in used for w in queues[tid])
+        ]
+        if not open_topics:
+            break
+        tid = min(open_topics, key=lambda t: (count[t], t))
+        wid = next(w for w in queues[tid] if w not in used)
+        used.add(wid)
+        matched = tuple(sorted(hits[wid]))
+        picks.append(TopupPick(wid, matched))
+        for other in matched:
+            count[other] += 1
+    return picks, {tid: count[tid] for tid in sorted(thin)}
+
+
+def build_topup_draft(
+    picks: Sequence[TopupPick],
+    frame: Mapping[str, FrameWork],
+    *,
+    taxonomy_version: int,
+    existing: GoldFile | None = None,
+) -> GoldFile:
+    """The top-up proposal in the ``gold.yaml`` format, keeping labels already drafted."""
+    kept = {w.work: w for w in existing.works} if existing else {}
+    works = []
+    for p in picks:
+        old = kept.get(p.work_id)
+        found = "Top-up: title matches " + ", ".join(p.topics) + "."
+        works.append(
+            GoldWork(
+                work=p.work_id,
+                title=frame[p.work_id].title,
+                labels=list(old.labels) if old else [],
+                split=split_for(p.work_id),
+                sampling="topup",
+                blind=False,
+                reviewed=False,
+                note=old.note if old else found,
+            )
+        )
+    return GoldFile(taxonomy_version=taxonomy_version, works=works)
+
+
+def render_works_md(
+    title: str,
+    work_ids: Sequence[str],
+    frame: Mapping[str, FrameWork],
+    parts: Mapping[str, CompositeParts],
+) -> str:
+    """Composite text of the listed works, in that order (local only: holds abstracts)."""
+    lines = [f"# {title}", "", "Local only (holds abstracts).", ""]
+    for i, wid in enumerate(work_ids, 1):
+        lines += _work_block(i, frame[wid], parts[wid])
+    return "\n".join(lines).rstrip() + "\n"
+
+
+TOPUP_HEADER = """\
+# Top-up proposal of the labelled set (P1-06b, PLAN §9.6): works found by title search for
+# level-1 topics with too few training works. Training only; never held out. Generated by
+# `flatatlas gold topup`, labels drafted by Claude. Edit only `labels` and `note`.
+"""
+
+
 # -- report ---------------------------------------------------------------------------------------
 
 
