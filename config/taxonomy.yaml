@@ -66,4 +66,4 @@ gold:
   seed: 20261118          # fixed before the sample was drawn
   n: 500
   min_per_cell: 3         # minimum per non-empty venue × decade × has-abstract cell
-  n_blind: 50             # labelled by Guilherme before he sees any draft
+  n_blind: 0              # no blind subset (D-91 waives the blind check of D-61)

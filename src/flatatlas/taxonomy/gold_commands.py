@@ -108,15 +108,20 @@ def sheet(
             write_text_atomic(
                 draft_path, tgold.render_gold_yaml(draft_file, frame, header=tgold.DRAFT_HEADER)
             )
+            written = [draft_path]
             blind_path = settings.paths.review / BLIND_NAME
-            if blind_path.exists():
+            if not the_sample.blind_ids():
+                pass  # no blind subset (n_blind: 0, D-91): no blind sheet
+            elif blind_path.exists():
                 typer.echo(f"kept {blind_path} (it exists; delete it to write a fresh one)")
             else:
                 write_text_atomic(
                     blind_path, tgold.render_blind_md(the_sample, frame, parts, topics)
                 )
+                written.append(blind_path)
             context_path = settings.paths.review / CONTEXT_NAME
             write_text_atomic(context_path, tgold.render_context_md(the_sample, frame, parts))
+            written.append(context_path)
             run.counts.update(
                 {
                     "works": len(draft_file.works),
@@ -127,7 +132,7 @@ def sheet(
             counts = dict(run.counts)
     finally:
         con.close()
-    typer.echo(f"wrote {draft_path}, {blind_path}, {context_path}: {counts}")
+    typer.echo(f"wrote {', '.join(str(p) for p in written)}: {counts}")
 
 
 def finalise(
@@ -145,10 +150,12 @@ def finalise(
     setup_logging(settings.paths.logs)
     topics = tcheck.load_topics()
     draft_file = tcheck.load_gold(draft or DRAFT_FILE)
-    blind_path = blind or settings.paths.review / BLIND_NAME
-    if not blind_path.exists():
-        raise _fail([f"{blind_path} not found"])
-    blind_entries = tgold.parse_blind_md(blind_path.read_text(encoding="utf-8"))
+    blind_entries: dict[str, tgold.BlindEntry] = {}
+    if any(w.blind for w in draft_file.works):
+        blind_path = blind or settings.paths.review / BLIND_NAME
+        if not blind_path.exists():
+            raise _fail([f"{blind_path} not found"])
+        blind_entries = tgold.parse_blind_md(blind_path.read_text(encoding="utf-8"))
     target = out or tcheck.GOLD_FILE
     existing = tcheck.load_gold(target) if target.exists() else None
     try:

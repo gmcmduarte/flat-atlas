@@ -75,7 +75,7 @@ class GoldConfig(_Section):
     seed: int = 20261118
     n: int = 500
     min_per_cell: int = 3  # every non-empty venue × decade × has-abstract cell gets at least this
-    n_blind: int = 50
+    n_blind: int = 0  # D-91: the blind check of D-61 is waived
 
 
 class TaxonomyConfig(_Section):

@@ -340,7 +340,12 @@ def add_text_tables(con: duckdb.DuckDBPyConnection) -> None:
 
 
 def test_sample_and_sheet_commands(settings, monkeypatch, tmp_path):
+    from flatatlas.taxonomy import config as tconfig
+
+    cfg = tconfig.load_config()
+    cfg.gold.n_blind = 50  # the blind path stays tested although the pilot uses none (D-91)
     monkeypatch.setattr("flatatlas.taxonomy.gold_commands.load_settings", lambda **_: settings)
+    monkeypatch.setattr("flatatlas.taxonomy.gold_commands.tconfig.load_config", lambda: cfg)
     con = connect(settings.paths)
     build_db(con, make_rows({"V1": 400, "V2": 300, "V3": 2}))
     add_text_tables(con)
@@ -370,3 +375,33 @@ def test_sample_and_sheet_commands(settings, monkeypatch, tmp_path):
     con.close()
     assert {"gold-sample", "gold-sheet"} <= stages
     assert '"seed": 20261118' in counts and "frame_counts" in counts
+
+
+def test_no_blind_subset_sheet_and_finalise(settings, monkeypatch, tmp_path):
+    """With n_blind: 0 (D-91) there is no blind sheet and finalise needs none."""
+    from flatatlas.taxonomy import config as tconfig
+
+    cfg = tconfig.load_config()
+    cfg.gold.n_blind = 0
+    monkeypatch.setattr("flatatlas.taxonomy.gold_commands.load_settings", lambda **_: settings)
+    monkeypatch.setattr("flatatlas.taxonomy.gold_commands.tconfig.load_config", lambda: cfg)
+    con = connect(settings.paths)
+    build_db(con, make_rows({"V1": 100, "V2": 80, "V3": 2}))
+    add_text_tables(con)
+    con.close()
+    runner = CliRunner()
+    assert runner.invoke(app, ["gold", "sample", "--n", "60"]).exit_code == 0
+    draft = tmp_path / "gold-draft.yaml"
+    result = runner.invoke(app, ["gold", "sheet", "--draft", str(draft)])
+    assert result.exit_code == 0, result.output
+    assert not (settings.paths.review / "gold-blind.md").exists()
+    parsed = tcheck.load_gold(draft)
+    assert not any(w.blind for w in parsed.works)
+    for w in parsed.works:
+        w.labels = ["regular-languages"]
+    draft.write_text(tgold.render_gold_yaml(parsed))
+    out = tmp_path / "gold.yaml"
+    result = runner.invoke(app, ["gold", "finalise", "--draft", str(draft), "--out", str(out)])
+    assert result.exit_code == 0, result.output
+    final = tcheck.load_gold(out)
+    assert len(final.works) == 60 and all(w.reviewed for w in final.works)
