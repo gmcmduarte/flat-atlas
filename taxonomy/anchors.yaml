@@ -189,7 +189,7 @@ anchors:
     year: 2016
     doi: "10.1007/978-3-319-40946-7_8"
     dblp: conf/wia/FernauK16
-    topic: decision-problems-for-finite-automata
+    topic: decision-problems
     kind: pilot
   - id: brabrand-2007-analyzing-ambiguity-context
     title: "Analyzing Ambiguity of Context-Free Grammars"
@@ -661,7 +661,7 @@ anchors:
     authors: "Leung, Podolskiy"
     year: 2001
     dblp: conf/dcfs/LeungP01
-    topic: cost-and-distance-automata
+    topic: weighted-automata
     kind: pilot
   - id: kudlek-2001-universal-turing-machine
     title: "A Universal Turing Machine with 3 States and 9 Symbols"
@@ -725,7 +725,7 @@ anchors:
     year: 2003
     doi: "10.1007/3-540-45007-6_1"
     dblp: conf/dlt/BertoniMP03
-    topic: quantum-automata
+    topic: quantum-finite-automata
     kind: pilot
   - id: holzer-2015-minimal-reversible-deterministic
     title: "Minimal Reversible Deterministic Finite Automata"
@@ -1118,7 +1118,7 @@ anchors:
     year: 2003
     doi: "10.1007/3-540-45007-6_22"
     dblp: conf/dlt/DrewesH03
-    topic: learning-grammars-and-trees
+    topic: learning-beyond-finite-automata
     kind: pilot
   - id: boiret-2012-learning-rational-functions
     title: "Learning Rational Functions"
@@ -1126,7 +1126,7 @@ anchors:
     year: 2012
     doi: "10.1007/978-3-642-31653-1_25"
     dblp: conf/dlt/BoiretLN12
-    topic: learning-transducers-and-weighted-automata
+    topic: learning-beyond-finite-automata
     kind: pilot
   - id: salzer-2024-verifying-interpreting-neural
     title: "Verifying and Interpreting Neural Networks Using Finite Automata"
@@ -1223,6 +1223,31 @@ anchors:
     topic: communicating-automata
     kind: pilot
 
+  - id: bertoni-2009-inclusion-problem-context-free
+    title: "The Inclusion Problem of Context-Free Languages: Some Tractable Cases"
+    authors: "Bertoni, Choffrut, Radicioni"
+    year: 2009
+    doi: "10.1007/978-3-642-02737-6_8"
+    dblp: conf/dlt/BertoniCR09
+    topic: decision-problems
+    kind: pilot
+  - id: ablayev-2014-very-narrow-quantum
+    title: "Very Narrow Quantum OBDDs and Width Hierarchies for Classical OBDDs"
+    authors: "Ablayev, Gainutdinova, Khadiev, Yakaryilmaz"
+    year: 2014
+    doi: "10.1007/978-3-319-09704-6_6"
+    dblp: conf/dcfs/AblayevGKY14
+    topic: quantum-branching-programs-and-queries
+    kind: pilot
+  - id: loff-2018-computational-power-parsing
+    title: "The Computational Power of Parsing Expression Grammars"
+    authors: "Loff, Moreira, Reis"
+    year: 2018
+    doi: "10.1007/978-3-319-98654-8_40"
+    dblp: conf/dlt/LoffMR18
+    topic: parsing-expression-grammars
+    kind: pilot
+
   # --- classic --------------------------------------------------------------------------------------
   - id: rabin-scott-1959
     title: "Finite Automata and Their Decision Problems"
@@ -1316,8 +1341,9 @@ anchors:
     year: 1968
     doi: "10.1007/bf01691346"
     dblp: journals/mst/ThatcherW68
-    topic: finite-tree-automata
+    topic: monadic-second-order-logic
     kind: classic
+    note: "the origin of tree automata, but the title names only second-order logic"
   - id: doner-1970
     title: "Tree acceptors and some of their applications"
     authors: "Doner"
@@ -1700,7 +1726,7 @@ anchors:
     year: 1997
     doi: "10.1109/sfcs.1997.646094"
     dblp: conf/focs/KondacsW97
-    topic: quantum-automata
+    topic: quantum-finite-automata
     kind: classic
   - id: rabin-1963
     title: "Probabilistic Automata"
@@ -1732,7 +1758,7 @@ anchors:
     year: 1982
     doi: "10.1016/0022-0000(82)90051-4"
     dblp: journals/jcss/Hashiguchi82
-    topic: cost-and-distance-automata
+    topic: weighted-automata
     kind: classic
   - id: kozen-1994
     title: "A Completeness Theorem for Kleene Algebras and the Algebra of Regular Events"
@@ -2142,4 +2168,28 @@ anchors:
     doi: "10.1016/s0304-3975(01)00223-7"
     dblp: journals/tcs/EhrenfeuchtHPPR03
     topic: ciliate-gene-assembly
+    kind: classic
+  - id: hunt-rosenkrantz-szymanski-1976
+    title: "On the Equivalence, Containment, and Covering Problems for the Regular and Context-Free Languages"
+    authors: "Hunt, Rosenkrantz, Szymanski"
+    year: 1976
+    doi: "10.1016/s0022-0000(76)80038-4"
+    dblp: journals/jcss/HuntRS76
+    topic: decision-problems
+    kind: classic
+  - id: stockmeyer-meyer-1973
+    title: "Word Problems Requiring Exponential Time: Preliminary Report"
+    authors: "Stockmeyer, Meyer"
+    year: 1973
+    doi: "10.1145/800125.804029"
+    dblp: conf/stoc/StockmeyerM73
+    topic: decision-problems
+    kind: classic
+  - id: ambainis-freivalds-1998
+    title: "1-way quantum finite automata: strengths, weaknesses and generalizations"
+    authors: "Ambainis, Freivalds"
+    year: 1998
+    doi: "10.1109/sfcs.1998.743469"
+    dblp: conf/focs/AmbainisF98
+    topic: quantum-finite-automata
     kind: classic
