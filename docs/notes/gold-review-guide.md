@@ -114,6 +114,15 @@ These are numbers from my draft, not from your review. The report will give the 
 - **Level-0 topics with fewer than 5 held-out works in the draft:** `grammatical-inference` (2), `automata-for-verification` (3), `quantum-computing-models` (4), `cellular-automata-and-symbolic-dynamics` (4). If that holds after review, the report lists them as too small to measure, as the session prompt allows.
 - **Level-1 topics with fewer than 5 training works: 79 of 119.** Three are absent altogether: `automata-on-infinite-trees`, `word-representable-graphs` and `networks-of-evolutionary-processors`. A top-up of at most 100 works (PLAN §9.6) cannot bring 79 topics to 5 examples each, because that would need roughly 250 works. This is a question for after the review: raise the top-up cap, measure per-topic level-1 numbers only for the larger topics, or both. I have not changed anything.
 
+## Top-up review (after the main review)
+
+Your review of the 500 works changed no label, and `taxonomy/gold.yaml` holds them as reviewed. The 79 level-1 topics with fewer than 5 training works then got a top-up of 100 works. These are listed in `taxonomy/proposals/gold-topup.yaml`, with `sampling: topup`, and are training only: each one's hash split is `train`.
+
+- **How they were found.** `flatatlas gold topup` searches pilot titles for the include phrases of each thin topic. It serves the topic with the fewest training works first, and takes candidates in a fixed random order.
+- **What the notes say.** Each note starts with "Top-up: title matches …", the topics that brought the work in. My labels are drafted from the full composite text, so they can differ from those topics.
+- **How to review.** Same as before: change `labels` or `note` where you disagree. The composite text is in `data/review/gold-topup-context.md`, in the same order.
+- **Result.** By my labels the thin topics drop from 79 to 69. Most move to 3 or 4 training works. `automata-on-infinite-trees` stays at 0, because no pilot title matches it. Closing the gap fully would need a higher cap than D-61's 100 works.
+
 ## Time
 
 About 2 hours for 500 works at about 15 s each. The works with notes take longer, and most of the others are quick confirmations.
