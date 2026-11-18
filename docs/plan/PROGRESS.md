@@ -3,12 +3,12 @@
 ## Current state (keep this section under 30 lines)
 - **Phase:** 0 (P0-00 open; P0-04 done), 1 started (P1-01 to P1-06 done)
 - **Last merged session:** P1-06 (PR #12)
-- **In progress:** P1-06b (branch `s/P1-06b-labelled-set`, paused at the hand-over): sample, review sheets and draft labels for all 500 works are done (no blind subset, D-91); Guilherme reviews the draft (`docs/notes/gold-review-guide.md`)
-- **Next:** resume P1-06b after the review (`gold finalise`, report, top-up decision, PR); then P1-07
+- **In progress:** P1-06b in its PR (branch `s/P1-06b-labelled-set`): `taxonomy/gold.yaml` holds 500 reviewed works; the top-up proposal (100 works, `taxonomy/proposals/gold-topup.yaml`) waits for Guilherme's review, then `gold finalise --draft taxonomy/proposals/gold-topup.yaml`
+- **Next:** Guilherme reviews the top-up and merges the P1-06b PR; then P1-07 (Sonnet)
 - **Live site:** https://gmcmduarte.github.io/flat-atlas/ (fixture data only; redeploys on every push to `main`)
 - **Latest release:** none
 - **Known problems:** Semantic Scholar throttles our key far below the documented 1 request/s (HTTP 429 on 15 to 25 % of calls or more); a full title-match pass takes about 2 hours (D-72, `docs/notes/sources.md`). The DBLP API is behind a bot challenge (HTTP 202, Anubis); DBLP data comes from the dump Guilherme downloads by hand (D-49). Refreshing it is manual. After a new dump, run `venues scan-dump` and then `parse dblp` again.
-- **Waiting on Guilherme:** the review of `taxonomy/proposals/gold-draft.yaml` (500 works, about 2 hours); the rest of P0-00 (branch protection, secret scanning, tmux, pre-commit install; S2 key is set in `.env`); reading the P1-04 report (a "done when" line of P1-04)
+- **Waiting on Guilherme:** the review of the 100 top-up works in `taxonomy/proposals/gold-topup.yaml` (about 25 minutes) and merging the P1-06b PR; the rest of P0-00 (branch protection, secret scanning, tmux, pre-commit install; S2 key is set in `.env`); reading the P1-04 report (a "done when" line of P1-04)
 
 ## Checklist
 **Phase 0** — [ ] P0-00 · [x] P0-01 · [x] P0-02 · [x] P0-03 · [x] P0-04
@@ -20,6 +20,24 @@
 **Phase 6** — [ ] P6-01 · [ ] P6-02 · [ ] P6-03 · [ ] G6
 
 ## Log (newest first)
+
+### 2026-11-18 — P1-06b The labelled set, part 2: review, `gold.yaml`, report, top-up (branch `s/P1-06b-labelled-set`)
+- **Review:** Guilherme went through `gold-draft.yaml` and changed nothing: all 1,526 draft labels (761 level 0, 765 level 1) stand. Because there was no blind subset (D-91), **the labelled set is in effect Claude's labels approved by Guilherme**. This matters when P1-07 reads its numbers: the held-out set measures agreement with Claude's reading of the papers.
+- **Built:** `taxonomy/gold.yaml` (`gold finalise`): 500 works, `sampling: random`, `reviewed: true`; 341 train and 159 held out (31.8 %). `docs/notes/gold-v1-report.md` (`gold report --draft-rev f612d42`): counts per topic and split, labels per work, 0.0 % of draft labels changed at either level, no blind section (D-91), thin topics. New command `flatatlas gold topup` (D-92) and `taxonomy/proposals/gold-topup.yaml`: 100 training-only works found by title search, labels drafted by Claude, not yet reviewed. `data/review/gold-topup-context.md` holds their composite text. 2 new tests (503 in all).
+- **Not built:** the review and finalising of the top-up (Guilherme's part). Tagger code (P1-07).
+- **Surprises:** (1) The draft passed review unchanged (see above). (2) The top-up cannot meet "5 training examples per level-1 topic": 236 examples were missing across 79 topics, and the cap is 100 works. By Claude's labels the top-up lowers the thin topics from 79 to 69, most of them to 3 or 4 training works. `automata-on-infinite-trees` stays at 0, because no pilot title matches it; `kleene-algebra`, `limited-automata`, `morphisms-and-pcp`, `supervisory-control` and `syntactic-monoids-and-varieties` stay at 2. (3) Four level-0 topics have fewer than 5 held-out works and are listed as too small to measure: `grammatical-inference` (2), `automata-for-verification` (3), `quantum-computing-models` (4), `cellular-automata-and-symbolic-dynamics` (4).
+- **Done when (evidence):**
+  - `gold.yaml` has 400–600 reviewed works with `sampling: random`; every one has a level-0 label; about one third held out; no top-up work held out: **pass**. 500 works, all `reviewed: true`; `finalise` refuses a work without a level-0 label and passed; 159 of 500 held out; no top-up work is in `gold.yaml` yet, and all 100 proposed are `train` by the hash rule (enforced by `topup`, `finalise` and `taxonomy check`).
+  - The blind subset was labelled before the draft was seen, with agreement numbers in the report: **waived** by Guilherme (D-91). The report gives the share of draft labels changed instead (0.0 %).
+  - Every level-0 topic in the pilot has at least 5 held-out works, or is listed as too small to measure: **pass**. 17 of 21 have at least 5; the 4 others are listed in the report.
+  - Guilherme's review is committed: **pass for the 500 works** (`gold.yaml`, `reviewed: true`; his review made no edits). The top-up review is open.
+- **Checks:** `uv run pytest` 503 passed; `uv run ruff check .` and `ruff format --check .` clean; `uv run flatatlas taxonomy check` OK (`gold.yaml`: 500 works); `taxonomy check --gold taxonomy/proposals/gold-topup.yaml` OK.
+- **Hand-off to P1-07 (Sonnet):**
+  - Labelled set: `taxonomy/gold.yaml`, 500 random works (341 `train`, 159 `heldout`), plus up to 100 top-up works (`sampling: topup`, always `train`) once Guilherme has reviewed them and `gold finalise --draft taxonomy/proposals/gold-topup.yaml` has run. `taxonomy load` writes `eval_gold`.
+  - **Held-out works are excluded from training, calibration, threshold tuning and seed sets** (D-61). Use them only to compare methods and to report precision and recall.
+  - Thin topics: 69 level-1 topics will have fewer than 5 training works even after the top-up, so learn per-topic weights only where there is data (share them across siblings, or fall back to the parent). Report level-1 macro scores only over topics with enough held-out works. Too small to measure at level 0: grammatical inference, verification, quantum, cellular automata.
+  - The labels are Claude's draft approved without changes (D-91); treat precision and recall as agreement with that reading.
+  - In 10 pilot works the S2 TLDR belongs to another paper (parking lot); they are in the labelled set, and their notes say so.
 
 ### 2026-11-18 — P1-06b The labelled set, part 1: sample, sheets, draft (branch `s/P1-06b-labelled-set`, paused)
 - **Built:** `flatatlas gold sample | sheet | finalise | report` (module `taxonomy/gold.py`, commands in `taxonomy/gold_commands.py`, group `gold` in `cli.py`). The sample reads only `core_work`, `core_version` and `core_venue`; it is stratified by venue, decade and has-abstract (proportional, at least 3 per non-empty cell, largest remainder), and works are chosen inside a cell by a hash of seed and work ID. The 50 blind works are also chosen by hash. `sheet` builds the review files from `text.store.build_all` (the composite text of P1-05) and keeps drafted labels on a re-run. `finalise` refuses unknown or deeper labels, works without a level-0 label and level-1 labels without a parent. `report` reads the unreviewed draft from a git revision. Config: section `gold` in `config/taxonomy.yaml` (seed 20261118, n 500, minimum 3, 50 blind), left out of the proposal hash, which is unchanged; `Paths.review`; `git_head_text` takes a revision. 20 new tests (500 in all). Decision D-90.
