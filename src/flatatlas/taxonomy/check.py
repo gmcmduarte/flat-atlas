@@ -101,15 +101,15 @@ def load_gold(path: Path = GOLD_FILE) -> GoldFile:
     return parse_gold(path.read_text(encoding="utf-8"), path.name)
 
 
-def git_head_text(path: Path, *, repo: Path = PROJECT_ROOT) -> str | None:
-    """The content of ``path`` at git HEAD, or None (not a repository, or not tracked)."""
+def git_head_text(path: Path, *, repo: Path = PROJECT_ROOT, rev: str = "HEAD") -> str | None:
+    """The content of ``path`` at git ``rev`` (HEAD by default), or None (not tracked there)."""
     try:
         rel = path.resolve().relative_to(repo.resolve())
     except ValueError:
         return None
     try:
         done = subprocess.run(  # noqa: S603 - fixed argument list
-            ["git", "-C", str(repo), "show", f"HEAD:{rel.as_posix()}"],  # noqa: S607
+            ["git", "-C", str(repo), "show", f"{rev}:{rel.as_posix()}"],  # noqa: S607
             capture_output=True,
             text=True,
             check=False,

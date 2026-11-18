@@ -12,6 +12,7 @@ EXPECTED_GROUPS = {
     "scope",
     "embed",
     "taxonomy",
+    "gold",
     "tag",
     "evaluate",
     "aggregate",
