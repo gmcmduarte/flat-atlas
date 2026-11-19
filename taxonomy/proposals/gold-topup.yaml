@@ -11,16 +11,16 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches ciliate-gene-assembly."
+  note: "Top-up: title matches ciliate-gene-assembly. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WBL3MW6EIYE
   # DLT 2015 · https://doi.org/10.1007/978-3-319-21500-6_19 · https://dblp.org/rec/conf/dlt/EsikFL15
   title: "*-Continuous Kleene ω-Algebras"
-  labels: [algebraic-language-theory, kleene-algebra, weighted-and-probabilistic-automata, weighted-automata, automata-on-infinite-words]
+  labels: [algebraic-language-theory, kleene-algebra, weighted-and-probabilistic-automata, weighted-automata, automata-on-infinite-words, omega-automata]
   split: train
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches kleene-algebra."
+  note: "Top-up: title matches kleene-algebra. Second pass added omega-automata. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: W5PNFR63XMZ
   # DCFS 2003 · https://dblp.org/rec/conf/dcfs/Mitrana03
   title: "Some Complexity Aspects of Hybrid Networks of Evolutionary Processors"
@@ -29,7 +29,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches networks-of-evolutionary-processors. Title only."
+  note: "Top-up: title matches networks-of-evolutionary-processors. Title only. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WMWFKM3HMTA
   # DCFS 2015 · https://doi.org/10.1007/978-3-319-19225-3_15 · https://dblp.org/rec/conf/dcfs/Mischenko-Slatenkova15
   title: "Quantum Queries on Permutations"
@@ -38,7 +38,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches quantum-branching-programs-and-queries."
+  note: "Top-up: title matches quantum-branching-programs-and-queries. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WOKB7W3XZM6
   # CIAA 2011 · https://doi.org/10.1007/978-3-642-22256-6_20 · https://dblp.org/rec/conf/wia/KushikEY11
   title: "Preset and Adaptive Homing Experiments for Nondeterministic Finite State Machines"
@@ -47,7 +47,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches state-machine-testing."
+  note: "Top-up: title matches state-machine-testing. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WNRM2IWJ2ZL
   # DLT 2021 · https://doi.org/10.1007/978-3-030-81508-0_30 · https://dblp.org/rec/conf/dlt/ThomasMBNS21
   title: "Parikh Word Representable Graphs and Morphisms"
@@ -56,16 +56,16 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches morphisms-and-pcp, word-representable-graphs. Title and references only."
+  note: "Top-up: title matches morphisms-and-pcp, word-representable-graphs. Title and references only. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WXM24KHTIUM
   # DLT 1995 · https://dblp.org/rec/conf/dlt/SimaW95
   title: "Neural Language Acceptors"
-  labels: [grammatical-inference, automata-and-neural-networks, descriptional-complexity]
+  labels: [grammatical-inference, automata-and-neural-networks, descriptional-complexity, conversions-and-trade-offs]
   split: train
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches automata-and-neural-networks. Neural networks as acceptors and their size; learning is not the subject, but automata-and-neural-networks is under grammatical inference."
+  note: "Top-up: title matches automata-and-neural-networks. Neural networks as acceptors and their size; learning is not the subject, but automata-and-neural-networks is under grammatical inference. Second pass added conversions-and-trade-offs. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: W4ANYFHSZUG
   # CIAA 2008 · https://doi.org/10.1007/978-3-540-70844-5_7 · https://dblp.org/rec/conf/wia/BouajjaniHHTV08
   title: "Antichain-Based Universality and Inclusion Testing over Nondeterministic Finite Tree Automata"
@@ -74,7 +74,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches automata-based-model-checking."
+  note: "Top-up: title matches automata-based-model-checking. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WNGLKKQUXFE
   # DCFS 2014 · https://doi.org/10.1007/978-3-319-09704-6_30 · https://dblp.org/rec/conf/dcfs/Petersen14
   title: "A Note on Pushdown Automata Systems"
@@ -83,16 +83,16 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches automata-systems."
+  note: "Top-up: title matches automata-systems. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WKBJDDDEECT
   # CIAA 2004 · https://doi.org/10.1007/978-3-540-30500-2_29 · https://dblp.org/rec/conf/wia/Cojocaru04
   title: "Simulating the Process of Gene Assembly in Ciliates"
-  labels: [natural-computing, ciliate-gene-assembly, transducers, finite-state-transducers]
+  labels: [natural-computing, ciliate-gene-assembly, transducers, finite-state-transducers, machine-models, automata-systems]
   split: train
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches ciliate-gene-assembly."
+  note: "Top-up: title matches ciliate-gene-assembly. Second pass added machine-models, automata-systems. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WK5U2XVZ7LF
   # DLT 2004 · https://doi.org/10.1007/978-3-540-30550-7_4 · https://dblp.org/rec/conf/dlt/GenestMK04
   title: "A Kleene Theorem for a Class of Communicating Automata with Effective Algorithms"
@@ -101,7 +101,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches communicating-automata."
+  note: "Top-up: title matches communicating-automata. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WPI34F65ZAL
   # DLT 2006 · https://doi.org/10.1007/11779148_31 · https://dblp.org/rec/conf/dlt/Lakshmanan06
   title: "End-Marked Maximal Depth-First Contextual Grammars"
@@ -110,7 +110,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches contextual-grammars."
+  note: "Top-up: title matches contextual-grammars. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WYLHSMFNH2H
   # CIAA 2019 · https://doi.org/10.1007/978-3-030-23679-3_16 · https://dblp.org/rec/conf/wia/KutribMW19
   title: "Input-Driven Multi-counter Automata"
@@ -119,7 +119,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches counter-automata."
+  note: "Top-up: title matches counter-automata. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: W2UWNE3UGKD
   # DLT 2012 · https://doi.org/10.1007/978-3-642-31653-1_42 · https://dblp.org/rec/conf/dlt/SaloT12
   title: "Geometry and Dynamics of the Besicovitch and Weyl Spaces"
@@ -128,7 +128,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches dynamics-of-cellular-automata."
+  note: "Top-up: title matches dynamics-of-cellular-automata. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WLVU3FGIIKA
   # CIAA 2001 · https://doi.org/10.1007/3-540-36390-4_15 · https://dblp.org/rec/conf/wia/KatritzkeMT01
   title: "Enhancements of Partitioning Techniques for Image Compression Using Weighted Finite Automata"
@@ -137,16 +137,16 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches fractals-and-images."
+  note: "Top-up: title matches fractals-and-images. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WOPYAMQHPUX
   # CIAA 2004 · https://doi.org/10.1007/978-3-540-30500-2_23 · https://dblp.org/rec/conf/wia/Shan04
   title: "Stochastic Context-Free Graph Grammars for Glycoprotein Modelling"
-  labels: [picture-and-graph-languages, graph-grammars, implementation-and-applications]
+  labels: [picture-and-graph-languages, graph-grammars, implementation-and-applications, weighted-and-probabilistic-automata, probabilistic-automata]
   split: train
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches graph-grammars, probabilistic-automata. Stochastic graph grammars applied to glycoproteins; probabilistic-automata is possible."
+  note: "Top-up: title matches graph-grammars, probabilistic-automata. Stochastic graph grammars applied to glycoproteins; stochastic grammars belong to probabilistic-automata. Second pass added weighted-and-probabilistic-automata, probabilistic-automata. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WAKSHLFOSOD
   # CIAA 2024 · https://doi.org/10.1007/978-3-031-71112-1_1 · https://dblp.org/rec/conf/wia/Seki24
   title: "Automata and Grammars for Data Words"
@@ -155,7 +155,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches infinite-alphabet-automata. Title and references only."
+  note: "Top-up: title matches infinite-alphabet-automata. Title and references only. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WQBQKCSIHRK
   # DCFS 2016 · https://doi.org/10.1007/978-3-319-41114-9_16 · https://dblp.org/rec/conf/dcfs/Vorel16
   title: "Two Results on Discontinuous Input Processing"
@@ -164,7 +164,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches jumping-automata."
+  note: "Top-up: title matches jumping-automata. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WFIVUNDZ7J7
   # DLT 2020 · https://doi.org/10.1007/978-3-030-48516-0_1 · https://dblp.org/rec/conf/dlt/AmraneB20
   title: "Equational Theories of Scattered and Countable Series-Parallel Posets"
@@ -173,7 +173,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches kleene-algebra, linear-orderings. Equational theories of series-parallel posets on scattered orders; automata-on-graphs is possible."
+  note: "Top-up: title matches kleene-algebra, linear-orderings. Equational theories of series-parallel posets on scattered orders; automata-on-graphs is possible. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WQ4QVBJQSEP
   # DLT 2006 · https://doi.org/10.1007/11779148_38 · https://dblp.org/rec/conf/dlt/OkhotinY06
   title: "Language Equations with Complementation"
@@ -182,7 +182,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches language-equations."
+  note: "Top-up: title matches language-equations. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WUPGSTUS6CF
   # DLT 1997 · https://dblp.org/rec/conf/dlt/DavidES97
   title: "Learning String Adjunct and Tree Adjunct Languages"
@@ -191,7 +191,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches learning-beyond-finite-automata. Title only."
+  note: "Top-up: title matches learning-beyond-finite-automata. Title only. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WZIH2TSBSHY
   # DLT 1995 · https://dblp.org/rec/conf/dlt/Gartner95
   title: "On Partition Limited OL Systems"
@@ -200,7 +200,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches limited-automata, lindenmayer-systems. Title only in practice: the S2 TLDR belongs to an unrelated patent."
+  note: "Top-up: title matches limited-automata, lindenmayer-systems. Title only in practice: the S2 TLDR belongs to an unrelated patent. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WYZTD2M6L2H
   # DLT 2009 · https://doi.org/10.1007/978-3-642-02737-6_35 · https://dblp.org/rec/conf/dlt/RestivoR09
   title: "Balanced Words Having Simple Burrows-Wheeler Transform"
@@ -209,16 +209,16 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches lyndon-words-and-bwt, sturmian-words."
+  note: "Top-up: title matches lyndon-words-and-bwt, sturmian-words. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WVJI4DSDFY5
   # DCFS 2008 · https://dblp.org/rec/conf/dcfs/AlhazovCMR08
   title: "Computational Completeness of Hybrid Networks of Evolutionary Processors with Seven Nodes"
-  labels: [natural-computing, networks-of-evolutionary-processors]
+  labels: [natural-computing, networks-of-evolutionary-processors, descriptional-complexity, complexity-of-grammars-and-systems]
   split: train
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches networks-of-evolutionary-processors."
+  note: "Top-up: title matches networks-of-evolutionary-processors. Second pass added descriptional-complexity, complexity-of-grammars-and-systems. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WFODKEQ4DIC
   # DLT 2009 · https://doi.org/10.1007/978-3-642-02737-6_40 · https://dblp.org/rec/conf/dlt/Zetzsche09
   title: "Erasing in Petri Net Languages and Matrix Grammars"
@@ -227,7 +227,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches petri-net-languages."
+  note: "Top-up: title matches petri-net-languages. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WCTELSWL6XO
   # DLT 2026 · https://doi.org/10.1007/978-3-032-28404-4_9 · https://dblp.org/rec/conf/dlt/MassazzaRT26
   title: "Centered Ascending Polyominoes"
@@ -236,7 +236,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches polyominoes. Title and references only."
+  note: "Top-up: title matches polyominoes. Title and references only. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WONQ5E6DC2V
   # DCFS 2014 · https://doi.org/10.1007/978-3-319-09704-6_1 · https://dblp.org/rec/conf/dcfs/Ambainis14
   title: "Recent Developments in Quantum Algorithms and Complexity"
@@ -245,7 +245,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches quantum-branching-programs-and-queries. A survey of quantum query complexity; little automata content."
+  note: "Top-up: title matches quantum-branching-programs-and-queries. A survey of quantum query complexity; little automata content. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: W2N36D6AJ32
   # DCFS 2005 · https://dblp.org/rec/conf/dcfs/BertoniMP05
   title: "Some formal methods for analyzing quantum automata"
@@ -254,7 +254,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches quantum-finite-automata. Title only."
+  note: "Top-up: title matches quantum-finite-automata. Title only. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WPTD4OM67UJ
   # DLT 2004 · https://doi.org/10.1007/978-3-540-30550-7_3 · https://dblp.org/rec/conf/dlt/EhrenfeuchtR04
   title: "Basic Notions of Reaction Systems"
@@ -263,7 +263,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches reaction-systems."
+  note: "Top-up: title matches reaction-systems. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WFCZREHGGTF
   # CIAA 2004 · https://doi.org/10.1007/978-3-540-30500-2_19 · https://dblp.org/rec/conf/wia/KariKS04
   title: "Substitutions, Trajectories and Noisy Channels"
@@ -272,7 +272,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches shuffle-and-interleaving. Trajectory-based substitution motivated by noisy channels; codes is possible."
+  note: "Top-up: title matches shuffle-and-interleaving. Trajectory-based substitution motivated by noisy channels; codes is possible. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WT4PQ7OFNN6
   # CIAA 2013 · https://doi.org/10.1007/978-3-642-39274-0_6 · https://dblp.org/rec/conf/wia/BelliB13
   title: "Using Regular Grammars for Event-Based Testing"
@@ -281,7 +281,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches state-machine-testing."
+  note: "Top-up: title matches state-machine-testing. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WKZ3J3UB3AR
   # CIAA 2001 · https://doi.org/10.1007/3-540-36390-4_2 · https://dblp.org/rec/conf/wia/BergeronH01
   title: "Cascade Decompositions are Bit-Vector Algorithms"
@@ -290,7 +290,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches transformation-semigroups."
+  note: "Top-up: title matches transformation-semigroups. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WHY42CCZQ6H
   # DCFS 2026 · https://doi.org/10.1007/978-3-032-32016-2_1 · https://dblp.org/rec/conf/dcfs/AdamsonDFHS26
   title: "2-Word-π-Representable Graphs"
@@ -299,7 +299,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches word-representable-graphs."
+  note: "Top-up: title matches word-representable-graphs. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WWO7RWQFIZ2
   # DLT 2013 · https://doi.org/10.1007/978-3-642-38771-5_10 · https://dblp.org/rec/conf/dlt/Blanchet-SadriF13
   title: "On the Asymptotic Abelian Complexity of Morphic Words"
@@ -308,7 +308,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches abelian-properties-of-words."
+  note: "Top-up: title matches abelian-properties-of-words. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WBH2BQPEHOJ
   # CIAA 2018 · https://doi.org/10.1007/978-3-319-94812-6_7 · https://dblp.org/rec/conf/wia/BartholdiGKP18
   title: "A New Hierarchy for Automaton Semigroups"
@@ -317,16 +317,16 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches automata-and-groups."
+  note: "Top-up: title matches automata-and-groups. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WFYSSWZNS5E
   # CIAA 2007 · https://doi.org/10.1007/978-3-540-76336-9_7 · https://dblp.org/rec/conf/wia/KleinB07
   title: "On-the-Fly Stuttering in the Construction of Deterministic omega -Automata"
-  labels: [automata-on-infinite-words, omega-automata, logic-and-automata, temporal-logics]
+  labels: [automata-on-infinite-words, omega-automata, logic-and-automata, temporal-logics, automata-for-verification, automata-based-model-checking]
   split: train
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches automata-based-model-checking."
+  note: "Top-up: title matches automata-based-model-checking. Second pass added automata-for-verification, automata-based-model-checking. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WMKY3GJS6D3
   # DCAGRS 2001 · https://dblp.org/rec/conf/dcfs/Balan01
   title: "Parallel Communicating Pushdown Automata with Filters in Communication"
@@ -335,7 +335,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches automata-systems. Title only."
+  note: "Top-up: title matches automata-systems. Title only. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: W6DNOQGB7VH
   # DLT 2004 · https://doi.org/10.1007/978-3-540-30550-7_13 · https://dblp.org/rec/conf/dlt/Dassow04
   title: "A Ciliate Bio-operation and Language Families"
@@ -344,7 +344,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches ciliate-gene-assembly."
+  note: "Top-up: title matches ciliate-gene-assembly. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: W3Y4U3H5JBJ
   # DLT 2014 · https://doi.org/10.1007/978-3-319-09698-8_25 · https://dblp.org/rec/conf/dlt/DayRS14
   title: "Closure Properties of Pattern Languages"
@@ -353,7 +353,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches closure-properties, pattern-languages."
+  note: "Top-up: title matches closure-properties, pattern-languages. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WMQND4FQYTZ
   # CIAA 2003 · https://doi.org/10.1007/3-540-45089-0_15 · https://dblp.org/rec/conf/wia/KuskeM03
   title: "Branching Automata with Costs - A Way of Reflecting Parallelism in Costs"
@@ -362,7 +362,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches communicating-automata. Branching automata on series-parallel posets are listed under communicating automata."
+  note: "Top-up: title matches communicating-automata. Branching automata on series-parallel posets are listed under communicating automata. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WL3H7TMOO5A
   # DCFS 2012 · https://doi.org/10.1007/978-3-642-31623-4_14 · https://dblp.org/rec/conf/dcfs/JezO12
   title: "On the Number of Nonterminal Symbols in Unambiguous Conjunctive Grammars"
@@ -371,7 +371,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches complexity-of-grammars-and-systems, conjunctive-and-boolean-grammars."
+  note: "Top-up: title matches complexity-of-grammars-and-systems, conjunctive-and-boolean-grammars. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WYEDOQDTYHL
   # DLT 1993 · https://dblp.org/rec/conf/dlt/PaunRS93
   title: "Contextual Grammars: Erasing, Determinism, One-Side Contexts"
@@ -380,7 +380,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches contextual-grammars. Title only."
+  note: "Top-up: title matches contextual-grammars. Title only. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WFIZVXVTIV3
   # CIAA 2013 · https://doi.org/10.1007/978-3-642-39274-0_25 · https://dblp.org/rec/conf/wia/Crespi-ReghizziP13
   title: "Deterministic Counter Machines and Parallel Matching Computations"
@@ -389,7 +389,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches counter-automata. Consensual languages and matching computations; regular-expressions is possible."
+  note: "Top-up: title matches counter-automata. Consensual languages and matching computations; regular-expressions is possible. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WCC4XH5FB2A
   # DLT 2007 · https://doi.org/10.1007/978-3-540-73208-2_11 · https://dblp.org/rec/conf/dlt/BienvenuS07
   title: "The Dynamics of Cellular Automata in Shift-Invariant Topologies"
@@ -398,7 +398,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches dynamics-of-cellular-automata."
+  note: "Top-up: title matches dynamics-of-cellular-automata. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WUPWXE3IKWL
   # WIA 1999 · https://doi.org/10.1007/3-540-45526-4_8 · https://dblp.org/rec/conf/wia/Eramian99
   title: "Computing Entropy Maps of Finite-Automaton-Encoded Binary Images"
@@ -407,7 +407,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches factor-complexity-and-growth, fractals-and-images."
+  note: "Top-up: title matches factor-complexity-and-growth, fractals-and-images. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WH4JRHEFETB
   # DLT 1999 · https://doi.org/10.1142/9789812792464_0025 · https://dblp.org/rec/conf/dlt/BordihnH99
   title: "Cooperating distributed grammar systems with non-terminating components"
@@ -416,7 +416,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches grammar-systems."
+  note: "Top-up: title matches grammar-systems. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WCBIMD7JUWR
   # DLT 2004 · https://doi.org/10.1007/978-3-540-30550-7_1 · https://dblp.org/rec/conf/dlt/Courcelle04
   title: "Recognizable Sets of Graphs, Hypergraphs and Relational Structures: A Survey"
@@ -425,7 +425,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches automata-on-graphs, graph-grammars, rational-and-recognisable-subsets."
+  note: "Top-up: title matches automata-on-graphs, graph-grammars, rational-and-recognisable-subsets. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WJYGLMSVKFW
   # CIAA 2026 · https://doi.org/10.1007/978-3-032-31176-4_9 · https://dblp.org/rec/conf/wia/LiTY26
   title: "Hyper-Minimization for Deterministic Register Automata"
@@ -434,7 +434,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches infinite-alphabet-automata."
+  note: "Top-up: title matches infinite-alphabet-automata. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WXYIHSPJ6EK
   # DLT 2011 · https://doi.org/10.1007/978-3-642-22321-1_16 · https://dblp.org/rec/conf/dlt/ChaturvediOT11
   title: "Languages vs. ω-Languages in Regular Infinite Games"
@@ -443,16 +443,16 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches infinite-games."
+  note: "Top-up: title matches infinite-games. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WNSXQU5WKD5
   # DLT 2008 · https://doi.org/10.1007/978-3-540-85780-8_4 · https://dblp.org/rec/conf/dlt/Jancar08
   title: "Selected Ideas Used for Decidability and Undecidability of Bisimilarity"
-  labels: [automata-for-verification, infinite-state-verification, grammars-and-context-free-languages, pushdown-automata]
+  labels: [automata-for-verification, infinite-state-verification, grammars-and-context-free-languages, pushdown-automata, decision-problems]
   split: train
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches infinite-state-verification."
+  note: "Top-up: title matches infinite-state-verification. Second pass added decision-problems. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WC52HFYUSBR
   # DCFS 2018 · https://doi.org/10.1007/978-3-319-94631-3_5 · https://dblp.org/rec/conf/dcfs/ChoHSS18
   title: "Site-Directed Insertion: Decision Problems, Maximality and Minimality"
@@ -461,7 +461,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches insertion-and-deletion-operations."
+  note: "Top-up: title matches insertion-and-deletion-operations. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: W4ZR5ZIV6S7
   # CIAA 2025 · https://doi.org/10.1007/978-3-032-02602-6_11 · https://dblp.org/rec/conf/wia/FazekasKKMMS25
   title: "Subsequence Matching and Analysis Problems for Automata with Translucent Letters"
@@ -470,7 +470,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches jumping-automata. Title and references only."
+  note: "Top-up: title matches jumping-automata. Title and references only. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WYU7ATZWY7P
   # DCFS 2008 · https://dblp.org/rec/conf/dcfs/Allender08
   title: "Circuit Complexity, Kolmogorov Complexity, and Prospects for Lower Bounds"
@@ -479,7 +479,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches automata-and-complexity-classes, kolmogorov-complexity."
+  note: "Top-up: title matches automata-and-complexity-classes, kolmogorov-complexity. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: W6CAQW26YOD
   # DCFS 2004 · https://dblp.org/rec/conf/dcfs/Okhotin04
   title: "A characterization of the arithmetical hierarchy by language equations"
@@ -488,7 +488,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches language-equations."
+  note: "Top-up: title matches language-equations. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WDTWMECUS5Q
   # CIAA 2024 · https://doi.org/10.1007/978-3-031-71112-1_4 · https://dblp.org/rec/conf/wia/BaumgartnerV24
   title: "PDFA Distillation with Error Bound Guarantees"
@@ -497,7 +497,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches learning-beyond-finite-automata. Title and references only."
+  note: "Top-up: title matches learning-beyond-finite-automata. Title and references only. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WVL47W6FKEY
   # DCFS 2005 · https://dblp.org/rec/conf/dcfs/GramlichH05
   title: "Learning Unary Automata"
@@ -506,7 +506,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches learning-regular-languages, unary-languages."
+  note: "Top-up: title matches learning-regular-languages, unary-languages. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WOYPU4NMTLX
   # DCFS 2018 · https://doi.org/10.1007/978-3-319-94631-3_11 · https://dblp.org/rec/conf/dcfs/GuillonP18
   title: "Linear-Time Limited Automata"
@@ -515,7 +515,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches limited-automata."
+  note: "Top-up: title matches limited-automata. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: W6FTXBMXTGK
   # DCFS 2006 · https://dblp.org/rec/conf/dcfs/DassowV06
   title: "On the Number of Active Symbols in Lindenmayer Systems"
@@ -524,16 +524,16 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches lindenmayer-systems."
+  note: "Top-up: title matches lindenmayer-systems. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WERFHUKMZCB
   # DLT 2025 · https://doi.org/10.1007/978-3-032-01475-7_20 · https://dblp.org/rec/conf/dlt/Cotumaccio25
   title: "Sorting Circular Suffixes in Linear Time"
-  labels: [combinatorics-on-words, lyndon-words-and-bwt]
+  labels: [combinatorics-on-words, lyndon-words-and-bwt, implementation-and-applications, string-matching]
   split: train
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches lyndon-words-and-bwt. Title only; circular suffixes read as the bijective/extended BWT."
+  note: "Top-up: title matches lyndon-words-and-bwt. Title only; circular suffixes read as the bijective/extended BWT. Second pass added implementation-and-applications, string-matching. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WVKLGNUEIWN
   # DLT 2009 · https://doi.org/10.1007/978-3-642-02737-6_25 · https://dblp.org/rec/conf/dlt/Kanazawa09
   title: "The Pumping Lemma for Well-Nested Multiple Context-Free Languages"
@@ -542,7 +542,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches mildly-context-sensitive-grammars."
+  note: "Top-up: title matches mildly-context-sensitive-grammars. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WCT2TEW5NNG
   # DLT 1999 · https://doi.org/10.1142/9789812792464_0004 · https://dblp.org/rec/conf/dlt/Yokomori99
   title: "Computation = self-assembly + conformational change: toward new computing paradigms"
@@ -551,7 +551,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches molecular-self-assembly."
+  note: "Top-up: title matches molecular-self-assembly. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WDJIXAQHKVI
   # DLT 2001 · https://doi.org/10.1007/3-540-46011-x_26 · https://dblp.org/rec/conf/dlt/HalavaH01
   title: "An Undecidability Result Concerning Periodic Morphisms"
@@ -560,16 +560,16 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches morphisms-and-pcp."
+  note: "Top-up: title matches morphisms-and-pcp. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WV462D7MXJM
   # DCFS 2009 · https://doi.org/10.4204/eptcs.3.16 · https://dblp.org/rec/journals/corr/abs-0907-5130
   title: "Small Universal Accepting Networks of Evolutionary Processors with Filtered Connections"
-  labels: [natural-computing, networks-of-evolutionary-processors, machine-models, turing-machines]
+  labels: [natural-computing, networks-of-evolutionary-processors, machine-models, turing-machines, descriptional-complexity, complexity-of-grammars-and-systems]
   split: train
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches networks-of-evolutionary-processors."
+  note: "Top-up: title matches networks-of-evolutionary-processors. Second pass added descriptional-complexity, complexity-of-grammars-and-systems. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: W32MJZ5DASR
   # DCFS 2015 · https://doi.org/10.1007/978-3-319-19225-3_21 · https://dblp.org/rec/conf/dcfs/NesinT15
   title: "Groups Whose Word Problem is a Petri Net Language"
@@ -578,16 +578,16 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches automata-and-groups, petri-net-languages."
+  note: "Top-up: title matches automata-and-groups, petri-net-languages. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WO4J4YIYYCF
   # DLT 2026 · https://doi.org/10.1007/978-3-032-28404-4_25 · https://dblp.org/rec/conf/dlt/FrosiniNR26
   title: "Generation and Enumeration of Floorplans Determined by HV-Matrices"
-  labels: [picture-and-graph-languages, polyominoes, implementation-and-applications, random-generation-and-enumeration]
+  labels: [picture-and-graph-languages, polyominoes]
   split: train
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches polyominoes. Title and references only. Floorplan enumeration; weak fit to polyominoes."
+  note: "Top-up: title matches polyominoes. Title and references only. Floorplan enumeration; weak fit to polyominoes. Second pass removed implementation-and-applications, random-generation-and-enumeration. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WPRHEHF5BVF
   # DLT 2014 · https://doi.org/10.1007/978-3-319-09698-8_29 · https://dblp.org/rec/conf/dlt/YakaryilmazSD14
   title: "Debates with Small Transparent Quantum Verifiers"
@@ -596,7 +596,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches quantum-branching-programs-and-queries."
+  note: "Top-up: title matches quantum-branching-programs-and-queries. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WWWR42XTRKD
   # DCFS 2015 · https://doi.org/10.1007/978-3-319-19225-3_24 · https://dblp.org/rec/conf/dcfs/VillagraY15
   title: "Quantum State Complexity of Formal Languages"
@@ -605,7 +605,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches quantum-finite-automata."
+  note: "Top-up: title matches quantum-finite-automata. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WYYTB3ZQ2HC
   # DCFS 2014 · https://doi.org/10.1007/978-3-319-09704-6_11 · https://dblp.org/rec/conf/dcfs/FormentiMP14
   title: "Cycles and Global Attractors of Reaction Systems"
@@ -614,7 +614,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches reaction-systems."
+  note: "Top-up: title matches reaction-systems. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WD7KQHAKCP5
   # DLT 1999 · https://doi.org/10.1142/9789812792464_0003 · https://dblp.org/rec/conf/dlt/SalomaaY99
   title: "On the decomposition of finite languages"
@@ -623,7 +623,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches roots-powers-and-decompositions."
+  note: "Top-up: title matches roots-powers-and-decompositions. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WCO7RORG5UR
   # DLT 2006 · https://doi.org/10.1007/11779148_17 · https://dblp.org/rec/conf/dlt/Domaratzki06
   title: "Characterizing DNA Bond Shapes Using Trajectories"
@@ -632,7 +632,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches dna-computing-and-splicing, shuffle-and-interleaving."
+  note: "Top-up: title matches dna-computing-and-splicing, shuffle-and-interleaving. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WE27M265HXF
   # WIA 1996 · https://doi.org/10.1007/3-540-63174-7_10 · https://dblp.org/rec/conf/wia/RavikumarX96
   title: "Implementing Sequential and Parallel Programs for the Homing Sequence Problem"
@@ -641,7 +641,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches state-machine-testing."
+  note: "Top-up: title matches state-machine-testing. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WYMODS7L2Z7
   # DLT 2018 · https://doi.org/10.1007/978-3-319-98654-8_5 · https://dblp.org/rec/conf/dlt/Perrin18
   title: "Groups, Languages and Dendric Shifts"
@@ -650,16 +650,16 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches automata-and-groups, symbolic-dynamics. Dendric shifts and free groups; automata-and-groups is possible."
+  note: "Top-up: title matches automata-and-groups, symbolic-dynamics. Dendric shifts and free groups; automata-and-groups is possible. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WOG3C235OMM
   # DLT 2006 · https://doi.org/10.1007/11779148_5 · https://dblp.org/rec/conf/dlt/Kufleitner06
   title: "Polynomials, Fragments of Temporal Logic and the Variety DA over Traces"
-  labels: [concurrency-and-traces, trace-languages, algebraic-language-theory, star-free-languages, logic-and-automata, temporal-logics]
+  labels: [concurrency-and-traces, trace-languages, algebraic-language-theory, star-free-languages, logic-and-automata, temporal-logics, syntactic-monoids-and-varieties]
   split: train
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches syntactic-monoids-and-varieties, temporal-logics, trace-languages."
+  note: "Top-up: title matches syntactic-monoids-and-varieties, temporal-logics, trace-languages. Second pass added syntactic-monoids-and-varieties. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: W5DPJ3TSOWJ
   # DLT 2008 · https://doi.org/10.1007/978-3-540-85780-8_22 · https://dblp.org/rec/conf/dlt/DurandRS08
   title: "Fixed Point and Aperiodic Tilings"
@@ -668,16 +668,16 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches tilings."
+  note: "Top-up: title matches tilings. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WYN77MDQVRT
   # DLT 2016 · https://doi.org/10.1007/978-3-662-53132-7_4 · https://dblp.org/rec/conf/dlt/BhaveDKPT16
   title: "A Perfect Class of Context-Sensitive Timed Languages"
-  labels: [automata-for-verification, timed-and-hybrid-automata, grammars-and-context-free-languages, pushdown-automata]
+  labels: [automata-for-verification, timed-and-hybrid-automata, grammars-and-context-free-languages, pushdown-automata, logic-and-automata]
   split: train
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches timed-and-hybrid-automata."
+  note: "Top-up: title matches timed-and-hybrid-automata. Second pass added logic-and-automata. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: W4ZOKB7LFN5
   # DLT 2011 · https://doi.org/10.1007/978-3-642-22321-1_28 · https://dblp.org/rec/conf/dlt/KuncO11
   title: "Describing Periodicity in Two-Way Deterministic Finite Automata Using Transformation Semigroups"
@@ -686,7 +686,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches periodicity-and-borders, transformation-semigroups."
+  note: "Top-up: title matches periodicity-and-borders, transformation-semigroups. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WBMGNJF3SEM
   # DLT 2020 · https://doi.org/10.1007/978-3-030-48516-0_18 · https://dblp.org/rec/conf/dlt/MalettiS20
   title: "On Tree Substitution Grammars"
@@ -695,7 +695,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches tree-grammars."
+  note: "Top-up: title matches tree-grammars. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WGIXRGJMVMX
   # DLT 2024 · https://doi.org/10.1007/978-3-031-66159-4_2 · https://dblp.org/rec/conf/dlt/Kiefer24
   title: "Polyregular Functions: Characterisations and Refutations"
@@ -704,7 +704,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches two-way-and-streaming-transducers. Title and references only."
+  note: "Top-up: title matches two-way-and-streaming-transducers. Title and references only. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: W2Y7GBY53CO
   # DLT 2006 · https://doi.org/10.1007/11779148_6 · https://dblp.org/rec/conf/dlt/DrosteR06
   title: "Weighted Automata and Weighted Logics on Infinite Words"
@@ -713,7 +713,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches weighted-logics."
+  note: "Top-up: title matches weighted-logics. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WNFEQWO7TKQ
   # DLT 2009 · https://doi.org/10.1007/978-3-642-02737-6_36 · https://dblp.org/rec/conf/dlt/Saarela09
   title: "On the Complexity of Hmelevskii's Theorem and Satisfiability of Three Unknown Equations"
@@ -722,7 +722,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches word-equations."
+  note: "Top-up: title matches word-equations. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WMDSZCPJ2VQ
   # DLT 2010 · https://doi.org/10.1007/978-3-642-14455-4_41 · https://dblp.org/rec/conf/dlt/HalldorssonKP10
   title: "Graphs Capturing Alternations in Words"
@@ -731,7 +731,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches word-representable-graphs."
+  note: "Top-up: title matches word-representable-graphs. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WSS2BTBYI4B
   # DLT 2013 · https://doi.org/10.1007/978-3-642-38771-5_21 · https://dblp.org/rec/conf/dlt/FiciLLLMP13
   title: "Abelian Repetitions in Sturmian Words"
@@ -740,7 +740,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches abelian-properties-of-words, sturmian-words."
+  note: "Top-up: title matches abelian-properties-of-words, sturmian-words. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: W2KPLBSXJ5M
   # CIAA 2007 · https://doi.org/10.1007/978-3-540-76336-9_2 · https://dblp.org/rec/conf/wia/Vardi07
   title: "Linear-Time Model Checking: Automata Theory in Practice"
@@ -749,7 +749,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches automata-based-model-checking. An invited survey."
+  note: "Top-up: title matches automata-based-model-checking. An invited survey. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WXJZKACBZ6P
   # CIAA 2010 · https://doi.org/10.1007/978-3-642-18098-9_18 · https://dblp.org/rec/conf/wia/HundeshagenOV10
   title: "Transductions Computed by PC-Systems of Monotone Deterministic Restarting Automata"
@@ -758,7 +758,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches automata-systems."
+  note: "Top-up: title matches automata-systems. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: W6EX7GCRKY6
   # DLT 2004 · https://doi.org/10.1007/978-3-540-30550-7_17 · https://dblp.org/rec/conf/dlt/GruskaTP04
   title: "Optimal Time and Communication Solutions of Firing Squad Synchronization Problems on Square Arrays, Toruses and Rings"
@@ -767,7 +767,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches cellular-automata-computation."
+  note: "Top-up: title matches cellular-automata-computation. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WPG24H6FWJH
   # DLT 2006 · https://doi.org/10.1007/11779148_16 · https://dblp.org/rec/conf/dlt/DassowV06
   title: "Ciliate Bio-operations on Finite String Multisets"
@@ -776,7 +776,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches ciliate-gene-assembly."
+  note: "Top-up: title matches ciliate-gene-assembly. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WVH7W43AV2V
   # DLT 2025 · https://doi.org/10.1007/978-3-032-01475-7_3 · https://dblp.org/rec/conf/dlt/ChoP25
   title: "A Comparative Analysis of Deletion Closure Operations and Their Properties"
@@ -785,7 +785,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches closure-properties, insertion-and-deletion-operations. Title and references only."
+  note: "Top-up: title matches closure-properties, insertion-and-deletion-operations. Title and references only. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WKG5YB6KV42
   # DLT 2016 · https://doi.org/10.1007/978-3-662-53132-7_2 · https://dblp.org/rec/conf/dlt/Bedon16
   title: "Complementation of Branching Automata for Scattered and Countable Series-Parallel Posets"
@@ -794,7 +794,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches communicating-automata, linear-orderings. Branching automata on posets are listed under communicating automata."
+  note: "Top-up: title matches communicating-automata, linear-orderings. Branching automata on posets are listed under communicating automata. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WLWWT27JUWH
   # DCFS 2005 · https://dblp.org/rec/conf/dcfs/FernauFOR05
   title: "Refining the Nonterminal Complexity of Graph-controlled Grammars"
@@ -803,7 +803,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches complexity-of-grammars-and-systems."
+  note: "Top-up: title matches complexity-of-grammars-and-systems. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WPRHWWGTNE4
   # DCFS 2012 · https://doi.org/10.1007/978-3-642-31623-4_17 · https://dblp.org/rec/conf/dcfs/ManeaT12
   title: "On Internal Contextual Grammars with Subregular Selection Languages"
@@ -812,7 +812,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches contextual-grammars."
+  note: "Top-up: title matches contextual-grammars. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WVZJNJEBLJ7
   # CIAA 2024 · https://doi.org/10.1007/978-3-031-71112-1_12 · https://dblp.org/rec/conf/wia/HerrmannM24
   title: "Global One-Counter Tree Automata"
@@ -821,7 +821,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches counter-automata."
+  note: "Top-up: title matches counter-automata. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WRSIMNV6TT4
   # DLT 2025 · https://doi.org/10.1007/978-3-032-01475-7_14 · https://dblp.org/rec/conf/dlt/Schmid25
   title: "A General Information Extraction Framework Based on Formal Languages"
@@ -830,7 +830,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches documents-and-databases."
+  note: "Top-up: title matches documents-and-databases. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WANCDVK55RW
   # DLT 2013 · https://doi.org/10.1007/978-3-642-38771-5_38 · https://dblp.org/rec/conf/dlt/Regnault13
   title: "Proof of a Phase Transition in Probabilistic Cellular Automata"
@@ -839,7 +839,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches dynamics-of-cellular-automata."
+  note: "Top-up: title matches dynamics-of-cellular-automata. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WUAZQHMEOI3
   # CIAA 2001 · https://doi.org/10.1007/3-540-36390-4_14 · https://dblp.org/rec/conf/wia/HolzerK01
   title: "Improving Raster Image Run-Length Encoding Using Data Order"
@@ -848,7 +848,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches fractals-and-images. Image run-length encoding processed by a double-queue automaton; weak fit to both."
+  note: "Top-up: title matches fractals-and-images. Image run-length encoding processed by a double-queue automaton; weak fit to both. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WIFSVOI7SEZ
   # DCFS 2004 · https://dblp.org/rec/conf/dcfs/Sunckel04
   title: "On the Descriptional Complexity of Metalinear CD Grammar Systems"
@@ -857,7 +857,7 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches grammar-systems."
+  note: "Top-up: title matches grammar-systems. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WUFCLLESOYY
   # DLT 1997 · https://dblp.org/rec/conf/dlt/Kurerov97
   title: "Resolution-Similar Graph Grammars"
@@ -866,34 +866,34 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches graph-grammars. Title only."
+  note: "Top-up: title matches graph-grammars. Title only. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WUYA2OD53OA
   # DLT 2023 · https://doi.org/10.1007/978-3-031-33264-7_4 · https://dblp.org/rec/conf/dlt/BanerjeeCG23
   title: "Set Augmented Finite Automata over Infinite Alphabets"
-  labels: [machine-models, infinite-alphabet-automata]
+  labels: [machine-models, infinite-alphabet-automata, decision-problems]
   split: train
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches infinite-alphabet-automata."
+  note: "Top-up: title matches infinite-alphabet-automata. Second pass added decision-problems. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WCQUCP5PVAX
   # CIAA 2025 · https://doi.org/10.1007/978-3-032-02602-6_10 · https://dblp.org/rec/conf/wia/DuretLutzZPGV25
   title: "Engineering an LTLf Synthesis Tool"
-  labels: [logic-and-automata, temporal-logics, implementation-and-applications, automata-software-tools, automata-on-infinite-words, infinite-games]
+  labels: [logic-and-automata, temporal-logics, implementation-and-applications, automata-software-tools, automata-on-infinite-words, infinite-games, efficient-representations]
   split: train
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches infinite-games, temporal-logics."
+  note: "Top-up: title matches infinite-games, temporal-logics. Second pass added efficient-representations. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: W74J7ZJDU5X
   # CIAA 2000 · https://doi.org/10.1007/3-540-44674-5_12 · https://dblp.org/rec/conf/wia/Ibarra00
   title: "Reachability and Safety in Queue Systems"
-  labels: [automata-for-verification, infinite-state-verification]
+  labels: [automata-for-verification, infinite-state-verification, machine-models, storage-automata, decision-problems]
   split: train
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches infinite-state-verification."
+  note: "Top-up: title matches infinite-state-verification. Second pass added machine-models, storage-automata, decision-problems. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WHZKBESHJAR
   # DCFS 2025 · https://doi.org/10.1007/978-3-031-97100-6_13 · https://dblp.org/rec/conf/dcfs/MrazO25
   title: "On A Measure for The Descriptional Complexity of Finite Automata with Translucent Words"
@@ -902,4 +902,4 @@ works:
   sampling: topup
   blind: false
   reviewed: false
-  note: "Top-up: title matches jumping-automata. Title and references only."
+  note: "Top-up: title matches jumping-automata. Title and references only. Second-pass review by Claude at Guilherme's request (D-93)."
