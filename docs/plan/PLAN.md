@@ -198,13 +198,13 @@ Embeddings are derived data under Apache 2.0 / our own computation and *may* be 
 
 ### 4.4 Tags
 
-**`tag_signal`** (wide, internal): `work_id`, `topic_id`, one column per signal score (§9.3; `dm_*` and `distil` are null where the step did not run), the context features of §9.3, `shortlisted`, `tagger_version`.
+**`tag_signal`** (wide, internal): `work_id`, `topic_id`, one column per signal score (§9.3; `dm_*` and `distil` are null where the step did not run), the context features of §9.3, `shortlisted`, `tagger_version`. P1-07 adds the fused scores here (`p_noisy_or`, `p_stage_a`, `parent_p`, `p_fusion`) and the two hierarchy features `child_lex` and `child_emb` (D-95); the `dm_*` and `distil` columns arrive with P1-07b and P4-05.
 
 **`local_decision`** (local-only cache of the decision model, §9.5): `work_id`, `question` (`l0` or a topic ID), `option_order`, `probabilities`, `model_sha256`, `prompt_version`.
 
 **`eval_gold`** (loaded from `taxonomy/gold.yaml`, §9.6): `work_id`, `topic_id`, `split` (`train`/`heldout`), `sampling`, `blind`, `taxonomy_version`. Never exported in a release as tags.
 
-**`tag_work_topic`** (published): `work_id`, `topic_id`, `confidence` (0–1), `rank`, `is_primary`, `provenance` (STRUCT: `method`, `signals` used with their scores, `models` (file hashes of the fusion, decision and distilled models that contributed), `tagger_version`, `taxonomy_version`), `derived` (true for ancestor rows added by closure).
+**`tag_work_topic`** (published): `work_id`, `topic_id`, `confidence` (0–1), `rank`, `is_primary`, `provenance` (STRUCT: `method`, `signals` used with their scores, `models` (file hashes of the fusion, decision and distilled models that contributed), `tagger_version`, `taxonomy_version`), `derived` (true for ancestor rows added by closure); `provenance` also has `flags` (for example `low_confidence`), and until P1-08 chooses the shipped method the table holds the rows of both methods, told apart by `provenance.method` (D-95).
 
 ### 4.5 Aggregates (built for the site)
 `agg_topic_year` (papers, confidence-weighted volume, citations), `agg_topic_author` (score, first/last year), `agg_topic_venue`, `agg_venue_year` (all venue metrics, §15.1), `agg_venue_overlap`, `agg_author_coauthor(author_a, author_b, year, n)`, `agg_bridge(topic_a, topic_b, work_id, score)`, `agg_reading_path`, `agg_map_layout(topic_id, parent_id, x, y, r, year)`.
@@ -474,7 +474,7 @@ Raw cosines are not comparable across topics (a broad topic is spread out, a nar
 
 **Context features (per work and per topic)**, given to the fusion model so that it can learn *when* to trust each signal: `has_abstract`, `has_tldr`, `n_references`, `n_references_with_title`, `embedding_source` (s2 or local), title length, publication decade; and the topic features of §9.2.
 
-**Shortlist.** For each work, the union of the top candidates of each signal family (lexical, embedding, source, propagation), cut to about 8 topics, plus their ancestors. Later steps only score shortlisted pairs. The shortlist's recall is measured on gold-train (share of gold labels that are in the shortlist, target ≥ 95 %); a label the shortlist misses can never be recovered.
+**Shortlist.** For each work, the union of the top candidates of each signal family (lexical, embedding, source, propagation), cut to about 8 topics (10 in P1-07, D-95), plus their ancestors. Later steps only score shortlisted pairs. The shortlist's recall is measured on gold-train (share of gold labels that are in the shortlist, target ≥ 95 %; 92.4 % in P1-07, causes in `docs/notes/tagger-experiments.md`); a label the shortlist misses can never be recovered.
 
 ### 9.4 Fusion, hierarchy and selection (cascade step 2)
 
@@ -487,7 +487,7 @@ Three fusion methods exist so that the choice is made by numbers (§9.6), not by
   - **Leak rule:** a signal that defined the silver label of a pair is not a feature for that pair.
   - **No held-out leakage:** held-out works are excluded from training, calibration, threshold tuning and artefact seed sets.
 
-**Hierarchy is soft, never hard routing.** Topics are scored level by level from the top; a child's features include its parents' probabilities (the maximum over its parents; several parents allowed). A wrong level-0 guess lowers the scores below it but blocks nothing, which avoids the error cascade of top-down classifiers.
+**Hierarchy is soft, never hard routing.** Topics are scored level by level from the top; a child's features include its parents' probabilities (the maximum over its parents; several parents allowed). In P1-07 this is a two-stage model: stage A scores each pair from its own features, stage B adds the best parent's stage-A probability (D-95). A wrong level-0 guess lowers the scores below it but blocks nothing, which avoids the error cascade of top-down classifiers.
 
 **Two passes.** Pass 1 without propagation → pass 2 adds `prop_*` using pass-1 tags → stop (no iteration to convergence; it keeps runs deterministic and incremental, D-25).
 
