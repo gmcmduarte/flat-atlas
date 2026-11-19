@@ -41,6 +41,7 @@ from flatatlas.sources import openalex as openalex_src
 from flatatlas.sources import reftitles as reftitles_src
 from flatatlas.sources import s2 as s2_src
 from flatatlas.status import render_status
+from flatatlas.tagging import commands as tag_commands
 from flatatlas.taxonomy import commands as taxonomy_commands
 from flatatlas.taxonomy import gold_commands
 from flatatlas.venues import (
@@ -79,7 +80,7 @@ app = typer.Typer(
 # One sub-app per group. Stage modules add commands with ``@groups["harvest"].command()``.
 # ``embed`` and ``resolve`` run when called without a sub-command, and ``evaluate`` has the
 # ``--data`` flag, so none of them may print its help instead.
-RUNNABLE_GROUPS = {"embed", "resolve", "evaluate"}
+RUNNABLE_GROUPS = {"embed", "resolve", "evaluate", "tag"}
 groups: dict[str, typer.Typer] = {
     name: typer.Typer(name=name, help=help_text, no_args_is_help=name not in RUNNABLE_GROUPS)
     for name, help_text in COMMAND_GROUPS.items()
@@ -97,6 +98,11 @@ groups["taxonomy"].command("composite")(taxonomy_commands.composite)
 groups["taxonomy"].command("mine")(taxonomy_commands.mine)
 groups["taxonomy"].command("cluster")(taxonomy_commands.cluster)
 groups["taxonomy"].command("propose")(taxonomy_commands.propose)
+groups["tag"].callback(invoke_without_command=True)(tag_commands.tag_run)
+groups["tag"].command("fit")(tag_commands.fit)
+groups["tag"].command("artefacts")(tag_commands.artefacts)
+groups["tag"].command("experiment")(tag_commands.experiment)
+groups["tag"].command("anchors")(tag_commands.anchors)
 groups["gold"].command("sample")(gold_commands.sample)
 groups["gold"].command("sheet")(gold_commands.sheet)
 groups["gold"].command("finalise")(gold_commands.finalise)

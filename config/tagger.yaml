@@ -1,0 +1,98 @@
+# Settings of the tagger (P1-07; PLAN §9.3, §9.4; D-63 to D-65, D-95).
+# Every weight, band, threshold, seed and model setting of cascade steps 1 and 2 is here. Artefacts
+# and models are frozen per `tagger_version`: change a number that affects the result and you bump it.
+tagger_version: tagger-1
+seed: 20261120
+
+# Cascade step 3 (P1-07b). Off: no signal named dm_* is computed.
+decision_model:
+  enabled: false
+
+phrases:
+  # Weight of a phrase match by where the phrase comes from.
+  weight_include: 1.0        # include_phrases of topics.yaml
+  weight_alias: 0.95
+  weight_name: 0.9           # the topic's own name, when it is not already a phrase
+  weight_variant: 0.85       # mined reordering variants (phrases.parquet), same words
+  weight_neighbour: 0.4      # multi-word phrases whose works embed like an include phrase
+  neighbour_min_cosine: 0.95
+  neighbour_min_tokens: 2
+  single_token_factor: 0.7   # a one-word phrase is weaker evidence than a longer one
+  max_title_seeds: 30        # exact title matches added to a topic's seed set, at most
+
+signals:
+  # lex_abstract: weighted matches per 100 tokens of abstract + TLDR -> 1 - exp(-x / scale)
+  lex_abstract_scale: 1.5
+  # emb_*: noisy-or sees max(0, (percentile - floor) / (1 - floor)); the model sees the percentile
+  percentile_floor: 0.9
+  # src_openalex: a mapped OpenAlex topic counts when its own score is at least this
+  openalex_min_score: 0.1
+  # venue_prior: additive smoothing of the share of a venue's random training works
+  venue_smoothing: 1.0
+
+embedding:
+  # Where a work has no Semantic Scholar vector, the local SPECTER2 vector is used (D-23).
+  # stored | title | title_refs: what the local model reads (experiment 2 of P1-07 decides).
+  # stored = the vector P1-03 wrote (title, plus the abstract when there is one).
+  local_input: title_refs
+  # How the topic description is embedded for emb_desc (experiment 1 of P1-07 decides):
+  # specter2 | specter2_adhoc | minilm
+  description_model: specter2
+  batch_size: 16
+  device: cpu
+  centroid_spread_split: 0.05   # mean cosine distance to the centroid above which seeds may split
+  max_centroids: 3
+  min_seeds_per_centroid: 4
+  kmeans_iterations: 50
+
+shortlist:
+  size: 10                   # candidate topics per work, ancestors are added on top
+  min_percentile: 0.8        # an embedding candidate needs at least this percentile
+  per_family: {lexical: 4, emb_seed: 4, emb_desc: 2, source: 1}
+
+noisy_or:
+  weights:
+    lex_title: 0.85
+    lex_abstract: 0.6
+    lex_refs: 0.5
+    emb_seed: 0.55
+    emb_desc: 0.3
+    src_openalex: 0.5
+    venue_prior: 0.2
+  agreement:
+    family_min: 0.35          # a family agrees when its best signal reaches this
+    bonus: 0.2                # added to the noisy-or in the (1 - p) sense, per extra agreeing family
+
+silver:
+  min_negative_gap: 0.15      # a negative needs the other roots' lexical+source score below this
+  positive_min_title: 0.85    # lex_title this high, and src_openalex at least openalex_min_score
+  max_per_class: 6000         # silver pairs kept per class (deterministic by hash)
+
+fusion:
+  folds: 5
+  weight_gold: 3.0
+  weight_silver: 1.0
+  # Only the random-sample training works fit the calibrator (top-up works are not a random sample).
+  calibrate_on: random
+  choose_by: f1_micro_l1      # the simpler model wins unless the other is better by this margin
+  complex_margin: 0.01
+  lightgbm:
+    n_estimators: 200
+    learning_rate: 0.05
+    num_leaves: 7
+    min_child_samples: 20
+    subsample: 0.8
+    subsample_freq: 1
+    colsample_bytree: 0.8
+    reg_lambda: 1.0
+  logistic:
+    C: 1.0
+    max_iter: 500
+
+selection:
+  threshold: 0.35
+  max_topics: 6
+  tune_threshold: [0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55]
+  tune_max_topics: [3, 4, 5, 6]
+  fallback_min: 0.15          # no topic reaches the threshold: best level-0 topic if above this
+  unsure_band: [0.3, 0.5]       # a level 0 or level 1 pair inside this band marks the work as unsure
