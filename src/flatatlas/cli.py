@@ -42,6 +42,7 @@ from flatatlas.sources import reftitles as reftitles_src
 from flatatlas.sources import s2 as s2_src
 from flatatlas.status import render_status
 from flatatlas.taxonomy import commands as taxonomy_commands
+from flatatlas.taxonomy import gold_commands
 from flatatlas.venues import (
     VenueConfigError,
     load_venue_facts,
@@ -56,6 +57,7 @@ COMMAND_GROUPS: dict[str, str] = {
     "scope": "Decide which works belong to the field.",
     "embed": "Fetch or compute paper embeddings.",
     "taxonomy": "Propose and check the topic DAG.",
+    "gold": "Sample, sheet and finalise the labelled set.",
     "tag": "Assign topics to works.",
     "evaluate": "Run the automatic quality checks.",
     "aggregate": "Compute per-topic, per-venue and per-author aggregates.",
@@ -95,6 +97,11 @@ groups["taxonomy"].command("composite")(taxonomy_commands.composite)
 groups["taxonomy"].command("mine")(taxonomy_commands.mine)
 groups["taxonomy"].command("cluster")(taxonomy_commands.cluster)
 groups["taxonomy"].command("propose")(taxonomy_commands.propose)
+groups["gold"].command("sample")(gold_commands.sample)
+groups["gold"].command("sheet")(gold_commands.sheet)
+groups["gold"].command("finalise")(gold_commands.finalise)
+groups["gold"].command("topup")(gold_commands.topup)
+groups["gold"].command("report")(gold_commands.report)
 
 
 def _show_version(value: bool) -> None:

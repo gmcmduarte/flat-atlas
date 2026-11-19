@@ -59,3 +59,13 @@ propose:
   citation_min_share: 0.2               # share of a child's in-corpus citations into the parent
   max_parents: 3
   examples_per_topic: 5
+
+gold:
+  # The labelled set (P1-06b, PLAN §9.6, D-61). The sample is random, stratified by venue, decade
+  # and has-abstract; it never reads tagger output. Not part of the hash printed in proposals.
+  seed: 20261118          # fixed before the sample was drawn
+  n: 500
+  min_per_cell: 3         # minimum per non-empty venue × decade × has-abstract cell
+  n_blind: 0              # no blind subset (D-91 waives the blind check of D-61)
+  topup_max: 100          # top-up works for thin level-1 topics, training only (D-61)
+  topup_min_train: 5      # a level-1 topic with fewer training works than this is thin

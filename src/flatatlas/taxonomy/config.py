@@ -69,6 +69,17 @@ class ProposeConfig(_Section):
     examples_per_topic: int = 5
 
 
+class GoldConfig(_Section):
+    """The labelled set (P1-06b, PLAN §9.6): the random sample and the blind subset."""
+
+    seed: int = 20261118
+    n: int = 500
+    min_per_cell: int = 3  # every non-empty venue × decade × has-abstract cell gets at least this
+    n_blind: int = 0  # D-91: the blind check of D-61 is waived
+    topup_max: int = 100  # extra training works for thin level-1 topics (D-61)
+    topup_min_train: int = 5  # a level-1 topic below this many training works is thin
+
+
 class TaxonomyConfig(_Section):
     seed: int = 20261116
     seeds: SeedsConfig = Field(default_factory=SeedsConfig)
@@ -76,6 +87,7 @@ class TaxonomyConfig(_Section):
     mine: MineConfig = Field(default_factory=MineConfig)
     cluster: ClusterConfig = Field(default_factory=ClusterConfig)
     propose: ProposeConfig = Field(default_factory=ProposeConfig)
+    gold: GoldConfig = Field(default_factory=GoldConfig)
 
 
 def load_config(path: Path = CONFIG_FILE) -> TaxonomyConfig:
@@ -83,6 +95,10 @@ def load_config(path: Path = CONFIG_FILE) -> TaxonomyConfig:
 
 
 def config_hash(config: TaxonomyConfig) -> str:
-    """A short digest of the settings (recorded in outputs, so runs can be compared)."""
-    text = config.model_dump_json()
+    """A short digest of the settings (recorded in outputs, so runs can be compared).
+
+    The ``gold`` section does not change mining, clustering or proposals, so it is left out: adding
+    it did not change the hash of earlier proposals.
+    """
+    text = config.model_dump_json(exclude={"gold"})
     return hashlib.sha256(text.encode()).hexdigest()[:10]

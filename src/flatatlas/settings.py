@@ -114,6 +114,11 @@ class Paths:
         return self.root / "cache"
 
     @property
+    def review(self) -> Path:
+        """Local review sheets (they may hold abstracts, so they are never committed)."""
+        return self.root / "review"
+
+    @property
     def warehouse_db(self) -> Path:
         return self.warehouse / "flatatlas.duckdb"
 
