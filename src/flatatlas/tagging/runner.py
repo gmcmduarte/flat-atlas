@@ -433,7 +433,7 @@ def tag(ctx: Context, method: str, *, limit: int | None = None) -> TagResult:
     except Missing:
         if method == "fusion":
             raise
-    X_out = _model_matrix(ctx, model if method == "fusion" else None)
+    X_out = _model_matrix(ctx, model)
     dm_models: list[dict] = []
     dm_rows: set[int] = set()
     if method == "fusion":

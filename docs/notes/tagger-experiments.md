@@ -222,3 +222,60 @@ final model for the rest; no label of a held-out work enters).
 corrected (it assumed 30 to 70 hours). The way out is step 4 (the distilled classifier trained on
 the pilot's answers), a smaller model, or fewer questions; Qwen3-4B (2.5 GB) would be about twice
 as fast, untested.
+
+# Decision model (P1-07b): the full run and the cross-validated comparison
+
+**The run** (`data/logs/2026-11-19-tag-decide.log`, 16:41 to 22:27, launched by Guilherme):
+`flatatlas tag decide` over the **1,173 unsure works** (band 0.3 to 0.5 of the base model, out of fold
+for gold-train works, plus the 281 works where signal families disagree; 50 % of the pilot).
+3,510 choice and 9,360 yes/no questions asked (9 and 24 more were served from the cache of the
+3-work test), no errors, **5.8 h
+= 17.7 s per work** (choice 2.7, 2.8 and 3.1 s per order, yes/no 9.1 s for 7.98 questions on average;
+the 50-work test above measured 22.6 s because of start-up and a cold cache). Peak memory 5.65 GB.
+**Order effect over all 1,173 works:** the top topic is the same in all three orders for 58.5 %,
+the top probability moves by 0.40 on average. Every one of the 1,173 works has `dm_l0` in
+`tag_signal` (16,698 pairs) and 1,123 have `dm_child` too (3,648 pairs; the other 50 had no
+level-1 candidate to ask about). Answers are cached in `warehouse/local/local_decision.parquet`
+(12,903 rows).
+
+**Cross-validated comparison on gold-train** (5 folds by work, the same folds as above; LightGBM,
+same hyper-parameters; the decision model's raw answers are calibrated inside each fold by isotonic
+maps fitted on that fold's random-sample training pairs: 835 level-0 pairs and 475 level-1 pairs in
+the final fit). Selection retuned for each: base threshold 0.45 and 3 topics, with the decision model
+0.4 and 3. **No held-out number.** Scores are agreement with the labelled set (Claude's reading).
+
+| Works | Model | Level 0 P | R | F1 | Level 1 P | R | F1 | Mean F1 |
+|---|---|---|---|---|---|---|---|---|
+| random-train (341) | base | 0.777 | 0.825 | **0.800** | 0.822 | 0.672 | 0.740 | 0.7697 |
+| random-train (341) | with decision model | 0.767 | 0.823 | 0.794 | 0.796 | 0.700 | **0.745** | 0.7694 |
+| all-train (523) | base | 0.791 | 0.830 | 0.810 | 0.843 | 0.701 | 0.765 | 0.7875 |
+| all-train (523) | with decision model | 0.781 | 0.829 | 0.804 | 0.820 | 0.726 | 0.770 | 0.7871 |
+
+Macro F1 (random-train; 19 level-0 and 40 level-1 topics): level 0 0.800 to 0.795, level 1 0.725 to
+0.737. Unsure share at the band 0.3 to 0.5: 37.0 % to 40.2 %.
+
+**On the works the step ran on only** (the unsure works; their out-of-fold probabilities):
+
+| Works | Model | Level 0 F1 | Level 1 P | R | F1 |
+|---|---|---|---|---|---|
+| unsure, random-train (150) | base | 0.786 | 0.796 | 0.656 | 0.719 |
+| unsure, random-train (150) | with decision model | 0.780 | 0.757 | 0.713 | 0.734 |
+| unsure, all-train (234) | base | 0.789 | 0.819 | 0.672 | 0.738 |
+| unsure, all-train (234) | with decision model | 0.785 | 0.787 | 0.721 | 0.753 |
+| not unsure, random-train (191, no `dm_*`) | base | 0.813 | 0.846 | 0.686 | 0.757 |
+| not unsure, random-train (191, no `dm_*`) | with decision model | 0.806 | 0.835 | 0.689 | 0.755 |
+
+**Reading.** With 341 works, differences under about 0.02 are noise (above). **The decision model
+changes nothing measurable.** The mean of the level 0 and level 1 F1 is 0.7697 against 0.7694. On the
+unsure works it moves level 1 recall up (0.656 to 0.713) and precision down (0.796 to 0.757), a
+level 1 F1 gain of 0.015 (0.015 on the 234 all-train works too), against a drift of 0.002 to 0.007
+on the *unchanged* works (no `dm_*` at all; only the retuned selection differs). That gain is about
+twice the drift and below the 0.02 that 341 works can resolve, and level 0 loses 0.004 to 0.006. Taken alone,
+the choice question is worse than the fusion model: the most probable topic is one of the work's
+gold level-0 labels for **80.7 %** of the 150 unsure random-train works (82.1 % of 234 all-train),
+against **91.3 %** for the base model's top level-0 topic on the same 150 works. The model is
+overconfident (many 0.00 or 1.00 per order) and changes its mind with the option order.
+Held-out numbers (P1-08) decide whether step 3 stays; on this evidence it would not earn its 5.8 h
+(and at field scale 740 h), unless a smaller model, a better prompt or a different use of the
+answer (for example only as a tie-breaker) is tried. Side effect to know: with the decision model
+the retuned selection leaves 73 works untagged (54 without) and 117 low-confidence (144 without).
