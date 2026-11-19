@@ -167,3 +167,58 @@ is wanted later, a 600 MB download and the licence check come first.
 - **Multi-centroid topics:** with a spread threshold of 0.05 (mean cosine distance of the seeds to
   their centroid; the median over topics is 0.04, because SPECTER2 vectors of one subfield sit
   close together) 13 topics get more than one centroid.
+
+# Decision model (P1-07b): measurements before the long run
+
+Cascade step 3 (PLAN §9.5). Model: `Qwen3-8B-Q4_K_M.gguf` (Apache-2.0, `docs/notes/sources.md`),
+`llama-cpp-python` 0.3.37 with Metal, prompt version `dm-1`, Apple M1 with 16 GB. Measured with
+`flatatlas tag decide --bench --limit 50` (answers kept in memory, so no cache helped): the first
+50 unsure works by ID, 3 option orders, up to 8 yes/no questions per work
+(`data/reports/dm-bench-50.json`, log `data/logs/2026-11-19-dm-bench-50.log`). **These numbers are
+speed and stability only; nothing here says how good the answers are** (that is the cross-validated
+comparison after the long run, and the held-out numbers are P1-08).
+
+| What | Measured |
+|---|---|
+| Seconds per work, 3 option orders + up to 8 yes/no | **22.6** (1,130 s for 50 works) |
+| Seconds per work, 1 option order + up to 8 yes/no | **14.7** (3.95 + 10.7; the yes/no step is the same) |
+| Choice question, one order | 3.95 s; 280 tokens evaluated of 1,284 in the prompt (the option list is served from the cache) |
+| Yes/no questions, 8 per work | 10.7 s; 722 tokens evaluated of 2,993 (the paper text is shared by a work's questions) |
+| Tokens evaluated per work (3 orders + yes/no) | about 1,560 of 6,840 in the prompts (77 % served from the cache) |
+| Throughput | about 80 evaluated tokens/s; `flash_attn` and `n_batch` 1024 did not help (76 and 74 tokens/s on a 6-prompt test) |
+| Peak memory (process) | 5.8 GB (model 5.0 GB plus the key-value cache and Python) |
+| Questions asked | 150 choice, 400 yes/no |
+
+**Order effect** (the same question with the options in three fixed orders; 50 works, all unsure):
+the most probable topic is the same in all three orders for **54 %** of works; the probability of
+the averaged top topic moves by **0.44** on average between orders and by 1.0 at most. Answers are
+often saturated (0.00 or 1.00 in one order, the opposite in another), which is why the three orders
+are averaged and the result is calibrated before it is used. A single order is not enough for the
+works this step exists for. Settings tried earlier on 5 works (a first version with 12 yes/no
+questions and the full topic description) took 28.7 s per work; shortening the yes/no topic text to
+its first sentence and capping the questions at 8 gives the 22.6 s above.
+
+**Layout of the yes/no question:** paper first, topic last, so the paper is evaluated once per
+work. With the topic first the paper (about 250 to 300 tokens) would be evaluated for every
+question, about 5 times the tokens per question (computed from the token counts, not run).
+
+**Projection.** Works the step runs on: the band 0.3 to 0.5 of the base fusion model (out of fold
+for gold-train works) plus works where two signal families back different level-0 topics:
+
+| Band | Band only | Band + disagreement | Share of random-train works | Time at 22.6 s/work |
+|---|---|---|---|---|
+| 0.35 to 0.45 | 382 | 611 (26 %) | 35 % | 3.8 h |
+| **0.30 to 0.50 (chosen)** | 1,055 | **1,173 (50 %)** | 44 % | **7.4 h** |
+| 0.25 to 0.55 | 1,240 | 1,335 (57 %) | 68 % | 8.4 h |
+| all works | - | 2,333 | - | 14.6 h |
+
+**Band chosen: 0.3 to 0.5 plus disagreement** (what `config/tagger.yaml` already had): the widest
+band that fits one night (about 8 h) with margin; 0.25 to 0.55 would need 8.4 h. `--all` would
+take 14.6 h, far over the 3 h limit, so the long run is on the unsure works only. The choice used
+no held-out work (the base probabilities are out of fold for gold-train works and come from the
+final model for the rest; no label of a held-out work enters).
+**Field scale:** at 22.6 s per work, 150,000 unsure works of a 300,000-work field would take about
+940 hours (39 days); with 1 order 610 hours. That is not practical on this machine; PLAN §9.8 is
+corrected (it assumed 30 to 70 hours). The way out is step 4 (the distilled classifier trained on
+the pilot's answers), a smaller model, or fewer questions; Qwen3-4B (2.5 GB) would be about twice
+as fast, untested.

@@ -144,3 +144,28 @@ evidence. Newest first within each source.
   (`title[SEP]`) gives 0.958, so title alone is kept. Likely cause of the gap for title-only
   papers: S2 holds abstracts that its API hides for Springer papers and embedded them
   (not tested). `reports/embedding-compare-pilot.md`.
+
+## Qwen3-8B (GGUF) for the local decision model (P1-07b)
+
+- **What:** `Qwen3-8B-Q4_K_M.gguf`, the 4-bit (Q4_K_M) quantised build of Qwen3-8B published by the
+  Qwen team in `Qwen/Qwen3-8B-GGUF` on Hugging Face. Downloaded on 2026-11-19 with Guilherme's
+  approval, with `curl` (no library download) into `data/models/llm/qwen3-8b-q4km/` (git-ignored).
+- **Size and hash:** 5,027,783,488 bytes (5.03 GB). SHA-256
+  `d98cdcbd03e17ce47681435b5150e34c1417f50b5c0019dd560e4882c5745785`, the value Hugging Face lists
+  for the file; the downloaded file matches it. This hash goes into the provenance of every cached
+  answer and every tag the decision model touched.
+- **Licence:** Apache-2.0 (the model card's licence field; the repository's `LICENSE` file is the
+  full Apache License 2.0 text, 11.5 kB, read). It allows use, modification and redistribution with
+  attribution and the licence text; nothing here is redistributed (the weights stay local, and only
+  probabilities derived from them enter the tags). If the model name is shown on the site, cite
+  "Qwen3, Qwen Team, Alibaba Cloud".
+- **Runtime:** `llama-cpp-python` 0.3.37 (MIT), which bundles llama.cpp, in the optional `llm`
+  extra. On this Mac it only built with Apple's compiler: Homebrew's LLVM is first on the path
+  (`CPPFLAGS`/`LDFLAGS` point at it) and fails on the Metal sources, so install with
+  `CC=/usr/bin/clang CXX=/usr/bin/clang++ CMAKE_ARGS="-DGGML_METAL=on -DGGML_OPENMP=OFF" uv sync --extra ml --extra llm`
+  (about 70 s).
+- **How it is used:** one forward pass over a prompt, then the logits of the option tokens (letters
+  or Yes/No) are read; nothing is generated and no network is used. Qwen3 is a hybrid reasoning
+  model; the chat template is filled with an empty think block so the answer comes first.
+- **Not used:** any hosted model (D-67 is not active). Newer Qwen releases appear in community
+  listings; only the official `Qwen3-8B-GGUF` card was read and verified.

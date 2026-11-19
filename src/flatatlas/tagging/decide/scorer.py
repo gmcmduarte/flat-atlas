@@ -158,8 +158,9 @@ class LlamaScorer:
         self.llm.n_tokens = common
         self.llm.eval(tokens[common:])
         self._tokens = tokens
-        logits = np.asarray(self.llm.scores[self.llm.n_tokens - 1], dtype=np.float64)
-        chosen = logits[ids]
+        # with logits_all=False the runtime keeps one row: the logits of the last token
+        last = np.ctypeslib.as_array(self.llm._ctx.get_logits(), shape=(self.llm.n_vocab(),))
+        chosen = last[ids].astype(np.float64)
         e = np.exp(chosen - chosen.max())
         self.stats.calls += 1
         self.stats.prompt_tokens += len(tokens)

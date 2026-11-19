@@ -115,7 +115,7 @@ def choice_prompt(text: str, topics: Sequence[Topic], order: Sequence[int]) -> s
 def yesno_prompt(text: str, topic: Topic) -> str:
     user = (
         f"{_YESNO_INTRO}\n\nPaper:\n{text.strip()}\n\n"
-        f"Area: {topic.name}. {topic.description.strip()}\n\n"
+        f"Area: {topic.name}. {one_line(topic.description, 160)}\n\n"
         "Does this area fit the paper? Reply with Yes or No only."
     )
     return chatml(user)

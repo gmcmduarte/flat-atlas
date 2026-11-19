@@ -399,7 +399,7 @@ Redesigned on 2026-11-16 (D-61 to D-66, approved; D-67 drafted and inactive; rea
 |---|---|---|---|---|
 | 1 | Signals and shortlist (§9.3) | all works | €0 | laptop, minutes |
 | 2 | Learned fusion and calibration (§9.4) | all works | €0 | laptop, seconds |
-| 3 | Local decision model (§9.5) | unsure works only (expected 30–40 % ⚠ estimate) | €0 (open weights, local) | laptop or server, background job, overnight |
+| 3 | Local decision model (§9.5) | unsure works only (50 % of the pilot at the chosen band, measured in P1-07b) | €0 (open weights, local) | laptop, background job, about 7 h for the pilot (§9.8) |
 | 4 | Distilled classifier (§9.7) | new works after the full run | €0 | seconds per week |
 
 **Cost rule for this section.** Every step runs on local models, the laptop (Apple M1, 16 GB) or the university server, and free API tiers. Nothing here may cost money per paper, per page view or per user. A paid decision-model API is **not part of this plan**; it exists only as the proposed, inactive exception D-67 and needs Guilherme's separate approval before any code calls it.
@@ -504,11 +504,11 @@ A decision model does not generate text: it is asked a question with a fixed set
 - **Which works:** only the unsure ones after step 2: top confidence inside a middle band (start: 0.25–0.55), or signal families that disagree on the best topic. Band and rule live in `config/tagger.yaml`; the share of works sent is reported.
 - **Question 1 (choice):** the composite text and the level-0 topics (name + one-line description); the model returns a probability per topic.
 - **Question 2 (yes/no):** for each child of the two most probable level-0 topics, and for shortlisted candidates below them (capped per work), "does this topic fit this paper?". Yes/no per topic handles several labels and several parents; keeping two parents limits cascade errors.
-- **Order effects:** options are shuffled (3 fixed orders by default) and the probabilities averaged.
+- **Order effects:** options are shuffled (3 fixed orders by default) and the probabilities averaged. Measured on 50 unsure works: the most probable topic is the same in all three orders for only 54 % of works, and the top probability moves by 0.44 on average, so a single order is not reliable on exactly the works this step is for.
 - **Calibration:** vendor or model calibration is not trusted; isotonic regression on gold-train per question type.
 - **Output is one more signal** (`dm_l0`, `dm_child`), fed to the fusion model of §9.4 for a final score. It is never an override.
 - **Reproducibility:** the model file name and its SHA-256, the quantisation, the runtime version and the prompt version are stored in provenance; no `latest` aliases.
-- **Speed:** ⚠ unmeasured. Rough estimate for the M1: 1–2 hours for all 2,339 pilot works, 30–70 hours for the unsure share of a 300,000-work field. P1-07b measures it with `--limit` before any long run. Prompts put the shared part first so that it is cached.
+- **Speed (measured in P1-07b, M1 16 GB, Qwen3-8B Q4_K_M, llama.cpp with Metal, 50 unsure works):** prompt processing runs at about 80 tokens/s, so cost follows the number of tokens that are *not* served from the key-value cache. The choice question evaluates about 280 of its 1,284 prompt tokens (the option list is cached per order, because the run goes order by order over all works): 4.0 s per order. The yes/no questions share the paper text: up to 8 of them evaluate about 720 of 3,000 tokens: 10.7 s per work. **22.6 s per work with 3 orders, 14.7 s with 1**; peak memory 5.8 GB. Prompts put the shared part first so that it is cached; the yes/no layout with the topic first would evaluate the whole paper again for every question (about 5 times the tokens; computed, not run). Details: `docs/notes/tagger-experiments.md`.
 - **Long job:** resumable, cached per (work, question, model hash, prompt version), launched by Guilherme (rule 7).
 - **Kept only if it earns its place:** the decision model stays in the tagger only if step 3 improves the held-out numbers over step 2 alone (§9.6). Otherwise `tagger.decision_model.enabled` is set to `false` and the cascade stops at step 2.
 
@@ -561,14 +561,15 @@ Topic artefacts (dictionaries, centroids, mappings, calibration tables, the fusi
 A scheduled monthly job recomputes centroids and propagation; a `taxonomy_version` bump triggers a full re-tag: steps 1–2 take minutes for the pilot and under a few hours for the full field on the server; step 3 is re-run only for works that are unsure under the new taxonomy and whose cached answers no longer apply.
 
 ### 9.8 Cost model
-Assumptions: about 1,000 tokens per work for the decision model (about 250 of paper text, about 700 of options and questions); field ≈ 300,000 works; unsure share 35 %. ⚠ All numbers are estimates until P1-07b measures them.
+Assumptions: field ≈ 300,000 works. The decision-model rows were **measured in P1-07b** (22.6 s per work with 3 option orders and up to 8 yes/no questions, 14.7 s with 1 order; Qwen3-8B Q4_K_M on the M1) and extrapolated linearly; the unsure share is 50 % of the pilot at the band 0.3 to 0.5 plus disagreement (1,173 of 2,333 works). Other rows are estimates.
 
 | Scenario | Local decision model (the plan) | Money |
 |---|---|---|
-| Pilot, all 2,339 works | about 1–2 h on the M1 | €0 |
-| Field, unsure works only (35 % of 300,000) | about 30–70 h, overnight runs on the server or the M1 | €0 |
-| Field, all 300,000 works | about 85–200 h | €0 |
-| Options shuffled 3 times | hours × 3 (less with prefix caching) | €0 |
+| Pilot, unsure works only (1,173 of 2,333) | **about 7.4 h** on the M1, one night (measured per work) | €0 |
+| Pilot, all 2,333 works | about 14.6 h (not run; the unsure run is the plan) | €0 |
+| Field, unsure works only (50 % of 300,000) | **about 940 h (39 days) with 3 orders, 610 h with 1**: not practical on the M1. Needs a smaller model, fewer questions, a GPU server, or the distilled classifier of step 4 trained on the pilot's answers | €0 |
+| Field, all 300,000 works | about 1,900 h: not practical | €0 |
+| Options shuffled 3 times | already in the numbers above; 1 order saves a third | €0 |
 | Full re-tag after a taxonomy change | steps 1–2: minutes to hours; step 3: as the unsure-only run | €0 |
 | Weekly new works (about 5,000 a year), after step 4 | minutes | €0 |
 

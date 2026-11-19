@@ -50,7 +50,7 @@ class DecisionModelConfig(_Section):
     n_threads: int | None = None  # None: the runtime decides
     option_orders: int = 3  # fixed orders of the level-0 options, 1 to 3
     top_l0: int = 2  # yes/no questions for the children of this many most probable topics
-    max_child_questions: int = 12  # at most this many yes/no questions per work
+    max_child_questions: int = 8  # at most this many yes/no questions per work
     child_max_level: int = 1  # deeper topics have no labels, so no calibration (D-98)
     flush_every: int = 10  # works between writes of the answer cache
     select: DecisionSelectConfig = Field(default_factory=DecisionSelectConfig)

@@ -448,7 +448,7 @@ def tag(ctx: Context, method: str, *, limit: int | None = None) -> TagResult:
             dmc = cfg.decision_model
             dm_models = [
                 {
-                    "name": f"decision-{dmc.model_name}-{dmc.quantisation}-{dq.PROMPT_VERSION}",
+                    "name": f"decision-{dmc.model_name}-{dq.PROMPT_VERSION}",
                     "sha256": dstage.model_sha(ctx),
                 }
             ]

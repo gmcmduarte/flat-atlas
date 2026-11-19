@@ -14,7 +14,7 @@ decision_model:
   n_ctx: 4096
   option_orders: 3          # fixed orders of the 21 level-0 options (1 to 3); answers are averaged
   top_l0: 2                 # yes/no questions for the children of the 2 most probable level-0 topics
-  max_child_questions: 12   # at most this many yes/no questions per work
+  max_child_questions: 8    # at most this many yes/no questions per work
   child_max_level: 1        # deeper topics are not labelled, so their answers could not be calibrated
   flush_every: 10           # works between writes of the answer cache
   select:
