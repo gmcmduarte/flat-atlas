@@ -253,3 +253,63 @@ def anchors(
             typer.echo(f"  miss: {miss}")
     finally:
         con.close()
+
+
+def decide(
+    limit: Annotated[
+        int | None, typer.Option(help="Ask about the first N works by ID only (a quick test).")
+    ] = None,
+    all_works: Annotated[
+        bool,
+        typer.Option("--all", help="Ask about every work, not only the unsure ones (a long run)."),
+    ] = False,
+    orders: Annotated[
+        int | None,
+        typer.Option(help="Option orders for the choice question, 1 to 3 (default: the config)."),
+    ] = None,
+    bench: Annotated[
+        bool,
+        typer.Option(
+            "--bench",
+            help="Measure only: answers stay in memory; the cache is neither read nor saved.",
+        ),
+    ] = False,
+    explain: Annotated[
+        list[str] | None,
+        typer.Option(
+            "--explain", help="Ask about these works (repeatable) and show the questions."
+        ),
+    ] = None,
+    write_json: Annotated[
+        Path | None, typer.Option("--json", help="Also write the numbers here.")
+    ] = None,
+    profile: ProfileOption = None,
+    config: ConfigOption = None,
+) -> None:
+    """Cascade step 3: ask a local open model about the works the fusion model is unsure about.
+
+    Reads option probabilities (no text is generated, no network is used). Answers are cached in
+    `local_decision`; a second run only asks what is missing, so an interrupted run resumes. Needs
+    `flatatlas tag fit` first (it saves the base probabilities that pick the unsure works) and
+    `uv sync --extra llm`. Then `flatatlas tag fit` again, with `decision_model.enabled: true`,
+    cross-validates and fits the model with the new signals.
+    """
+    from flatatlas.tagging.decide import stage
+
+    settings, cfg, con = _open(profile, config, write=not bench)
+    try:
+        tctx = _prepare(settings, cfg, con)
+        try:
+            report, numbers = stage.decide(
+                tctx, limit=limit, all_works=all_works, orders=orders, bench=bench, works=explain
+            )
+        except (stage.MissingDecisionInput, runner.Missing) as exc:
+            typer.echo(f"error: {exc}", err=True)
+            raise typer.Exit(1) from None
+        if explain:
+            typer.echo(stage.explain_report(tctx, report, orders))
+        typer.echo(json.dumps(numbers, indent=2, sort_keys=True))
+        if write_json:
+            write_json.write_text(json.dumps(numbers, indent=2, sort_keys=True), encoding="utf-8")
+    finally:
+        con.close()

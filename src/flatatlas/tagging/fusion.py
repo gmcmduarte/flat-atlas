@@ -30,14 +30,20 @@ from flatatlas.tagging.config import TaggerConfig
 from flatatlas.tagging.guard import Guard
 from flatatlas.tagging.inputs import Corpus, Dag
 from flatatlas.tagging.pairs import (
+    BASE_FEATURES,
     FEATURES,
     KIND_GOLD_RANDOM,
+    N_BASE,
     PARENT,
     Pairs,
 )
 
-STAGE_A_COLUMNS = list(FEATURES)
-STAGE_B_COLUMNS = [*FEATURES, PARENT]
+STAGE_A_COLUMNS = list(BASE_FEATURES)
+STAGE_B_COLUMNS = [*BASE_FEATURES, PARENT]
+
+
+def stage_b_columns(use_dm: bool) -> list[str]:
+    return [*(FEATURES if use_dm else BASE_FEATURES), PARENT]
 
 
 class MissingMlExtra(RuntimeError):
@@ -197,12 +203,21 @@ class FusionModel:
     tagger_version: str
     columns: list[str]
     selection: dict | None = None  # threshold and maximum tuned on gold-train (set by `tag fit`)
+    use_dm: bool = False  # the decision model's signals are features (P1-07b)
+    dm_calibrators: object | None = None  # decide.calibrate.DmCalibrators when use_dm
+
+    def matrix(self, pairs: Pairs) -> np.ndarray:
+        """The feature matrix this model reads: base columns, or all with calibrated ``dm_*``."""
+        if not self.use_dm:
+            return pairs.X[:, :N_BASE]
+        return self.dm_calibrators.apply(pairs.X) if self.dm_calibrators else pairs.X
 
     def predict(self, pairs: Pairs) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
         """``(p_stage_a, parent_p, calibrated)`` for every pair."""
-        pa = self.stage_a.predict(pairs.X)
+        X = self.matrix(pairs)
+        pa = self.stage_a.predict(X)
         parent = parent_probability(pairs, pa)
-        raw = self.stage_b.predict(_with_parent(pairs.X, parent))
+        raw = self.stage_b.predict(_with_parent(X, parent))
         return pa, parent, self.calibrator.apply(raw)
 
     def save(self, path: Path) -> str:
@@ -245,14 +260,27 @@ def fit_two_stage(
     guard: Guard,
     cfg: TaggerConfig,
     kind: str,
+    *,
+    use_dm: bool = False,
 ) -> tuple[FusionModel, dict]:
     """Fit stages A and B and the calibrator on every labelled pair of ``pairs``.
 
     Out-of-fold (by work) predictions are made inside: stage A's become stage B's parent feature,
-    and stage B's, on random-sample gold pairs only, fit the isotonic calibrator.
+    and stage B's, on random-sample gold pairs only, fit the isotonic calibrator. With ``use_dm``
+    the decision model's two columns are features too, calibrated by isotonic maps fitted here on
+    the random-sample pairs of the same labelled set.
     Returns the model and a small dictionary of diagnostics.
     """
-    check_trainable(pairs, corpus, guard, purpose=f"fit_two_stage({kind})")
+    check_trainable(pairs, corpus, guard, purpose=f"fit_two_stage({kind}, use_dm={use_dm})")
+    dm_cal = None
+    if use_dm:
+        from flatatlas.tagging.decide.calibrate import fit_dm_calibrators
+
+        dm_cal = fit_dm_calibrators(pairs)
+    shell = FusionModel(
+        kind, None, None, None, cfg.tagger_version, [], use_dm=use_dm, dm_calibrators=dm_cal
+    )
+    X0 = shell.matrix(pairs)
     labelled = np.flatnonzero(pairs.label >= 0)
     y = pairs.label.astype(np.float64)
     w = _weights(pairs, cfg)
@@ -262,14 +290,14 @@ def fit_two_stage(
     )
 
     # Stage A, out of fold, for every labelled pair; a final fit on all labelled pairs.
-    oof_a = _oof(kind, cfg, pairs.X, y, w, fold, labelled, folds)
-    stage_a = make_model(kind, cfg).fit(pairs.X[labelled], y[labelled], w[labelled])
+    oof_a = _oof(kind, cfg, X0, y, w, fold, labelled, folds)
+    stage_a = make_model(kind, cfg).fit(X0[labelled], y[labelled], w[labelled])
     # Stage A probabilities of every pair: out of fold for labelled pairs (what stage B is trained
     # on), the final model for the others (parents of a labelled pair may be unlabelled).
-    p_a = stage_a.predict(pairs.X)
+    p_a = stage_a.predict(X0)
     p_a[labelled] = np.where(np.isnan(oof_a[labelled]), p_a[labelled], oof_a[labelled])
     parent = parent_probability(pairs, p_a)
-    XB = _with_parent(pairs.X, parent)
+    XB = _with_parent(X0, parent)
 
     oof_b = _oof(kind, cfg, XB, y, w, fold, labelled, folds)
     stage_b = make_model(kind, cfg).fit(XB[labelled], y[labelled], w[labelled])
@@ -278,12 +306,17 @@ def fit_two_stage(
     if len(cal_rows) < 50 or len(np.unique(y[cal_rows])) < 2:
         raise RuntimeError(f"too few random-sample pairs to calibrate ({len(cal_rows)})")
     calibrator = fit_isotonic(oof_b[cal_rows], y[cal_rows])
-    model = FusionModel(kind, stage_a, stage_b, calibrator, cfg.tagger_version, STAGE_B_COLUMNS)
+    model = FusionModel(
+        kind, stage_a, stage_b, calibrator, cfg.tagger_version, stage_b_columns(use_dm),
+        use_dm=use_dm, dm_calibrators=dm_cal,
+    )  # fmt: skip
     info = {
         "n_pairs": int(len(labelled)),
         "n_gold": int(((pairs.kind == 1) | (pairs.kind == 2)).sum()),
         "n_silver": int((pairs.kind == 3).sum()),
         "n_calibration": int(len(cal_rows)),
+        "n_dm_l0": getattr(dm_cal, "n_l0", 0),
+        "n_dm_child": getattr(dm_cal, "n_child", 0),
         "oof_b": oof_b,
     }
     return model, info

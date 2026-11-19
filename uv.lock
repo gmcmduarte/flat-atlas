@@ -181,6 +181,15 @@ nvtx = [
 ]
 
 [[package]]
+name = "diskcache"
+version = "5.6.3"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/3f/21/1c1ffc1a039ddcc459db43cc108658f32c57d271d7289a2794e401d0fdb6/diskcache-5.6.3.tar.gz", hash = "sha256:2c3a3fa2743d8535d832ec61c2054a1641f41775aa7c556758a109941e33e4fc", size = 67916, upload-time = "2023-08-31T06:12:00.316Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/3f/27/4570e78fc0bf5ea0ca45eb1de3818a23787af9b390c0b0a0033a1b8236f9/diskcache-5.6.3-py3-none-any.whl", hash = "sha256:5e31b2d5fbad117cc363ebaf6b689474db18a1f6438bc82358b024abd4c2ca19", size = 45550, upload-time = "2023-08-31T06:11:58.822Z" },
+]
+
+[[package]]
 name = "duckdb"
 version = "2.0.0"
 source = { registry = "https://pypi.org/simple" }
@@ -222,6 +231,9 @@ dependencies = [
 ]
 
 [package.optional-dependencies]
+llm = [
+    { name = "llama-cpp-python" },
+]
 ml = [
     { name = "adapters" },
     { name = "lightgbm" },
@@ -245,6 +257,7 @@ requires-dist = [
     { name = "duckdb" },
     { name = "httpx" },
     { name = "lightgbm", marker = "extra == 'ml'", specifier = ">=4.6" },
+    { name = "llama-cpp-python", marker = "extra == 'llm'", specifier = ">=0.3.16" },
     { name = "numpy", specifier = ">=2.5.5" },
     { name = "pyarrow" },
     { name = "pydantic" },
@@ -259,7 +272,7 @@ requires-dist = [
     { name = "typer" },
     { name = "umap-learn", marker = "extra == 'ml'", specifier = ">=0.6.0" },
 ]
-provides-extras = ["ml"]
+provides-extras = ["ml", "llm"]
 
 [package.metadata.requires-dev]
 dev = [
@@ -408,6 +421,18 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/15/eb/837ea3b40cc36e22eeebb9785c01e42b2c255d033eea1d2d9ee8e2540e55/lightgbm-4.7.0-py3-none-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:d23e922acd891e77212e4d0fbcee9ba973c96dee479491341d05ba595357ebb7", size = 3476028, upload-time = "2026-07-18T21:00:39.331Z" },
     { url = "https://files.pythonhosted.org/packages/d5/0b/c5c17d862b12ce292f24cd85d40f2f8f8981668fbdbd43fdc2625eccbc79/lightgbm-4.7.0-py3-none-win_amd64.whl", hash = "sha256:f42d1e5b32b6f170e606d7c689c6165671da98d7bf37f1addec2623efc8740c9", size = 1360833, upload-time = "2026-07-18T21:00:40.865Z" },
 ]
+
+[[package]]
+name = "llama-cpp-python"
+version = "0.3.37"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "diskcache" },
+    { name = "jinja2" },
+    { name = "numpy" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/7f/9a/3ebc0b3ef42b8d9cc7d15dc9b147b3e8ce11bfdb61eb381c3eb7d9762373/llama_cpp_python-0.3.37.tar.gz", hash = "sha256:bf4108fc76e933ea4969b61b1e281a2d232dd3e43361d1fdca5e2e029d62f729", size = 80885950, upload-time = "2026-11-15T09:14:07.435Z" }
 
 [[package]]
 name = "llvmlite"
