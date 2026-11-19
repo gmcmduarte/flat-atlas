@@ -1,12 +1,24 @@
 # Settings of the tagger (P1-07; PLAN §9.3, §9.4; D-63 to D-65, D-95).
 # Every weight, band, threshold, seed and model setting of cascade steps 1 and 2 is here. Artefacts
 # and models are frozen per `tagger_version`: change a number that affects the result and you bump it.
-tagger_version: tagger-1
+tagger_version: tagger-2
 seed: 20261120
 
-# Cascade step 3 (P1-07b). Off: no signal named dm_* is computed.
+# Cascade step 3 (P1-07b; PLAN §9.5, D-98). Off: the fusion model never sees a dm_* signal.
+# A local open model, read for option probabilities. No hosted model, no network at inference.
 decision_model:
-  enabled: false
+  enabled: true
+  model_file: llm/qwen3-8b-q4km/Qwen3-8B-Q4_K_M.gguf   # under data/models/, a download (sources.md)
+  model_name: Qwen3-8B-Q4_K_M
+  quantisation: Q4_K_M
+  n_ctx: 4096
+  option_orders: 3          # fixed orders of the 21 level-0 options (1 to 3); answers are averaged
+  top_l0: 2                 # yes/no questions for the children of the 2 most probable level-0 topics
+  max_child_questions: 8    # at most this many yes/no questions per work
+  child_max_level: 1        # deeper topics are not labelled, so their answers could not be calibrated
+  flush_every: 10           # works between writes of the answer cache
+  select:
+    disagreement: true      # also ask when two signal families back different level-0 topics
 
 phrases:
   # Weight of a phrase match by where the phrase comes from.

@@ -33,8 +33,27 @@ class _Section(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
 
+class DecisionSelectConfig(_Section):
+    # Besides the unsure band (`selection.unsure_band`), a work is also sent when two signal
+    # families each reach `noisy_or.agreement.family_min` for different level-0 topics.
+    disagreement: bool = True
+
+
 class DecisionModelConfig(_Section):
-    enabled: bool = False
+    """Cascade step 3 (PLAN §9.5): a local open model read for option probabilities."""
+
+    enabled: bool = False  # off: no dm_* signal reaches the fusion model
+    model_file: str = "llm/qwen3-8b-q4km/Qwen3-8B-Q4_K_M.gguf"  # relative to data/models/
+    model_name: str = "Qwen3-8B-Q4_K_M"
+    quantisation: str = "Q4_K_M"
+    n_ctx: int = 4096
+    n_threads: int | None = None  # None: the runtime decides
+    option_orders: int = 3  # fixed orders of the level-0 options, 1 to 3
+    top_l0: int = 2  # yes/no questions for the children of this many most probable topics
+    max_child_questions: int = 8  # at most this many yes/no questions per work
+    child_max_level: int = 1  # deeper topics have no labels, so no calibration (D-98)
+    flush_every: int = 10  # works between writes of the answer cache
+    select: DecisionSelectConfig = Field(default_factory=DecisionSelectConfig)
 
 
 class PhrasesConfig(_Section):

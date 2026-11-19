@@ -32,7 +32,13 @@ from flatatlas.tagging.signals import WORK_FEATURES, Signals
 
 TOPIC_FEATURES = ("t_level", "t_n_children", "t_seed_size", "t_seed_spread", "t_n_phrases")
 HIERARCHY_FEATURES = ("child_lex", "child_emb")
-FEATURES = (*SIGNALS, *WORK_FEATURES, *TOPIC_FEATURES, *HIERARCHY_FEATURES)
+# The decision model's two signals (PLAN §9.3, §9.5) come last, so the base model (every column
+# before them) is the same model as before they existed. Raw probabilities: ``decide.calibrate``
+# maps them, inside the fusion model, so a calibrator is never fitted on the works it scores.
+DM_FEATURES = ("dm_l0", "dm_child")
+BASE_FEATURES = (*SIGNALS, *WORK_FEATURES, *TOPIC_FEATURES, *HIERARCHY_FEATURES)
+FEATURES = (*BASE_FEATURES, *DM_FEATURES)
+N_BASE = len(BASE_FEATURES)
 PARENT = "parent_p"
 SILVER_DEFINING = ("lex_title", "src_openalex")  # the leak rule hides these in silver pairs
 
@@ -110,6 +116,7 @@ def build_pairs(
         columns.append(art.topic_features[name][topics])
     columns.append(child_lex[rows, topics])
     columns.append(child_emb[rows, topics])
+    columns.extend(np.full(len(rows), np.nan) for _ in DM_FEATURES)  # filled by decide.features
     X = np.column_stack(columns).astype(np.float32)
 
     index = {(int(r), int(t)): i for i, (r, t) in enumerate(zip(rows, topics, strict=True))}

@@ -34,6 +34,12 @@ ml = [
     "umap-learn>=0.6.0",
 ]
 
+# Cascade step 3 (P1-07b): the local decision model runs through llama.cpp. Not needed by the
+# tests or CI, which use a fake scorer; the model file is a separate download (docs/notes/sources.md).
+llm = [
+    "llama-cpp-python>=0.3.16",
+]
+
 [dependency-groups]
 dev = [
     "pytest",

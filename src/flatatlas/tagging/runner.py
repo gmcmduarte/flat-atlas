@@ -28,7 +28,7 @@ from flatatlas.tagging.config import SIGNALS, TaggerConfig
 from flatatlas.tagging.fusion import FusionModel, fit_two_stage, select_tags
 from flatatlas.tagging.guard import Guard
 from flatatlas.tagging.inputs import Corpus, Dag, Labels
-from flatatlas.tagging.pairs import FEATURES, Pairs
+from flatatlas.tagging.pairs import DM_FEATURES, FEATURES, Pairs
 from flatatlas.tagging.signals import Signals, compute_signals
 from flatatlas.taxonomy import check as tcheck
 from flatatlas.taxonomy import stage as tstage
@@ -170,6 +170,7 @@ def cross_validated_report(ctx: Context, kinds: tuple[str, ...] = ("logistic", "
         methods[kind] = evaluate.cross_validate(
             ctx.pairs, ctx.corpus, ctx.labels, ctx.guard, cfg, kind, eval_works=train
         )
+    ctx.notes["oof"] = {k: v for k, v in methods.items() if k in kinds}
     for name, probs in methods.items():
         tuned = evaluate.tune_selection(probs, gold_random, dag, cfg)
         default = {"threshold": cfg.selection.threshold, "max_topics": cfg.selection.max_topics}
@@ -192,31 +193,96 @@ def choose_kind(report: dict, cfg: TaggerConfig, kinds=("logistic", "lightgbm"))
     return next(iter(scores))
 
 
+def dm_report(ctx: Context, kind: str) -> dict:
+    """Cross-validated numbers of the fusion model with the decision model's two signals."""
+    cfg, dag = ctx.cfg, ctx.dag
+    train = ctx.labels.works(split="train")
+    random_train = ctx.labels.works(split="train", sampling="random")
+    gold_random = evaluate.gold_sets(ctx.labels, ctx.corpus, dag, random_train)
+    gold_all = evaluate.gold_sets(ctx.labels, ctx.corpus, dag, train)
+    probs = evaluate.cross_validate(
+        ctx.pairs, ctx.corpus, ctx.labels, ctx.guard, cfg, kind, eval_works=train, use_dm=True
+    )
+    tuned = evaluate.tune_selection(probs, gold_random, dag, cfg)
+    return {
+        "tuned": _round(tuned),
+        "random_train": level_report(probs, gold_random, dag, cfg, tuned),
+        "all_train": level_report(probs, gold_all, dag, cfg, tuned),
+    }
+
+
 def fit(ctx: Context, *, kinds: tuple[str, ...] = ("logistic", "lightgbm")) -> dict:
-    """Cross-validate, choose, fit the final model on all gold-train + silver, and save it."""
+    """Cross-validate, choose, fit the final model on all gold-train + silver, and save it.
+
+    Always saves the **base** model (no ``dm_*`` features) and the base probabilities, which the
+    decision model uses to pick the unsure works. With ``decision_model.enabled`` and cached
+    answers, also cross-validates and fits the model with the two decision-model signals; that one
+    becomes ``fusion.pkl``. Otherwise ``fusion.pkl`` is the base model.
+    """
+    from flatatlas.tagging.decide import stage
+
+    ctx.notes.pop("dm", None)
     report = cross_validated_report(ctx, kinds)
     kind = choose_kind(report, ctx.cfg, kinds)
     model, info = fit_two_stage(ctx.pairs, ctx.corpus, ctx.guard, ctx.cfg, kind)
-    model.selection = {
+    base_selection = {
         "threshold": report["methods"][kind]["tuned"]["threshold"],
         "max_topics": report["methods"][kind]["tuned"]["max_topics"],
     }
-    digest = model.save(ctx.model_dir / "fusion.pkl")
+    model.selection = base_selection
+    base_digest = model.save(ctx.model_dir / stage.BASE_MODEL)
+    _pa, _parent, p_final = model.predict(ctx.pairs)
+    final = evaluate.work_probabilities(ctx.pairs, p_final)
+    oof = ctx.notes["oof"][kind]
+    stage.save_base_probs(ctx, final, oof)
+
+    dm_info: dict = {"enabled": ctx.cfg.decision_model.enabled, "active": False}
+    shipped, shipped_digest, shipped_info = model, base_digest, info
+    if ctx.cfg.decision_model.enabled:
+        try:
+            activated = stage.activate(ctx, by_work={**final, **oof})
+        except stage.MissingDecisionInput as exc:
+            dm_info["note"] = str(exc)
+            activated = None
+        if activated and activated["works_with_answers"] > 0:
+            report["methods"][f"{kind}+dm"] = dm_report(ctx, kind)
+            dm_model, dm_fit = fit_two_stage(
+                ctx.pairs, ctx.corpus, ctx.guard, ctx.cfg, kind, use_dm=True
+            )
+            dm_tuned = report["methods"][f"{kind}+dm"]["tuned"]
+            dm_model.selection = {
+                "threshold": dm_tuned["threshold"],
+                "max_topics": dm_tuned["max_topics"],
+            }
+            shipped, shipped_info = dm_model, dm_fit
+            shipped_digest = dm_model.save(ctx.model_dir / "fusion.pkl")
+            dm_info.update(
+                active=True,
+                **activated,
+                n_calibration_l0=dm_fit["n_dm_l0"],
+                n_calibration_child=dm_fit["n_dm_child"],
+            )
+    if shipped is model:
+        shipped_digest = model.save(ctx.model_dir / "fusion.pkl")
     tuning = {
         "tagger_version": ctx.cfg.tagger_version,
         "taxonomy_version": ctx.topics_file.taxonomy_version,
         "artefacts_key": ctx.art.key,
         "model_kind": kind,
-        "model_sha256": digest,
-        "fusion_selection": model.selection,
+        "model_sha256": shipped_digest,
+        "base_model_sha256": base_digest,
+        "uses_decision_model": bool(shipped.use_dm),
+        "decision_model": dm_info,
+        "fusion_selection": shipped.selection,
+        "base_selection": base_selection,
         "noisy_or_selection": {
             "threshold": report["methods"]["noisy_or"]["tuned"]["threshold"],
             "max_topics": report["methods"]["noisy_or"]["tuned"]["max_topics"],
         },
-        "n_pairs": info["n_pairs"],
-        "n_gold_pairs": info["n_gold"],
-        "n_silver_pairs": info["n_silver"],
-        "n_calibration_pairs": info["n_calibration"],
+        "n_pairs": shipped_info["n_pairs"],
+        "n_gold_pairs": shipped_info["n_gold"],
+        "n_silver_pairs": shipped_info["n_silver"],
+        "n_calibration_pairs": shipped_info["n_calibration"],
         "cv": report,
     }
     write_text_atomic(ctx.model_dir / "tuning.json", json.dumps(tuning, indent=2, sort_keys=True))
@@ -233,7 +299,20 @@ def load_model(ctx: Context) -> tuple[FusionModel, dict]:
             "the saved model was fitted on other artefacts "
             f"({tuning['artefacts_key']} != {ctx.art.key}); run `flatatlas tag fit`"
         )
-    return FusionModel.load(path), tuning
+    model = FusionModel.load(path)
+    if model.use_dm:
+        from flatatlas.tagging.decide import stage
+
+        if not ctx.cfg.decision_model.enabled:
+            raise Missing(
+                "the saved model uses the decision model but `decision_model.enabled` is false; "
+                "run `flatatlas tag fit`"
+            )
+        try:
+            stage.activate(ctx)
+        except stage.MissingDecisionInput as exc:
+            raise Missing(str(exc)) from exc
+    return model, tuning
 
 
 # -- tagging ---------------------------------------------------------------------------------------
@@ -291,7 +370,19 @@ class TagResult:
     seconds: float = 0.0
 
 
-def _signal_rows(ctx: Context, rows: set[int], p_a, parent, p_f) -> list[dict]:
+def _model_matrix(ctx: Context, model: FusionModel | None) -> np.ndarray:
+    """All ``FEATURES`` columns, the ``dm_*`` ones calibrated when the model uses them else NaN."""
+    X = ctx.pairs.X
+    if model is not None and model.use_dm and model.dm_calibrators is not None:
+        return model.dm_calibrators.apply(X)
+    if model is not None and model.use_dm:
+        return X
+    X = X.copy()
+    X[:, len(FEATURES) - len(DM_FEATURES) :] = np.nan
+    return X
+
+
+def _signal_rows(ctx: Context, rows: set[int], p_a, parent, p_f, X: np.ndarray) -> list[dict]:
     pr = ctx.pairs
     out = []
     for i in np.flatnonzero(np.isin(pr.work, np.fromiter(rows, dtype=np.int64))):
@@ -306,17 +397,17 @@ def _signal_rows(ctx: Context, rows: set[int], p_a, parent, p_f) -> list[dict]:
             "tagger_version": ctx.cfg.tagger_version,
         }
         for j, name in enumerate(FEATURES):
-            v = float(pr.X[i, j])
+            v = float(X[i, j])
             row[name] = None if np.isnan(v) else v
         out.append(row)
     return out
 
 
-def _signals_of_pair(ctx: Context, i: int) -> list[dict]:
+def _signals_of_pair(X: np.ndarray, i: int) -> list[dict]:
     return [
-        {"name": name, "score": float(ctx.pairs.X[i, FEATURES.index(name)])}
-        for name in SIGNALS
-        if not np.isnan(ctx.pairs.X[i, FEATURES.index(name)])
+        {"name": name, "score": float(X[i, FEATURES.index(name)])}
+        for name in (*SIGNALS, *DM_FEATURES)
+        if not np.isnan(X[i, FEATURES.index(name)])
     ]
 
 
@@ -342,11 +433,27 @@ def tag(ctx: Context, method: str, *, limit: int | None = None) -> TagResult:
     except Missing:
         if method == "fusion":
             raise
+    X_out = _model_matrix(ctx, model)
+    dm_models: list[dict] = []
+    dm_rows: set[int] = set()
     if method == "fusion":
         assert model is not None
         probs = evaluate.work_probabilities(pairs, p_f)
         selection = tuning["fusion_selection"]
         models = [{"name": f"fusion-{model.kind}", "sha256": tuning["model_sha256"]}]
+        if model.use_dm:
+            from flatatlas.tagging.decide import questions as dq
+            from flatatlas.tagging.decide import stage as dstage
+
+            dmc = cfg.decision_model
+            dm_models = [
+                {
+                    "name": f"decision-{dmc.model_name}-{dq.PROMPT_VERSION}",
+                    "sha256": dstage.model_sha(ctx),
+                }
+            ]
+            have = ~np.isnan(X_out[:, len(FEATURES) - 2 :]).all(axis=1)
+            dm_rows = {int(r) for r in np.unique(pairs.work[have])}
     else:
         probs = evaluate.work_probabilities(pairs, pairs.p_noisy)
         selection = tuning.get(
@@ -386,8 +493,8 @@ def tag(ctx: Context, method: str, *, limit: int | None = None) -> TagResult:
                     "is_primary": (t == sel.primary) and not derived,
                     "provenance": {
                         "method": method,
-                        "signals": _signals_of_pair(ctx, i) if i is not None else [],
-                        "models": models,
+                        "signals": _signals_of_pair(X_out, i) if i is not None else [],
+                        "models": models + (dm_models if r in dm_rows else []),
                         "tagger_version": cfg.tagger_version,
                         "taxonomy_version": ctx.topics_file.taxonomy_version,
                         "flags": ["low_confidence"] if sel.low_confidence else [],
@@ -406,7 +513,7 @@ def tag(ctx: Context, method: str, *, limit: int | None = None) -> TagResult:
         if old.num_rows:
             new = pa.concat_tables([old.cast(TAG_WORK_TOPIC), new])
     replace_table(con, "tag_work_topic", new, paths.warehouse / "core" / "tag_work_topic.parquet")
-    sig_rows = _signal_rows(ctx, set(chosen), p_a, parent, p_f)
+    sig_rows = _signal_rows(ctx, set(chosen), p_a, parent, p_f, X_out)
     replace_table(
         con,
         "tag_signal",
@@ -460,6 +567,8 @@ def explain(ctx: Context, work_id: str, *, top: int = 6) -> str:
     except Missing:
         parent = p_f = None
         tuning = {}
+    X_ex = _model_matrix(ctx, model)
+    X_model = model.matrix(pairs) if model is not None else None
     idx = np.flatnonzero(pairs.work == r)
     prob = p_f if p_f is not None else pairs.p_noisy
     idx = sorted(idx, key=lambda i: -prob[i])
@@ -470,8 +579,8 @@ def explain(ctx: Context, work_id: str, *, top: int = 6) -> str:
     for i in idx[:top]:
         t = int(pairs.topic[i])
         sigs = []
-        for name in SIGNALS:
-            v = pairs.X[i, FEATURES.index(name)]
+        for name in (*SIGNALS, *DM_FEATURES):
+            v = X_ex[i, FEATURES.index(name)]
             sigs.append(f"{name}={'-' if np.isnan(v) else f'{v:.2f}'}")
         mark = "cand" if pairs.candidate[i] else "anc "
         fused = f"fusion {p_f[i]:.2f}  " if p_f is not None else ""
@@ -486,7 +595,7 @@ def explain(ctx: Context, work_id: str, *, top: int = 6) -> str:
         if hits:
             lines.append("      lexical: " + ", ".join(hits))
         if model is not None:
-            XB = np.hstack([pairs.X[i], parent[i] if not np.isnan(parent[i]) else np.nan])
+            XB = np.hstack([X_model[i], parent[i] if not np.isnan(parent[i]) else np.nan])
             contrib = model.stage_b.contributions(XB.astype(np.float32), list(model.columns))
             lines.append(
                 "      largest contributions: " + ", ".join(f"{n} {v:+.2f}" for n, v in contrib[:5])
