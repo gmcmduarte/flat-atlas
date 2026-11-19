@@ -3,6 +3,806 @@
 # threshold tuning or seed sets.
 taxonomy_version: 1
 works:
+- work: WVM3UIJYEBP
+  title: "Theory Inspired by Gene Assembly in Ciliates"
+  labels: [natural-computing, ciliate-gene-assembly]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches ciliate-gene-assembly. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WBL3MW6EIYE
+  title: "*-Continuous Kleene ω-Algebras"
+  labels: [algebraic-language-theory, kleene-algebra, weighted-and-probabilistic-automata, weighted-automata, automata-on-infinite-words, omega-automata]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches kleene-algebra. Second pass added omega-automata. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: W5PNFR63XMZ
+  title: "Some Complexity Aspects of Hybrid Networks of Evolutionary Processors"
+  labels: [natural-computing, networks-of-evolutionary-processors]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches networks-of-evolutionary-processors. Title only. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WMWFKM3HMTA
+  title: "Quantum Queries on Permutations"
+  labels: [quantum-computing-models, quantum-branching-programs-and-queries]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches quantum-branching-programs-and-queries. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WOKB7W3XZM6
+  title: "Preset and Adaptive Homing Experiments for Nondeterministic Finite State Machines"
+  labels: [implementation-and-applications, state-machine-testing]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches state-machine-testing. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WNRM2IWJ2ZL
+  title: "Parikh Word Representable Graphs and Morphisms"
+  labels: [combinatorics-on-words, word-representable-graphs, subwords-and-scattered-factors]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches morphisms-and-pcp, word-representable-graphs. Title and references only. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WXM24KHTIUM
+  title: "Neural Language Acceptors"
+  labels: [grammatical-inference, automata-and-neural-networks, descriptional-complexity, conversions-and-trade-offs]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches automata-and-neural-networks. Neural networks as acceptors and their size; learning is not the subject, but automata-and-neural-networks is under grammatical inference. Second pass added conversions-and-trade-offs. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: W4ANYFHSZUG
+  title: "Antichain-Based Universality and Inclusion Testing over Nondeterministic Finite Tree Automata"
+  labels: [tree-languages, finite-tree-automata, automata-for-verification, automata-based-model-checking]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches automata-based-model-checking. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WNGLKKQUXFE
+  title: "A Note on Pushdown Automata Systems"
+  labels: [machine-models, automata-systems, multi-head-and-multitape-automata, grammars-and-context-free-languages, pushdown-automata]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches automata-systems. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WKBJDDDEECT
+  title: "Simulating the Process of Gene Assembly in Ciliates"
+  labels: [natural-computing, ciliate-gene-assembly, transducers, finite-state-transducers, machine-models, automata-systems]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches ciliate-gene-assembly. Second pass added machine-models, automata-systems. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WK5U2XVZ7LF
+  title: "A Kleene Theorem for a Class of Communicating Automata with Effective Algorithms"
+  labels: [concurrency-and-traces, communicating-automata, logic-and-automata, monadic-second-order-logic]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches communicating-automata. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WPI34F65ZAL
+  title: "End-Marked Maximal Depth-First Contextual Grammars"
+  labels: [rewriting-systems, contextual-grammars]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches contextual-grammars. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WYLHSMFNH2H
+  title: "Input-Driven Multi-counter Automata"
+  labels: [machine-models, counter-automata, decision-problems]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches counter-automata. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: W2UWNE3UGKD
+  title: "Geometry and Dynamics of the Besicovitch and Weyl Spaces"
+  labels: [cellular-automata-and-symbolic-dynamics, dynamics-of-cellular-automata, symbolic-dynamics]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches dynamics-of-cellular-automata. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WLVU3FGIIKA
+  title: "Enhancements of Partitioning Techniques for Image Compression Using Weighted Finite Automata"
+  labels: [picture-and-graph-languages, fractals-and-images, weighted-and-probabilistic-automata, weighted-automata]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches fractals-and-images. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WOPYAMQHPUX
+  title: "Stochastic Context-Free Graph Grammars for Glycoprotein Modelling"
+  labels: [picture-and-graph-languages, graph-grammars, implementation-and-applications, weighted-and-probabilistic-automata, probabilistic-automata]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches graph-grammars, probabilistic-automata. Stochastic graph grammars applied to glycoproteins; stochastic grammars belong to probabilistic-automata. Second pass added weighted-and-probabilistic-automata, probabilistic-automata. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WAKSHLFOSOD
+  title: "Automata and Grammars for Data Words"
+  labels: [machine-models, infinite-alphabet-automata, grammars-and-context-free-languages]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches infinite-alphabet-automata. Title and references only. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WQBQKCSIHRK
+  title: "Two Results on Discontinuous Input Processing"
+  labels: [machine-models, jumping-automata, restarting-automata, decision-problems]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches jumping-automata. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WFIVUNDZ7J7
+  title: "Equational Theories of Scattered and Countable Series-Parallel Posets"
+  labels: [algebraic-language-theory, kleene-algebra, automata-on-infinite-words, linear-orderings]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches kleene-algebra, linear-orderings. Equational theories of series-parallel posets on scattered orders; automata-on-graphs is possible. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WQ4QVBJQSEP
+  title: "Language Equations with Complementation"
+  labels: [operations-on-languages, language-equations]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches language-equations. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WUPGSTUS6CF
+  title: "Learning String Adjunct and Tree Adjunct Languages"
+  labels: [grammatical-inference, learning-beyond-finite-automata, grammars-and-context-free-languages, mildly-context-sensitive-grammars]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches learning-beyond-finite-automata. Title only. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WZIH2TSBSHY
+  title: "On Partition Limited OL Systems"
+  labels: [rewriting-systems, lindenmayer-systems]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches limited-automata, lindenmayer-systems. Title only in practice: the S2 TLDR belongs to an unrelated patent. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WYZTD2M6L2H
+  title: "Balanced Words Having Simple Burrows-Wheeler Transform"
+  labels: [combinatorics-on-words, lyndon-words-and-bwt, sturmian-words]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches lyndon-words-and-bwt, sturmian-words. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WVJI4DSDFY5
+  title: "Computational Completeness of Hybrid Networks of Evolutionary Processors with Seven Nodes"
+  labels: [natural-computing, networks-of-evolutionary-processors, descriptional-complexity, complexity-of-grammars-and-systems]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches networks-of-evolutionary-processors. Second pass added descriptional-complexity, complexity-of-grammars-and-systems. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WFODKEQ4DIC
+  title: "Erasing in Petri Net Languages and Matrix Grammars"
+  labels: [concurrency-and-traces, petri-net-languages, rewriting-systems, regulated-rewriting]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches petri-net-languages. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WCTELSWL6XO
+  title: "Centered Ascending Polyominoes"
+  labels: [picture-and-graph-languages, polyominoes]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches polyominoes. Title and references only. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WONQ5E6DC2V
+  title: "Recent Developments in Quantum Algorithms and Complexity"
+  labels: [quantum-computing-models, quantum-branching-programs-and-queries]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches quantum-branching-programs-and-queries. A survey of quantum query complexity; little automata content. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: W2N36D6AJ32
+  title: "Some formal methods for analyzing quantum automata"
+  labels: [quantum-computing-models, quantum-finite-automata]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches quantum-finite-automata. Title only. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WPTD4OM67UJ
+  title: "Basic Notions of Reaction Systems"
+  labels: [natural-computing, reaction-systems]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches reaction-systems. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WFCZREHGGTF
+  title: "Substitutions, Trajectories and Noisy Channels"
+  labels: [operations-on-languages, shuffle-and-interleaving, language-equations]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches shuffle-and-interleaving. Trajectory-based substitution motivated by noisy channels; codes is possible. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WT4PQ7OFNN6
+  title: "Using Regular Grammars for Event-Based Testing"
+  labels: [implementation-and-applications, state-machine-testing]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches state-machine-testing. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WKZ3J3UB3AR
+  title: "Cascade Decompositions are Bit-Vector Algorithms"
+  labels: [algebraic-language-theory, transformation-semigroups, implementation-and-applications, efficient-representations]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches transformation-semigroups. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WHY42CCZQ6H
+  title: "2-Word-π-Representable Graphs"
+  labels: [combinatorics-on-words, word-representable-graphs]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches word-representable-graphs. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WWO7RWQFIZ2
+  title: "On the Asymptotic Abelian Complexity of Morphic Words"
+  labels: [combinatorics-on-words, abelian-properties-of-words, morphic-and-automatic-sequences]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches abelian-properties-of-words. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WBH2BQPEHOJ
+  title: "A New Hierarchy for Automaton Semigroups"
+  labels: [algebraic-language-theory, automata-and-groups]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches automata-and-groups. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WFYSSWZNS5E
+  title: "On-the-Fly Stuttering in the Construction of Deterministic omega -Automata"
+  labels: [automata-on-infinite-words, omega-automata, logic-and-automata, temporal-logics, automata-for-verification, automata-based-model-checking]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches automata-based-model-checking. Second pass added automata-for-verification, automata-based-model-checking. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WMKY3GJS6D3
+  title: "Parallel Communicating Pushdown Automata with Filters in Communication"
+  labels: [machine-models, automata-systems, grammars-and-context-free-languages, pushdown-automata]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches automata-systems. Title only. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: W6DNOQGB7VH
+  title: "A Ciliate Bio-operation and Language Families"
+  labels: [natural-computing, ciliate-gene-assembly, operations-on-languages, closure-properties]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches ciliate-gene-assembly. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: W3Y4U3H5JBJ
+  title: "Closure Properties of Pattern Languages"
+  labels: [combinatorics-on-words, pattern-languages, operations-on-languages, closure-properties]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches closure-properties, pattern-languages. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WMQND4FQYTZ
+  title: "Branching Automata with Costs - A Way of Reflecting Parallelism in Costs"
+  labels: [weighted-and-probabilistic-automata, weighted-automata, concurrency-and-traces, communicating-automata]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches communicating-automata. Branching automata on series-parallel posets are listed under communicating automata. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WL3H7TMOO5A
+  title: "On the Number of Nonterminal Symbols in Unambiguous Conjunctive Grammars"
+  labels: [grammars-and-context-free-languages, conjunctive-and-boolean-grammars, descriptional-complexity, complexity-of-grammars-and-systems]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches complexity-of-grammars-and-systems, conjunctive-and-boolean-grammars. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WYEDOQDTYHL
+  title: "Contextual Grammars: Erasing, Determinism, One-Side Contexts"
+  labels: [rewriting-systems, contextual-grammars]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches contextual-grammars. Title only. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WFIZVXVTIV3
+  title: "Deterministic Counter Machines and Parallel Matching Computations"
+  labels: [machine-models, counter-automata]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches counter-automata. Consensual languages and matching computations; regular-expressions is possible. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WCC4XH5FB2A
+  title: "The Dynamics of Cellular Automata in Shift-Invariant Topologies"
+  labels: [cellular-automata-and-symbolic-dynamics, dynamics-of-cellular-automata]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches dynamics-of-cellular-automata. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WUPWXE3IKWL
+  title: "Computing Entropy Maps of Finite-Automaton-Encoded Binary Images"
+  labels: [picture-and-graph-languages, fractals-and-images]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches factor-complexity-and-growth, fractals-and-images. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WH4JRHEFETB
+  title: "Cooperating distributed grammar systems with non-terminating components"
+  labels: [rewriting-systems, grammar-systems]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches grammar-systems. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WCBIMD7JUWR
+  title: "Recognizable Sets of Graphs, Hypergraphs and Relational Structures: A Survey"
+  labels: [picture-and-graph-languages, automata-on-graphs, logic-and-automata, monadic-second-order-logic, algebraic-language-theory, rational-and-recognisable-subsets]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches automata-on-graphs, graph-grammars, rational-and-recognisable-subsets. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WJYGLMSVKFW
+  title: "Hyper-Minimization for Deterministic Register Automata"
+  labels: [machine-models, infinite-alphabet-automata, regular-languages, minimisation-of-automata]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches infinite-alphabet-automata. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WXYIHSPJ6EK
+  title: "Languages vs. ω-Languages in Regular Infinite Games"
+  labels: [automata-on-infinite-words, infinite-games, omega-regular-languages]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches infinite-games. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WNSXQU5WKD5
+  title: "Selected Ideas Used for Decidability and Undecidability of Bisimilarity"
+  labels: [automata-for-verification, infinite-state-verification, grammars-and-context-free-languages, pushdown-automata, decision-problems]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches infinite-state-verification. Second pass added decision-problems. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WC52HFYUSBR
+  title: "Site-Directed Insertion: Decision Problems, Maximality and Minimality"
+  labels: [operations-on-languages, insertion-and-deletion-operations, language-equations]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches insertion-and-deletion-operations. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: W4ZR5ZIV6S7
+  title: "Subsequence Matching and Analysis Problems for Automata with Translucent Letters"
+  labels: [machine-models, jumping-automata, combinatorics-on-words, subwords-and-scattered-factors]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches jumping-automata. Title and references only. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WYU7ATZWY7P
+  title: "Circuit Complexity, Kolmogorov Complexity, and Prospects for Lower Bounds"
+  labels: [descriptional-complexity, kolmogorov-complexity, machine-models, automata-and-complexity-classes]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches automata-and-complexity-classes, kolmogorov-complexity. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: W6CAQW26YOD
+  title: "A characterization of the arithmetical hierarchy by language equations"
+  labels: [operations-on-languages, language-equations]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches language-equations. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WDTWMECUS5Q
+  title: "PDFA Distillation with Error Bound Guarantees"
+  labels: [grammatical-inference, automata-and-neural-networks, learning-beyond-finite-automata, weighted-and-probabilistic-automata, probabilistic-automata]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches learning-beyond-finite-automata. Title and references only. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WVL47W6FKEY
+  title: "Learning Unary Automata"
+  labels: [grammatical-inference, learning-regular-languages, regular-languages, unary-languages]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches learning-regular-languages, unary-languages. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WOYPU4NMTLX
+  title: "Linear-Time Limited Automata"
+  labels: [machine-models, limited-automata, descriptional-complexity, conversions-and-trade-offs]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches limited-automata. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: W6FTXBMXTGK
+  title: "On the Number of Active Symbols in Lindenmayer Systems"
+  labels: [rewriting-systems, lindenmayer-systems, descriptional-complexity, complexity-of-grammars-and-systems]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches lindenmayer-systems. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WERFHUKMZCB
+  title: "Sorting Circular Suffixes in Linear Time"
+  labels: [combinatorics-on-words, lyndon-words-and-bwt, implementation-and-applications, string-matching]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches lyndon-words-and-bwt. Title only; circular suffixes read as the bijective/extended BWT. Second pass added implementation-and-applications, string-matching. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WVKLGNUEIWN
+  title: "The Pumping Lemma for Well-Nested Multiple Context-Free Languages"
+  labels: [grammars-and-context-free-languages, mildly-context-sensitive-grammars]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches mildly-context-sensitive-grammars. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WCT2TEW5NNG
+  title: "Computation = self-assembly + conformational change: toward new computing paradigms"
+  labels: [natural-computing, molecular-self-assembly]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches molecular-self-assembly. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WDJIXAQHKVI
+  title: "An Undecidability Result Concerning Periodic Morphisms"
+  labels: [combinatorics-on-words, morphisms-and-pcp]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches morphisms-and-pcp. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WV462D7MXJM
+  title: "Small Universal Accepting Networks of Evolutionary Processors with Filtered Connections"
+  labels: [natural-computing, networks-of-evolutionary-processors, machine-models, turing-machines, descriptional-complexity, complexity-of-grammars-and-systems]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches networks-of-evolutionary-processors. Second pass added descriptional-complexity, complexity-of-grammars-and-systems. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: W32MJZ5DASR
+  title: "Groups Whose Word Problem is a Petri Net Language"
+  labels: [algebraic-language-theory, automata-and-groups, concurrency-and-traces, petri-net-languages]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches automata-and-groups, petri-net-languages. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WO4J4YIYYCF
+  title: "Generation and Enumeration of Floorplans Determined by HV-Matrices"
+  labels: [picture-and-graph-languages, polyominoes]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches polyominoes. Title and references only. Floorplan enumeration; weak fit to polyominoes. Second pass removed implementation-and-applications, random-generation-and-enumeration. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WPRHEHF5BVF
+  title: "Debates with Small Transparent Quantum Verifiers"
+  labels: [quantum-computing-models, quantum-branching-programs-and-queries]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches quantum-branching-programs-and-queries. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WWWR42XTRKD
+  title: "Quantum State Complexity of Formal Languages"
+  labels: [quantum-computing-models, quantum-finite-automata, descriptional-complexity]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches quantum-finite-automata. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WYYTB3ZQ2HC
+  title: "Cycles and Global Attractors of Reaction Systems"
+  labels: [natural-computing, reaction-systems]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches reaction-systems. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WD7KQHAKCP5
+  title: "On the decomposition of finite languages"
+  labels: [operations-on-languages, roots-powers-and-decompositions]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches roots-powers-and-decompositions. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WCO7RORG5UR
+  title: "Characterizing DNA Bond Shapes Using Trajectories"
+  labels: [natural-computing, dna-computing-and-splicing, operations-on-languages, shuffle-and-interleaving]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches dna-computing-and-splicing, shuffle-and-interleaving. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WE27M265HXF
+  title: "Implementing Sequential and Parallel Programs for the Homing Sequence Problem"
+  labels: [implementation-and-applications, state-machine-testing]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches state-machine-testing. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WYMODS7L2Z7
+  title: "Groups, Languages and Dendric Shifts"
+  labels: [cellular-automata-and-symbolic-dynamics, symbolic-dynamics, combinatorics-on-words]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches automata-and-groups, symbolic-dynamics. Dendric shifts and free groups; automata-and-groups is possible. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WOG3C235OMM
+  title: "Polynomials, Fragments of Temporal Logic and the Variety DA over Traces"
+  labels: [concurrency-and-traces, trace-languages, algebraic-language-theory, star-free-languages, logic-and-automata, temporal-logics, syntactic-monoids-and-varieties]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches syntactic-monoids-and-varieties, temporal-logics, trace-languages. Second pass added syntactic-monoids-and-varieties. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: W5DPJ3TSOWJ
+  title: "Fixed Point and Aperiodic Tilings"
+  labels: [cellular-automata-and-symbolic-dynamics, tilings]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches tilings. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WYN77MDQVRT
+  title: "A Perfect Class of Context-Sensitive Timed Languages"
+  labels: [automata-for-verification, timed-and-hybrid-automata, grammars-and-context-free-languages, pushdown-automata, logic-and-automata]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches timed-and-hybrid-automata. Second pass added logic-and-automata. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: W4ZOKB7LFN5
+  title: "Describing Periodicity in Two-Way Deterministic Finite Automata Using Transformation Semigroups"
+  labels: [descriptional-complexity, conversions-and-trade-offs, regular-languages, two-way-and-alternating-automata, unary-languages, algebraic-language-theory, transformation-semigroups]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches periodicity-and-borders, transformation-semigroups. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WBMGNJF3SEM
+  title: "On Tree Substitution Grammars"
+  labels: [tree-languages, tree-grammars]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches tree-grammars. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WGIXRGJMVMX
+  title: "Polyregular Functions: Characterisations and Refutations"
+  labels: [transducers, two-way-and-streaming-transducers]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches two-way-and-streaming-transducers. Title and references only. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: W2Y7GBY53CO
+  title: "Weighted Automata and Weighted Logics on Infinite Words"
+  labels: [weighted-and-probabilistic-automata, weighted-automata, weighted-logics, logic-and-automata, automata-on-infinite-words, omega-automata]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches weighted-logics. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WNFEQWO7TKQ
+  title: "On the Complexity of Hmelevskii's Theorem and Satisfiability of Three Unknown Equations"
+  labels: [combinatorics-on-words, word-equations]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches word-equations. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WMDSZCPJ2VQ
+  title: "Graphs Capturing Alternations in Words"
+  labels: [combinatorics-on-words, word-representable-graphs]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches word-representable-graphs. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WSS2BTBYI4B
+  title: "Abelian Repetitions in Sturmian Words"
+  labels: [combinatorics-on-words, abelian-properties-of-words, sturmian-words, repetitions-and-avoidability]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches abelian-properties-of-words, sturmian-words. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: W2KPLBSXJ5M
+  title: "Linear-Time Model Checking: Automata Theory in Practice"
+  labels: [automata-for-verification, automata-based-model-checking, automata-on-infinite-words, omega-automata, logic-and-automata, temporal-logics]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches automata-based-model-checking. An invited survey. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WXJZKACBZ6P
+  title: "Transductions Computed by PC-Systems of Monotone Deterministic Restarting Automata"
+  labels: [machine-models, restarting-automata, automata-systems, transducers]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches automata-systems. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: W6EX7GCRKY6
+  title: "Optimal Time and Communication Solutions of Firing Squad Synchronization Problems on Square Arrays, Toruses and Rings"
+  labels: [cellular-automata-and-symbolic-dynamics, cellular-automata-computation]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches cellular-automata-computation. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WPG24H6FWJH
+  title: "Ciliate Bio-operations on Finite String Multisets"
+  labels: [natural-computing, ciliate-gene-assembly]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches ciliate-gene-assembly. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WVH7W43AV2V
+  title: "A Comparative Analysis of Deletion Closure Operations and Their Properties"
+  labels: [operations-on-languages, insertion-and-deletion-operations, closure-properties]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches closure-properties, insertion-and-deletion-operations. Title and references only. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WKG5YB6KV42
+  title: "Complementation of Branching Automata for Scattered and Countable Series-Parallel Posets"
+  labels: [automata-on-infinite-words, linear-orderings, concurrency-and-traces, communicating-automata]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches communicating-automata, linear-orderings. Branching automata on posets are listed under communicating automata. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WLWWT27JUWH
+  title: "Refining the Nonterminal Complexity of Graph-controlled Grammars"
+  labels: [rewriting-systems, regulated-rewriting, descriptional-complexity, complexity-of-grammars-and-systems]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches complexity-of-grammars-and-systems. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WPRHWWGTNE4
+  title: "On Internal Contextual Grammars with Subregular Selection Languages"
+  labels: [rewriting-systems, contextual-grammars, regular-languages, subregular-languages]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches contextual-grammars. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WVZJNJEBLJ7
+  title: "Global One-Counter Tree Automata"
+  labels: [tree-languages, finite-tree-automata, machine-models, counter-automata]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches counter-automata. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WRSIMNV6TT4
+  title: "A General Information Extraction Framework Based on Formal Languages"
+  labels: [implementation-and-applications, documents-and-databases]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches documents-and-databases. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WANCDVK55RW
+  title: "Proof of a Phase Transition in Probabilistic Cellular Automata"
+  labels: [cellular-automata-and-symbolic-dynamics, dynamics-of-cellular-automata]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches dynamics-of-cellular-automata. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WUAZQHMEOI3
+  title: "Improving Raster Image Run-Length Encoding Using Data Order"
+  labels: [picture-and-graph-languages, fractals-and-images, machine-models, storage-automata]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches fractals-and-images. Image run-length encoding processed by a double-queue automaton; weak fit to both. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WIFSVOI7SEZ
+  title: "On the Descriptional Complexity of Metalinear CD Grammar Systems"
+  labels: [rewriting-systems, grammar-systems, descriptional-complexity, conversions-and-trade-offs, complexity-of-grammars-and-systems]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches grammar-systems. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WUFCLLESOYY
+  title: "Resolution-Similar Graph Grammars"
+  labels: [picture-and-graph-languages, graph-grammars]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches graph-grammars. Title only. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WUYA2OD53OA
+  title: "Set Augmented Finite Automata over Infinite Alphabets"
+  labels: [machine-models, infinite-alphabet-automata, decision-problems]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches infinite-alphabet-automata. Second pass added decision-problems. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WCQUCP5PVAX
+  title: "Engineering an LTLf Synthesis Tool"
+  labels: [logic-and-automata, temporal-logics, implementation-and-applications, automata-software-tools, automata-on-infinite-words, infinite-games, efficient-representations]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches infinite-games, temporal-logics. Second pass added efficient-representations. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: W74J7ZJDU5X
+  title: "Reachability and Safety in Queue Systems"
+  labels: [automata-for-verification, infinite-state-verification, machine-models, storage-automata, decision-problems]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches infinite-state-verification. Second pass added machine-models, storage-automata, decision-problems. Second-pass review by Claude at Guilherme's request (D-93)."
+- work: WHZKBESHJAR
+  title: "On A Measure for The Descriptional Complexity of Finite Automata with Translucent Words"
+  labels: [machine-models, jumping-automata, descriptional-complexity]
+  split: train
+  sampling: topup
+  blind: false
+  reviewed: true
+  note: "Top-up: title matches jumping-automata. Title and references only. Second-pass review by Claude at Guilherme's request (D-93)."
 - work: WABVXJ254NQ
   title: "Experiments with Synchronizing Automata"
   labels: [regular-languages, synchronizing-automata]

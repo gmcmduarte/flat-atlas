@@ -3,16 +3,16 @@
 ## Current state (keep this section under 30 lines)
 - **Phase:** 0 (P0-00 open; P0-04 done), 1 started (P1-01 to P1-06 done)
 - **Last merged session:** P1-06 (PR #12)
-- **In progress:** P1-06b in its PR (branch `s/P1-06b-labelled-set`): `taxonomy/gold.yaml` holds 500 reviewed works; the top-up proposal (100 works, `taxonomy/proposals/gold-topup.yaml`) waits for Guilherme's review, then `gold finalise --draft taxonomy/proposals/gold-topup.yaml`
-- **Next:** Guilherme reviews the top-up and merges the P1-06b PR; then P1-07 (Sonnet)
+- **In progress:** P1-06b done, in its PR (branch `s/P1-06b-labelled-set`): `taxonomy/gold.yaml` holds 600 works (500 random, 100 top-up; 441 train, 159 held out)
+- **Next:** Guilherme merges the P1-06b PR; then P1-07 (Sonnet)
 - **Live site:** https://gmcmduarte.github.io/flat-atlas/ (fixture data only; redeploys on every push to `main`)
 - **Latest release:** none
 - **Known problems:** Semantic Scholar throttles our key far below the documented 1 request/s (HTTP 429 on 15 to 25 % of calls or more); a full title-match pass takes about 2 hours (D-72, `docs/notes/sources.md`). The DBLP API is behind a bot challenge (HTTP 202, Anubis); DBLP data comes from the dump Guilherme downloads by hand (D-49). Refreshing it is manual. After a new dump, run `venues scan-dump` and then `parse dblp` again.
-- **Waiting on Guilherme:** the review of the 100 top-up works in `taxonomy/proposals/gold-topup.yaml` (about 25 minutes) and merging the P1-06b PR; the rest of P0-00 (branch protection, secret scanning, tmux, pre-commit install; S2 key is set in `.env`); reading the P1-04 report (a "done when" line of P1-04)
+- **Waiting on Guilherme:** merging the P1-06b PR; the rest of P0-00 (branch protection, secret scanning, tmux, pre-commit install; S2 key is set in `.env`); reading the P1-04 report (a "done when" line of P1-04)
 
 ## Checklist
 **Phase 0** — [ ] P0-00 · [x] P0-01 · [x] P0-02 · [x] P0-03 · [x] P0-04
-**Phase 1** — [x] P1-01 · [x] P1-02 · [x] P1-03 · [x] P1-04 · [x] P1-05 · [x] P1-06 · [ ] P1-06b · [ ] P1-07 · [ ] P1-07b · [ ] P1-08 · [ ] P1-09 · [ ] P1-10 · [ ] P1-11 · [ ] P1-12 · [ ] G1
+**Phase 1** — [x] P1-01 · [x] P1-02 · [x] P1-03 · [x] P1-04 · [x] P1-05 · [x] P1-06 · [x] P1-06b · [ ] P1-07 · [ ] P1-07b · [ ] P1-08 · [ ] P1-09 · [ ] P1-10 · [ ] P1-11 · [ ] P1-12 · [ ] G1
 **Phase 2** — [ ] P2-01 · [ ] P2-02 · [ ] P2-03 · [ ] P2-04 · [ ] G2
 **Phase 3** — [ ] P3-00 · [ ] P3-01 · [ ] P3-02 · [ ] P3-03 · [ ] P3-04 · [ ] P3-05 · [ ] G3
 **Phase 4** — [ ] P4-01 · [ ] P4-02 · [ ] P4-03 · [ ] P4-04 · [ ] P4-05 · [ ] G4
@@ -20,6 +20,20 @@
 **Phase 6** — [ ] P6-01 · [ ] P6-02 · [ ] P6-03 · [ ] G6
 
 ## Log (newest first)
+
+### 2026-11-19 — P1-06b The labelled set, part 3: top-up review and finalise (branch `s/P1-06b-labelled-set`)
+- **Review:** Guilherme asked Claude to review the 100 top-up works instead of doing it himself (D-93). Claude re-read every work's composite text against the topic descriptions. 15 works changed: 14 gained labels (for example `decision-problems` for three decidability papers, `automata-based-model-checking` for the LTL-to-deterministic-ω-automata paper, `complexity-of-grammars-and-systems` for two "small universal network" papers); the floorplan paper lost `random-generation-and-enumeration`, which is about counting automata and languages, not figures. Each note says what changed and that Claude reviewed it.
+- **Built:** `gold finalise --draft taxonomy/proposals/gold-topup.yaml` added the 100 works to `taxonomy/gold.yaml`: 600 works (500 random, 100 top-up), 441 train, 159 held out; the 500 random entries are byte for byte unchanged. `docs/notes/gold-v1-report.md` regenerated with the new counts (the review-change table still covers the 500 random works only; the top-up changes are in the git history of `gold-topup.yaml`).
+- **Surprises:** (1) After the top-up, 67 of 119 level-1 topics have fewer than 5 training works (not 69 as estimated by title): 1 at 0 (`automata-on-infinite-trees`), 4 at 2 (`kleene-algebra`, `supervisory-control`, `limited-automata`, `morphisms-and-pcp`), 32 at 3 and 30 at 4; 111 examples are missing in all. (2) The pilot still holds 82 title-matched candidates for thin topics; with all of them, the title estimate leaves 13 topics thin. So most of the gap can be closed from the pilot itself, without new papers; the topics left are those the five pilot venues rarely publish on (infinite trees, supervisory control).
+- **Done when (evidence):** all four lines as in part 2, now with the top-up: 600 reviewed works, every one with a level-0 label; 159 of 600 held out (26.5 %; 31.8 % of the random works, the top-up being training-only by design); no top-up work held out (`taxonomy check` OK). Review committed: the 500 by Guilherme (no edits), the 100 top-up by Claude at his request (D-93).
+- **Checks:** `uv run pytest` 503 passed; `uv run ruff check .` and `ruff format --check .` clean; `uv run flatatlas taxonomy check` OK (`gold.yaml`: 600 works).
+- **Hand-off to P1-07 (Sonnet)** (replaces the hand-off of part 2):
+  - Labelled set: `taxonomy/gold.yaml`, 600 works: 500 `sampling: random` (341 `train`, 159 `heldout`) and 100 `sampling: topup` (all `train`). `taxonomy load` writes `eval_gold`.
+  - **Held-out works are excluded from training, calibration, threshold tuning and seed sets** (D-61). Use them only to compare methods and to report precision and recall. Top-up works are not a random sample: never use them to estimate base rates or calibrate priors; use the random works for that.
+  - Thin topics: 67 level-1 topics have fewer than 5 training works, so learn per-topic weights only where there is data (share them across siblings, or fall back to the parent). Report level-1 macro scores only over topics with enough held-out works. Too small to measure at level 0: grammatical inference, verification, quantum, cellular automata.
+  - The labels are Claude's: the 500 approved by Guilherme without changes (D-91), the 100 top-up reviewed by Claude (D-93). Treat precision and recall as agreement with that reading.
+  - In 10 pilot works the S2 TLDR belongs to another paper (parking lot); they are in the labelled set, and their notes say so.
+  - More training examples: the roadmap already extends `gold.yaml` to new venues in P4-04, and P2-01 adds 11 venues. A new random sample from those venues (not a hand-picked import) is the place to fill topics the pilot venues do not cover.
 
 ### 2026-11-18 — P1-06b The labelled set, part 2: review, `gold.yaml`, report, top-up (branch `s/P1-06b-labelled-set`)
 - **Review:** Guilherme went through `gold-draft.yaml` and changed nothing: all 1,526 draft labels (761 level 0, 765 level 1) stand. Because there was no blind subset (D-91), **the labelled set is in effect Claude's labels approved by Guilherme**. This matters when P1-07 reads its numbers: the held-out set measures agreement with Claude's reading of the papers.
@@ -32,7 +46,7 @@
   - Every level-0 topic in the pilot has at least 5 held-out works, or is listed as too small to measure: **pass**. 17 of 21 have at least 5; the 4 others are listed in the report.
   - Guilherme's review is committed: **pass for the 500 works** (`gold.yaml`, `reviewed: true`; his review made no edits). The top-up review is open.
 - **Checks:** `uv run pytest` 503 passed; `uv run ruff check .` and `ruff format --check .` clean; `uv run flatatlas taxonomy check` OK (`gold.yaml`: 500 works); `taxonomy check --gold taxonomy/proposals/gold-topup.yaml` OK.
-- **Hand-off to P1-07 (Sonnet):**
+- **Hand-off to P1-07 (Sonnet)** (superseded by part 3):
   - Labelled set: `taxonomy/gold.yaml`, 500 random works (341 `train`, 159 `heldout`), plus up to 100 top-up works (`sampling: topup`, always `train`) once Guilherme has reviewed them and `gold finalise --draft taxonomy/proposals/gold-topup.yaml` has run. `taxonomy load` writes `eval_gold`.
   - **Held-out works are excluded from training, calibration, threshold tuning and seed sets** (D-61). Use them only to compare methods and to report precision and recall.
   - Thin topics: 69 level-1 topics will have fewer than 5 training works even after the top-up, so learn per-topic weights only where there is data (share them across siblings, or fall back to the parent). Report level-1 macro scores only over topics with enough held-out works. Too small to measure at level 0: grammatical inference, verification, quantum, cellular automata.
