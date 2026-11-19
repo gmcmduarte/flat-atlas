@@ -2,13 +2,13 @@
 
 ## Current state (keep this section under 30 lines)
 - **Phase:** 0 (P0-00 open; P0-04 done), 1 started (P1-01 to P1-07 done)
-- **Last merged session:** P1-06b (PR #13)
-- **In progress:** P1-07 done, in its PR (branch `s/P1-07-tagger-v1`): signals, shortlist, learned fusion; `flatatlas tag` tags all 2,333 pilot works with both methods in about 30 s
-- **Next:** Guilherme merges the P1-07 PR and picks five works for `--explain`; then P1-07b (the local decision model)
+- **Last merged session:** P1-07 (PR #14): signals, shortlist, learned fusion; `flatatlas tag` tags all 2,333 pilot works with both methods in about 30 s
+- **In progress:** P1-07b (branch `s/P1-07b-decision-model`): the local decision model
+- **Next:** P1-07b long run (Guilherme launches it), then P1-08; Guilherme still picks five works for `flatatlas tag --explain`
 - **Live site:** https://gmcmduarte.github.io/flat-atlas/ (fixture data only; redeploys on every push to `main`)
 - **Latest release:** none
 - **Known problems:** Semantic Scholar throttles our key far below the documented 1 request/s (HTTP 429 on 15 to 25 % of calls or more); a full title-match pass takes about 2 hours (D-72, `docs/notes/sources.md`). The DBLP API is behind a bot challenge (HTTP 202, Anubis); DBLP data comes from the dump Guilherme downloads by hand (D-49). Refreshing it is manual. After a new dump, run `venues scan-dump` and then `parse dblp` again.
-- **Waiting on Guilherme:** merging the P1-07 PR; five works for `flatatlas tag --explain`; the rest of P0-00 (branch protection, secret scanning, tmux, pre-commit install; S2 key is set in `.env`); reading the P1-04 report (a "done when" line of P1-04)
+- **Waiting on Guilherme:** approval to download the local model weights (P1-07b); five works for `flatatlas tag --explain`; the rest of P0-00 (branch protection, secret scanning, tmux, pre-commit install; S2 key is set in `.env`); reading the P1-04 report (a "done when" line of P1-04)
 
 ## Checklist
 **Phase 0** — [ ] P0-00 · [x] P0-01 · [x] P0-02 · [x] P0-03 · [x] P0-04
