@@ -1,18 +1,18 @@
 # Progress
 
 ## Current state (keep this section under 30 lines)
-- **Phase:** 0 (P0-00 open; P0-04 done), 1 started (P1-01 to P1-06 done)
-- **Last merged session:** P1-06 (PR #12)
-- **In progress:** P1-06b done, in its PR (branch `s/P1-06b-labelled-set`): `taxonomy/gold.yaml` holds 682 works (500 random, 182 top-up in two rounds; 523 train, 159 held out)
-- **Next:** Guilherme merges the P1-06b PR; then P1-07 (Sonnet)
+- **Phase:** 0 (P0-00 open; P0-04 done), 1 started (P1-01 to P1-07 done)
+- **Last merged session:** P1-06b (PR #13)
+- **In progress:** P1-07 done, in its PR (branch `s/P1-07-tagger-v1`): signals, shortlist, learned fusion; `flatatlas tag` tags all 2,333 pilot works with both methods in about 30 s
+- **Next:** Guilherme merges the P1-07 PR and picks five works for `--explain`; then P1-07b (the local decision model)
 - **Live site:** https://gmcmduarte.github.io/flat-atlas/ (fixture data only; redeploys on every push to `main`)
 - **Latest release:** none
 - **Known problems:** Semantic Scholar throttles our key far below the documented 1 request/s (HTTP 429 on 15 to 25 % of calls or more); a full title-match pass takes about 2 hours (D-72, `docs/notes/sources.md`). The DBLP API is behind a bot challenge (HTTP 202, Anubis); DBLP data comes from the dump Guilherme downloads by hand (D-49). Refreshing it is manual. After a new dump, run `venues scan-dump` and then `parse dblp` again.
-- **Waiting on Guilherme:** merging the P1-06b PR; the rest of P0-00 (branch protection, secret scanning, tmux, pre-commit install; S2 key is set in `.env`); reading the P1-04 report (a "done when" line of P1-04)
+- **Waiting on Guilherme:** merging the P1-07 PR; five works for `flatatlas tag --explain`; the rest of P0-00 (branch protection, secret scanning, tmux, pre-commit install; S2 key is set in `.env`); reading the P1-04 report (a "done when" line of P1-04)
 
 ## Checklist
 **Phase 0** — [ ] P0-00 · [x] P0-01 · [x] P0-02 · [x] P0-03 · [x] P0-04
-**Phase 1** — [x] P1-01 · [x] P1-02 · [x] P1-03 · [x] P1-04 · [x] P1-05 · [x] P1-06 · [x] P1-06b · [ ] P1-07 · [ ] P1-07b · [ ] P1-08 · [ ] P1-09 · [ ] P1-10 · [ ] P1-11 · [ ] P1-12 · [ ] G1
+**Phase 1** — [x] P1-01 · [x] P1-02 · [x] P1-03 · [x] P1-04 · [x] P1-05 · [x] P1-06 · [x] P1-06b · [x] P1-07 · [ ] P1-07b · [ ] P1-08 · [ ] P1-09 · [ ] P1-10 · [ ] P1-11 · [ ] P1-12 · [ ] G1
 **Phase 2** — [ ] P2-01 · [ ] P2-02 · [ ] P2-03 · [ ] P2-04 · [ ] G2
 **Phase 3** — [ ] P3-00 · [ ] P3-01 · [ ] P3-02 · [ ] P3-03 · [ ] P3-04 · [ ] P3-05 · [ ] G3
 **Phase 4** — [ ] P4-01 · [ ] P4-02 · [ ] P4-03 · [ ] P4-04 · [ ] P4-05 · [ ] G4
@@ -20,6 +20,26 @@
 **Phase 6** — [ ] P6-01 · [ ] P6-02 · [ ] P6-03 · [ ] G6
 
 ## Log (newest first)
+
+### 2026-11-19 — P1-07 Tagger v1: artefacts, signals, shortlist, learned fusion (branch `s/P1-07-tagger-v1`)
+- **Built:** package `flatatlas.tagging` (`config`, `guard`, `inputs`, `matcher`, `descriptions`, `artefacts`, `signals`, `noisyor`, `shortlist`, `pairs`, `fusion`, `evaluate`, `runner`, `local_embed`, `experiments`, `commands`) and `config/tagger.yaml` (every weight, band, threshold, seed and model setting; `decision_model.enabled: false`). Commands: `flatatlas tag [--method noisy_or|fusion] [--limit N] [--explain <work_id>] [--refit]`, `tag fit`, `tag artefacts`, `tag anchors`, `tag experiment emb-desc|local-embedding`. Tables `tag_signal` (33,005 pairs) and `tag_work_topic` (both methods, `provenance.method`), model and tuning under `data/models/tagger/tagger-1/` (`fusion.pkl`, `tuning.json`). 37 new tests (540 in all), including the 20-work anchor regression fixture; the default run needs no `ml` extra (3 tests skip), and a new CI job `test-ml` runs the tagger tests with it. `ml` extra gained `lightgbm` and `sentence-transformers`. Decisions D-95 to D-97; PLAN §4.4, §9.3, §9.4 touched. Numbers and the two experiments: `docs/notes/tagger-experiments.md`.
+- **Not built:** propagation, the held-out evaluation and the method comparison (P1-08), the decision model (P1-07b), the optional SciEmbed experiment (weights not approved for download), `src_msc`.
+- **Cross-validated on gold-train (random-train, 341 works; no held-out number exists):** noisy-or F1 0.706 at level 0 and 0.659 at level 1; logistic fusion 0.730 and 0.701; **LightGBM fusion (kept) 0.800 and 0.740** (precision 0.777 and 0.822, recall 0.825 and 0.672). Scores are agreement with Claude's reading (D-91, D-93).
+- **Surprises:** (1) **`topics.yaml` names 46 held-out works as `seed_works`** in 41 topics (D-97): the tagger drops them, the file is untouched, suggestions in `taxonomy/proposals/seed-works-heldout.md`. (2) **Reference titles help more than anything else tried for works without an S2 vector** (+0.055 F1 on those works, signals +70 %). (3) **Silver labels are thin:** 37 positives, 2,170 negatives, because only 4 % of (work, topic) cells have an OpenAlex mapping; the learned model is trained mostly on gold. (4) A general sentence model is twice as good as SPECTER2 for `emb_desc` alone but adds nothing to the fusion. (5) The shortlist tops out near 93 %: a third of its misses have no signal at all. (6) SPECTER2 vectors of one subfield sit close together (median spread 0.04), so the multi-centroid threshold had to drop from 0.35 to 0.05. (7) Seven in ten works sit inside a wide unsure band (0.2 to 0.6); the narrow band 0.3 to 0.5 gives 37 %.
+- **Done when (evidence):**
+  - Every pilot work has tag rows or is listed as untagged, for both methods: **pass**. Fusion: 2,279 tagged + 54 untagged = 2,333; noisy-or: 2,259 + 74 = 2,333 (`data/reports/tag-untagged-<method>.txt`).
+  - Shortlist recall on gold-train at least 95 %, or the misses listed by cause: **partial, misses listed**. 92.4 % (level 0 95.1 %, level 1 89.7 %), 128 of 1,679 labels missed; by cause 46 lexical hit not picked, 35 embedding above floor not picked, 47 no signal above its floor (table in `tagger-experiments.md`).
+  - At least 80 % of in-corpus anchors in the right topic (top 3) with the learned fusion: **pass**. 134 of 147 (91 %): 102 of 113 for anchors not in `gold.yaml`, 32 of 34 for gold-train anchors (in-sample); held-out anchors skipped.
+  - Cross-validated precision, recall and F1 at levels 0 and 1 on gold-train for (a) and (c), with the unsure share: **pass** (table in `tagger-experiments.md`). Unsure share 37 % at band 0.3 to 0.5 for the fusion model. **No held-out number computed: pass.**
+  - Full pilot tagging (steps 1 and 2, including training) under 10 minutes: **pass**, about 30 s (15 s + 17 s, artefact cache emptied first).
+  - `--explain` for five works Guilherme picks: **open**, waiting for his picks (the command works: `uv run flatatlas tag --explain <work_id> ...`).
+- **Checks:** `uv run pytest` 540 passed (3 skipped without the `ml` extra, checked with `uv run --isolated`); `uv run ruff check .` and `ruff format --check .` clean; `uv run flatatlas taxonomy check` OK.
+- **Hand-off to P1-07b (decision model):**
+  - **Unsure share:** 37 % of random-train works at the band 0.3 to 0.5 (`selection.unsure_band`), 47.5 % of all 2,333 works; 64 % at 0.25 to 0.55, 27 % at 0.35 to 0.45. Pick the band by how many works the local model can read. The pairs to ask about are level 0 or level 1 pairs of the work inside the band.
+  - **Where the fused scores are:** table `tag_signal` (local, `warehouse/local/tag_signal.parquet`), one row per shortlisted pair and its ancestors; column `p_fusion` is the calibrated probability of the learned fusion (in-sample for gold-train works), `p_noisy_or` is method (a), `p_stage_a` and `parent_p` are the two stages. Final tags: `tag_work_topic` (`warehouse/core/`), rows told apart by `provenance.method` (`fusion` or `noisy_or`).
+  - **How a new signal is added to the fusion model:** (1) compute it as a `(works, topics)` float32 matrix in `tagging/signals.py` (NaN where absent) and add its name to `SIGNALS` in `tagging/config.py` (and a weight in `noisy_or.weights` if method (a) should see it, and its family in `FAMILIES`); `pairs.FEATURES` is built from `SIGNALS`, so it becomes a model feature and a `tag_signal` column once it is also added to `TAG_SIGNAL` (automatic: the schema is built from `FEATURES`). (2) Bump `tagger_version` in `config/tagger.yaml`. (3) `uv run flatatlas tag fit` refits both stages, recalibrates and re-tunes the selection; `tag` writes the tables. For `dm_l0`, `dm_child` (null for works the step did not run) fill the column with NaN: LightGBM handles it, logistic regression adds a missing indicator. If a signal defines a silver label, add its name to `pairs.SILVER_DEFINING` (the leak rule). Keep it out of the artefact hash unless it changes artefacts.
+  - **Guard:** every fit goes through `tagging/guard.py`; a decision-model cache or any new training must call `Guard.check`. Held-out works must not be used to choose the band either.
+  - Thin topics: 72 level-1 topics have 1 to 4 positives among random-train works; the model shares information through topic features and the parent probability, not per-topic weights.
 
 ### 2026-11-19 — P1-06b The labelled set, part 3: top-up review, second round, finalise (branch `s/P1-06b-labelled-set`)
 - **Round 1 review:** Guilherme asked Claude to review the 100 top-up works instead of doing it himself (D-93). Claude re-read every work's composite text against the topic descriptions. 15 works changed: 14 gained labels (for example `decision-problems` for three decidability papers, `automata-based-model-checking` for the LTL-to-deterministic-ω-automata paper, `complexity-of-grammars-and-systems` for two "small universal network" papers); the floorplan paper lost `random-generation-and-enumeration`, which is about counting automata and languages, not figures.
@@ -224,6 +244,10 @@
 - **Hand-off to P0-00 / P0-01:** nothing exists except documents. P0-01 creates the Python project from scratch. Python must be pinned to 3.12 (the system has 3.15). `uv`, `git`, `gh`, `node`, `docker` are installed; `ollama` and `tmux` are not.
 
 ## Parking lot (ideas outside the current session; do not build)
+- Try `description_model: minilm` on the held-out set in P1-08: twice the single-signal AP of SPECTER2 for `emb_desc`, no gain in cross-validated fusion F1; it may matter for the 20 thin level-1 topics (found in P1-07).
+- Silver positives need more than OpenAlex agreement: only 4 % of (work, topic) cells have an OpenAlex mapping. Map more OpenAlex topics in `topics.yaml` at the next taxonomy review, or add `src_msc` (Phase 6) (found in P1-07).
+- Replace the 46 held-out `seed_works` in `topics.yaml` (list in `taxonomy/proposals/seed-works-heldout.md`).
+- SciEmbed against SPECTER2 (optional experiment of P1-07, not run: 600 MB download and a licence check first).
 - "Similar papers" on paper pages using embeddings (needs pgvector; server stage).
 - Per-author topic timeline visualisation.
 - Wikidata / ROR enrichment for institutions.

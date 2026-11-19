@@ -1,0 +1,64 @@
+# Regression fixture (P1-07): 20 pilot anchors from taxonomy/anchors.yaml whose title carries a phrase
+# of the expected topic. It guards the phrase dictionary and the matcher against breakage; it is not
+# a measure of accuracy (anchors are easy cases, PLAN §9.6). Public metadata only: titles.
+works:
+- id: baburin-2025-close-analysis-subset
+  title: A Close Analysis of the Subset Construction
+  expected: deterministic-finite-automata
+- id: holzer-2008-nondeterministic-finite-automata
+  title: Nondeterministic Finite Automata-Recent Results on the Descriptional and Computational Complexity
+  expected: nondeterministic-finite-automata
+- id: colcombet-2015-unambiguity-automata-theory
+  title: Unambiguity in Automata Theory
+  expected: unambiguous-finite-automata
+- id: ellul-2002-regular-expressions-results
+  title: 'Regular Expressions: New Results and Open Problems'
+  expected: regular-expressions
+- id: gruber-2009-short-regular-expressions
+  title: 'Short Regular Expressions from Finite Automata: Empirical Results'
+  expected: regular-expressions-from-automata
+- id: moreira-2022-manipulation-regular-expressions
+  title: 'Manipulation of Regular Expressions Using Derivatives: An Overview'
+  expected: derivatives-of-regular-expressions
+- id: schmid-2012-inside-class-regex
+  title: Inside the Class of REGEX Languages
+  expected: extended-regular-expressions
+- id: caron-2011-generalized-one-unambiguity
+  title: Generalized One-Unambiguity
+  expected: deterministic-regular-expressions
+- id: berstel-2004-complexity-hopcroft-s
+  title: On the Complexity of Hopcroft's State Minimization Algorithm
+  expected: minimisation-of-automata
+- id: badr-2008-hyper-minimization-o
+  title: Hyper-Minimization in O(n2)
+  expected: hyper-minimisation
+- id: campeanu-1998-minimal-cover-automata
+  title: Minimal Cover-Automata for Finite Languages
+  expected: cover-automata
+- id: watson-1998-fast-semi-incremental
+  title: A Fast New Semi-incremental Algorithm for the Construction of Minimal Acyclic DFAs
+  expected: minimal-acyclic-automata
+- id: champarnaud-2003-nfa-reduction-algorithms
+  title: NFA Reduction Algorithms by Means of Regular Inequalities
+  expected: nfa-reduction
+- id: geffert-2005-complementing-two-way
+  title: Complementing Two-Way Finite Automata
+  expected: two-way-and-alternating-automata
+- id: ananichev-2003-synchronizing-monotonic-automata
+  title: Synchronizing Monotonic Automata
+  expected: synchronizing-automata
+- id: bondar-2016-completely-reachable-automata
+  title: Completely Reachable Automata
+  expected: completely-reachable-automata
+- id: jiraskova-2010-complexity-prefix-free
+  title: Complexity in Prefix-Free Regular Languages
+  expected: prefix-and-suffix-free-languages
+- id: brzozowski-2017-complexity-proper-prefix
+  title: Complexity of Proper Prefix-Convex Regular Languages
+  expected: ideal-and-convex-languages
+- id: jiraskova-2010-complexity-union-free
+  title: Complexity in Union-Free Regular Languages
+  expected: union-free-languages
+- id: gawrychowski-2011-chrobak-normal-form
+  title: Chrobak Normal Form Revisited, with Applications
+  expected: unary-languages
