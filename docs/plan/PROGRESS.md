@@ -1,18 +1,18 @@
 # Progress
 
 ## Current state (keep this section under 30 lines)
-- **Phase:** 0 (P0-00 open; P0-04 done), 1 started (P1-01 to P1-07b done, P1-08 in progress)
+- **Phase:** 0 (P0-00 open; P0-04 done), 1 started (P1-01 to P1-08 done; P1-08 in its PR)
 - **Last merged session:** P1-07b (PR #15): local decision model, run on the 1,173 unsure works; no measurable gain on gold-train (D-99)
-- **In progress:** P1-08 (branch `s/P1-08-propagation-eval`): propagation, evaluation harness, one held-out comparison of all methods, decides whether step 3 stays
-- **Next:** P1-08 PR review; then P1-09; Guilherme still picks five works for `flatatlas tag --explain`
+- **In progress:** P1-08 done, in its PR (branch `s/P1-08-propagation-eval`): propagation, evaluation harness, held-out set opened once; **the pilot ships the bagged learned fusion, step 3 (decision model) and propagation are off (D-100)**; held-out F1 0.762 (level 0) and 0.700 (level 1)
+- **Next:** Guilherme opens `reports/eval-p1-08-tagger-3-084b04920e.html` and reviews and merges the P1-08 PR; then P1-09; Guilherme still picks five works for `flatatlas tag --explain`
 - **Live site:** https://gmcmduarte.github.io/flat-atlas/ (fixture data only; redeploys on every push to `main`)
 - **Latest release:** none
 - **Known problems:** Semantic Scholar throttles our key far below the documented 1 request/s (HTTP 429 on 15 to 25 % of calls or more); a full title-match pass takes about 2 hours (D-72, `docs/notes/sources.md`). The DBLP API is behind a bot challenge (HTTP 202, Anubis); DBLP data comes from the dump Guilherme downloads by hand (D-49). Refreshing it is manual. After a new dump, run `venues scan-dump` and then `parse dblp` again.
-- **Waiting on Guilherme:** five works for `flatatlas tag --explain`; the rest of P0-00 (branch protection, secret scanning, tmux, pre-commit install; S2 key is set in `.env`); reading the P1-04 report (a "done when" line of P1-04)
+- **Waiting on Guilherme:** open the P1-08 report and confirm the reading of "no hard check gets worse" (D-100); five works for `flatatlas tag --explain`; the rest of P0-00 (branch protection, secret scanning, tmux, pre-commit install; S2 key is set in `.env`); reading the P1-04 report (a "done when" line of P1-04)
 
 ## Checklist
 **Phase 0** — [ ] P0-00 · [x] P0-01 · [x] P0-02 · [x] P0-03 · [x] P0-04
-**Phase 1** — [x] P1-01 · [x] P1-02 · [x] P1-03 · [x] P1-04 · [x] P1-05 · [x] P1-06 · [x] P1-06b · [x] P1-07 · [x] P1-07b · [ ] P1-08 · [ ] P1-09 · [ ] P1-10 · [ ] P1-11 · [ ] P1-12 · [ ] G1
+**Phase 1** — [x] P1-01 · [x] P1-02 · [x] P1-03 · [x] P1-04 · [x] P1-05 · [x] P1-06 · [x] P1-06b · [x] P1-07 · [x] P1-07b · [x] P1-08 · [ ] P1-09 · [ ] P1-10 · [ ] P1-11 · [ ] P1-12 · [ ] G1
 **Phase 2** — [ ] P2-01 · [ ] P2-02 · [ ] P2-03 · [ ] P2-04 · [ ] G2
 **Phase 3** — [ ] P3-00 · [ ] P3-01 · [ ] P3-02 · [ ] P3-03 · [ ] P3-04 · [ ] P3-05 · [ ] G3
 **Phase 4** — [ ] P4-01 · [ ] P4-02 · [ ] P4-03 · [ ] P4-04 · [ ] P4-05 · [ ] G4
@@ -20,6 +20,25 @@
 **Phase 6** — [ ] P6-01 · [ ] P6-02 · [ ] P6-03 · [ ] G6
 
 ## Log (newest first)
+
+### 2026-11-20 — P1-08 Propagation, evaluation harness, held-out comparison (branch `s/P1-08-propagation-eval`)
+- **Built:** `tagging/propagate.py` (`prop_cite`, `prop_author`, one pass), `tagging/topdown.py` (method b), `fusion.BaggedFusion` and `fit_model` (5 seeds), package `flatatlas.evaluate` (`metrics`, `checks`, `variants`, `freeze`, `heldout`, `report`, `report_data`, `commands`) and the commands `flatatlas evaluate freeze | check | report | --heldout [--again]`; `config/tagger.yaml` sections `method`, `propagation`, `topdown`, `evaluation`, `fusion.bag`. 50 new tests (611 in all with the `ml` extra; 595 passed and 11 skipped without it). Decisions D-100, D-101; PLAN §9.3 to §9.5 updated; the comparison table, the frozen settings and the by-paper-type split are in `docs/notes/tagger-experiments.md`.
+- **The held-out set was opened once** (159 works, run `p1-08-tagger-3-084b04920e`), after the settings were frozen and committed. **Result (agreement with Claude's reading):** fusion over noisy-or **+0.067 mean F1 (90 % interval +0.038 to +0.096): adopted**; decision model over fusion +0.014 (-0.002 to +0.032): **not adopted, `decision_model.enabled` is `false`**; propagation +0.014 (-0.002 to +0.031) for fusion, -0.003 for noisy-or: **not adopted**; top-down far behind (0.540 against 0.731). **Pilot precision and recall, level 0:** P 0.739, R 0.785, F1 0.762; **level 1:** P 0.805, R 0.618, F1 0.700 (intervals in D-100). Proposed floor for G1: level 0 F1 ≥ 0.70, level 1 F1 ≥ 0.65.
+- **Surprises:** (1) **The learned fusion was not stable under another seed** (7.5 % of primary tags changed; threshold 0.95; noisy-or is exactly 1). The cause is fold assignment and LightGBM sampling flipping near ties. Guilherme chose to bag the model before the opening: 5 members give 0.960. (2) The reading of "no hard check gets worse" decides whether any learned model can beat noisy-or: I fixed it (a check the simpler method passes and the complex one fails) before the opening; Guilherme should confirm it (D-100). (3) The citation graph is thin (2,211 edges for 2,333 works, `is_influential` null on every edge), so propagation had little to work with. (4) In training, NaN `lex_title` marks silver pairs (98 % negative), so the first hold-out leak test (title set to NaN) showed 21 % recovery; with 0 it is 57 % (noisy-or 68 %). (5) The fusion has 70 untagged works (noisy-or 74; `tagger-2` had 54). (6) The decision model's held-out gain is concentrated in works without an abstract (34 works, 0.711 to 0.768) or without references (26 works, 0.663 to 0.723): a post-hoc look at small groups.
+- **Not built:** `minilm` for `emb_desc` on the held-out set (the set is now opened; a test would be a second look); the distilled classifier (P4-05); a richer citation graph.
+- **Done when (evidence):**
+  - Anchors ≥ 90 %, coverage ≥ 85 %, stability ≥ 95 % for the adopted method: **pass** (anchors 139/147 = 0.946, coverage 0.911, stability 0.960; venue sanity 10/10; `flatatlas evaluate check` exits 0).
+  - The comparison table exists with intervals and the adopted method follows from the rule: **pass** (`tagger-experiments.md`, "P1-08: the held-out comparison"; D-100). The reading of "worse" is mine; see surprise 2.
+  - The held-out numbers of the adopted method are stated with a proposed G1 floor: **pass** (above and D-100).
+  - The HTML report exists; Guilherme has opened it: **report exists, opening is open** (`reports/eval-p1-08-tagger-3-084b04920e.html`, 1.3 MB, no outside resources).
+  - Propagation improves or keeps held-out F1, anchor accuracy and coverage: **partial**. F1 and coverage are kept (all intervals include zero); anchors fall for the fusion (139 to 134 of 147) and by one for noisy-or, rise by two for the fusion with the decision model. Before/after table in `tagger-experiments.md`. Propagation is therefore off.
+- **Checks:** `uv run pytest` 611 passed with the `ml` extra, 595 passed and 11 skipped without it (`uv run --isolated`); `uv run ruff check .` and `ruff format --check .` clean; `uv run flatatlas taxonomy check` OK. `tag fit`, `tag --method fusion` and `tag --method noisy_or` re-run with the shipped settings; the shipped model reproduces the frozen `fusion` variant (largest probability difference 3e-8).
+- **Hand-off to P1-09 (aggregates, topic edges, map layout, release build, static export):**
+  - **Read the tags from `tag_work_topic` rows with `provenance.method = 'fusion'`**; `tagger_version` is `tagger-3`; the model is `data/models/tagger/tagger-3/fusion.pkl` (a `BaggedFusion` of 5 members), selection 0.45 and 3 topics (`tuning.json`). Both methods' rows are in the table side by side; do not read noisy-or rows. 2,263 works have tags, 70 are untagged (`data/reports/tag-untagged-fusion.txt`), 137 carry a `low_confidence` flag: decide what the site shows for them.
+  - **Confidence is calibrated** (held-out: stated 0.95 observed 0.95; the 0.8 to 0.9 bin is 0.87 stated and 0.67 observed on 48 pairs), so bubble volume may use it.
+  - `flatatlas tag fit` reproduces everything in a few minutes (the 5-model bag makes it several times slower than `tagger-2`). Re-run `evaluate freeze` after any change of the settings; **the held-out set is used up** for this taxonomy version: a second `--heldout` needs `--again` and is optimistic. A taxonomy version bump needs a new labelled set or a new held-out share before the next comparison.
+  - The decision-model cache (12,903 rows) and the 5 GB model stay on disk and are unused; `tag decide` still works if a later session wants to try a smaller model.
+  - **Parking lot additions** are below.
 
 ### 2026-11-19 — P1-07b Local decision model: code, long run, cross-validated comparison (branch `s/P1-07b-decision-model`)
 - **Built:** package `flatatlas.tagging.decide` (`scorer` with `LlamaScorer` and `FakeScorer`, `questions`, `cache`, `select`, `run`, `calibrate`, `features`, `stage`); `flatatlas tag decide [--limit N] [--all] [--orders N] [--bench] [--explain WORK_ID] [--json F]`; `tag fit` also saves the **base** model (`fusion-base.pkl`) and `base_probs.parquet`, and with `decision_model.enabled` and cached answers cross-validates and fits the model with `dm_l0`/`dm_child` (CV entry `lightgbm+dm`; becomes `fusion.pkl`); `tag` records the decision model in `provenance.models` for works that have `dm_*`; `tag_signal` no longer depends on which method ran last. `tagger_version` is `tagger-2` (the base model reproduces P1-07 exactly). 21 new tests (561 in all); the default run and CI never load a model; a test checks that nothing in `tagging/decide/` imports a network or hosted-model client. Optional extra `llm`. Decisions D-98 and D-99; PLAN §9.5 and §9.8 carry measured numbers; `docs/notes/sources.md` has the model and licence.
@@ -266,7 +285,7 @@
 - **Hand-off to P0-00 / P0-01:** nothing exists except documents. P0-01 creates the Python project from scratch. Python must be pinned to 3.12 (the system has 3.15). `uv`, `git`, `gh`, `node`, `docker` are installed; `ollama` and `tmux` are not.
 
 ## Parking lot (ideas outside the current session; do not build)
-- Try `description_model: minilm` on the held-out set in P1-08: twice the single-signal AP of SPECTER2 for `emb_desc`, no gain in cross-validated fusion F1; it may matter for the 20 thin level-1 topics (found in P1-07).
+- `description_model: minilm` (twice the single-signal AP of SPECTER2 for `emb_desc`, no gain in cross-validated fusion F1; may matter for the 20 thin level-1 topics, found in P1-07) was **not** tried on the held-out set in P1-08: the set is opened, so a test is a second look. Try it after the next taxonomy version with a fresh held-out share.
 - Silver positives need more than OpenAlex agreement: only 4 % of (work, topic) cells have an OpenAlex mapping. Map more OpenAlex topics in `topics.yaml` at the next taxonomy review, or add `src_msc` (Phase 6) (found in P1-07).
 - Replace the 46 held-out `seed_works` in `topics.yaml` (list in `taxonomy/proposals/seed-works-heldout.md`).
 - SciEmbed against SPECTER2 (optional experiment of P1-07, not run: 600 MB download and a licence check first).
@@ -292,3 +311,8 @@
 - Split `cellular-automata-and-symbolic-dynamics` into cellular automata and symbolic dynamics/tilings when the AUTOMATA venue is added (P2-01; D-87).
 - Semantic Scholar TLDRs that belong to other papers (unrelated patents) for at least 9 pilot works, mostly DLT 1993 to 1999 (found in P1-06b; notes in `gold-draft.yaml`). Detect a TLDR that shares no content word with title and references, and drop it from the composite text.
 - Define how the tagger matches phrases (word boundaries, the window for context words, hyphen and plural variants) before P1-07; the P1-06 review used whole-word matching on folded text.
+- Silver pairs hide `lex_title` and `src_openalex` (the leak rule), so a NaN title signal marks a silver pair (98 % negative) and the model can read "missing" as "negative"; real works never have it. Hide the defining signals differently, or add a `silver` indicator the model cannot see (found in P1-08).
+- Level 2 and deeper topics have no labels, so the fusion is trained at levels 0 and 1 only and often puts deep anchors under their parent (anchors 0.946 against 0.986 for noisy-or). Label a small deep set, or let a deep topic inherit a lexical rule (found in P1-08).
+- Level 1 recall is the weak number (held-out 0.618): the shortlist bounds it at 89.7 % and the selection keeps at most 3 topics. Try a larger shortlist for level 1 only, or a per-level threshold (found in P1-08).
+- The decision model gained most on works without an abstract or without references (34 and 26 held-out works, +0.057 and +0.060 F1, intervals not computed): try it only for works with the least text, with a smaller model, on a fresh held-out share (found in P1-08).
+- Semantic Scholar's citation endpoint carries `isInfluential` and the citing-context intents; a harvest of them would give the influential boost something to act on and may make propagation worth switching on (found in P1-08).

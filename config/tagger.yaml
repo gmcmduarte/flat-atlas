@@ -45,10 +45,12 @@ evaluation:
   leak_sample: 200
   spot_n: 10
 
-# Cascade step 3 (P1-07b; PLAN §9.5, D-98). Off: the fusion model never sees a dm_* signal.
+# Cascade step 3 (P1-07b; PLAN §9.5, D-98). OFF since P1-08 (D-100): on the held-out set the fusion
+# with the decision model beat the base fusion by +0.014 mean F1, 90 % interval -0.002 to +0.032,
+# which includes zero, so the rule of PLAN §9.6 keeps the simpler method. The answers stay cached.
 # A local open model, read for option probabilities. No hosted model, no network at inference.
 decision_model:
-  enabled: true
+  enabled: false
   model_file: llm/qwen3-8b-q4km/Qwen3-8B-Q4_K_M.gguf   # under data/models/, a download (sources.md)
   model_name: Qwen3-8B-Q4_K_M
   quantisation: Q4_K_M
