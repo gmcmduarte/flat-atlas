@@ -21,6 +21,7 @@ from __future__ import annotations
 
 import hashlib
 import pickle
+import warnings
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -31,19 +32,25 @@ from flatatlas.tagging.guard import Guard
 from flatatlas.tagging.inputs import Corpus, Dag
 from flatatlas.tagging.pairs import (
     BASE_FEATURES,
-    FEATURES,
+    DM_FEATURES,
     KIND_GOLD_RANDOM,
-    N_BASE,
     PARENT,
+    PROP_FEATURES,
     Pairs,
+    feature_columns,
 )
 
 STAGE_A_COLUMNS = list(BASE_FEATURES)
 STAGE_B_COLUMNS = [*BASE_FEATURES, PARENT]
 
 
-def stage_b_columns(use_dm: bool) -> list[str]:
-    return [*(FEATURES if use_dm else BASE_FEATURES), PARENT]
+def stage_b_columns(use_dm: bool, use_prop: bool = False) -> list[str]:
+    return [
+        *BASE_FEATURES,
+        *(DM_FEATURES if use_dm else ()),
+        *(PROP_FEATURES if use_prop else ()),
+        PARENT,
+    ]
 
 
 class MissingMlExtra(RuntimeError):
@@ -205,12 +212,14 @@ class FusionModel:
     selection: dict | None = None  # threshold and maximum tuned on gold-train (set by `tag fit`)
     use_dm: bool = False  # the decision model's signals are features (P1-07b)
     dm_calibrators: object | None = None  # decide.calibrate.DmCalibrators when use_dm
+    use_prop: bool = False  # the pass-2 signals prop_cite and prop_author are features (P1-08)
 
     def matrix(self, pairs: Pairs) -> np.ndarray:
-        """The feature matrix this model reads: base columns, or all with calibrated ``dm_*``."""
-        if not self.use_dm:
-            return pairs.X[:, :N_BASE]
-        return self.dm_calibrators.apply(pairs.X) if self.dm_calibrators else pairs.X
+        """The features this model reads: base columns, plus calibrated ``dm_*`` and ``prop_*``."""
+        X = pairs.X
+        if self.use_dm and self.dm_calibrators:
+            X = self.dm_calibrators.apply(X)
+        return X[:, feature_columns(self.use_dm, self.use_prop)]
 
     def predict(self, pairs: Pairs) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
         """``(p_stage_a, parent_p, calibrated)`` for every pair."""
@@ -262,6 +271,7 @@ def fit_two_stage(
     kind: str,
     *,
     use_dm: bool = False,
+    use_prop: bool = False,
 ) -> tuple[FusionModel, dict]:
     """Fit stages A and B and the calibrator on every labelled pair of ``pairs``.
 
@@ -271,15 +281,18 @@ def fit_two_stage(
     the random-sample pairs of the same labelled set.
     Returns the model and a small dictionary of diagnostics.
     """
-    check_trainable(pairs, corpus, guard, purpose=f"fit_two_stage({kind}, use_dm={use_dm})")
+    check_trainable(
+        pairs, corpus, guard, purpose=f"fit_two_stage({kind}, use_dm={use_dm}, use_prop={use_prop})"
+    )
     dm_cal = None
     if use_dm:
         from flatatlas.tagging.decide.calibrate import fit_dm_calibrators
 
         dm_cal = fit_dm_calibrators(pairs)
     shell = FusionModel(
-        kind, None, None, None, cfg.tagger_version, [], use_dm=use_dm, dm_calibrators=dm_cal
-    )
+        kind, None, None, None, cfg.tagger_version, [],
+        use_dm=use_dm, dm_calibrators=dm_cal, use_prop=use_prop,
+    )  # fmt: skip
     X0 = shell.matrix(pairs)
     labelled = np.flatnonzero(pairs.label >= 0)
     y = pairs.label.astype(np.float64)
@@ -307,8 +320,8 @@ def fit_two_stage(
         raise RuntimeError(f"too few random-sample pairs to calibrate ({len(cal_rows)})")
     calibrator = fit_isotonic(oof_b[cal_rows], y[cal_rows])
     model = FusionModel(
-        kind, stage_a, stage_b, calibrator, cfg.tagger_version, stage_b_columns(use_dm),
-        use_dm=use_dm, dm_calibrators=dm_cal,
+        kind, stage_a, stage_b, calibrator, cfg.tagger_version, stage_b_columns(use_dm, use_prop),
+        use_dm=use_dm, dm_calibrators=dm_cal, use_prop=use_prop,
     )  # fmt: skip
     info = {
         "n_pairs": int(len(labelled)),
@@ -320,6 +333,113 @@ def fit_two_stage(
         "oof_b": oof_b,
     }
     return model, info
+
+
+# -- bagging (P1-08) ------------------------------------------------------------------------------
+
+
+@dataclass
+class BaggedFusion:
+    """The average of several fusion models fitted under different seeds (D-100).
+
+    One model's primary tags move under another seed (the cross-validation folds that feed stage B
+    and the calibrator, and LightGBM's sampling, flip near-tied topics: 7.5 % of the primary tags on
+    the pilot). Averaging the calibrated probabilities of ``fusion.bag`` models removes most of that
+    variance. It has the interface of ``FusionModel`` where the tagger uses one.
+    """
+
+    members: list[FusionModel]
+    selection: dict | None = None
+
+    @property
+    def kind(self) -> str:
+        return self.members[0].kind
+
+    @property
+    def use_dm(self) -> bool:
+        return self.members[0].use_dm
+
+    @property
+    def use_prop(self) -> bool:
+        return self.members[0].use_prop
+
+    @property
+    def dm_calibrators(self):
+        return self.members[0].dm_calibrators
+
+    @property
+    def tagger_version(self) -> str:
+        return self.members[0].tagger_version
+
+    @property
+    def columns(self) -> list[str]:
+        return self.members[0].columns
+
+    @property
+    def stage_b(self):
+        return self.members[0].stage_b  # `tag --explain` shows the first member's contributions
+
+    def matrix(self, pairs: Pairs) -> np.ndarray:
+        return self.members[0].matrix(pairs)
+
+    def predict(self, pairs: Pairs) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+        outs = [m.predict(pairs) for m in self.members]
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", RuntimeWarning)  # a root has no parent: all NaN
+            parent = np.nanmean([o[1] for o in outs], axis=0)
+        return (
+            np.mean([o[0] for o in outs], axis=0),
+            parent.astype(np.float32),
+            np.mean([o[2] for o in outs], axis=0),
+        )
+
+    def save(self, path: Path) -> str:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        blob = pickle.dumps(self, protocol=pickle.HIGHEST_PROTOCOL)
+        tmp = path.with_suffix(".tmp")
+        tmp.write_bytes(blob)
+        tmp.replace(path)
+        return hashlib.sha256(blob).hexdigest()
+
+    @staticmethod
+    def load(path: Path) -> BaggedFusion:
+        return pickle.loads(path.read_bytes())  # noqa: S301 - a file this program wrote
+
+
+def fit_model(
+    pairs: Pairs,
+    corpus: Corpus,
+    guard: Guard,
+    cfg: TaggerConfig,
+    kind: str,
+    *,
+    use_dm: bool = False,
+    use_prop: bool = False,
+):
+    """``fit_two_stage``, bagged over ``fusion.bag`` seeds (one model when ``bag`` is 1).
+
+    Member ``k`` is fitted with seed ``cfg.seed + k * fusion.bag_seed_step``; member 0 is the
+    single model of earlier versions. ``info`` is member 0's, with ``oof_b`` averaged.
+    """
+    n = max(cfg.fusion.bag, 1)
+    members, infos = [], []
+    for k in range(n):
+        c = (
+            cfg
+            if k == 0
+            else cfg.model_copy(update={"seed": cfg.seed + k * cfg.fusion.bag_seed_step})
+        )
+        m, info = fit_two_stage(pairs, corpus, guard, c, kind, use_dm=use_dm, use_prop=use_prop)
+        members.append(m)
+        infos.append(info)
+    if n == 1:
+        return members[0], infos[0]
+    info = dict(infos[0])
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", RuntimeWarning)  # a pair that is out of fold nowhere
+        info["oof_b"] = np.nanmean([i["oof_b"] for i in infos], axis=0)
+    info["bag"] = n
+    return BaggedFusion(members), info
 
 
 # -- selection (PLAN §9.4) ----------------------------------------------------------------

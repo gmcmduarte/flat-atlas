@@ -27,6 +27,7 @@ from flatatlas.dblp_dump import (
 )
 from flatatlas.embed import stage as embed_stage
 from flatatlas.embed import store as embed_store
+from flatatlas.evaluate import commands as eval_commands
 from flatatlas.http import BudgetExhausted, SourceClient, SourceError
 from flatatlas.log import setup_logging
 from flatatlas.resolve import report as resolve_report
@@ -104,6 +105,9 @@ groups["tag"].command("decide")(tag_commands.decide)
 groups["tag"].command("artefacts")(tag_commands.artefacts)
 groups["tag"].command("experiment")(tag_commands.experiment)
 groups["tag"].command("anchors")(tag_commands.anchors)
+groups["evaluate"].command("freeze")(eval_commands.freeze_cmd)
+groups["evaluate"].command("check")(eval_commands.check_cmd)
+groups["evaluate"].command("report")(eval_commands.report_cmd)
 groups["gold"].command("sample")(gold_commands.sample)
 groups["gold"].command("sheet")(gold_commands.sheet)
 groups["gold"].command("finalise")(gold_commands.finalise)
@@ -988,10 +992,23 @@ def evaluate_run(
         bool,
         typer.Option("--data", help="Run the data-quality checks on the core tables."),
     ] = False,
+    heldout: Annotated[
+        bool,
+        typer.Option(
+            "--heldout",
+            help="Open the held-out labelled set once for every tagging method (PLAN §9.6).",
+        ),
+    ] = False,
+    again: Annotated[
+        bool, typer.Option("--again", help="With --heldout: open again; numbers are optimistic.")
+    ] = False,
     profile: ProfileOption = None,
 ) -> None:
     """Run the automatic quality checks (exit code 1 if one fails)."""
     if ctx.invoked_subcommand is not None:
+        return
+    if heldout:
+        eval_commands.heldout_cmd(again=again, profile=profile)
         return
     if not data:
         typer.echo(ctx.get_help())

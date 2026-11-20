@@ -399,7 +399,7 @@ Redesigned on 2026-11-16 (D-61 to D-66, approved; D-67 drafted and inactive; rea
 |---|---|---|---|---|
 | 1 | Signals and shortlist (§9.3) | all works | €0 | laptop, minutes |
 | 2 | Learned fusion and calibration (§9.4) | all works | €0 | laptop, seconds |
-| 3 | Local decision model (§9.5) | unsure works only (50 % of the pilot at the chosen band, measured in P1-07b) | €0 (open weights, local) | laptop, background job, 5.8 h for the pilot (§9.8) |
+| 3 | Local decision model (§9.5) | unsure works only (50 % of the pilot at the chosen band, measured in P1-07b); **dropped for the pilot in P1-08 (D-100): no shown gain on the held-out set** | €0 (open weights, local) | laptop, background job, 5.8 h for the pilot (§9.8) |
 | 4 | Distilled classifier (§9.7) | new works after the full run | €0 | seconds per week |
 
 **Cost rule for this section.** Every step runs on local models, the laptop (Apple M1, 16 GB) or the university server, and free API tiers. Nothing here may cost money per paper, per page view or per user. A paid decision-model API is **not part of this plan**; it exists only as the proposed, inactive exception D-67 and needs Guilherme's separate approval before any code calls it.
@@ -489,7 +489,9 @@ Three fusion methods exist so that the choice is made by numbers (§9.6), not by
 
 **Hierarchy is soft, never hard routing.** Topics are scored level by level from the top; a child's features include its parents' probabilities (the maximum over its parents; several parents allowed). In P1-07 this is a two-stage model: stage A scores each pair from its own features, stage B adds the best parent's stage-A probability (D-95). A wrong level-0 guess lowers the scores below it but blocks nothing, which avoids the error cascade of top-down classifiers.
 
-**Two passes.** Pass 1 without propagation → pass 2 adds `prop_*` using pass-1 tags → stop (no iteration to convergence; it keeps runs deterministic and incremental, D-25).
+**Two passes.** Pass 1 without propagation → pass 2 adds `prop_*` using pass-1 tags → stop (no iteration to convergence; it keeps runs deterministic and incremental, D-25). Built in P1-08 (`tagging/propagate.py`, D-101). **Measured on the pilot: no gain** (paired Δ mean F1 +0.014, interval -0.002 to +0.031 for fusion; the in-corpus citation graph has only 2,211 edges for 2,333 works and no influential flags), so `propagation.enabled` is `false` (D-100).
+
+**Bagging.** The shipped fusion model is the average of `fusion.bag` = 5 models fitted under different seeds (D-101): one model changed 7.5 % of the primary tags under another seed (stability 0.925 against the 0.95 threshold), five change 4 % (0.960).
 
 **Selection.** Assign the most specific topics. If only a parent is supported, tag the parent. Keep topics with confidence ≥ 0.35, at most 6 non-derived topics per work; mark the top one `is_primary`. Both numbers are starting values, re-tuned on gold-train (never on the held-out third). Ancestors are added as `derived: true` rows with the max child confidence. Works with no topic above the threshold are tagged to their best level-0 topic with a low-confidence flag, or left `untagged` (reported).
 
@@ -510,7 +512,7 @@ A decision model does not generate text: it is asked a question with a fixed set
 - **Reproducibility:** the model file name and its SHA-256, the quantisation, the runtime version and the prompt version are stored in provenance; no `latest` aliases.
 - **Speed (measured in P1-07b, M1 16 GB, Qwen3-8B Q4_K_M, llama.cpp with Metal; the full run over 1,173 unsure works, the first 50-work test gave 22.6 s per work because of start-up):** prompt processing runs at about 80 tokens/s, so cost follows the number of tokens that are *not* served from the key-value cache. The choice question evaluates about 220 of its 1,240 prompt tokens (the option list is cached per order, because the run goes order by order over all works): 2.7 to 3.1 s per order. The yes/no questions share the paper text: up to 8 of them (7.98 on average) evaluate about 680 of 2,650 tokens: 9.1 s per work. **17.7 s per work with 3 orders, about 11.8 s with 1**; peak memory 5.7 GB. Prompts put the shared part first so that it is cached; the yes/no layout with the topic first would evaluate the whole paper again for every question (about 5 times the tokens; computed, not run). Details: `docs/notes/tagger-experiments.md`.
 - **Long job:** resumable, cached per (work, question, model hash, prompt version), launched by Guilherme (rule 7).
-- **Kept only if it earns its place:** the decision model stays in the tagger only if step 3 improves the held-out numbers over step 2 alone (§9.6). Otherwise `tagger.decision_model.enabled` is set to `false` and the cascade stops at step 2.
+- **Kept only if it earns its place:** the decision model stays in the tagger only if step 3 improves the held-out numbers over step 2 alone (§9.6). Otherwise `tagger.decision_model.enabled` is set to `false` and the cascade stops at step 2. **Result (P1-08, D-100): the held-out gain was +0.014 mean F1 with a 90 % interval of -0.002 to +0.032, which includes zero, so `decision_model.enabled` is `false` and the pilot cascade stops at step 2.** The code, the cache and the model stay for a later try (a smaller model, one order, tie-breaker use, or only for works with no abstract or no references).
 
 > **Paid API variant: not active.** A hosted decision model (for example Microsoft-Decision-1 on Azure, ⚠ price and terms unverified) could play the same role. Hard rule 3 forbids it today. It may only be tried under the conditions of the proposed decision D-67, after Guilherme approves that decision. No session may add an API client for it before then.
 

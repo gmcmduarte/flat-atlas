@@ -221,3 +221,53 @@ def test_learned_fusion_is_calibrated_deterministic_and_uses_the_hierarchy(kind)
     # the signals carry the label, so the model must beat chance
     y = pairs.label == 1
     assert cal1[y].mean() > cal1[~y].mean() + 0.2
+
+
+# -- bagging over seeds (P1-08, D-100) ----------------------------------------------------------
+
+
+def test_one_member_is_the_single_model_and_a_bag_averages_its_members():
+    pytest.importorskip("sklearn")
+    from flatatlas.tagging.fusion import BaggedFusion, fit_model
+
+    corpus, pairs, guard = synthetic()
+    c1 = cfg().model_copy(deep=True)
+    c1.fusion.bag = 1
+    single, _ = fit_model(pairs, corpus, guard, c1, "logistic")
+    plain, _ = fit_two_stage(pairs, corpus, guard, c1, "logistic")
+    assert not isinstance(single, BaggedFusion)
+    assert single.predict(pairs)[2] == pytest.approx(plain.predict(pairs)[2])
+
+    c3 = c1.model_copy(deep=True)
+    c3.fusion.bag = 3
+    bag, info = fit_model(pairs, corpus, guard, c3, "logistic")
+    assert isinstance(bag, BaggedFusion) and len(bag.members) == 3 and info["bag"] == 3
+    members = [m.predict(pairs)[2] for m in bag.members]
+    assert bag.predict(pairs)[2] == pytest.approx(np.mean(members, axis=0))
+    # member 0 is the single model of earlier versions
+    assert members[0] == pytest.approx(plain.predict(pairs)[2])
+    assert (bag.kind, bag.use_dm, bag.use_prop) == ("logistic", False, False)
+
+
+def test_a_bag_refuses_a_held_out_work_like_a_single_model():
+    pytest.importorskip("sklearn")
+    from flatatlas.tagging.fusion import fit_model
+
+    corpus, pairs, guard = synthetic(heldout=("W0000000003",))
+    c = cfg().model_copy(deep=True)
+    c.fusion.bag = 2
+    with pytest.raises(HeldOutLeak):
+        fit_model(pairs, corpus, guard, c, "logistic")
+
+
+def test_a_saved_bag_loads_back(tmp_path):
+    pytest.importorskip("sklearn")
+    from flatatlas.tagging.fusion import BaggedFusion, fit_model
+
+    corpus, pairs, guard = synthetic()
+    c = cfg().model_copy(deep=True)
+    c.fusion.bag = 2
+    bag, _ = fit_model(pairs, corpus, guard, c, "logistic")
+    sha = bag.save(tmp_path / "m.pkl")
+    again = BaggedFusion.load(tmp_path / "m.pkl")
+    assert len(sha) == 64 and again.predict(pairs)[2] == pytest.approx(bag.predict(pairs)[2])

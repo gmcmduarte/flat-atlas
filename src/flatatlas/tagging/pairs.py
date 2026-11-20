@@ -36,9 +36,24 @@ HIERARCHY_FEATURES = ("child_lex", "child_emb")
 # before them) is the same model as before they existed. Raw probabilities: ``decide.calibrate``
 # maps them, inside the fusion model, so a calibrator is never fitted on the works it scores.
 DM_FEATURES = ("dm_l0", "dm_child")
+# The two propagation signals of pass 2 (PLAN §9.3, P1-08) come after the decision model's, so every
+# model fitted before they existed reads the same columns as before.
+PROP_FEATURES = ("prop_cite", "prop_author")
 BASE_FEATURES = (*SIGNALS, *WORK_FEATURES, *TOPIC_FEATURES, *HIERARCHY_FEATURES)
-FEATURES = (*BASE_FEATURES, *DM_FEATURES)
+FEATURES = (*BASE_FEATURES, *DM_FEATURES, *PROP_FEATURES)
 N_BASE = len(BASE_FEATURES)
+
+
+def feature_columns(use_dm: bool = False, use_prop: bool = False) -> list[int]:
+    """Indexes into ``FEATURES`` of the columns a model reads."""
+    cols = list(range(N_BASE))
+    if use_dm:
+        cols += [FEATURES.index(n) for n in DM_FEATURES]
+    if use_prop:
+        cols += [FEATURES.index(n) for n in PROP_FEATURES]
+    return cols
+
+
 PARENT = "parent_p"
 SILVER_DEFINING = ("lex_title", "src_openalex")  # the leak rule hides these in silver pairs
 
@@ -116,7 +131,8 @@ def build_pairs(
         columns.append(art.topic_features[name][topics])
     columns.append(child_lex[rows, topics])
     columns.append(child_emb[rows, topics])
-    columns.extend(np.full(len(rows), np.nan) for _ in DM_FEATURES)  # filled by decide.features
+    columns.extend(np.full(len(rows), np.nan) for _ in (*DM_FEATURES, *PROP_FEATURES))
+    # the dm_* columns are filled by decide.features, the prop_* ones by tagging.propagate
     X = np.column_stack(columns).astype(np.float32)
 
     index = {(int(r), int(t)): i for i, (r, t) in enumerate(zip(rows, topics, strict=True))}

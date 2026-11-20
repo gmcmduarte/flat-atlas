@@ -279,3 +279,226 @@ Held-out numbers (P1-08) decide whether step 3 stays; on this evidence it would 
 (and at field scale 740 h), unless a smaller model, a better prompt or a different use of the
 answer (for example only as a tie-breaker) is tried. Side effect to know: with the decision model
 the retuned selection leaves 73 works untagged (54 without) and 117 low-confidence (144 without).
+
+# P1-08: settings frozen before the held-out set was opened
+
+Written **before** `flatatlas evaluate --heldout` was run; nothing below uses a held-out label.
+Run `p1-08-tagger-3-084b04920e` (`flatatlas evaluate freeze`, `data/reports/frozen-<run>.json`,
+which also holds the model and probability-file hashes and the work lists every fit used).
+`tagger_version` is `tagger-3` (see "What changed" below). Numbers are cross-validated on
+random-sample gold-train (341 works) or label-free checks on all 2,333 works. Scores are agreement
+with the labelled set (Claude's reading, D-91, D-93).
+
+## Method of the comparison
+
+Eight variants: (a) noisy-or, (b) top-down, (c) learned fusion, (c) with the decision model, each
+without and with propagation (pass 2). Every variant is fitted on gold-train (plus silver for the
+fusion models) through `Guard`; the held-out works are scored as unlabelled works. The held-out
+numbers come from probability files that were written here and hashed, so `--heldout` cannot
+refit or retune anything: it refuses if `config/tagger.yaml` (apart from three adoption switches),
+`gold.yaml`, `topics.yaml` or a probability file changed, or if a held-out work is in any recorded
+training, calibration, seed or top-down set. It writes a lock file; a second opening needs
+`--again` and its numbers are labelled optimistic.
+
+**The adoption rule, as I read it before opening (PLAN §9.6).** The ladder is (a) → (c) → (c) with
+the decision model; propagation is compared with the same method without it; (b) is a baseline
+compared with (a) and (c). A more complex option is adopted only if the 90 % bootstrap interval
+(2,000 resamples of the held-out works, the same resamples for every method) of the paired
+difference in *mean of the level 0 and level 1 micro F1* excludes zero **and is positive**, and no
+hard check gets worse. **"Gets worse" means: the simpler method meets the hard threshold and the
+more complex one does not.** The reason for this reading: noisy-or is deterministic, so its
+stability is exactly 1.000; if any fall counted as worse, no learned model could ever be adopted
+over it, which cannot be what the rule is for. Drops that stay above their threshold are shown in
+the report beside the verdict (for example anchors 0.946 for fusion against 0.986 for noisy-or).
+
+## Frozen settings and the label-free checks
+
+| Variant | Selection (threshold, max topics) | CV level 0 F1 | CV level 1 F1 | Anchors | Coverage | Stability | Venue sanity | Citation consistency |
+|---|---|---|---|---|---|---|---|---|
+| (c) fusion | 0.45, 3 | 0.794 | 0.742 | 139/147 = 0.946 | 0.911 | 0.960 | 10/10 | 0.853 |
+| (c) + decision model | 0.4, 3 | 0.792 | 0.743 | 135/147 = 0.918 | 0.926 | 0.962 | 10/10 | 0.859 |
+| (c) + decision model + propagation | 0.5, 3 | 0.807 | 0.753 | 137/147 = 0.932 | 0.916 | 0.964 | 10/10 | 0.882 |
+| (c) + propagation | 0.5, 3 | 0.806 | 0.746 | 134/147 = 0.912 | 0.908 | 0.969 | 10/10 | 0.896 |
+| (a) noisy-or | 0.55, 3 | 0.706 | 0.659 | 145/147 = 0.986 | 0.945 | 1.000 | 10/10 | 0.887 |
+| (a) + propagation | 0.55, 3 | 0.717 | 0.671 | 144/147 = 0.980 | 0.955 | 1.000 | 10/10 | 0.930 |
+| (b) top-down | 0.2, 3 | 0.613 | 0.420 | 65/147 = 0.442 | 0.954 | 1.000 | 9/10 | 0.809 |
+| (b) + propagation | 0.2, 4 | 0.647 | 0.444 | 64/147 = 0.435 | 0.950 | 0.952 | 9/10 | 0.877 |
+
+Hard thresholds: anchors ≥ 0.90, coverage ≥ 0.85 (works with at least one non-derived tag above the
+threshold; the low-confidence fallback tag is not counted), stability ≥ 0.95, all venue
+expectations. **Every fusion variant passes all four; (b) fails anchors and venue sanity** (it
+scores levels 0 and 1 only, and its level-1 F1 is 0.42), so it cannot be adopted. The selection of
+each variant is tuned on out-of-fold probabilities of random-sample gold-train works only.
+
+**Propagation.** The in-corpus citation graph is thin: 2,211 edges for 2,333 works, and
+`is_influential` is null on every edge, so the influential boost has no effect here. `prop_cite`
+(references weight 1, citers 0.25) and `prop_author` (±5 years) were tuned on gold-train
+cross-validation only: citer weight 0.25 against 0.5 (fusion mean F1 0.7705 against 0.7679, flat);
+noisy-or weights over `prop_cite` {0.2 to 1.0} and `prop_author` {0 to 0.3}: 0.6 and 0.1 (mean
+F1 0.683 to 0.694). Pass-1 vectors come from the variant's own method (from the base fusion for
+both fusion variants), out of fold for gold-train works. Cross-validated, propagation adds about
+0.01 to the noisy-or F1 and 0.01 at level 0 to the fusion; the held-out set decides.
+
+**Decision-model coverage.** All 1,173 unsure works have answers. Under pass 2 the unsure set is
+the one chosen from pass-1 probabilities (the band is not moved), so no new works become unsure.
+
+**Method agreement** (label-free, level 0, top-1): lexical against embedding 0.512 (2,002 works),
+lexical against source 0.548 (292), embedding against source 0.649 (251). Twelve level-0 topics
+have a mean per-topic Jaccard under 0.2 (list in the report).
+
+**Hold-out leak test** (200 unlabelled works whose `lex_title` is set to 0, shortlist and features
+rebuilt): the fusion keeps 57 % of the tags and 54 % of the primary tags, noisy-or 68 % and 64 %.
+The learned model leans on the title match more than noisy-or does. (A first version of this test
+set the title signal to NaN and got 21 %: in training, NaN `lex_title` marks silver pairs, 98 %
+negative, so the model read "missing" as "negative". Real works never have NaN there, so the test
+now uses 0.)
+
+## What changed on the way (all before the opening, none uses a held-out label)
+
+1. **Stability of the learned fusion.** With one model, 7.5 % of the primary tags changed under
+   another seed (stability 0.925, below the 0.95 threshold; noisy-or 1.000). Variance experiments
+   (artefacts fixed, final fits only): without row and column subsampling 0.939; with the fold
+   assignment fixed as well 1.000, so the variance comes from the folds that feed stage B and the
+   calibrator and from LightGBM's sampling, which flip near-tied topics. Averaging the calibrated
+   probabilities of several models fitted under different seeds: 3 models 0.937, **5 models 0.960**,
+   9 models 0.974. Guilherme chose to bag the fusion model (asked in this session): `fusion.bag: 5`,
+   member *k* fitted with seed + 101 *k*, member 0 is the single model of `tagger-2`.
+   Cross-validated F1 of the bagged fusion is within noise of the single model (level 0 0.794 against
+   0.800, level 1 0.742 against 0.740). `tagger_version` is now `tagger-3`.
+2. The top-down baseline's logistic regression uses C = 0.1 (best of 0.001 to 10 by cross-validated
+   mean F1: 0.358, 0.511, 0.516, 0.511, 0.509); the selection threshold grid was checked down to
+   0.05 and its optimum (0.2) is not at the edge.
+
+
+# P1-08: the held-out comparison (opened once)
+
+**This is the only opening of the held-out set** (`flatatlas evaluate --heldout`, run
+`p1-08-tagger-3-084b04920e`, `data/reports/heldout-<run>.json`, lock file
+`data/reports/heldout-opened.json`). The settings are those frozen in the section above; nothing was
+changed after seeing these numbers except the three adoption switches the rule decides
+(`method`, `decision_model.enabled`, `propagation.enabled`). **159 held-out works, 242
+gold labels at level 0 and 241 at level 1.** Scores are **agreement with the labelled set**, which is
+Claude's reading of the papers (500 random works approved by Guilherme without changes, 182
+top-up works reviewed by Claude); they are not agreement with the truth. Intervals are 90 %
+bootstrap intervals over the held-out works (2,000 resamples, the same for every method, so the
+paired differences are paired).
+
+## The comparison table
+
+| Method | Level 0 P | R | F1 | Level 1 P | R | F1 | Macro F1 L0 | Macro F1 L1 | Mean of the F1s | Paired Δ mean F1 against the simpler neighbour (90 %) | Hard checks that fail |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| (a) noisy-or | 0.627 (0.584–0.671) | 0.818 (0.779–0.858) | 0.710 (0.674–0.746) | 0.546 (0.505–0.590) | 0.710 (0.663–0.755) | 0.617 (0.578–0.656) | 0.697 (0.636–0.732) | 0.696 (0.595–0.755) | 0.664 (0.631–0.695) | – | none |
+| (a) + propagation | 0.624 (0.583–0.666) | 0.843 (0.808–0.879) | 0.717 (0.684–0.750) | 0.523 (0.486–0.563) | 0.714 (0.667–0.760) | 0.604 (0.567–0.640) | 0.699 (0.640–0.732) | 0.671 (0.578–0.726) | 0.660 (0.633–0.689) | -0.003 (-0.017 to +0.011) | none |
+| (b) top-down | 0.550 (0.510–0.590) | 0.632 (0.579–0.685) | 0.588 (0.548–0.628) | 0.662 (0.597–0.729) | 0.390 (0.336–0.444) | 0.491 (0.435–0.544) | 0.557 (0.495–0.592) | 0.551 (0.432–0.619) | 0.540 (0.497–0.580) | – | anchors, venue_sanity |
+| (b) + propagation | 0.586 (0.547–0.626) | 0.645 (0.590–0.699) | 0.614 (0.572–0.653) | 0.658 (0.594–0.724) | 0.398 (0.346–0.452) | 0.496 (0.444–0.550) | 0.580 (0.515–0.618) | 0.551 (0.443–0.612) | 0.555 (0.516–0.594) | +0.015 (-0.006 to +0.038) | anchors, venue_sanity |
+| (c) fusion (bagged) | 0.739 (0.692–0.785) | 0.785 (0.740–0.828) | 0.762 (0.724–0.798) | 0.805 (0.757–0.852) | 0.618 (0.568–0.668) | 0.700 (0.657–0.739) | 0.755 (0.698–0.789) | 0.696 (0.601–0.745) | 0.731 (0.696–0.762) | +0.067 (+0.038 to +0.096) **adopt** | none |
+| (c) fusion + propagation | 0.776 (0.730–0.823) | 0.785 (0.744–0.826) | 0.780 (0.746–0.813) | 0.816 (0.768–0.861) | 0.627 (0.576–0.678) | 0.709 (0.667–0.748) | 0.765 (0.708–0.797) | 0.707 (0.605–0.761) | 0.745 (0.713–0.774) | +0.014 (-0.002 to +0.031) | none |
+| (c) fusion + decision model | 0.756 (0.716–0.800) | 0.793 (0.751–0.838) | 0.774 (0.739–0.811) | 0.800 (0.754–0.845) | 0.647 (0.598–0.696) | 0.716 (0.676–0.753) | 0.768 (0.709–0.803) | 0.700 (0.609–0.750) | 0.745 (0.713–0.777) | +0.014 (-0.002 to +0.032) | none |
+| (c) fusion + decision model + propagation | 0.769 (0.730–0.812) | 0.785 (0.742–0.828) | 0.777 (0.744–0.810) | 0.812 (0.770–0.856) | 0.643 (0.593–0.691) | 0.718 (0.678–0.756) | 0.759 (0.698–0.794) | 0.717 (0.622–0.772) | 0.747 (0.716–0.777) | +0.002 (-0.011 to +0.015) | none |
+
+Reading, by the rule of PLAN §9.6 (interval of the paired difference in mean F1 excludes zero, is
+positive, and no hard check fails that the simpler method passes):
+
+- **(c) fusion over (a) noisy-or: adopted.** Mean F1 +0.067, interval
+  +0.038 to +0.096; level 0 +0.052, level 1 +0.082. All hard
+  checks pass for both. Fusion gives up some of what noisy-or has on the label-free checks (anchors
+  0.946 against 0.986, coverage 0.911 against 0.945, stability 0.960 against 1.000), all above the
+  thresholds.
+- **The decision model (step 3) does not earn its place: not adopted.** Mean F1 +0.014,
+  interval -0.002 to +0.032, which includes zero (level 0 +0.013, level 1
+  +0.016); it also costs four anchors (0.946 to 0.918). **`decision_model.enabled` is now `false`.** The
+  point estimate is positive and the interval only just reaches zero, so this is "not shown", not
+  "shown not to help". Where it helps most is the thinnest text: works with no abstract (34 works)
+  0.711 to 0.768, with no references (26 works) 0.663 to 0.723, but these groups are too small to
+  say anything (see "by paper type").
+- **Propagation does not earn its place: not adopted, for any method.** Noisy-or -0.003
+  (-0.017 to +0.011), fusion +0.014 (-0.002 to +0.031),
+  fusion with the decision model +0.002 (-0.011 to +0.015).
+  The citation graph has 2,211 edges for 2,333 works and no influential flag, so there is little to
+  propagate. `propagation.enabled` stays `false`.
+- **(b) top-down is far behind** and is a baseline only: against (c) fusion -0.191 (-0.234 to -0.149),
+  against (a) -0.124 (-0.170 to -0.078). It also fails anchors (0.442) and venue sanity (9 of 10),
+  because it scores levels 0 and 1 only.
+
+**Shipped method (D-100): (c) learned fusion, bagged over 5 seeds, without the decision model and
+without propagation** (`method: fusion`, `decision_model.enabled: false`, `propagation.enabled:
+false`, `tagger_version: tagger-3`). Its held-out numbers are the pilot's precision and recall:
+
+| Level | Precision | Recall | F1 |
+|---|---|---|---|
+| 0 | 0.739 (0.692–0.785) | 0.785 (0.740–0.828) | 0.762 (0.724–0.798) |
+| 1 | 0.805 (0.757–0.852) | 0.618 (0.568–0.668) | 0.700 (0.657–0.739) |
+
+**Proposed floor for gate G1** (the lower end of the 90 % interval, rounded down to the
+nearest 0.05): level 0 F1 ≥ 0.70, level 1 F1 ≥ 0.65; precision ≥ 0.65 at level 0 and ≥ 0.75 at
+level 1; recall ≥ 0.70 at level 0 and ≥ 0.55 at level 1. Level 1 recall is the weak number (0.618):
+the shortlist's recall bound at level 1 is 89.7 % (P1-07), and the model keeps at most 3 topics.
+
+## Hard checks (label-free; the table of the frozen section, with the variants side by side)
+
+| Method | Anchors | Coverage | Stability | Venue sanity |
+|---|---|---|---|---|
+| (a) noisy-or | 0.986 | 0.945 | 1.000 | 10/10 |
+| (a) + propagation | 0.980 | 0.955 | 1.000 | 10/10 |
+| (b) top-down | 0.442 | 0.954 | 1.000 | 9/10 |
+| (b) + propagation | 0.435 | 0.950 | 0.952 | 9/10 |
+| (c) fusion (bagged) | 0.946 | 0.911 | 0.960 | 10/10 |
+| (c) fusion + propagation | 0.912 | 0.908 | 0.969 | 10/10 |
+| (c) fusion + decision model | 0.918 | 0.926 | 0.962 | 10/10 |
+| (c) fusion + decision model + propagation | 0.932 | 0.916 | 0.964 | 10/10 |
+
+## Calibration (held-out, levels 0 and 1)
+
+Fusion is close to calibrated: stated confidence against observed precision in bins of 0.1: 0.03 to
+0.04, 0.15 to 0.19, 0.25 to 0.26, 0.34 to 0.37, 0.45 to 0.62, 0.55 to 0.58, 0.65 to 0.68, 0.75 to
+0.80, **0.87 to 0.67** (48 pairs), 0.95 to 0.95. Noisy-or is not calibrated (stated 0.55 observed
+0.14; 0.75 observed 0.48), which is expected for an uncalibrated score. The full curves are in the
+report.
+
+## By paper type (mean of level 0 and level 1 F1, held-out)
+
+| Abstract | Works | (a) noisy-or | (c) fusion | (c) + decision model |
+|---|---|---|---|---|
+| abstract | 125 | 0.680 | 0.736 | 0.741 |
+| no abstract | 34 | 0.604 | 0.711 | 0.768 |
+
+| References | Works | (a) noisy-or | (c) fusion | (c) + decision model |
+|---|---|---|---|---|
+| 0 references | 26 | 0.639 | 0.663 | 0.723 |
+| 1-9 references | 28 | 0.655 | 0.784 | 0.785 |
+| 10+ references | 105 | 0.672 | 0.732 | 0.740 |
+
+| Decade | Works | (a) noisy-or | (c) fusion | (c) + decision model |
+|---|---|---|---|---|
+| 1990s | 20 | 0.627 | 0.619 | 0.625 |
+| 2000s | 64 | 0.697 | 0.746 | 0.767 |
+| 2010s | 46 | 0.647 | 0.701 | 0.718 |
+| 2020s | 29 | 0.642 | 0.816 | 0.816 |
+
+Fusion is better than noisy-or in every group but the 1990s (20 works, 0.619 against 0.627). The
+weakest groups for fusion are works with no references (0.663), the 1990s (0.619) and works without
+an abstract (0.711): where the text is thinnest.
+
+## Settings changed after seeing held-out numbers
+
+None. The only edits after the opening are the adoption switches the rule decides:
+`decision_model.enabled: true` to `false`; `method` and `propagation.enabled` were already `fusion`
+and `false`. `tag fit` and `tag` were re-run with those switches and the shipped model reproduces the
+frozen `fusion` variant's probabilities (largest difference 3e-8 over 33,005 pairs; the same model
+and selection, 0.45 and 3 topics).
+
+
+## Propagation: before and after (held-out F1, anchors, coverage)
+
+| Method | Mean F1 before | after | Paired Δ (90 %) | Anchors before | after | Coverage before | after |
+|---|---|---|---|---|---|---|---|
+| (a) noisy-or | 0.664 | 0.660 | -0.003 (-0.017 to +0.011) | 145/147 | 144/147 | 0.945 | 0.955 |
+| (c) fusion | 0.731 | 0.745 | +0.014 (-0.002 to +0.031) | 139/147 | 134/147 | 0.911 | 0.908 |
+| (c) fusion + decision model | 0.745 | 0.747 | +0.002 (-0.011 to +0.015) | 135/147 | 137/147 | 0.926 | 0.916 |
+| (b) top-down | 0.540 | 0.555 | +0.015 (-0.006 to +0.038) | 65/147 | 64/147 | 0.954 | 0.950 |
+
+Propagation keeps the held-out F1 (the intervals all include zero) and coverage, but **the fusion
+loses five anchors (139 to 134 of 147)** and the fusion with the decision model gains two; for
+noisy-or one anchor is lost. The citation graph is thin (2,211 edges, no influential flags), so
+there is little for the second pass to add; the "improves or keeps anchor accuracy" line of the
+session's done-when list is therefore **not met for the fusion** (see PROGRESS).

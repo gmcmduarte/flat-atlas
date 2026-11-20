@@ -18,7 +18,7 @@ import numpy as np
 
 from flatatlas.tagging.config import TaggerConfig
 from flatatlas.tagging.fusion import (
-    fit_two_stage,
+    fit_model,
     fold_of,
     select_tags,
 )
@@ -185,6 +185,7 @@ def cross_validate(
     *,
     eval_works: list[str],
     use_dm: bool = False,
+    use_prop: bool = False,
 ) -> dict[int, dict[int, float]]:
     """Out-of-fold calibrated probabilities for the pairs of ``eval_works`` (gold-train only).
 
@@ -204,7 +205,9 @@ def cross_validate(
         label = pairs.label.copy()
         label[held & gold_kinds] = -1
         train_pairs = replace(pairs, label=label)
-        model, _info = fit_two_stage(train_pairs, corpus, guard, cfg, kind, use_dm=use_dm)
+        model, _info = fit_model(
+            train_pairs, corpus, guard, cfg, kind, use_dm=use_dm, use_prop=use_prop
+        )
         _pa, _parent, cal = model.predict(pairs)
         sub = np.flatnonzero(held)
         for i in sub:
