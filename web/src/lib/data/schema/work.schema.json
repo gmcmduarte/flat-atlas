@@ -1,0 +1,281 @@
+{
+  "$defs": {
+    "Provenance": {
+      "additionalProperties": false,
+      "properties": {
+        "flags": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Flags",
+          "type": "array"
+        },
+        "method": {
+          "title": "Method",
+          "type": "string"
+        },
+        "signals": {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "description": "Signal name to score, for the tooltip.",
+          "title": "Signals",
+          "type": "object"
+        },
+        "tagger_version": {
+          "title": "Tagger Version",
+          "type": "string"
+        },
+        "taxonomy_version": {
+          "title": "Taxonomy Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "method",
+        "signals",
+        "tagger_version",
+        "taxonomy_version",
+        "flags"
+      ],
+      "title": "Provenance",
+      "type": "object"
+    },
+    "Tag": {
+      "additionalProperties": false,
+      "description": "A work-topic tag: never shown without its confidence and provenance.",
+      "properties": {
+        "confidence": {
+          "title": "Confidence",
+          "type": "number"
+        },
+        "derived": {
+          "description": "True for ancestor rows added by closure.",
+          "title": "Derived",
+          "type": "boolean"
+        },
+        "is_primary": {
+          "title": "Is Primary",
+          "type": "boolean"
+        },
+        "provenance": {
+          "$ref": "#/$defs/Provenance"
+        },
+        "rank": {
+          "title": "Rank",
+          "type": "integer"
+        },
+        "topic_id": {
+          "title": "Topic Id",
+          "type": "string"
+        },
+        "topic_name": {
+          "title": "Topic Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "topic_id",
+        "topic_name",
+        "confidence",
+        "rank",
+        "is_primary",
+        "derived",
+        "provenance"
+      ],
+      "title": "Tag",
+      "type": "object"
+    },
+    "WorkAuthor": {
+      "additionalProperties": false,
+      "properties": {
+        "author_id": {
+          "title": "Author Id",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "position": {
+          "title": "Position",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "author_id",
+        "name",
+        "position"
+      ],
+      "title": "WorkAuthor",
+      "type": "object"
+    },
+    "WorkLinks": {
+      "additionalProperties": false,
+      "properties": {
+        "dblp": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Dblp"
+        },
+        "doi": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Doi"
+        },
+        "open_access": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Open Access"
+        },
+        "openalex": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Openalex"
+        }
+      },
+      "required": [
+        "dblp",
+        "openalex",
+        "doi",
+        "open_access"
+      ],
+      "title": "WorkLinks",
+      "type": "object"
+    },
+    "WorkVenue": {
+      "additionalProperties": false,
+      "properties": {
+        "acronym": {
+          "title": "Acronym",
+          "type": "string"
+        },
+        "venue_id": {
+          "title": "Venue Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "venue_id",
+        "acronym"
+      ],
+      "title": "WorkVenue",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "One entry of a ``works/<shard>.json`` file.",
+  "properties": {
+    "authors": {
+      "items": {
+        "$ref": "#/$defs/WorkAuthor"
+      },
+      "title": "Authors",
+      "type": "array"
+    },
+    "cited_by_count": {
+      "title": "Cited By Count",
+      "type": "integer"
+    },
+    "doi": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Doi"
+    },
+    "fixture": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Fixture"
+    },
+    "links": {
+      "$ref": "#/$defs/WorkLinks"
+    },
+    "tag_status": {
+      "enum": [
+        "tagged",
+        "low_confidence",
+        "untagged"
+      ],
+      "title": "Tag Status",
+      "type": "string"
+    },
+    "tags": {
+      "items": {
+        "$ref": "#/$defs/Tag"
+      },
+      "title": "Tags",
+      "type": "array"
+    },
+    "title": {
+      "title": "Title",
+      "type": "string"
+    },
+    "venue": {
+      "$ref": "#/$defs/WorkVenue"
+    },
+    "work_id": {
+      "title": "Work Id",
+      "type": "string"
+    },
+    "work_type": {
+      "title": "Work Type",
+      "type": "string"
+    },
+    "year": {
+      "title": "Year",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "work_id",
+    "title",
+    "year",
+    "work_type",
+    "venue",
+    "authors",
+    "doi",
+    "links",
+    "cited_by_count",
+    "tag_status",
+    "tags"
+  ],
+  "title": "Work",
+  "type": "object"
+}

@@ -1,0 +1,74 @@
+{
+  "$defs": {
+    "MapNode": {
+      "additionalProperties": false,
+      "properties": {
+        "ghost_parents": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Ghost Parents",
+          "type": "array"
+        },
+        "level": {
+          "title": "Level",
+          "type": "integer"
+        },
+        "parent_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Parent Id"
+        },
+        "r": {
+          "title": "R",
+          "type": "number"
+        },
+        "topic_id": {
+          "title": "Topic Id",
+          "type": "string"
+        },
+        "x": {
+          "title": "X",
+          "type": "number"
+        },
+        "y": {
+          "title": "Y",
+          "type": "number"
+        }
+      },
+      "required": [
+        "topic_id",
+        "parent_id",
+        "level",
+        "x",
+        "y",
+        "r",
+        "ghost_parents"
+      ],
+      "title": "MapNode",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "``map.json``: precomputed layout, one node per topic.",
+  "properties": {
+    "nodes": {
+      "items": {
+        "$ref": "#/$defs/MapNode"
+      },
+      "title": "Nodes",
+      "type": "array"
+    }
+  },
+  "required": [
+    "nodes"
+  ],
+  "title": "MapLayout",
+  "type": "object"
+}

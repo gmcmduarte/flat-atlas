@@ -1,0 +1,73 @@
+{
+  "additionalProperties": false,
+  "description": "``meta.json``: which release the site data comes from (for the About page).",
+  "properties": {
+    "aggregate_version": {
+      "title": "Aggregate Version",
+      "type": "string"
+    },
+    "date": {
+      "title": "Date",
+      "type": "string"
+    },
+    "fixture": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Fixture"
+    },
+    "release": {
+      "title": "Release",
+      "type": "string"
+    },
+    "source_fetch_dates": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Source Fetch Dates",
+      "type": "object"
+    },
+    "tagger_version": {
+      "title": "Tagger Version",
+      "type": "string"
+    },
+    "taxonomy_version": {
+      "title": "Taxonomy Version",
+      "type": "string"
+    },
+    "topics": {
+      "title": "Topics",
+      "type": "integer"
+    },
+    "works": {
+      "title": "Works",
+      "type": "integer"
+    },
+    "works_by_tag_status": {
+      "additionalProperties": {
+        "type": "integer"
+      },
+      "title": "Works By Tag Status",
+      "type": "object"
+    }
+  },
+  "required": [
+    "release",
+    "date",
+    "tagger_version",
+    "taxonomy_version",
+    "aggregate_version",
+    "works",
+    "works_by_tag_status",
+    "topics",
+    "source_fetch_dates"
+  ],
+  "title": "DataInfo",
+  "type": "object"
+}

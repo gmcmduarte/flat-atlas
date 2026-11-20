@@ -1,0 +1,101 @@
+{
+  "$defs": {
+    "AuthorTopic": {
+      "additionalProperties": false,
+      "properties": {
+        "score": {
+          "title": "Score",
+          "type": "number"
+        },
+        "topic_id": {
+          "title": "Topic Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "topic_id",
+        "score"
+      ],
+      "title": "AuthorTopic",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "One entry of an ``authors/<shard>.json`` file.",
+  "properties": {
+    "author_id": {
+      "title": "Author Id",
+      "type": "string"
+    },
+    "dblp_pid": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Dblp Pid"
+    },
+    "display_name": {
+      "title": "Display Name",
+      "type": "string"
+    },
+    "fixture": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Fixture"
+    },
+    "name_variants": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Name Variants",
+      "type": "array"
+    },
+    "orcid": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Orcid"
+    },
+    "topics": {
+      "items": {
+        "$ref": "#/$defs/AuthorTopic"
+      },
+      "title": "Topics",
+      "type": "array"
+    },
+    "work_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Work Ids",
+      "type": "array"
+    }
+  },
+  "required": [
+    "author_id",
+    "display_name",
+    "name_variants",
+    "dblp_pid",
+    "orcid",
+    "topics",
+    "work_ids"
+  ],
+  "title": "Author",
+  "type": "object"
+}

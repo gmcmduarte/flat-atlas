@@ -1,0 +1,48 @@
+# Settings of the aggregate stage (P1-09, D-102): topic edges, per-topic aggregates, map layout.
+# Every number that decides an edge or a position is here. Changing one changes the output, so
+# `aggregate_version` is recorded in every edge's provenance; bump it with the numbers.
+
+aggregate_version: agg-1
+seed: 20261120
+
+# A tag counts as "present" for hard counts at this confidence (the tagger's selection threshold).
+present_min: 0.35
+
+# Edges are stored for the strongest `top_k` per topic and type (an edge stays when either end keeps it).
+top_k: 10
+
+related:
+  # Normalised PMI of soft co-occurrence on works with a normal (not weak) tag.
+  min_support: 5 # works where both topics are present
+  npmi_min: 0.1
+  min_confidence: 0.5 # share of bootstrap resamples in which the edge still holds
+  bootstrap: 200
+
+builds_on:
+  # Directed citation flow A -> B ("A builds on B") against a null that permutes work membership
+  # inside strata of `stratum_years` years (topic sizes and time order stay, the citation link goes).
+  min_flow: 5.0 # soft citation count
+  max_p: 0.05
+  permutations: 1000
+  stratum_years: 5
+
+shared_community:
+  # Cosine on author-activity vectors (activity = sqrt of an author's confidence-weighted papers).
+  min_shared_authors: 3 # authors present (>= present_min) in both topics
+  cosine_min: 0.1
+  min_confidence: 0.5
+  bootstrap: 200
+
+layout:
+  seed: 20261120
+  root_radius: 100.0 # radius of the largest level-0 bubble
+  min_radius_share: 0.08 # smallest sibling's size relative to the largest of its siblings
+  fill: 0.9 # children are packed inside this share of the parent's radius
+  pad: 0.05 # gap between packed siblings, relative to the smallest sibling radius
+  fa2:
+    iterations: 600
+    gravity: 1.0
+    scaling: 0.5
+    edge_weight_influence: 1.0
+    overlap_gap: 4.0
+  decimals: 3

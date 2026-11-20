@@ -43,10 +43,12 @@
 						"embedding": 0.71
 					},
 					"tagger_version": "fixture-0",
-					"taxonomy_version": "fixture-0"
+					"taxonomy_version": "fixture-0",
+					"flags": []
 				}
 			}
 		],
-		"fixture": true
+		"fixture": true,
+		"tag_status": "tagged"
 	}
 }

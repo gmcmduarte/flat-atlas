@@ -190,11 +190,11 @@ Embeddings are derived data under Apache 2.0 / our own computation and *may* be 
 | `edge_type` | Meaning | How computed | Directed |
 |---|---|---|---|
 | `subtopic-of` | DAG backbone | from `topics.yaml` (proposed automatically, reviewed once) | yes, child → parent |
-| `related` | co-occurrence on the same papers | normalised PMI of tag co-occurrence, with a minimum support | no |
-| `builds-on` | citation flow | share of citations from papers in A to papers in B, compared to a null model that keeps topic sizes | yes, A → B |
-| `shared-community` | author overlap | weighted Jaccard / cosine on author-activity vectors | no |
+| `related` | co-occurrence on the same papers | normalised PMI of soft tag co-occurrence on works with a normal tag, minimum support 5 works; confidence = share of 200 bootstrap resamples of works that keep the edge (D-102) | no |
+| `builds-on` | citation flow | share of A's outgoing citation flow that reaches B (citing work in A and not B, cited work in B and not A), against a null that permutes work membership inside 5-year strata (topic sizes and time order kept), 1,000 permutations; confidence = 1 − p (D-102) | yes, A → B ("A builds on B") |
+| `shared-community` | author overlap | cosine on author-activity vectors (activity = square root of an author's confidence-weighted papers), at least 3 authors present in both; confidence = share of 200 bootstrap resamples of authors that keep the edge (D-102) | no |
 
-`related`, `builds-on` and `shared-community` are never computed between a topic and its own ancestors or descendants.
+`related`, `builds-on` and `shared-community` are never computed between a topic and its own ancestors or descendants. Edges are computed on the rolled-up membership of every topic (§9.4), using only works with a normal tag, and the strongest 10 per topic and type are stored. `confidence` is not comparable across edge types. `taxonomy load` rewrites `core_topic_edge` with the backbone only; run `flatatlas aggregate` again afterwards.
 
 ### 4.4 Tags
 
@@ -207,22 +207,25 @@ Embeddings are derived data under Apache 2.0 / our own computation and *may* be 
 **`tag_work_topic`** (published): `work_id`, `topic_id`, `confidence` (0–1), `rank`, `is_primary`, `provenance` (STRUCT: `method`, `signals` used with their scores, `models` (file hashes of the fusion, decision and distilled models that contributed), `tagger_version`, `taxonomy_version`), `derived` (true for ancestor rows added by closure); `provenance` also has `flags` (for example `low_confidence`), and until P1-08 chooses the shipped method the table holds the rows of both methods, told apart by `provenance.method` (D-95).
 
 ### 4.5 Aggregates (built for the site)
-`agg_topic_year` (papers, confidence-weighted volume, citations), `agg_topic_author` (score, first/last year), `agg_topic_venue`, `agg_venue_year` (all venue metrics, §15.1), `agg_venue_overlap`, `agg_author_coauthor(author_a, author_b, year, n)`, `agg_bridge(topic_a, topic_b, work_id, score)`, `agg_reading_path`, `agg_map_layout(topic_id, parent_id, x, y, r, year)`.
+Built in P1-09 (`flatatlas aggregate`, D-102), from the shipped method's tags: `agg_topic_year(topic_id, year, papers, volume, citations, n_low_confidence)`, `agg_topic_author(topic_id, author_id, score, n_works, first_year, last_year)`, `agg_topic_venue(topic_id, venue_id, papers, volume, first_year, last_year)`, `agg_topic_work(topic_id, work_id, confidence, score, rank, low_confidence)` (paper ranking: `score = confidence × log(1 + cited_by_count)`, normal works first, weakly matched works after them) and `agg_map_layout(topic_id, parent_id, level, x, y, r, year, volume, ghost_parents[])` (`year` is null: the all-time layout; per-year radii belong to the time slider, P5-01). **Work classes:** `tagged` (a normal tag), `low_confidence` (only the level-0 fallback tag below the selection threshold) and `untagged`. Volume counts the first two (the second at its own confidence); `papers` and `paper_count` count only `tagged` works with a rolled-up confidence of at least 0.35; edges and the key-author lists use `tagged` works only (edges) or both (authors); untagged works appear in no aggregate.
+Planned for later sessions: `agg_venue_year` (all venue metrics, §15.1), `agg_venue_overlap`, `agg_author_coauthor(author_a, author_b, year, n)`, `agg_bridge(topic_a, topic_b, work_id, score)`, `agg_reading_path`.
 
 ### 4.6 Operational tables
 `ops_harvest_state(source, job_key, cursor, status, updated_at, n_items)`, `ops_run_log(run_id, stage, started, finished, status, counts)`, `ops_quality_report(run_id, check, value, threshold, passed)`.
 
 ### 4.7 Release layout
 ```
-releases/v2027.01.0/
-  manifest.json        # version, date, row counts, checksums, tagger/taxonomy versions, source dates
+data/releases/v2026.11.0/            # Paths.releases; a release is copied to GitHub and Zenodo when published
+  manifest.json        # version, date, row counts, bytes and SHA-256 per file, tagger/taxonomy/aggregate versions,
+                       # source fetch dates, git commit (and whether the tree was dirty), check results, works per tag_status
   works.parquet versions.parquet authors.parquet authorships.parquet institutions.parquet
   venues.parquet editions.parquet citations.parquet
   topics.parquet topic_edges.parquet work_topics.parquet
-  agg_*.parquet id_registry.parquet
+  agg_topic_year.parquet agg_topic_author.parquet agg_topic_venue.parquet agg_topic_work.parquet agg_map_layout.parquet
+  id_registry.parquet
   SOURCES.md LICENSE.md CITATION.cff
 ```
-Version scheme: `vYYYY.MM.patch`. A release never contains abstracts.
+Version scheme: `vYYYY.MM.patch` (the patch counts the releases of that month). `works.parquet` has the extra column `tag_status` (`tagged`, `low_confidence`, `untagged`). `work_topics.parquet` holds only the rows of the shipped method (`provenance.method`) and one `tagger_version`, and no signal of a step that is off (`dm_*`, `prop_*`, `distil`). **A release never contains abstracts, TLDRs or embeddings**: the build refuses a column called abstract, tldr, text, vector or embedding (`has_abstract` is allowed), reads no `local_*` table, and `flatatlas release verify <dir>` re-checks checksums, row counts and column names. The build runs the data-quality checks and the adopted tagging variant's hard checks first (from the frozen record, no held-out label) and writes nothing if one fails.
 
 ---
 
@@ -495,7 +498,7 @@ Three fusion methods exist so that the choice is made by numbers (§9.6), not by
 
 **Selection.** Assign the most specific topics. If only a parent is supported, tag the parent. Keep topics with confidence ≥ 0.35, at most 6 non-derived topics per work; mark the top one `is_primary`. Both numbers are starting values, re-tuned on gold-train (never on the held-out third). Ancestors are added as `derived: true` rows with the max child confidence. Works with no topic above the threshold are tagged to their best level-0 topic with a low-confidence flag, or left `untagged` (reported).
 
-**Volume for bubbles** = sum of confidences of non-derived tags, rolled up the DAG without double counting a work inside one ancestor.
+**Volume for bubbles** = sum over works of `m_t(w)`, the largest confidence among the work's non-derived tags in the subtree of topic *t* (the topic itself included): a work counts once inside an ancestor, also through a diamond of parents (D-102). Works the selection left with only the low-confidence level-0 fallback tag count at that low confidence; untagged works count nowhere (§4.5).
 
 Every `tag_work_topic` row stores `confidence` and `provenance` (method, signals with scores, model file hashes, `tagger_version`, `taxonomy_version`). Cost of step 2: free; training takes seconds to minutes on the laptop.
 
@@ -612,7 +615,7 @@ web/
 ### 11.2 Static data layout (pilot)
 - `topics.json` (all topics: names, parents, sizes), `topic/<id>.json` (full topic page payload: edges by type, top papers, key authors, year series).
 - `works/<shard>.json`: works sharded by the first 2 hex characters of a hash of the ID (256 shards); a paper page fetches one shard.
-- `authors/<shard>.json`, `venue/<id>.json`, `map.json` (layout), `search/index.json` (MiniSearch index of topics, authors, venues, and paper titles while < about 30,000 papers).
+- `authors/<shard>.json`, `venue/<id>.json`, `map.json` (layout), `search/index.json` (the raw documents of topics with aliases, authors, venues and paper titles, for the client to index while < about 30,000 papers; the pilot ships documents, not a prebuilt MiniSearch index), `meta.json` (which release the data comes from). Written by `flatatlas export static` from a verified release folder, never from the warehouse; file shapes are the pydantic models of `src/flatatlas/export/models.py`, from which `flatatlas export types` generates `web/src/lib/data/schema/*.schema.json` and `types.ts` (a test fails when they are out of date). The pilot export measures 6.7 MB for 2,333 works.
 - Routes are client-rendered with a `404.html` fallback (SPA mode), so no per-paper HTML is generated. Topic and venue pages are prerendered for link previews and search engines.
 - Size budget on GitHub Pages: site ≤ 1 GB, soft 100 GB/month bandwidth. Pilot data is expected under 30 MB.
 

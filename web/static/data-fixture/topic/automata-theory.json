@@ -4,7 +4,9 @@
 		"name": "Automata theory",
 		"description": "Abstract machines that read words, and what they can and cannot recognise.",
 		"level": 0,
-		"paper_count": 2
+		"paper_count": 2,
+		"volume": 1.8,
+		"n_low_confidence": 0
 	},
 	"parents": [],
 	"children": [
@@ -38,7 +40,8 @@
 			"year": 2015,
 			"venue_acronym": "FIXCONF",
 			"confidence": 0.86,
-			"cited_by_count": 21
+			"cited_by_count": 21,
+			"low_confidence": false
 		},
 		{
 			"work_id": "WFIXTUREAAH",
@@ -46,7 +49,8 @@
 			"year": 2018,
 			"venue_acronym": "FIXCONF",
 			"confidence": 0.68,
-			"cited_by_count": 24
+			"cited_by_count": 24,
+			"low_confidence": false
 		}
 	],
 	"key_authors": [
@@ -74,11 +78,13 @@
 	"year_series": [
 		{
 			"year": 2015,
-			"papers": 1
+			"papers": 1,
+			"volume": 1.0
 		},
 		{
 			"year": 2018,
-			"papers": 1
+			"papers": 1,
+			"volume": 1.0
 		}
 	],
 	"fixture": true

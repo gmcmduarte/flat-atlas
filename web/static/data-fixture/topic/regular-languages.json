@@ -4,7 +4,9 @@
 		"name": "Regular languages",
 		"description": "The languages recognised by finite automata, with their closure properties.",
 		"level": 1,
-		"paper_count": 4
+		"paper_count": 4,
+		"volume": 3.6,
+		"n_low_confidence": 0
 	},
 	"parents": [
 		{
@@ -43,7 +45,8 @@
 			"year": 2003,
 			"venue_acronym": "FIXCONF",
 			"confidence": 0.92,
-			"cited_by_count": 3
+			"cited_by_count": 3,
+			"low_confidence": false
 		},
 		{
 			"work_id": "WFIXTUREAAF",
@@ -51,7 +54,8 @@
 			"year": 2013,
 			"venue_acronym": "FIXCONF",
 			"confidence": 0.87,
-			"cited_by_count": 18
+			"cited_by_count": 18,
+			"low_confidence": false
 		},
 		{
 			"work_id": "WFIXTUREAAI",
@@ -59,7 +63,8 @@
 			"year": 2020,
 			"venue_acronym": "FIXCONF",
 			"confidence": 0.84,
-			"cited_by_count": 27
+			"cited_by_count": 27,
+			"low_confidence": false
 		},
 		{
 			"work_id": "WFIXTUREAAJ",
@@ -67,7 +72,8 @@
 			"year": 2023,
 			"venue_acronym": "FIXCONF",
 			"confidence": 0.66,
-			"cited_by_count": 30
+			"cited_by_count": 30,
+			"low_confidence": false
 		}
 	],
 	"key_authors": [
@@ -100,19 +106,23 @@
 	"year_series": [
 		{
 			"year": 2003,
-			"papers": 1
+			"papers": 1,
+			"volume": 1.0
 		},
 		{
 			"year": 2013,
-			"papers": 1
+			"papers": 1,
+			"volume": 1.0
 		},
 		{
 			"year": 2020,
-			"papers": 1
+			"papers": 1,
+			"volume": 1.0
 		},
 		{
 			"year": 2023,
-			"papers": 1
+			"papers": 1,
+			"volume": 1.0
 		}
 	],
 	"fixture": true

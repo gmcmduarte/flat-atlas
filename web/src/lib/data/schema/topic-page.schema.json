@@ -1,0 +1,312 @@
+{
+  "$defs": {
+    "TopicAuthor": {
+      "additionalProperties": false,
+      "properties": {
+        "author_id": {
+          "title": "Author Id",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "score": {
+          "title": "Score",
+          "type": "number"
+        }
+      },
+      "required": [
+        "author_id",
+        "name",
+        "score"
+      ],
+      "title": "TopicAuthor",
+      "type": "object"
+    },
+    "TopicEdge": {
+      "additionalProperties": false,
+      "description": "A lateral edge as seen from the topic whose page it is on.",
+      "properties": {
+        "confidence": {
+          "description": "Not comparable across edge types.",
+          "title": "Confidence",
+          "type": "number"
+        },
+        "direction": {
+          "description": "out: this topic builds on the other; in: the other builds on this one.",
+          "enum": [
+            "out",
+            "in",
+            "both"
+          ],
+          "title": "Direction",
+          "type": "string"
+        },
+        "edge_type": {
+          "enum": [
+            "related",
+            "builds-on",
+            "shared-community"
+          ],
+          "title": "Edge Type",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "topic_id": {
+          "title": "Topic Id",
+          "type": "string"
+        },
+        "weight": {
+          "title": "Weight",
+          "type": "number"
+        }
+      },
+      "required": [
+        "topic_id",
+        "name",
+        "edge_type",
+        "direction",
+        "weight",
+        "confidence"
+      ],
+      "title": "TopicEdge",
+      "type": "object"
+    },
+    "TopicEdges": {
+      "additionalProperties": false,
+      "properties": {
+        "builds-on": {
+          "items": {
+            "$ref": "#/$defs/TopicEdge"
+          },
+          "title": "Builds-On",
+          "type": "array"
+        },
+        "related": {
+          "items": {
+            "$ref": "#/$defs/TopicEdge"
+          },
+          "title": "Related",
+          "type": "array"
+        },
+        "shared-community": {
+          "items": {
+            "$ref": "#/$defs/TopicEdge"
+          },
+          "title": "Shared-Community",
+          "type": "array"
+        }
+      },
+      "required": [
+        "related",
+        "builds-on",
+        "shared-community"
+      ],
+      "title": "TopicEdges",
+      "type": "object"
+    },
+    "TopicPaper": {
+      "additionalProperties": false,
+      "properties": {
+        "cited_by_count": {
+          "title": "Cited By Count",
+          "type": "integer"
+        },
+        "confidence": {
+          "title": "Confidence",
+          "type": "number"
+        },
+        "low_confidence": {
+          "title": "Low Confidence",
+          "type": "boolean"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "venue_acronym": {
+          "title": "Venue Acronym",
+          "type": "string"
+        },
+        "work_id": {
+          "title": "Work Id",
+          "type": "string"
+        },
+        "year": {
+          "title": "Year",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "work_id",
+        "title",
+        "year",
+        "venue_acronym",
+        "confidence",
+        "cited_by_count",
+        "low_confidence"
+      ],
+      "title": "TopicPaper",
+      "type": "object"
+    },
+    "TopicRef": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "topic_id": {
+          "title": "Topic Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "topic_id",
+        "name"
+      ],
+      "title": "TopicRef",
+      "type": "object"
+    },
+    "TopicSummary": {
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "level": {
+          "title": "Level",
+          "type": "integer"
+        },
+        "n_low_confidence": {
+          "title": "N Low Confidence",
+          "type": "integer"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "paper_count": {
+          "title": "Paper Count",
+          "type": "integer"
+        },
+        "topic_id": {
+          "title": "Topic Id",
+          "type": "string"
+        },
+        "volume": {
+          "title": "Volume",
+          "type": "number"
+        }
+      },
+      "required": [
+        "topic_id",
+        "name",
+        "description",
+        "level",
+        "paper_count",
+        "volume",
+        "n_low_confidence"
+      ],
+      "title": "TopicSummary",
+      "type": "object"
+    },
+    "YearPoint": {
+      "additionalProperties": false,
+      "properties": {
+        "papers": {
+          "title": "Papers",
+          "type": "integer"
+        },
+        "volume": {
+          "title": "Volume",
+          "type": "number"
+        },
+        "year": {
+          "title": "Year",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "year",
+        "papers",
+        "volume"
+      ],
+      "title": "YearPoint",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "``topic/<id>.json``.",
+  "properties": {
+    "children": {
+      "items": {
+        "$ref": "#/$defs/TopicRef"
+      },
+      "title": "Children",
+      "type": "array"
+    },
+    "edges": {
+      "$ref": "#/$defs/TopicEdges"
+    },
+    "fixture": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Fixture"
+    },
+    "key_authors": {
+      "items": {
+        "$ref": "#/$defs/TopicAuthor"
+      },
+      "title": "Key Authors",
+      "type": "array"
+    },
+    "parents": {
+      "items": {
+        "$ref": "#/$defs/TopicRef"
+      },
+      "title": "Parents",
+      "type": "array"
+    },
+    "top_papers": {
+      "items": {
+        "$ref": "#/$defs/TopicPaper"
+      },
+      "title": "Top Papers",
+      "type": "array"
+    },
+    "topic": {
+      "$ref": "#/$defs/TopicSummary"
+    },
+    "year_series": {
+      "items": {
+        "$ref": "#/$defs/YearPoint"
+      },
+      "title": "Year Series",
+      "type": "array"
+    }
+  },
+  "required": [
+    "topic",
+    "parents",
+    "children",
+    "edges",
+    "top_papers",
+    "key_authors",
+    "year_series"
+  ],
+  "title": "TopicPage",
+  "type": "object"
+}

@@ -9,7 +9,9 @@
 			"regular-languages",
 			"finite-automata"
 		],
-		"paper_count": 3
+		"paper_count": 3,
+		"volume": 2.7,
+		"n_low_confidence": 0
 	},
 	{
 		"topic_id": "automata-theory",
@@ -21,7 +23,9 @@
 			"finite-automata",
 			"descriptional-complexity"
 		],
-		"paper_count": 2
+		"paper_count": 2,
+		"volume": 1.8,
+		"n_low_confidence": 0
 	},
 	{
 		"topic_id": "regular-languages",
@@ -32,7 +36,9 @@
 			"formal-languages"
 		],
 		"children": [],
-		"paper_count": 4
+		"paper_count": 4,
+		"volume": 3.6,
+		"n_low_confidence": 0
 	},
 	{
 		"topic_id": "finite-automata",
@@ -44,7 +50,9 @@
 			"formal-languages"
 		],
 		"children": [],
-		"paper_count": 4
+		"paper_count": 4,
+		"volume": 3.6,
+		"n_low_confidence": 0
 	},
 	{
 		"topic_id": "descriptional-complexity",
@@ -55,6 +63,8 @@
 			"automata-theory"
 		],
 		"children": [],
-		"paper_count": 3
+		"paper_count": 3,
+		"volume": 2.7,
+		"n_low_confidence": 0
 	}
 ]

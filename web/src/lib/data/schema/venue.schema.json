@@ -1,0 +1,94 @@
+{
+  "additionalProperties": false,
+  "description": "``venue/<id>.json``.",
+  "properties": {
+    "acronym": {
+      "title": "Acronym",
+      "type": "string"
+    },
+    "first_year": {
+      "title": "First Year",
+      "type": "integer"
+    },
+    "fixture": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Fixture"
+    },
+    "homepage": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Homepage"
+    },
+    "kind": {
+      "enum": [
+        "conference",
+        "journal",
+        "book-series"
+      ],
+      "title": "Kind",
+      "type": "string"
+    },
+    "last_year": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Last Year"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "successor_of": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Successor Of",
+      "type": "array"
+    },
+    "tier": {
+      "enum": [
+        "core",
+        "broad",
+        "other"
+      ],
+      "title": "Tier",
+      "type": "string"
+    },
+    "venue_id": {
+      "title": "Venue Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "venue_id",
+    "acronym",
+    "name",
+    "kind",
+    "tier",
+    "first_year",
+    "last_year",
+    "successor_of",
+    "homepage"
+  ],
+  "title": "Venue",
+  "type": "object"
+}
