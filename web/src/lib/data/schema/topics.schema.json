@@ -1,0 +1,65 @@
+{
+  "additionalProperties": false,
+  "description": "One row of ``topics.json``.",
+  "properties": {
+    "children": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Children",
+      "type": "array"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string"
+    },
+    "level": {
+      "description": "0 = top-level bubble.",
+      "title": "Level",
+      "type": "integer"
+    },
+    "n_low_confidence": {
+      "description": "Weakly matched works, not in paper_count.",
+      "title": "N Low Confidence",
+      "type": "integer"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "paper_count": {
+      "description": "Works with a normal tag in the topic or below it.",
+      "title": "Paper Count",
+      "type": "integer"
+    },
+    "parents": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Parents",
+      "type": "array"
+    },
+    "topic_id": {
+      "title": "Topic Id",
+      "type": "string"
+    },
+    "volume": {
+      "description": "Sum of the rolled-up confidences (bubble size).",
+      "title": "Volume",
+      "type": "number"
+    }
+  },
+  "required": [
+    "topic_id",
+    "name",
+    "description",
+    "level",
+    "parents",
+    "children",
+    "paper_count",
+    "volume",
+    "n_low_confidence"
+  ],
+  "title": "Topic",
+  "type": "object"
+}

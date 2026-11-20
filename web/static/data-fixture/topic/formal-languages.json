@@ -4,7 +4,9 @@
 		"name": "Formal languages",
 		"description": "Sets of finite words, and the grammars and operations used to describe and combine them.",
 		"level": 0,
-		"paper_count": 3
+		"paper_count": 3,
+		"volume": 2.7,
+		"n_low_confidence": 0
 	},
 	"parents": [],
 	"children": [
@@ -38,7 +40,8 @@
 			"year": 2009,
 			"venue_acronym": "FIXCONF",
 			"confidence": 0.89,
-			"cited_by_count": 12
+			"cited_by_count": 12,
+			"low_confidence": false
 		},
 		{
 			"work_id": "WFIXTUREAAJ",
@@ -46,7 +49,8 @@
 			"year": 2023,
 			"venue_acronym": "FIXCONF",
 			"confidence": 0.83,
-			"cited_by_count": 30
+			"cited_by_count": 30,
+			"low_confidence": false
 		},
 		{
 			"work_id": "WFIXTUREAAF",
@@ -54,7 +58,8 @@
 			"year": 2013,
 			"venue_acronym": "FIXCONF",
 			"confidence": 0.7,
-			"cited_by_count": 18
+			"cited_by_count": 18,
+			"low_confidence": false
 		}
 	],
 	"key_authors": [
@@ -87,15 +92,18 @@
 	"year_series": [
 		{
 			"year": 2009,
-			"papers": 1
+			"papers": 1,
+			"volume": 1.0
 		},
 		{
 			"year": 2013,
-			"papers": 1
+			"papers": 1,
+			"volume": 1.0
 		},
 		{
 			"year": 2023,
-			"papers": 1
+			"papers": 1,
+			"volume": 1.0
 		}
 	],
 	"fixture": true

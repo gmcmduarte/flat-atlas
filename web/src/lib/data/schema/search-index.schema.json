@@ -1,0 +1,138 @@
+{
+  "$defs": {
+    "SearchAuthor": {
+      "additionalProperties": false,
+      "properties": {
+        "author_id": {
+          "title": "Author Id",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "author_id",
+        "name"
+      ],
+      "title": "SearchAuthor",
+      "type": "object"
+    },
+    "SearchTopic": {
+      "additionalProperties": false,
+      "properties": {
+        "aliases": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Aliases",
+          "type": "array"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "topic_id": {
+          "title": "Topic Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "topic_id",
+        "name",
+        "aliases"
+      ],
+      "title": "SearchTopic",
+      "type": "object"
+    },
+    "SearchVenue": {
+      "additionalProperties": false,
+      "properties": {
+        "acronym": {
+          "title": "Acronym",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "venue_id": {
+          "title": "Venue Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "venue_id",
+        "name",
+        "acronym"
+      ],
+      "title": "SearchVenue",
+      "type": "object"
+    },
+    "SearchWork": {
+      "additionalProperties": false,
+      "properties": {
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "work_id": {
+          "title": "Work Id",
+          "type": "string"
+        },
+        "year": {
+          "title": "Year",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "work_id",
+        "title",
+        "year"
+      ],
+      "title": "SearchWork",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "``search/index.json``: the raw documents the client indexes.",
+  "properties": {
+    "authors": {
+      "items": {
+        "$ref": "#/$defs/SearchAuthor"
+      },
+      "title": "Authors",
+      "type": "array"
+    },
+    "topics": {
+      "items": {
+        "$ref": "#/$defs/SearchTopic"
+      },
+      "title": "Topics",
+      "type": "array"
+    },
+    "venues": {
+      "items": {
+        "$ref": "#/$defs/SearchVenue"
+      },
+      "title": "Venues",
+      "type": "array"
+    },
+    "works": {
+      "items": {
+        "$ref": "#/$defs/SearchWork"
+      },
+      "title": "Works",
+      "type": "array"
+    }
+  },
+  "required": [
+    "topics",
+    "authors",
+    "venues",
+    "works"
+  ],
+  "title": "SearchIndex",
+  "type": "object"
+}

@@ -13,6 +13,7 @@ import yaml
 
 from flatatlas import __version__, quality
 from flatatlas import coverage as coverage_report
+from flatatlas.aggregate import commands as aggregate_commands
 from flatatlas.db import connect, run_log, write_text_atomic
 from flatatlas.dblp_dump import (
     DTD_FILE,
@@ -28,8 +29,10 @@ from flatatlas.dblp_dump import (
 from flatatlas.embed import stage as embed_stage
 from flatatlas.embed import store as embed_store
 from flatatlas.evaluate import commands as eval_commands
+from flatatlas.export import commands as export_commands
 from flatatlas.http import BudgetExhausted, SourceClient, SourceError
 from flatatlas.log import setup_logging
+from flatatlas.release import commands as release_commands
 from flatatlas.resolve import report as resolve_report
 from flatatlas.resolve import stage as resolve_stage
 from flatatlas.resolve.config import ResolveConfigError, load_resolve_config
@@ -81,7 +84,7 @@ app = typer.Typer(
 # One sub-app per group. Stage modules add commands with ``@groups["harvest"].command()``.
 # ``embed`` and ``resolve`` run when called without a sub-command, and ``evaluate`` has the
 # ``--data`` flag, so none of them may print its help instead.
-RUNNABLE_GROUPS = {"embed", "resolve", "evaluate", "tag"}
+RUNNABLE_GROUPS = {"embed", "resolve", "evaluate", "tag", "aggregate"}
 groups: dict[str, typer.Typer] = {
     name: typer.Typer(name=name, help=help_text, no_args_is_help=name not in RUNNABLE_GROUPS)
     for name, help_text in COMMAND_GROUPS.items()
@@ -100,6 +103,7 @@ groups["taxonomy"].command("mine")(taxonomy_commands.mine)
 groups["taxonomy"].command("cluster")(taxonomy_commands.cluster)
 groups["taxonomy"].command("propose")(taxonomy_commands.propose)
 groups["tag"].callback(invoke_without_command=True)(tag_commands.tag_run)
+groups["aggregate"].callback(invoke_without_command=True)(aggregate_commands.aggregate_run)
 groups["tag"].command("fit")(tag_commands.fit)
 groups["tag"].command("decide")(tag_commands.decide)
 groups["tag"].command("artefacts")(tag_commands.artefacts)
@@ -108,6 +112,10 @@ groups["tag"].command("anchors")(tag_commands.anchors)
 groups["evaluate"].command("freeze")(eval_commands.freeze_cmd)
 groups["evaluate"].command("check")(eval_commands.check_cmd)
 groups["evaluate"].command("report")(eval_commands.report_cmd)
+groups["export"].command("static")(export_commands.static_cmd)
+groups["export"].command("types")(export_commands.types_cmd)
+groups["release"].command("build")(release_commands.build)
+groups["release"].command("verify")(release_commands.verify)
 groups["gold"].command("sample")(gold_commands.sample)
 groups["gold"].command("sheet")(gold_commands.sheet)
 groups["gold"].command("finalise")(gold_commands.finalise)

@@ -11,7 +11,9 @@ const topics: Topic[] = [
 		level: 0,
 		parents: [],
 		children: ['finite-automata'],
-		paper_count: 7
+		paper_count: 7,
+		volume: 6.3,
+		n_low_confidence: 0
 	},
 	{
 		topic_id: 'finite-automata',
@@ -20,7 +22,9 @@ const topics: Topic[] = [
 		level: 1,
 		parents: ['automata-theory'],
 		children: [],
-		paper_count: 4
+		paper_count: 4,
+		volume: 3.6,
+		n_low_confidence: 0
 	}
 ];
 
