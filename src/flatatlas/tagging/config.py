@@ -133,6 +133,8 @@ class FusionConfig(_Section):
     calibrate_on: str = "random"
     choose_by: str = "f1_micro_l1"
     complex_margin: float = 0.01
+    bag: int = 1  # models averaged over seeds (1: a single model; P1-08 sets 5, D-100)
+    bag_seed_step: int = 101  # member k is fitted with seed + k * step
     lightgbm: LightGbmConfig = Field(default_factory=LightGbmConfig)
     logistic: LogisticConfig = Field(default_factory=LogisticConfig)
 
@@ -146,9 +148,52 @@ class SelectionConfig(_Section):
     unsure_band: tuple[float, float] = (0.3, 0.5)
 
 
+class PropagationConfig(_Section):
+    """Pass 2 (P1-08, PLAN §9.3, D-25): topic vectors of the graph neighbours as two signals."""
+
+    enabled: bool = False  # the shipped model reads prop_cite and prop_author
+    ref_weight: float = 1.0  # a reference counts this much in prop_cite
+    citer_weight: float = 0.5  # an in-corpus citer counts this much (references count more)
+    influential_boost: float = 1.5  # multiplies an edge Semantic Scholar marks influential
+    author_window: int = 5  # years either side of the work for the authors' other works
+    noisy_or_weights: dict[str, float] = Field(
+        default_factory=lambda: {"prop_cite": 0.4, "prop_author": 0.15}
+    )
+
+
+class TopDownConfig(_Section):
+    """Method (b), the top-down baseline (PLAN §9.4): a small classifier per level on embeddings."""
+
+    C: float = 0.1  # inverse regularisation; best of 0.001 to 10 by gold-train CV (P1-08)
+    min_positives: int = 2  # a topic with fewer gold positives gets no classifier
+    min_negatives: int = 2
+
+
+class EvaluationConfig(_Section):
+    """Thresholds and settings of ``flatatlas evaluate`` (PLAN §9.6); hard ones fail the run."""
+
+    anchors_min: float = 0.90  # hard: share of in-corpus anchors in the top 3 topics
+    coverage_min: float = 0.85  # hard: share of works with at least one non-derived tag
+    stability_min: float = 0.95  # hard: share of primary tags unchanged under another seed
+    stability_seed: int = 20261121
+    venue_top: int = 3  # a venue's expected topics must be among its top level-0 topics
+    bootstrap_n: int = 2000
+    bootstrap_seed: int = 20261122
+    interval: float = 0.90  # central bootstrap interval
+    calibration_bins: int = 10
+    agreement_flag: float = 0.2  # topics with method agreement below this are flagged
+    coherence_margin: float = 0.0  # a topic is flagged when its cosine is below random + margin
+    leak_sample: int = 200  # works whose lex_title is hidden in the hold-out leak test
+    spot_n: int = 10  # works per list per topic in the spot-check report
+
+
 class TaggerConfig(_Section):
     tagger_version: str
     seed: int = 20261120
+    method: str = "fusion"  # the method that ships: noisy_or | fusion (P1-08 decides, D-100)
+    propagation: PropagationConfig = Field(default_factory=PropagationConfig)
+    topdown: TopDownConfig = Field(default_factory=TopDownConfig)
+    evaluation: EvaluationConfig = Field(default_factory=EvaluationConfig)
     decision_model: DecisionModelConfig = Field(default_factory=DecisionModelConfig)
     phrases: PhrasesConfig = Field(default_factory=PhrasesConfig)
     signals: SignalsConfig = Field(default_factory=SignalsConfig)

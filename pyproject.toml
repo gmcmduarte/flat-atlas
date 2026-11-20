@@ -66,3 +66,7 @@ src = ["src", "tests"]
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "UP", "B", "SIM"]
+
+[tool.ruff.lint.per-file-ignores]
+# HTML templates read better as one string per table row than wrapped at 100 columns.
+"src/flatatlas/evaluate/report.py" = ["E501"]

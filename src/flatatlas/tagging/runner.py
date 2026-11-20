@@ -25,10 +25,10 @@ from flatatlas.tagging import pairs as pairs_mod
 from flatatlas.tagging import shortlist as shortlist_mod
 from flatatlas.tagging.artefacts import Artefacts
 from flatatlas.tagging.config import SIGNALS, TaggerConfig
-from flatatlas.tagging.fusion import FusionModel, fit_two_stage, select_tags
+from flatatlas.tagging.fusion import BaggedFusion, FusionModel, fit_model, select_tags
 from flatatlas.tagging.guard import Guard
 from flatatlas.tagging.inputs import Corpus, Dag, Labels
-from flatatlas.tagging.pairs import DM_FEATURES, FEATURES, Pairs
+from flatatlas.tagging.pairs import DM_FEATURES, FEATURES, PROP_FEATURES, Pairs
 from flatatlas.tagging.signals import Signals, compute_signals
 from flatatlas.taxonomy import check as tcheck
 from flatatlas.taxonomy import stage as tstage
@@ -224,7 +224,7 @@ def fit(ctx: Context, *, kinds: tuple[str, ...] = ("logistic", "lightgbm")) -> d
     ctx.notes.pop("dm", None)
     report = cross_validated_report(ctx, kinds)
     kind = choose_kind(report, ctx.cfg, kinds)
-    model, info = fit_two_stage(ctx.pairs, ctx.corpus, ctx.guard, ctx.cfg, kind)
+    model, info = fit_model(ctx.pairs, ctx.corpus, ctx.guard, ctx.cfg, kind)
     base_selection = {
         "threshold": report["methods"][kind]["tuned"]["threshold"],
         "max_topics": report["methods"][kind]["tuned"]["max_topics"],
@@ -246,7 +246,7 @@ def fit(ctx: Context, *, kinds: tuple[str, ...] = ("logistic", "lightgbm")) -> d
             activated = None
         if activated and activated["works_with_answers"] > 0:
             report["methods"][f"{kind}+dm"] = dm_report(ctx, kind)
-            dm_model, dm_fit = fit_two_stage(
+            dm_model, dm_fit = fit_model(
                 ctx.pairs, ctx.corpus, ctx.guard, ctx.cfg, kind, use_dm=True
             )
             dm_tuned = report["methods"][f"{kind}+dm"]["tuned"]
@@ -289,7 +289,7 @@ def fit(ctx: Context, *, kinds: tuple[str, ...] = ("logistic", "lightgbm")) -> d
     return tuning
 
 
-def load_model(ctx: Context) -> tuple[FusionModel, dict]:
+def load_model(ctx: Context) -> tuple[FusionModel | BaggedFusion, dict]:
     path, tuning_path = ctx.model_dir / "fusion.pkl", ctx.model_dir / "tuning.json"
     if not path.exists() or not tuning_path.exists():
         raise Missing(f"no fitted model in {ctx.model_dir}; run `flatatlas tag fit` first")
@@ -370,15 +370,20 @@ class TagResult:
     seconds: float = 0.0
 
 
-def _model_matrix(ctx: Context, model: FusionModel | None) -> np.ndarray:
-    """All ``FEATURES`` columns, the ``dm_*`` ones calibrated when the model uses them else NaN."""
+def _model_matrix(ctx: Context, model: FusionModel | BaggedFusion | None) -> np.ndarray:
+    """All ``FEATURES`` columns; the ``dm_*`` and ``prop_*`` ones only when the model reads them."""
     X = ctx.pairs.X
-    if model is not None and model.use_dm and model.dm_calibrators is not None:
-        return model.dm_calibrators.apply(X)
-    if model is not None and model.use_dm:
+    use_dm = model is not None and model.use_dm
+    use_prop = model is not None and model.use_prop
+    if use_dm and model.dm_calibrators is not None:
+        X = model.dm_calibrators.apply(X)
+    if use_dm and use_prop:
         return X
     X = X.copy()
-    X[:, len(FEATURES) - len(DM_FEATURES) :] = np.nan
+    if not use_dm:
+        X[:, [FEATURES.index(n) for n in DM_FEATURES]] = np.nan
+    if not use_prop:
+        X[:, [FEATURES.index(n) for n in PROP_FEATURES]] = np.nan
     return X
 
 
@@ -406,7 +411,7 @@ def _signal_rows(ctx: Context, rows: set[int], p_a, parent, p_f, X: np.ndarray) 
 def _signals_of_pair(X: np.ndarray, i: int) -> list[dict]:
     return [
         {"name": name, "score": float(X[i, FEATURES.index(name)])}
-        for name in (*SIGNALS, *DM_FEATURES)
+        for name in (*SIGNALS, *DM_FEATURES, *PROP_FEATURES)
         if not np.isnan(X[i, FEATURES.index(name)])
     ]
 
@@ -452,7 +457,7 @@ def tag(ctx: Context, method: str, *, limit: int | None = None) -> TagResult:
                     "sha256": dstage.model_sha(ctx),
                 }
             ]
-            have = ~np.isnan(X_out[:, len(FEATURES) - 2 :]).all(axis=1)
+            have = ~np.isnan(X_out[:, [FEATURES.index(n) for n in DM_FEATURES]]).all(axis=1)
             dm_rows = {int(r) for r in np.unique(pairs.work[have])}
     else:
         probs = evaluate.work_probabilities(pairs, pairs.p_noisy)
@@ -628,44 +633,35 @@ def count_kinds(pairs: Pairs) -> dict:
     return dict(Counter(int(k) for k in pairs.kind))
 
 
-def anchor_check(ctx: Context) -> dict:
+def anchor_check(ctx: Context, probs: dict[int, dict[int, float]] | None = None) -> dict:
     """The anchor papers in the corpus: is the expected topic among the 3 most probable?
 
     Groups: ``not in gold`` (clean), ``gold-train`` (the model saw their labels: in-sample).
-    Held-out anchors are skipped.
+    Held-out anchors are skipped. ``probs`` are per-work topic probabilities (default: the saved
+    fusion model's).
     """
     from flatatlas.taxonomy import anchors as tanchors
 
     anchors_file = tcheck.load_anchors()
     corpus_ids = tanchors.load_corpus(ctx.con)
-    model, _tuning = load_model(ctx)
-    _pa, _parent, p_f = model.predict(ctx.pairs)
-    probs = evaluate.work_probabilities(ctx.pairs, p_f)
-    groups: dict[str, list[bool]] = {"not in gold": [], "gold-train (in-sample)": []}
-    misses: list[str] = []
+    if probs is None:  # the saved fusion model; the evaluation harness passes any variant's
+        model, _tuning = load_model(ctx)
+        _pa, _parent, p_f = model.predict(ctx.pairs)
+        probs = evaluate.work_probabilities(ctx.pairs, p_f)
+    from flatatlas.evaluate.checks import anchor_hits
+
+    items = []
     for anchor in anchors_file.anchors:
         work = corpus_ids.work_of(anchor)
-        if work is None or work not in ctx.corpus.index:
-            continue
-        if anchor.topic not in ctx.dag.index:
+        if work is None or work not in ctx.corpus.index or anchor.topic not in ctx.dag.index:
             continue
         if work in ctx.guard.heldout:
             continue
-        r = ctx.corpus.index[work]
-        ranked = sorted(probs.get(r, {}).items(), key=lambda kv: (-kv[1], kv[0]))[:3]
-        top = [ctx.dag.ids[t] for t, _p in ranked]
-        hit = anchor.topic in top
         group = "gold-train (in-sample)" if work in ctx.guard.labelled else "not in gold"
-        groups[group].append(hit)
-        if not hit:
-            misses.append(f"{anchor.id} ({group}): expected {anchor.topic}, got {', '.join(top)}")
-    out = {}
-    for name, hits in groups.items():
-        out[name] = {"n": len(hits), "hit": sum(hits), "rate": sum(hits) / max(len(hits), 1)}
-    both = [h for hits in groups.values() for h in hits]
-    out["all (held-out excluded)"] = {
-        "n": len(both),
-        "hit": sum(both),
-        "rate": sum(both) / max(len(both), 1),
-    }
-    return {"groups": out, "misses": misses}
+        items.append((anchor.id, anchor.topic, ctx.corpus.index[work], group))
+    res = anchor_hits(items, probs, ctx.dag)
+    groups = res["groups"]
+    for name in ("not in gold", "gold-train (in-sample)"):
+        groups.setdefault(name, {"n": 0, "hit": 0, "rate": 0.0})
+    groups["all (held-out excluded)"] = groups.pop("all")
+    return {"groups": groups, "misses": res["misses"]}

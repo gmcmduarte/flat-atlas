@@ -22,9 +22,21 @@ def evidence(name: str, values: np.ndarray, cfg: TaggerConfig) -> np.ndarray:
     return v
 
 
-def noisy_or(matrices: dict[str, np.ndarray], cfg: TaggerConfig) -> np.ndarray:
-    """Confidence of every cell of the signal matrices (any shape)."""
-    weights = cfg.noisy_or.weights
+def noisy_or(
+    matrices: dict[str, np.ndarray],
+    cfg: TaggerConfig,
+    extra: dict[str, np.ndarray] | None = None,
+) -> np.ndarray:
+    """Confidence of every cell of the signal matrices (any shape).
+
+    ``extra`` holds the pass-2 signals (``prop_cite``, ``prop_author``): they add evidence with the
+    weights of ``propagation.noisy_or_weights`` but are not a signal family, so they never count
+    towards the agreement bonus (graph neighbours are not independent evidence about the text).
+    """
+    weights = dict(cfg.noisy_or.weights)
+    if extra:
+        matrices = {**matrices, **extra}
+        weights.update(cfg.propagation.noisy_or_weights)
     agree = cfg.noisy_or.agreement
     shape = next(iter(matrices.values())).shape
     miss = np.ones(shape)

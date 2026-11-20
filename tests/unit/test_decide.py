@@ -372,16 +372,22 @@ def test_the_base_model_ignores_the_decision_columns():
     from test_tagging_fusion import synthetic
 
     from flatatlas.tagging.fusion import fit_two_stage
-    from flatatlas.tagging.pairs import N_BASE
+    from flatatlas.tagging.pairs import DM_FEATURES, N_BASE, PROP_FEATURES
 
     corpus, pairs, guard = synthetic()
     base, _ = fit_two_stage(pairs, corpus, guard, cfg(), "logistic")
     assert base.matrix(pairs).shape[1] == N_BASE and not base.use_dm
-    pairs.X[:, N_BASE:] = np.random.default_rng(1).random((len(pairs), 2))  # dm columns change
+    dm_cols = [FEATURES.index(n) for n in DM_FEATURES]
+    pairs.X[:, dm_cols] = np.random.default_rng(1).random((len(pairs), 2))  # dm columns change
     again, _ = fit_two_stage(pairs, corpus, guard, cfg(), "logistic")
     assert base.predict(pairs)[2] == pytest.approx(again.predict(pairs)[2])
     with_dm, info = fit_two_stage(pairs, corpus, guard, cfg(), "logistic", use_dm=True)
-    assert with_dm.use_dm and with_dm.matrix(pairs).shape[1] == len(FEATURES)
+    assert with_dm.use_dm and with_dm.matrix(pairs).shape[1] == N_BASE + len(DM_FEATURES)
+    # the pass-2 columns are read only by a model fitted with use_prop
+    pairs.X[:, [FEATURES.index(n) for n in PROP_FEATURES]] = 0.3
+    with_prop, _ = fit_two_stage(pairs, corpus, guard, cfg(), "logistic", use_prop=True)
+    assert with_prop.use_prop and with_prop.matrix(pairs).shape[1] == N_BASE + len(PROP_FEATURES)
+    assert base.predict(pairs)[2] == pytest.approx(again.predict(pairs)[2])
     assert info["n_dm_l0"] >= 0
 
 
