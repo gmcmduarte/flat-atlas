@@ -13,4 +13,5 @@ export class ApiDataSource implements DataSource {
 	getVenue = notImplemented;
 	search = notImplemented;
 	getMap = notImplemented;
+	getMeta = notImplemented;
 }

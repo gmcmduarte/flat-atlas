@@ -46,7 +46,12 @@
 			"venue_acronym": "FIXCONF",
 			"confidence": 0.92,
 			"cited_by_count": 3,
-			"low_confidence": false
+			"low_confidence": false,
+			"authors": [
+				"Ada Fixture",
+				"Chandra Example"
+			],
+			"n_authors": 2
 		},
 		{
 			"work_id": "WFIXTUREAAF",
@@ -55,7 +60,12 @@
 			"venue_acronym": "FIXCONF",
 			"confidence": 0.87,
 			"cited_by_count": 18,
-			"low_confidence": false
+			"low_confidence": false,
+			"authors": [
+				"Ada Fixture",
+				"Chandra Example"
+			],
+			"n_authors": 2
 		},
 		{
 			"work_id": "WFIXTUREAAI",
@@ -64,7 +74,12 @@
 			"venue_acronym": "FIXCONF",
 			"confidence": 0.84,
 			"cited_by_count": 27,
-			"low_confidence": false
+			"low_confidence": false,
+			"authors": [
+				"Dmitri Sample",
+				"Ada Fixture"
+			],
+			"n_authors": 2
 		},
 		{
 			"work_id": "WFIXTUREAAJ",
@@ -73,7 +88,12 @@
 			"venue_acronym": "FIXCONF",
 			"confidence": 0.66,
 			"cited_by_count": 30,
-			"low_confidence": false
+			"low_confidence": false,
+			"authors": [
+				"Eun-ji Test",
+				"Bo Placeholder"
+			],
+			"n_authors": 2
 		}
 	],
 	"key_authors": [

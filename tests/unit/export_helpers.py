@@ -36,8 +36,9 @@ TABLES = {
         "primary_version_id VARCHAR, has_abstract BOOLEAN, cited_by_count INTEGER"
     ),
     "core_version": (
-        "version_id VARCHAR, work_id VARCHAR, venue_id VARCHAR, doi VARCHAR, dblp_key VARCHAR, "
-        "openalex_id VARCHAR, url_oa VARCHAR"
+        "version_id VARCHAR, work_id VARCHAR, venue_id VARCHAR, year SMALLINT, volume VARCHAR, "
+        "pages VARCHAR, doi VARCHAR, dblp_key VARCHAR, openalex_id VARCHAR, url_oa VARCHAR, "
+        "url_landing VARCHAR"
     ),
     "core_author": (
         "author_id VARCHAR, display_name VARCHAR, name_variants VARCHAR[], dblp_pid VARCHAR, "
@@ -85,16 +86,21 @@ ROWS = {
         "('W3','Third paper',2002,'proceedings-paper','P3',false,2)",
     ],
     "core_version": [
-        "('P1','W1','V1','10.1/x','conf/c/One00','W11','https://oa.example/1')",
-        "('P2','W2','V1',NULL,'conf/c/Two01',NULL,NULL)",
-        "('P3','W3','V1',NULL,NULL,NULL,NULL)",
+        "('P1','W1','V1',2000,'1','1-10','10.1/x','conf/c/One00','W11','https://oa.example/1',NULL)",
+        "('P2','W2','V1',2001,NULL,NULL,NULL,'conf/c/Two01',NULL,NULL,NULL)",
+        "('P3','W3','V1',2002,NULL,NULL,NULL,NULL,NULL,NULL,NULL)",
+        "('P1b','W1','V9',2001,'2',NULL,NULL,NULL,NULL,NULL,'https://j.example/1')",
     ],
     "core_author": [
         "('A1','Ada One',[]::VARCHAR[],'1/1','0000-0000-0000-0001')",
         "('A2','Bo Two',['B. Two'],NULL,NULL)",
     ],
     "core_authorship": ["('P1','A1',1)", "('P1','A2',2)", "('P2','A1',1)"],
-    "core_venue": ["('V1','CONF','A Conference','conference','core',1999,NULL,[]::VARCHAR[],NULL)"],
+    "core_venue": [
+        "('V1','CONF','A Conference','conference','core',1999,NULL,[]::VARCHAR[],NULL)",
+        "('V9','JRNL','A Journal','journal','core',1990,NULL,[]::VARCHAR[],NULL)",
+    ],
+    "core_citation": ["('W2','W1')", "('W3','W1')", "('W3','W2')", "('W3','WX')"],
     "core_topic": [
         "('a','Alpha',['alpha'],'The  top\ntopic.',0)",
         "('b','Beta',[]::VARCHAR[],'A child.',1)",

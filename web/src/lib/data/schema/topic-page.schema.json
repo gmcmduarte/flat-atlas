@@ -112,6 +112,14 @@
     "TopicPaper": {
       "additionalProperties": false,
       "properties": {
+        "authors": {
+          "description": "Names of the first authors (at most 3).",
+          "items": {
+            "type": "string"
+          },
+          "title": "Authors",
+          "type": "array"
+        },
         "cited_by_count": {
           "title": "Cited By Count",
           "type": "integer"
@@ -123,6 +131,10 @@
         "low_confidence": {
           "title": "Low Confidence",
           "type": "boolean"
+        },
+        "n_authors": {
+          "title": "N Authors",
+          "type": "integer"
         },
         "title": {
           "title": "Title",
@@ -146,6 +158,8 @@
         "title",
         "year",
         "venue_acronym",
+        "authors",
+        "n_authors",
         "confidence",
         "cited_by_count",
         "low_confidence"

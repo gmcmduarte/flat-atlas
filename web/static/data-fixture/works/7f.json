@@ -49,6 +49,44 @@
 			}
 		],
 		"fixture": true,
-		"tag_status": "tagged"
+		"tag_status": "tagged",
+		"versions": [
+			{
+				"venue_acronym": "FIXCONF",
+				"year": 2020,
+				"volume": null,
+				"pages": null,
+				"doi": null,
+				"url": null
+			}
+		],
+		"references": [
+			{
+				"work_id": "WFIXTUREAAF",
+				"title": "Fixture paper 6: a regular-language characterisation, sketched",
+				"year": 2013,
+				"venue_acronym": "FIXCONF",
+				"authors": [
+					"Ada Fixture",
+					"Chandra Example"
+				],
+				"n_authors": 2,
+				"cited_by_count": 18
+			}
+		],
+		"cited_by": [
+			{
+				"work_id": "WFIXTUREAAJ",
+				"title": "Fixture paper 10: operations on words, revisited for the fixture",
+				"year": 2023,
+				"venue_acronym": "FIXCONF",
+				"authors": [
+					"Eun-ji Test",
+					"Bo Placeholder"
+				],
+				"n_authors": 2,
+				"cited_by_count": 30
+			}
+		]
 	}
 }

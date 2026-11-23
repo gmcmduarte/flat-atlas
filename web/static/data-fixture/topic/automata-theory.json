@@ -41,7 +41,12 @@
 			"venue_acronym": "FIXCONF",
 			"confidence": 0.86,
 			"cited_by_count": 21,
-			"low_confidence": false
+			"low_confidence": false,
+			"authors": [
+				"Bo Placeholder",
+				"Dmitri Sample"
+			],
+			"n_authors": 2
 		},
 		{
 			"work_id": "WFIXTUREAAH",
@@ -50,7 +55,12 @@
 			"venue_acronym": "FIXCONF",
 			"confidence": 0.68,
 			"cited_by_count": 24,
-			"low_confidence": false
+			"low_confidence": false,
+			"authors": [
+				"Chandra Example",
+				"Eun-ji Test"
+			],
+			"n_authors": 2
 		}
 	],
 	"key_authors": [

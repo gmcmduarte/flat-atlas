@@ -16,11 +16,73 @@
 			}
 		],
 		"work_ids": [
-			"WFIXTUREAAA",
-			"WFIXTUREAAD",
+			"WFIXTUREAAI",
 			"WFIXTUREAAF",
-			"WFIXTUREAAI"
+			"WFIXTUREAAD",
+			"WFIXTUREAAA"
 		],
-		"fixture": true
+		"fixture": true,
+		"papers": [
+			{
+				"work_id": "WFIXTUREAAI",
+				"title": "Fixture paper 9: regular languages and a toy decision problem",
+				"year": 2020,
+				"venue_acronym": "FIXCONF",
+				"authors": [
+					"Dmitri Sample",
+					"Ada Fixture"
+				],
+				"n_authors": 2,
+				"cited_by_count": 27
+			},
+			{
+				"work_id": "WFIXTUREAAF",
+				"title": "Fixture paper 6: a regular-language characterisation, sketched",
+				"year": 2013,
+				"venue_acronym": "FIXCONF",
+				"authors": [
+					"Ada Fixture",
+					"Chandra Example"
+				],
+				"n_authors": 2,
+				"cited_by_count": 18
+			},
+			{
+				"work_id": "WFIXTUREAAD",
+				"title": "Fixture paper 4: words, languages and an example theorem",
+				"year": 2009,
+				"venue_acronym": "FIXCONF",
+				"authors": [
+					"Dmitri Sample",
+					"Ada Fixture"
+				],
+				"n_authors": 2,
+				"cited_by_count": 12
+			},
+			{
+				"work_id": "WFIXTUREAAA",
+				"title": "Fixture paper 1: closure of regular languages under a toy operation",
+				"year": 2003,
+				"venue_acronym": "FIXCONF",
+				"authors": [
+					"Ada Fixture",
+					"Chandra Example"
+				],
+				"n_authors": 2,
+				"cited_by_count": 3
+			}
+		],
+		"coauthors": [
+			{
+				"author_id": "AFIXTUREAAC",
+				"name": "Chandra Example",
+				"n_papers": 2
+			},
+			{
+				"author_id": "AFIXTUREAAD",
+				"name": "Dmitri Sample",
+				"n_papers": 2
+			}
+		]
 	}
 }

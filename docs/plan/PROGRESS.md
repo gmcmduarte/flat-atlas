@@ -1,18 +1,18 @@
 # Progress
 
 ## Current state (keep this section under 30 lines)
-- **Phase:** 0 (P0-00 open; P0-04 done), 1 started (P1-01 to P1-09 done; P1-09 in its PR, P1-01 to P1-08 merged)
-- **Last merged session:** P1-08 (PR #16): propagation, evaluation harness, held-out opened once; the pilot ships the bagged learned fusion (D-100, D-101)
-- **In progress:** P1-09 done, in its PR (branch `s/P1-09-aggregate-export`): aggregates, topic edges, map layout, release, static export (D-102). **The pilot ships the bagged learned fusion; the decision model and propagation are off (D-100)**; held-out F1 0.762 (level 0) and 0.700 (level 1)
-- **Next:** Guilherme merges the P1-09 PR (edges read and found sensible); then P1-10; Guilherme still opens `reports/eval-p1-08-tagger-3-084b04920e.html` and picks five works for `flatatlas tag --explain`
-- **Live site:** https://gmcmduarte.github.io/flat-atlas/ (fixture data only; redeploys on every push to `main`)
+- **Phase:** 0 (P0-00 open; P0-04 done), 1 started (P1-01 to P1-10 done; P1-10 in its PR, P1-01 to P1-09 merged)
+- **Last merged session:** P1-09 (PR #17): aggregates, topic edges, map layout, release, static export (D-102)
+- **In progress:** P1-10 done, in its PR (branch `s/P1-10-site-pages`): topic, paper, author, venue and search pages, five components, MiniSearch, Playwright smoke test (D-103). **The pilot ships the bagged learned fusion; the decision model and propagation are off (D-100)**
+- **Next:** Guilherme merges the P1-10 PR; then P1-11 (the map); Guilherme still opens `reports/eval-p1-08-tagger-3-084b04920e.html` and picks five works for `flatatlas tag --explain`
+- **Live site:** https://gmcmduarte.github.io/flat-atlas/ (fixture data only until P1-12; redeploys on every push to `main`; real data needs the release asset and the `SITE_DATA_TAG` variable, `docs/runbooks/publish-site.md`)
 - **Latest release:** `v2026.11.0` (local, `data/releases/`; 2,333 works, 20 files, 1.5 MB; not published)
 - **Known problems:** Semantic Scholar throttles our key far below the documented 1 request/s (HTTP 429 on 15 to 25 % of calls or more); a full title-match pass takes about 2 hours (D-72, `docs/notes/sources.md`). The DBLP API is behind a bot challenge (HTTP 202, Anubis); DBLP data comes from the dump Guilherme downloads by hand (D-49). Refreshing it is manual. After a new dump, run `venues scan-dump` and then `parse dblp` again.
 - **Waiting on Guilherme:** open the P1-08 report; five works for `flatatlas tag --explain`; the rest of P0-00 (branch protection, secret scanning, tmux, pre-commit install; S2 key is set in `.env`); reading the P1-04 report (a "done when" line of P1-04)
 
 ## Checklist
 **Phase 0** — [ ] P0-00 · [x] P0-01 · [x] P0-02 · [x] P0-03 · [x] P0-04
-**Phase 1** — [x] P1-01 · [x] P1-02 · [x] P1-03 · [x] P1-04 · [x] P1-05 · [x] P1-06 · [x] P1-06b · [x] P1-07 · [x] P1-07b · [x] P1-08 · [x] P1-09 · [ ] P1-10 · [ ] P1-11 · [ ] P1-12 · [ ] G1
+**Phase 1** — [x] P1-01 · [x] P1-02 · [x] P1-03 · [x] P1-04 · [x] P1-05 · [x] P1-06 · [x] P1-06b · [x] P1-07 · [x] P1-07b · [x] P1-08 · [x] P1-09 · [x] P1-10 · [ ] P1-11 · [ ] P1-12 · [ ] G1
 **Phase 2** — [ ] P2-01 · [ ] P2-02 · [ ] P2-03 · [ ] P2-04 · [ ] G2
 **Phase 3** — [ ] P3-00 · [ ] P3-01 · [ ] P3-02 · [ ] P3-03 · [ ] P3-04 · [ ] P3-05 · [ ] G3
 **Phase 4** — [ ] P4-01 · [ ] P4-02 · [ ] P4-03 · [ ] P4-04 · [ ] P4-05 · [ ] G4
@@ -20,6 +20,24 @@
 **Phase 6** — [ ] P6-01 · [ ] P6-02 · [ ] P6-03 · [ ] G6
 
 ## Log (newest first)
+
+### 2026-11-23 — P1-10 Site: topic, paper, author, venue pages and search (branch `s/P1-10-site-pages`)
+- **Built:** routes `/topic/[id]` and `/venue/[id]` (prerendered; 181 + 5 pages on the pilot data), `/paper/[id]`, `/author/[id]`, `/search` (client-rendered through the `404.html` fallback), `+error.svelte` (404 and load failure), navigation progress bar, skip link, footer from `meta.json`. Components `ConfidenceBadge`, `PaperList`, `TopicChips`, `YearSparkline`, `SearchBox` (ARIA combobox); `lib/provenance.ts` (plain-language provenance sentence), `lib/topics.ts` (breadcrumb for every parent path), `lib/sortPapers.ts`, `lib/search/engine.ts` (MiniSearch, lazy). Python side: one export-model change (D-103): references, citers, versions, author papers and co-authors, venue profile, authors on paper rows; types regenerated, fixtures extended (a weak-match work, an untagged work, search index, `meta.json`), 2 new export tests. CI: Playwright smoke test step; `docs/runbooks/publish-site.md`; an inert release-download step in the Pages workflow (needs the variable `SITE_DATA_TAG`). Dependencies added with Guilherme's yes: `minisearch`, `@playwright/test` (+ Chromium), Lighthouse run once with `npx`.
+- **Not built:** the map (P1-11); the Suggest button and static content pages (P1-12); a paged full paper list per topic (a topic page lists its 50 best-ranked papers); name variants in author search; matched phrases in the provenance sentence (no text is exported); venue analytics; a prebuilt search index.
+- **Surprises:** (1) The export lacked what three pages list (references and citers, an author's papers, anything on a venue); one model change fixed it (9.9 MB, was 6.7). (2) `PUBLIC_DATA_DIR` is baked into `.svelte-kit/generated` by `svelte-kit sync`, which `npm run check` and `build` re-run: a running dev server silently switched back to the fixture mid-session. Verification therefore used `PUBLIC_DATA_DIR=data npm run build` and `vite preview`. (3) The preview server dies when its `build/` folder is rebuilt underneath it. (4) Svelte trims whitespace between `{#each}` iterations and around `{#if}`, which glued author names together; the author list is now a `<ul>` with CSS commas. (5) Homebrew upgraded `simdjson` and `node` (26.12 to 26.13) while I was working, so `node` failed to start for about two minutes; nothing in the repo changed. (6) The first `uv run` of the session printed "Uninstalled 1 package / Installed 1 package" (I did not check which); the Python checks then ran as `.venv/bin/python -m pytest` (670 passed).
+- **Done when (evidence):**
+  - The four page types show real pilot data with no console errors: **pass**. Playwright against the real-data build, 10 URLs at 1280 px and at 375 px (home, 2 topics, 3 papers: tagged, weak match, untagged; author, venue, search, about): 0 console errors, 0 page errors, no horizontal overflow.
+  - Search finds the topic "state complexity", a known author and a known paper: **pass**. "state complexity" gives "State complexity of operations" first among topics, then "…of combined operations"; "Sakarovitch" gives Jacques Sakarovitch; "Holzer Kutrib" finds authors; "derivatives of regular expressions" finds the topic "Derivatives of regular expressions" and five papers (a Vitest case on the real index runs when `web/static/data/` exists).
+  - Every tag shows confidence and an understandable provenance: **pass**. A paper page prints, under each tag, "Confidence 96%. Based on topic words in the title (100%); similarity to the topic's example papers (99%); similarity to the topic description (95%). Method: learned combination of signals (fusion, tagger-3)."; weak matches say "weak match"; broader (inherited) topics carry a badge with an explanatory title. In topic lists the badge has a title only (no sentence), which is where the full provenance is one click away on the paper page.
+  - Lighthouse accessibility at least 90 on topic and paper pages: **pass**. Lighthouse 13.6.0, accessibility category, `vite preview` of the real-data build, Chrome for Testing 159: topic page 100 (mobile) and 100 (desktop); paper page 100 and 100; author 100 and venue 100 (mobile). Light colour scheme (the Lighthouse default); the dark scheme was checked by eye only.
+- **Checks:** in `web/`: `npm run check` 0 errors, `npm run lint` clean, `npm run test` 42 passed (8 files), `npm run build` done (`BASE_PATH=/flat-atlas`), `npm run test:e2e` 1 passed; `uv run pytest` 670 passed, `ruff check` and `ruff format --check` clean, `flatatlas export types --check` in sync.
+- **Hand-off to P1-11 (the map):**
+  - Pages link to topics with `resolve('/topic/[id]', { id })`; the map should do the same and link to the list view. `map.json` is read with `getDataSource(fetch).getMap()`; `MapNode` has `x`, `y`, `r`, `parent_id`, `ghost_parents`; nothing on the site uses it yet. Add `sigma`, `graphology` and a layout step only with Guilherme's yes (downloads).
+  - The home page (`+page.svelte`) still shows the plain top-level topic list: that list is the "equivalent list view" PLAN §11.4 asks for; put the map above it.
+  - `+layout.ts` already loads `topics` and `meta` for every page (`data.topics` is available in any page).
+  - `browserDataSource()` (in `lib/data/index.ts`) is the shared data source for code outside a load function.
+  - To run real data: `PUBLIC_DATA_DIR=data npm run build && npm run preview` (a dev server needs `PUBLIC_DATA_DIR=data` and must not be left running while `npm run check` or `build` runs, see surprise 2). `.claude/launch.json` (untracked) holds a preview config for the in-app browser.
+  - Smoke test: `npm run test:e2e` (builds the fixture and previews on port 4173; stop any other server on that port first).
 
 ### 2026-11-20 — P1-09 Aggregates, topic edges, map layout, release, static export (branch `s/P1-09-aggregate-export`)
 - **Built:** package `flatatlas.aggregate` (`config`, `membership`, `edges`, `topics`, `layout`, `stage`, `commands`), `flatatlas.release` (`checks`, `build`, `commands`), `flatatlas.export` (`models`, `typegen`, `static`, `commands`) and `config/aggregate.yaml`. Commands: `flatatlas aggregate [--limit N]`, `release build | verify <dir>`, `export static [--release DIR] [--out DIR]`, `export types [--check]`. Tables: `core_topic`, `core_topic_edge` (backbone + three lateral types), `agg_topic_year`, `agg_topic_author`, `agg_topic_venue`, `agg_topic_work` (new), `agg_map_layout` (in `data/warehouse/agg/`). 57 new tests (668 passed with the `ml` extra, 652 passed and 11 skipped without it, `uv run --isolated --offline`). Decision D-102; PLAN §4.3, §4.5, §4.7, §9.4, §11.2 updated.
@@ -309,6 +327,9 @@
 - **Hand-off to P0-00 / P0-01:** nothing exists except documents. P0-01 creates the Python project from scratch. Python must be pinned to 3.12 (the system has 3.15). `uv`, `git`, `gh`, `node`, `docker` are installed; `ollama` and `tmux` are not.
 
 ## Parking lot (ideas outside the current session; do not build)
+- A paged "all papers" list per topic (a topic page holds its 50 best-ranked papers); needs an export per topic page or a client-side query over `agg_topic_work` (found in P1-10).
+- Index author name variants in search (`Author.name_variants` is in the author shards, not in `search/index.json`) (found in P1-10).
+- A phrase-level provenance ("matched phrase 'shuffle product'") needs the matched text exported; decide with the abstract rule in DECISIONS first (found in P1-10).
 - `description_model: minilm` (twice the single-signal AP of SPECTER2 for `emb_desc`, no gain in cross-validated fusion F1; may matter for the 20 thin level-1 topics, found in P1-07) was **not** tried on the held-out set in P1-08: the set is opened, so a test is a second look. Try it after the next taxonomy version with a fresh held-out share.
 - Silver positives need more than OpenAlex agreement: only 4 % of (work, topic) cells have an OpenAlex mapping. Map more OpenAlex topics in `topics.yaml` at the next taxonomy review, or add `src_msc` (Phase 6) (found in P1-07).
 - Replace the 46 held-out `seed_works` in `topics.yaml` (list in `taxonomy/proposals/seed-works-heldout.md`).

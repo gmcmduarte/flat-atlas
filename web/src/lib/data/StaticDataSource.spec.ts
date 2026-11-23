@@ -61,11 +61,21 @@ describe('StaticDataSource', () => {
 		expect(await s.getVenue('VNOSUCHVENU')).toBeNull();
 	});
 
-	it('searches topic names and loads the map', async () => {
+	it('searches the four kinds and loads the map', async () => {
 		const s = source();
-		expect((await s.search('automata')).topics.map((t) => t.topic_id)).toContain('finite-automata');
+		const found = await s.search('automata');
+		expect(found.topics.map((t) => t.topic_id)).toContain('finite-automata');
+		expect((await s.search('fixture')).authors.map((a) => a.name)).toContain('Ada Fixture');
+		expect((await s.search('FIXCONF')).venues).toHaveLength(1);
+		expect((await s.search('closure regular')).works.map((w) => w.work_id)).toContain(
+			'WFIXTUREAAA'
+		);
 		expect((await s.search('   ')).topics).toEqual([]);
 		expect((await s.getMap()).nodes).toHaveLength(5);
+	});
+
+	it('reads meta.json', async () => {
+		expect((await source().getMeta())?.fixture).toBe(true);
 	});
 
 	it('reports a failing host instead of returning data', async () => {

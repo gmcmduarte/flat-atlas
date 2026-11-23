@@ -102,6 +102,49 @@ def test_authors_list_their_works_newest_first(exported):
     assert authors["A2"]["name_variants"] == ["B. Two"]
 
 
+def test_a_work_page_has_versions_and_citation_links(exported):
+    out, *_ = exported
+    works = {}
+    for path in (out / "works").glob("*.json"):
+        works |= json.loads(path.read_text("utf-8"))
+    w1 = works["W1"]
+    # the primary version first, then the journal version
+    assert [(v["venue_acronym"], v["year"], v["volume"]) for v in w1["versions"]] == [
+        ("CONF", 2000, "1"),
+        ("JRNL", 2001, "2"),
+    ]
+    assert w1["versions"][0]["url"] == "https://doi.org/10.1/x"
+    assert w1["versions"][1]["url"] == "https://j.example/1"
+    # W2 and W3 cite W1; the citation of the unknown work WX is dropped
+    assert [c["work_id"] for c in w1["cited_by"]] == ["W3", "W2"]
+    assert [c["work_id"] for c in works["W3"]["references"]] == ["W1", "W2"]
+    assert w1["references"] == []
+    card = w1["cited_by"][1]
+    assert card["authors"] == ["Ada One"] and card["n_authors"] == 1
+
+
+def test_author_and_venue_pages_have_what_the_site_lists(exported):
+    out, *_ = exported
+    authors = {}
+    for path in (out / "authors").glob("*.json"):
+        authors |= json.loads(path.read_text("utf-8"))
+    a1 = authors["A1"]
+    assert [p["work_id"] for p in a1["papers"]] == ["W2", "W1"]
+    assert a1["papers"][1]["authors"] == ["Ada One", "Bo Two"]
+    assert a1["coauthors"] == [{"author_id": "A2", "name": "Bo Two", "n_papers": 1}]
+    venue = read(out, "venue/V1.json")
+    assert venue["n_works"] == 3
+    assert venue["year_series"] == [
+        {"year": 2000, "papers": 1},
+        {"year": 2001, "papers": 1},
+        {"year": 2002, "papers": 1},
+    ]
+    # only level-0 topics with papers
+    assert venue["top_topics"] == [{"topic_id": "a", "name": "Alpha", "papers": 1}]
+    assert [p["work_id"] for p in venue["top_papers"]] == ["W1", "W3", "W2"]
+    assert read(out, "venue/V9.json")["n_works"] == 0
+
+
 def test_map_search_and_meta(exported):
     out, result, release = exported
     nodes = {n["topic_id"]: n for n in read(out, "map.json")["nodes"]}
@@ -175,3 +218,5 @@ def test_the_hand_written_fixtures_follow_the_same_models():
     for path in (FIXTURE / "venue").glob("*.json"):
         m.Venue.model_validate_json(path.read_text("utf-8"))
     m.MapLayout.model_validate_json((FIXTURE / "map.json").read_text("utf-8"))
+    m.SearchIndex.model_validate_json((FIXTURE / "search" / "index.json").read_text("utf-8"))
+    m.DataInfo.model_validate_json((FIXTURE / "meta.json").read_text("utf-8"))

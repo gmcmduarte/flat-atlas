@@ -24,3 +24,14 @@ export function getDataSource(fetchFn: typeof fetch): DataSource {
 		`${root.endsWith('/') ? root : `${root}/`}${PUBLIC_DATA_DIR}`
 	);
 }
+
+let shared: DataSource | undefined;
+
+/**
+ * One data source for everything that runs in the browser outside a load function (the search
+ * box and the search page), so the search index is fetched and built once. Browser only.
+ */
+export function browserDataSource(): DataSource {
+	shared ??= getDataSource(fetch);
+	return shared;
+}

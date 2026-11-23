@@ -1,4 +1,98 @@
 {
+  "$defs": {
+    "VenueTopic": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "papers": {
+          "title": "Papers",
+          "type": "integer"
+        },
+        "topic_id": {
+          "title": "Topic Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "topic_id",
+        "name",
+        "papers"
+      ],
+      "title": "VenueTopic",
+      "type": "object"
+    },
+    "VenueYear": {
+      "additionalProperties": false,
+      "properties": {
+        "papers": {
+          "title": "Papers",
+          "type": "integer"
+        },
+        "year": {
+          "title": "Year",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "year",
+        "papers"
+      ],
+      "title": "VenueYear",
+      "type": "object"
+    },
+    "WorkSummary": {
+      "additionalProperties": false,
+      "description": "A work as listed on another page (references, citers, an author's or venue's papers).",
+      "properties": {
+        "authors": {
+          "description": "Names of the first authors (at most 3).",
+          "items": {
+            "type": "string"
+          },
+          "title": "Authors",
+          "type": "array"
+        },
+        "cited_by_count": {
+          "title": "Cited By Count",
+          "type": "integer"
+        },
+        "n_authors": {
+          "title": "N Authors",
+          "type": "integer"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "venue_acronym": {
+          "title": "Venue Acronym",
+          "type": "string"
+        },
+        "work_id": {
+          "title": "Work Id",
+          "type": "string"
+        },
+        "year": {
+          "title": "Year",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "work_id",
+        "title",
+        "year",
+        "venue_acronym",
+        "authors",
+        "n_authors",
+        "cited_by_count"
+      ],
+      "title": "WorkSummary",
+      "type": "object"
+    }
+  },
   "additionalProperties": false,
   "description": "``venue/<id>.json``.",
   "properties": {
@@ -53,6 +147,10 @@
       ],
       "title": "Last Year"
     },
+    "n_works": {
+      "title": "N Works",
+      "type": "integer"
+    },
     "name": {
       "title": "Name",
       "type": "string"
@@ -73,9 +171,32 @@
       "title": "Tier",
       "type": "string"
     },
+    "top_papers": {
+      "description": "The 30 most cited works.",
+      "items": {
+        "$ref": "#/$defs/WorkSummary"
+      },
+      "title": "Top Papers",
+      "type": "array"
+    },
+    "top_topics": {
+      "description": "Level-0 topics with most papers, at most 10.",
+      "items": {
+        "$ref": "#/$defs/VenueTopic"
+      },
+      "title": "Top Topics",
+      "type": "array"
+    },
     "venue_id": {
       "title": "Venue Id",
       "type": "string"
+    },
+    "year_series": {
+      "items": {
+        "$ref": "#/$defs/VenueYear"
+      },
+      "title": "Year Series",
+      "type": "array"
     }
   },
   "required": [
@@ -87,7 +208,11 @@
     "first_year",
     "last_year",
     "successor_of",
-    "homepage"
+    "homepage",
+    "n_works",
+    "year_series",
+    "top_topics",
+    "top_papers"
   ],
   "title": "Venue",
   "type": "object"

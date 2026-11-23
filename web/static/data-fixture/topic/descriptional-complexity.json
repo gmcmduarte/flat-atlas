@@ -46,7 +46,12 @@
 			"venue_acronym": "FIXCONF",
 			"confidence": 0.91,
 			"cited_by_count": 6,
-			"low_confidence": false
+			"low_confidence": false,
+			"authors": [
+				"Bo Placeholder",
+				"Dmitri Sample"
+			],
+			"n_authors": 2
 		},
 		{
 			"work_id": "WFIXTUREAAH",
@@ -55,7 +60,12 @@
 			"venue_acronym": "FIXCONF",
 			"confidence": 0.85,
 			"cited_by_count": 24,
-			"low_confidence": false
+			"low_confidence": false,
+			"authors": [
+				"Chandra Example",
+				"Eun-ji Test"
+			],
+			"n_authors": 2
 		},
 		{
 			"work_id": "WFIXTUREAAC",
@@ -64,7 +74,12 @@
 			"venue_acronym": "FIXCONF",
 			"confidence": 0.73,
 			"cited_by_count": 9,
-			"low_confidence": false
+			"low_confidence": false,
+			"authors": [
+				"Chandra Example",
+				"Eun-ji Test"
+			],
+			"n_authors": 2
 		}
 	],
 	"key_authors": [

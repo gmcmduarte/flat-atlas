@@ -67,6 +67,31 @@
 			}
 		],
 		"fixture": true,
-		"tag_status": "tagged"
+		"tag_status": "tagged",
+		"versions": [
+			{
+				"venue_acronym": "FIXCONF",
+				"year": 2018,
+				"volume": null,
+				"pages": null,
+				"doi": null,
+				"url": null
+			}
+		],
+		"references": [
+			{
+				"work_id": "WFIXTUREAAB",
+				"title": "Fixture paper 2: a state-complexity bound for a toy operation",
+				"year": 2005,
+				"venue_acronym": "FIXCONF",
+				"authors": [
+					"Bo Placeholder",
+					"Dmitri Sample"
+				],
+				"n_authors": 2,
+				"cited_by_count": 6
+			}
+		],
+		"cited_by": []
 	}
 }

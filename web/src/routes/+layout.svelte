@@ -1,16 +1,28 @@
 <script lang="ts">
 	import favicon from '#lib/assets/favicon.svg';
+	import SearchBox from '#lib/components/SearchBox.svelte';
+	import { navigating } from '$app/state';
 	import { resolve } from '$app/paths';
 	import type { LayoutProps } from './$types';
 	import './layout.css';
 
-	let { children }: LayoutProps = $props();
+	let { data, children }: LayoutProps = $props();
+
+	const meta = $derived(data.meta);
 </script>
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
-	<title>The FLAT Atlas</title>
 </svelte:head>
+
+<a class="skip" href="#main">Skip to the content</a>
+
+{#if navigating.to}
+	<div class="loading" role="status">
+		<span class="bar"></span>
+		<span class="sr-only">Loading…</span>
+	</div>
+{/if}
 
 <div class="page">
 	<header>
@@ -19,17 +31,10 @@
 			<a href={resolve('/')}>Topics</a>
 			<a href={resolve('/about')}>About</a>
 		</nav>
-		<form role="search" onsubmit={(e) => e.preventDefault()}>
-			<input
-				type="search"
-				placeholder="Search (coming soon)"
-				aria-label="Search (not available yet)"
-				disabled
-			/>
-		</form>
+		<SearchBox />
 	</header>
 
-	<main>
+	<main id="main" tabindex="-1">
 		{@render children()}
 	</main>
 
@@ -42,8 +47,15 @@
 			full texts.
 		</p>
 		<p>
-			<a href="https://github.com/gmcmduarte/flat-atlas">Source on GitHub</a> · Early development: everything
-			shown here is fixture data.
+			<a href="https://github.com/gmcmduarte/flat-atlas">Source on GitHub</a> ·
+			{#if meta?.fixture}
+				Early development: everything shown here is fixture data, not the real corpus.
+			{:else if meta}
+				Data: release {meta.release} ({meta.date}), {meta.works.toLocaleString('en')} works, tagged with
+				{meta.tagger_version}. Topic assignments are automatic and carry a confidence.
+			{:else}
+				Early development.
+			{/if}
 		</p>
 	</footer>
 </div>

@@ -28,11 +28,85 @@
 			}
 		],
 		"work_ids": [
-			"WFIXTUREAAB",
-			"WFIXTUREAAE",
+			"WFIXTUREAAJ",
 			"WFIXTUREAAG",
-			"WFIXTUREAAJ"
+			"WFIXTUREAAK",
+			"WFIXTUREAAE",
+			"WFIXTUREAAB"
 		],
-		"fixture": true
+		"fixture": true,
+		"papers": [
+			{
+				"work_id": "WFIXTUREAAJ",
+				"title": "Fixture paper 10: operations on words, revisited for the fixture",
+				"year": 2023,
+				"venue_acronym": "FIXCONF",
+				"authors": [
+					"Eun-ji Test",
+					"Bo Placeholder"
+				],
+				"n_authors": 2,
+				"cited_by_count": 30
+			},
+			{
+				"work_id": "WFIXTUREAAG",
+				"title": "Fixture paper 7: automata over a toy alphabet",
+				"year": 2015,
+				"venue_acronym": "FIXCONF",
+				"authors": [
+					"Bo Placeholder",
+					"Dmitri Sample"
+				],
+				"n_authors": 2,
+				"cited_by_count": 21
+			},
+			{
+				"work_id": "WFIXTUREAAK",
+				"title": "Fixture paper 11: a note that only weakly matches a topic",
+				"year": 2015,
+				"venue_acronym": "FIXCONF",
+				"authors": [
+					"Bo Placeholder"
+				],
+				"n_authors": 1,
+				"cited_by_count": 0
+			},
+			{
+				"work_id": "WFIXTUREAAE",
+				"title": "Fixture paper 5: minimal automata for a toy family",
+				"year": 2011,
+				"venue_acronym": "FIXCONF",
+				"authors": [
+					"Eun-ji Test",
+					"Bo Placeholder"
+				],
+				"n_authors": 2,
+				"cited_by_count": 15
+			},
+			{
+				"work_id": "WFIXTUREAAB",
+				"title": "Fixture paper 2: a state-complexity bound for a toy operation",
+				"year": 2005,
+				"venue_acronym": "FIXCONF",
+				"authors": [
+					"Bo Placeholder",
+					"Dmitri Sample"
+				],
+				"n_authors": 2,
+				"cited_by_count": 6
+			}
+		],
+		"coauthors": [
+			{
+				"author_id": "AFIXTUREAAD",
+				"name": "Dmitri Sample",
+				"n_papers": 2
+			},
+			{
+				"author_id": "AFIXTUREAAE",
+				"name": "Eun-ji Test",
+				"n_papers": 2
+			}
+		]
 	}
 }

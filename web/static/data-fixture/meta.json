@@ -1,0 +1,16 @@
+{
+	"release": "fixture",
+	"date": "2026-11-20",
+	"tagger_version": "tagger-3",
+	"taxonomy_version": "1",
+	"aggregate_version": "agg-1",
+	"works": 12,
+	"works_by_tag_status": {
+		"low_confidence": 1,
+		"tagged": 10,
+		"untagged": 1
+	},
+	"topics": 5,
+	"source_fetch_dates": {},
+	"fixture": true
+}

@@ -1,5 +1,16 @@
 import type { DataSource } from './DataSource';
-import type { Author, MapLayout, SearchResults, Topic, TopicPage, Venue, Work } from './types';
+import type {
+	Author,
+	DataInfo,
+	MapLayout,
+	SearchIndex,
+	SearchResults,
+	Topic,
+	TopicPage,
+	Venue,
+	Work
+} from './types';
+import type { SearchEngine } from '../search/engine';
 
 /**
  * Shard name of an ID: the first two hex characters of its SHA-256 (256 shards, PLAN §11.2).
@@ -31,6 +42,8 @@ export class StaticDataSource implements DataSource {
 		if (!pending) {
 			pending = this.load<T>(path);
 			this.cache.set(path, pending);
+			// A failed load is not kept, so the next call tries again.
+			pending.catch(() => this.cache.delete(path));
 		}
 		return pending;
 	}
@@ -73,23 +86,28 @@ export class StaticDataSource implements DataSource {
 		return this.json<Venue>(`venue/${encodeURIComponent(venueId)}.json`);
 	}
 
-	/**
-	 * Placeholder: matches topic names and descriptions only. The MiniSearch index
-	 * (`search/index.json`) replaces this later.
-	 */
-	async search(query: string): Promise<SearchResults> {
-		const q = query.trim().toLowerCase();
-		const topics = q
-			? (await this.getTopics()).filter(
-					(t) => t.name.toLowerCase().includes(q) || t.description.toLowerCase().includes(q)
-				)
-			: [];
-		return {
-			topics: topics.map((t) => ({ topic_id: t.topic_id, name: t.name })),
-			authors: [],
-			venues: [],
-			works: []
-		};
+	private engine: Promise<SearchEngine> | undefined;
+
+	/** The search index is fetched and built on the first search only (it is the biggest file). */
+	private searchEngine(): Promise<SearchEngine> {
+		this.engine ??= (async () => {
+			const [{ SearchEngine }, index] = await Promise.all([
+				import('../search/engine'),
+				this.json<SearchIndex>('search/index.json')
+			]);
+			return new SearchEngine(index ?? { topics: [], authors: [], venues: [], works: [] });
+		})();
+		// A failed load is not kept, so the next search tries again.
+		this.engine.catch(() => (this.engine = undefined));
+		return this.engine;
+	}
+
+	async search(query: string, limit = 10): Promise<SearchResults> {
+		return (await this.searchEngine()).search(query, limit);
+	}
+
+	getMeta(): Promise<DataInfo | null> {
+		return this.json<DataInfo>('meta.json');
 	}
 
 	async getMap(): Promise<MapLayout> {

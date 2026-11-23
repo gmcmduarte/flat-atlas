@@ -67,6 +67,31 @@
 			}
 		],
 		"fixture": true,
-		"tag_status": "tagged"
+		"tag_status": "tagged",
+		"versions": [
+			{
+				"venue_acronym": "FIXCONF",
+				"year": 2015,
+				"volume": null,
+				"pages": null,
+				"doi": null,
+				"url": null
+			}
+		],
+		"references": [
+			{
+				"work_id": "WFIXTUREAAE",
+				"title": "Fixture paper 5: minimal automata for a toy family",
+				"year": 2011,
+				"venue_acronym": "FIXCONF",
+				"authors": [
+					"Eun-ji Test",
+					"Bo Placeholder"
+				],
+				"n_authors": 2,
+				"cited_by_count": 15
+			}
+		],
+		"cited_by": []
 	}
 }

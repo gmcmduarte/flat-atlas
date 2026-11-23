@@ -167,6 +167,55 @@
       "title": "WorkLinks",
       "type": "object"
     },
+    "WorkSummary": {
+      "additionalProperties": false,
+      "description": "A work as listed on another page (references, citers, an author's or venue's papers).",
+      "properties": {
+        "authors": {
+          "description": "Names of the first authors (at most 3).",
+          "items": {
+            "type": "string"
+          },
+          "title": "Authors",
+          "type": "array"
+        },
+        "cited_by_count": {
+          "title": "Cited By Count",
+          "type": "integer"
+        },
+        "n_authors": {
+          "title": "N Authors",
+          "type": "integer"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "venue_acronym": {
+          "title": "Venue Acronym",
+          "type": "string"
+        },
+        "work_id": {
+          "title": "Work Id",
+          "type": "string"
+        },
+        "year": {
+          "title": "Year",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "work_id",
+        "title",
+        "year",
+        "venue_acronym",
+        "authors",
+        "n_authors",
+        "cited_by_count"
+      ],
+      "title": "WorkSummary",
+      "type": "object"
+    },
     "WorkVenue": {
       "additionalProperties": false,
       "properties": {
@@ -185,6 +234,74 @@
       ],
       "title": "WorkVenue",
       "type": "object"
+    },
+    "WorkVersion": {
+      "additionalProperties": false,
+      "description": "One published version of a work (a conference paper and its journal version, say).",
+      "properties": {
+        "doi": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Doi"
+        },
+        "pages": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Pages"
+        },
+        "url": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Url"
+        },
+        "venue_acronym": {
+          "title": "Venue Acronym",
+          "type": "string"
+        },
+        "volume": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Volume"
+        },
+        "year": {
+          "title": "Year",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "venue_acronym",
+        "year",
+        "volume",
+        "pages",
+        "doi",
+        "url"
+      ],
+      "title": "WorkVersion",
+      "type": "object"
     }
   },
   "additionalProperties": false,
@@ -195,6 +312,14 @@
         "$ref": "#/$defs/WorkAuthor"
       },
       "title": "Authors",
+      "type": "array"
+    },
+    "cited_by": {
+      "description": "Works in the corpus that cite this work.",
+      "items": {
+        "$ref": "#/$defs/WorkSummary"
+      },
+      "title": "Cited By",
       "type": "array"
     },
     "cited_by_count": {
@@ -227,6 +352,14 @@
     "links": {
       "$ref": "#/$defs/WorkLinks"
     },
+    "references": {
+      "description": "Works in the corpus that this work cites.",
+      "items": {
+        "$ref": "#/$defs/WorkSummary"
+      },
+      "title": "References",
+      "type": "array"
+    },
     "tag_status": {
       "enum": [
         "tagged",
@@ -249,6 +382,14 @@
     },
     "venue": {
       "$ref": "#/$defs/WorkVenue"
+    },
+    "versions": {
+      "description": "All versions; the first is the primary one.",
+      "items": {
+        "$ref": "#/$defs/WorkVersion"
+      },
+      "title": "Versions",
+      "type": "array"
     },
     "work_id": {
       "title": "Work Id",
@@ -274,7 +415,10 @@
     "links",
     "cited_by_count",
     "tag_status",
-    "tags"
+    "tags",
+    "versions",
+    "references",
+    "cited_by"
   ],
   "title": "Work",
   "type": "object"

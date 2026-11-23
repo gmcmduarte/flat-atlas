@@ -6,7 +6,7 @@
 		"level": 0,
 		"paper_count": 3,
 		"volume": 2.7,
-		"n_low_confidence": 0
+		"n_low_confidence": 1
 	},
 	"parents": [],
 	"children": [
@@ -41,7 +41,12 @@
 			"venue_acronym": "FIXCONF",
 			"confidence": 0.89,
 			"cited_by_count": 12,
-			"low_confidence": false
+			"low_confidence": false,
+			"authors": [
+				"Dmitri Sample",
+				"Ada Fixture"
+			],
+			"n_authors": 2
 		},
 		{
 			"work_id": "WFIXTUREAAJ",
@@ -50,7 +55,12 @@
 			"venue_acronym": "FIXCONF",
 			"confidence": 0.83,
 			"cited_by_count": 30,
-			"low_confidence": false
+			"low_confidence": false,
+			"authors": [
+				"Eun-ji Test",
+				"Bo Placeholder"
+			],
+			"n_authors": 2
 		},
 		{
 			"work_id": "WFIXTUREAAF",
@@ -59,7 +69,25 @@
 			"venue_acronym": "FIXCONF",
 			"confidence": 0.7,
 			"cited_by_count": 18,
-			"low_confidence": false
+			"low_confidence": false,
+			"authors": [
+				"Ada Fixture",
+				"Chandra Example"
+			],
+			"n_authors": 2
+		},
+		{
+			"work_id": "WFIXTUREAAK",
+			"title": "Fixture paper 11: a note that only weakly matches a topic",
+			"year": 2015,
+			"venue_acronym": "FIXCONF",
+			"authors": [
+				"Bo Placeholder"
+			],
+			"n_authors": 1,
+			"confidence": 0.27,
+			"cited_by_count": 0,
+			"low_confidence": true
 		}
 	],
 	"key_authors": [

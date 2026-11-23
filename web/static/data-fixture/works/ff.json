@@ -67,6 +67,55 @@
 			}
 		],
 		"fixture": true,
-		"tag_status": "tagged"
+		"tag_status": "tagged",
+		"versions": [
+			{
+				"venue_acronym": "FIXCONF",
+				"year": 2005,
+				"volume": null,
+				"pages": null,
+				"doi": null,
+				"url": null
+			}
+		],
+		"references": [],
+		"cited_by": [
+			{
+				"work_id": "WFIXTUREAAH",
+				"title": "Fixture paper 8: descriptional measures, an example survey",
+				"year": 2018,
+				"venue_acronym": "FIXCONF",
+				"authors": [
+					"Chandra Example",
+					"Eun-ji Test"
+				],
+				"n_authors": 2,
+				"cited_by_count": 24
+			},
+			{
+				"work_id": "WFIXTUREAAE",
+				"title": "Fixture paper 5: minimal automata for a toy family",
+				"year": 2011,
+				"venue_acronym": "FIXCONF",
+				"authors": [
+					"Eun-ji Test",
+					"Bo Placeholder"
+				],
+				"n_authors": 2,
+				"cited_by_count": 15
+			},
+			{
+				"work_id": "WFIXTUREAAC",
+				"title": "Fixture paper 3: nondeterminism and succinctness, an illustration",
+				"year": 2007,
+				"venue_acronym": "FIXCONF",
+				"authors": [
+					"Chandra Example",
+					"Eun-ji Test"
+				],
+				"n_authors": 2,
+				"cited_by_count": 9
+			}
+		]
 	}
 }
