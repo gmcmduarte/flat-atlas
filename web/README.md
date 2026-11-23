@@ -25,3 +25,17 @@ Files in `static/data-fixture/` follow PLAN §11.2: `topics.json`, `topic/<id>.j
 `works/<shard>.json`, `authors/<shard>.json`, `venue/<id>.json`, `map.json`. A shard is the first
 two hex characters of the SHA-256 of the ID (`shardOf` in `StaticDataSource.ts`); the pipeline must
 use the same rule.
+
+## Images
+
+`static/favicon.svg`, `static/apple-touch-icon.png` (rendered from the favicon), `static/og-source.svg`
+and `static/og.png` (the social preview, rendered from `og-source.svg` with the Chromium of
+Playwright) are original artwork of this project, drawn from plain shapes: no third-party image,
+icon or font is used, and the images contain no text. They are published under the same licences as
+the repository (code MIT). Do not add third-party artwork without a licence note here.
+
+## Site address
+
+`src/lib/site.ts` holds the public address (`SITE_URL`, `SITE_BASE`) and the repository. They end up
+in the `og:` and canonical tags and in the pre-filled "Suggest a change" links (`src/lib/suggest.ts`
+puts only public values in those links). A custom domain means editing that file.

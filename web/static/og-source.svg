@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <title>The FLAT Atlas: a map of formal languages and automata theory</title>
+  <!-- Original artwork of this project (no third-party image, no font, no text): bubbles inside
+       bubbles, the shape of the topic map. Rendered to og.png with the Chromium of Playwright. -->
+  <rect width="1200" height="630" fill="#12161d"/>
+  <g fill="none" stroke="#2b3340" stroke-width="2">
+    <path d="M300 300 L560 230"/><path d="M560 230 L840 330"/><path d="M840 330 L930 150"/>
+    <path d="M300 300 L330 470"/><path d="M330 470 L610 450"/><path d="M610 450 L840 330"/>
+    <path d="M560 230 L610 450"/><path d="M840 330 L1000 470"/>
+  </g>
+  <!-- top-level bubbles with their sub-topic bubbles -->
+  <circle cx="300" cy="300" r="150" fill="#1f5fbf" fill-opacity="0.35" stroke="#7db0ff" stroke-width="3"/>
+  <circle cx="250" cy="270" r="58" fill="#7db0ff"/><circle cx="355" cy="250" r="40" fill="#b9d4ff"/>
+  <circle cx="330" cy="352" r="46" fill="#5b92e6"/><circle cx="235" cy="365" r="24" fill="#d5e5ff"/>
+
+  <circle cx="610" cy="215" r="110" fill="#d9822b" fill-opacity="0.30" stroke="#ffc680" stroke-width="3"/>
+  <circle cx="575" cy="200" r="48" fill="#ffc680"/><circle cx="650" cy="250" r="34" fill="#ffdfb5"/>
+  <circle cx="640" cy="165" r="20" fill="#f0a64d"/>
+
+  <circle cx="860" cy="340" r="130" fill="#2a9d6f" fill-opacity="0.30" stroke="#8fe0c0" stroke-width="3"/>
+  <circle cx="825" cy="320" r="56" fill="#8fe0c0"/><circle cx="905" cy="385" r="38" fill="#c3f2dd"/>
+  <circle cx="900" cy="290" r="24" fill="#5cc79b"/>
+
+  <circle cx="955" cy="140" r="70" fill="#9b5de5" fill-opacity="0.30" stroke="#d3b4ff" stroke-width="3"/>
+  <circle cx="940" cy="128" r="30" fill="#d3b4ff"/><circle cx="980" cy="168" r="18" fill="#e9dbff"/>
+
+  <circle cx="610" cy="470" r="90" fill="#d1495b" fill-opacity="0.30" stroke="#ff9aa8" stroke-width="3"/>
+  <circle cx="590" cy="455" r="38" fill="#ff9aa8"/><circle cx="640" cy="500" r="24" fill="#ffd0d6"/>
+
+  <circle cx="330" cy="500" r="52" fill="#e0b320" fill-opacity="0.30" stroke="#ffe27a" stroke-width="3"/>
+  <circle cx="320" cy="495" r="24" fill="#ffe27a"/>
+
+  <circle cx="1010" cy="480" r="62" fill="#3aa0c8" fill-opacity="0.30" stroke="#9adcf5" stroke-width="3"/>
+  <circle cx="1000" cy="470" r="26" fill="#9adcf5"/><circle cx="1035" cy="505" r="15" fill="#cdeefb"/>
+
+  <circle cx="110" cy="110" r="46" fill="#7a8bb0" fill-opacity="0.30" stroke="#b6c2dd" stroke-width="3"/>
+  <circle cx="110" cy="110" r="18" fill="#b6c2dd"/>
+  <circle cx="150" cy="560" r="38" fill="#4fb8b0" fill-opacity="0.30" stroke="#a6e6e0" stroke-width="3"/>
+  <circle cx="150" cy="560" r="14" fill="#a6e6e0"/>
+  <circle cx="1110" cy="300" r="42" fill="#c2639b" fill-opacity="0.30" stroke="#f2b3d6" stroke-width="3"/>
+  <circle cx="1110" cy="300" r="16" fill="#f2b3d6"/>
+</svg>

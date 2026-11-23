@@ -5,6 +5,9 @@
 	--accent: #1f5fbf;
 	--line: #d9dee7;
 	--chip: #eef2f8;
+	--banner-bg: #fff4d6;
+	--banner-fg: #3d2f00;
+	--banner-line: #ecd9a0;
 	font-family:
 		system-ui,
 		-apple-system,
@@ -24,6 +27,9 @@
 		--accent: #7db0ff;
 		--line: #2b3340;
 		--chip: #1d242f;
+		--banner-bg: #2b2410;
+		--banner-fg: #f2e2b0;
+		--banner-line: #4a3f1c;
 	}
 }
 
@@ -205,4 +211,62 @@ main:focus {
 	h1 {
 		font-size: 1.5rem;
 	}
+}
+
+/* Reading pages (About, Methods, Sources, Cite) */
+.prose {
+	max-width: 44rem;
+}
+
+.prose h2 {
+	margin-top: 2rem;
+}
+
+.prose h3 {
+	margin: 1.4rem 0 0.2rem;
+	font-size: 1.02rem;
+}
+
+.prose table {
+	border-collapse: collapse;
+	width: 100%;
+	margin: 0.8rem 0;
+	font-size: 0.95rem;
+}
+
+.prose th,
+.prose td {
+	text-align: left;
+	vertical-align: top;
+	padding: 0.4rem 0.6rem;
+	border-bottom: 1px solid var(--line);
+}
+
+.prose th {
+	font-weight: 600;
+}
+
+.prose .scroll {
+	overflow-x: auto;
+}
+
+.prose pre {
+	overflow-x: auto;
+	padding: 0.8rem 1rem;
+	border: 1px solid var(--line);
+	border-radius: 0.4rem;
+	background: var(--chip);
+	font-size: 0.85rem;
+	line-height: 1.45;
+}
+
+.prose .note {
+	padding: 0.6rem 0.9rem;
+	border-left: 4px solid var(--accent);
+	background: var(--chip);
+	border-radius: 0 0.4rem 0.4rem 0;
+}
+
+.prose .lead {
+	font-size: 1.1rem;
 }
