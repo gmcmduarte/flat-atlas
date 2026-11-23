@@ -1,4 +1,13 @@
-import type { Author, MapLayout, SearchResults, Topic, TopicPage, Venue, Work } from './types';
+import type {
+	Author,
+	DataInfo,
+	MapLayout,
+	SearchResults,
+	Topic,
+	TopicPage,
+	Venue,
+	Work
+} from './types';
 
 /**
  * What the pages need from the data. Two implementations: `StaticDataSource` (JSON files, the
@@ -13,6 +22,8 @@ export interface DataSource {
 	getWork(workId: string): Promise<Work | null>;
 	getAuthor(authorId: string): Promise<Author | null>;
 	getVenue(venueId: string): Promise<Venue | null>;
-	search(query: string): Promise<SearchResults>;
+	/** Up to `limit` results per group (topics, authors, venues, works). */
+	search(query: string, limit?: number): Promise<SearchResults>;
+	getMeta(): Promise<DataInfo | null>;
 	getMap(): Promise<MapLayout>;
 }

@@ -1,5 +1,9 @@
 <script lang="ts">
 	import ConfidenceBadge from '#lib/components/ConfidenceBadge.svelte';
+	import PaperList from '#lib/components/PaperList.svelte';
+	import TopicChips from '#lib/components/TopicChips.svelte';
+	import YearSparkline from '#lib/components/YearSparkline.svelte';
+	import { ancestorPaths } from '#lib/topics.js';
 	import { resolve } from '$app/paths';
 	import type { TopicEdge } from '#lib/data/index.js';
 	import type { PageProps } from './$types';
@@ -7,25 +11,38 @@
 	let { data }: PageProps = $props();
 
 	const page = $derived(data.page);
+	const topic = $derived(page.topic);
+	const paths = $derived(ancestorPaths(data.topics, topic.topic_id));
 	const buildsOn = $derived(page.edges['builds-on'].filter((e) => e.direction === 'out'));
 	const builtOnBy = $derived(page.edges['builds-on'].filter((e) => e.direction === 'in'));
-	const maxPapers = $derived(Math.max(1, ...page.year_series.map((y) => y.papers)));
+	const shownNormal = $derived(page.top_papers.filter((p) => !p.low_confidence).length);
+	const shownWeak = $derived(page.top_papers.length - shownNormal);
+
+	const blurb = $derived(
+		topic.description.length > 150 ? `${topic.description.slice(0, 147)}…` : topic.description
+	);
 </script>
 
 <svelte:head>
-	<title>{page.topic.name} · The FLAT Atlas</title>
-	<meta name="description" content={page.topic.description} />
+	<title>{topic.name} · The FLAT Atlas</title>
+	<meta
+		name="description"
+		content="{blurb} {topic.paper_count} papers in the atlas, with related topics and key authors."
+	/>
 </svelte:head>
 
-{#snippet edgeList(edges: TopicEdge[])}
+{#snippet edgeList(edges: TopicEdge[], what: string, empty: string)}
 	{#if edges.length === 0}
-		<p class="muted">None yet.</p>
+		<p class="muted">{empty}</p>
 	{:else}
-		<ul>
+		<ul aria-label={what}>
 			{#each edges as edge (edge.topic_id)}
 				<li>
 					<a href={resolve('/topic/[id]', { id: edge.topic_id })}>{edge.name}</a>
-					<ConfidenceBadge value={edge.confidence} title="Edge confidence; weight {edge.weight}" />
+					<ConfidenceBadge
+						value={edge.confidence}
+						title="{what}: confidence {Math.round(edge.confidence * 100)}% (strength {edge.weight})"
+					/>
 				</li>
 			{/each}
 		</ul>
@@ -33,87 +50,123 @@
 {/snippet}
 
 <nav aria-label="Breadcrumb" class="crumbs">
-	{#if page.parents.length === 0}
-		<a href={resolve('/')}>Topics</a> › {page.topic.name}
+	{#if paths.length === 0}
+		<a href={resolve('/')}>Topics</a> › <span aria-current="page">{topic.name}</span>
 	{:else}
-		{#each page.parents as parent (parent.topic_id)}
-			<div>
-				<a href={resolve('/')}>Topics</a> ›
-				<a href={resolve('/topic/[id]', { id: parent.topic_id })}>{parent.name}</a> ›
-				{page.topic.name}
-			</div>
-		{/each}
+		<ol>
+			{#each paths as path (path.map((t) => t.topic_id).join('>'))}
+				<li>
+					<a href={resolve('/')}>Topics</a>
+					{#each path as step (step.topic_id)}
+						› <a href={resolve('/topic/[id]', { id: step.topic_id })}>{step.name}</a>
+					{/each}
+					› <span aria-current="page">{topic.name}</span>
+				</li>
+			{/each}
+		</ol>
 	{/if}
 </nav>
 
-<h1>{page.topic.name}</h1>
-<p>{page.topic.description}</p>
-<p class="muted">{page.topic.paper_count} papers</p>
+<h1>{topic.name}</h1>
+<p>{topic.description}</p>
+<p class="muted">
+	{topic.paper_count} papers{#if topic.n_low_confidence > 0}
+		and {topic.n_low_confidence} weak match{topic.n_low_confidence === 1 ? '' : 'es'}{/if}
+	· topic tags are assigned automatically and each carries a confidence.
+</p>
 
 {#if page.children.length > 0}
 	<h2>Subtopics</h2>
-	<ul class="chips">
-		{#each page.children as child (child.topic_id)}
-			<li><a href={resolve('/topic/[id]', { id: child.topic_id })}>{child.name}</a></li>
+	<TopicChips topics={page.children} label="Subtopics of {topic.name}" />
+{/if}
+
+<h2>Papers</h2>
+{#if topic.paper_count > shownNormal || topic.n_low_confidence > shownWeak}
+	<p class="muted">
+		{#if topic.paper_count > shownNormal}
+			Showing the {shownNormal} best matches of {topic.paper_count} papers; the sort order applies to
+			these.
+		{/if}
+		{#if topic.n_low_confidence > shownWeak}
+			{topic.n_low_confidence - shownWeak} weak match{topic.n_low_confidence - shownWeak === 1
+				? ' is'
+				: 'es are'} not listed.
+		{/if}
+	</p>
+{/if}
+<PaperList
+	papers={page.top_papers}
+	initialSort="relevance"
+	emptyText="No papers in this topic yet."
+	label="Papers on {topic.name}"
+/>
+
+<h2>Links to other topics</h2>
+<p class="muted">
+	Three kinds of link, each measured differently: the confidence of one kind cannot be compared with
+	the confidence of another.
+</p>
+<div class="two-col">
+	<section class="panel" aria-labelledby="related">
+		<h3 id="related">Related topics</h3>
+		<p class="muted">
+			Often tagged on the same papers. Confidence: share of resamplings of the papers in which the
+			link stays.
+		</p>
+		{@render edgeList(
+			page.edges.related,
+			'Related topics',
+			'No topic shares enough papers with this one.'
+		)}
+	</section>
+
+	<section class="panel" aria-labelledby="builds">
+		<h3 id="builds">Builds on, built on by</h3>
+		<p class="muted">
+			Citations that run mostly one way. Confidence: one minus the p-value of a permutation test.
+			Few such links exist in the pilot, so many topics have none.
+		</p>
+		<h4>This topic builds on</h4>
+		{@render edgeList(
+			buildsOn,
+			'Topics this topic builds on',
+			'None found: no topic is cited by this topic’s papers clearly more than chance.'
+		)}
+		<h4>Built on by</h4>
+		{@render edgeList(
+			builtOnBy,
+			'Topics that build on this topic',
+			'None found: no topic cites this topic’s papers clearly more than chance.'
+		)}
+	</section>
+
+	<section class="panel" aria-labelledby="community">
+		<h3 id="community">Shared community</h3>
+		<p class="muted">
+			Many of the same authors work on both. Confidence: share of resamplings of the authors in
+			which the link stays.
+		</p>
+		{@render edgeList(
+			page.edges['shared-community'],
+			'Topics with a shared community',
+			'No topic shares enough authors with this one.'
+		)}
+	</section>
+</div>
+
+<h2>Key authors</h2>
+{#if page.key_authors.length === 0}
+	<p class="muted">No authors yet.</p>
+{:else}
+	<ul class="authors">
+		{#each page.key_authors as author (author.author_id)}
+			<li><a href={resolve('/author/[id]', { id: author.author_id })}>{author.name}</a></li>
 		{/each}
 	</ul>
 {/if}
 
-<h2>Related topics</h2>
-<p class="muted">Topics that are often tagged on the same papers.</p>
-{@render edgeList(page.edges.related)}
-
-<h2>Builds on</h2>
-<p class="muted">Topics whose papers this topic's papers cite.</p>
-{@render edgeList(buildsOn)}
-
-<h2>Built on by</h2>
-<p class="muted">Topics whose papers cite this topic's papers.</p>
-{@render edgeList(builtOnBy)}
-
-<h2>Shared community</h2>
-<p class="muted">Topics that many of the same authors work on.</p>
-{@render edgeList(page.edges['shared-community'])}
-
-<h2>Papers</h2>
-<ul class="papers">
-	{#each page.top_papers as paper (paper.work_id)}
-		<li>
-			<span>{paper.title}</span>
-			<span class="muted">{paper.venue_acronym} {paper.year}</span>
-			<ConfidenceBadge value={paper.confidence} title="Confidence of the topic tag" />
-		</li>
-	{/each}
-</ul>
-
-<h2>Key authors</h2>
-<ul>
-	{#each page.key_authors as author (author.author_id)}
-		<li>{author.name}</li>
-	{/each}
-</ul>
-
 <h2>Activity</h2>
-<svg
-	class="spark"
-	viewBox="0 0 {page.year_series.length * 14} 40"
-	role="img"
-	aria-label="Papers per year: {page.year_series.map((y) => `${y.year}: ${y.papers}`).join(', ')}"
->
-	{#each page.year_series as y, i (y.year)}
-		<rect
-			x={i * 14 + 2}
-			y={40 - (y.papers / maxPapers) * 36}
-			width="10"
-			height={(y.papers / maxPapers) * 36}
-		/>
-	{/each}
-</svg>
-{#if page.year_series.length > 0}
-	<p class="muted">
-		{page.year_series[0].year} to {page.year_series[page.year_series.length - 1].year}
-	</p>
-{/if}
+<YearSparkline points={page.year_series.map((y) => ({ year: y.year, value: y.papers }))} />
 
 <style>
 	.crumbs {
@@ -121,18 +174,24 @@
 		color: var(--muted);
 	}
 
-	.papers {
+	.crumbs ol {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	h3 {
+		margin: 1rem 0 0.2rem;
+		font-size: 1.05rem;
+	}
+
+	h4 {
+		margin: 0.8rem 0 0.1rem;
+		font-size: 0.95rem;
+	}
+
+	.authors {
+		columns: 14rem;
 		padding-left: 1.1rem;
-	}
-
-	.papers li {
-		margin: 0.35rem 0;
-	}
-
-	.spark {
-		width: 100%;
-		max-width: 28rem;
-		height: 3.5rem;
-		fill: var(--accent);
 	}
 </style>

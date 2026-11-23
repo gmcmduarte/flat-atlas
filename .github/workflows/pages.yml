@@ -33,10 +33,22 @@ jobs:
           cache-dependency-path: web/package-lock.json
       - uses: actions/configure-pages@v5
       - run: npm ci
+      # Inert until the repository variable SITE_DATA_TAG names a release that carries
+      # `site-data.tar.gz` (docs/runbooks/publish-site.md). Without it the site shows the fixture.
+      - name: Download the site data from a release
+        if: ${{ vars.SITE_DATA_TAG != '' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SITE_DATA_TAG: ${{ vars.SITE_DATA_TAG }}
+        run: |
+          gh release download "$SITE_DATA_TAG" --repo "$GITHUB_REPOSITORY" --pattern site-data.tar.gz
+          tar -xzf site-data.tar.gz -C static
+          test -f static/data/meta.json
       - name: Build (served under /<repository name>/)
         run: npm run build
         env:
           BASE_PATH: /${{ github.event.repository.name }}
+          PUBLIC_DATA_DIR: ${{ vars.SITE_DATA_TAG != '' && 'data' || 'data-fixture' }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: web/build

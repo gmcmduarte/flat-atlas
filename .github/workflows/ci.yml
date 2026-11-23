@@ -67,6 +67,12 @@ jobs:
         run: npm run build
         env:
           BASE_PATH: /flat-atlas
+      - name: Browser for the smoke test
+        run: npx playwright install --with-deps chromium
+      - name: Smoke test (search, topic, child, paper, author; on the fixture data)
+        run: npm run test:e2e
+        env:
+          CI: 'true'
 
   gitleaks:
     name: Secret scan (full history)
