@@ -63,10 +63,16 @@ test('Methods states what is shipped, what is off, and the known limits', async 
 	await expect(main).toContainText('Subtopic recall is 62 %');
 });
 
-test('Cite shows a placeholder, not a DOI', async ({ page }) => {
+test('Cite shows the Zenodo DOI and says what the archive holds', async ({ page }) => {
 	await page.goto('/cite');
-	await expect(page.getByRole('main')).toContainText('DOI: not yet assigned');
-	await expect(page.locator('pre')).toContainText('@misc{flatatlas');
+	const main = page.getByRole('main');
+	await expect(main.getByRole('link', { name: 'doi:10.5281/zenodo.24461535' })).toHaveAttribute(
+		'href',
+		'https://doi.org/10.5281/zenodo.24461535'
+	);
+	await expect(main.getByRole('link', { name: 'doi:10.5281/zenodo.24461534' })).toBeVisible();
+	await expect(main).toContainText('not the data files');
+	await expect(page.locator('pre')).toContainText('doi          = {10.5281/zenodo.24461535}');
 });
 
 test('an address that does not exist shows the 404 page', async ({ page }) => {

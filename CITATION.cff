@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you use the FLAT Atlas, please cite it as below, and name the data release you used."
+title: "The FLAT Atlas: an open map of formal languages and automata theory"
+type: software
+version: 0.1.0
+date-released: 2026-11-23
+doi: 10.5281/zenodo.24461534
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.24461535
+    description: "This version (v0.1.0), archived on Zenodo. The doi field above is the concept DOI that resolves to the latest version."
+authors:
+  - family-names: Duarte
+    given-names: Guilherme
+repository-code: "https://github.com/gmcmduarte/flat-atlas"
+url: "https://gmcmduarte.github.io/flat-atlas/"
+license: MIT
+keywords:
+  - formal languages
+  - automata theory
+  - bibliometrics
+  - topic map
+abstract: >-
+  An open, public map of formal languages and automata theory: topics, papers, authors and venues,
+  with automatically assigned topics that carry a confidence and a provenance. Code under the MIT
+  licence; data releases are intended to be published under CC BY 4.0. The Zenodo archive of a
+  version holds the code and documentation; the data export is not part of it.

@@ -1,7 +1,13 @@
 <script lang="ts">
 	import ExternalLink from '#lib/components/ExternalLink.svelte';
 	import { resolve } from '$app/paths';
-	import { REPO_URL, SITE_URL } from '#lib/site.js';
+	import {
+		DOI_ALL_VERSIONS,
+		DOI_VERSION,
+		REPO_URL,
+		SITE_URL,
+		SOFTWARE_VERSION
+	} from '#lib/site.js';
 	import { formatDate } from '#lib/venues.js';
 	import type { PageProps } from './$types';
 
@@ -16,7 +22,8 @@
   title        = {The {FLAT} Atlas: an open map of formal languages and automata theory},
   year         = {${year}},
   howpublished = {\\url{${SITE_URL}/}},
-  note         = {Pilot release ${real?.release ?? '(version)'}, ${real ? formatDate(real.date) : '(date)'}. DOI: not yet assigned}
+  doi          = {${DOI_VERSION}},
+  note         = {Pilot release ${real?.release ?? '(version)'}, ${real ? formatDate(real.date) : '(date)'}. Software version ${SOFTWARE_VERSION}}
 }`
 	);
 </script>
@@ -59,10 +66,17 @@
 	<pre><code>{bibtex}</code></pre>
 
 	<h2>A permanent identifier (DOI)</h2>
+	<p>
+		The code, site and documentation of each version are archived on Zenodo, which gives them a DOI.
+		For version {SOFTWARE_VERSION} (this site, pilot release {real?.release ?? 'of the data'}):
+		<ExternalLink href="https://doi.org/{DOI_VERSION}">doi:{DOI_VERSION}</ExternalLink>. To cite the
+		atlas whatever its latest version is, use the DOI for all versions:
+		<ExternalLink href="https://doi.org/{DOI_ALL_VERSIONS}">doi:{DOI_ALL_VERSIONS}</ExternalLink>.
+	</p>
 	<p class="note">
-		<strong>DOI: not yet assigned.</strong> The data will be archived on Zenodo, which gives each release
-		a DOI. Until then, cite the address and the release name above. This page will show the DOI when it
-		exists.
+		The archive holds the <strong>code and documentation</strong>, not the data files: the data
+		export of release {real?.release ?? '(release)'} is not archived separately and has no DOI of its
+		own yet. Cite the release name and date together with the DOI.
 	</p>
 
 	<h2>Citing the sources too</h2>

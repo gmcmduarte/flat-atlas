@@ -64,7 +64,7 @@ Found a wrong tag, a missing paper or a duplicated author? Every topic, paper, a
 
 ## Citing
 
-See [`CITATION.cff`](CITATION.cff) and the site's Cite page. A DOI will be added when the first data release is archived on Zenodo.
+See [`CITATION.cff`](CITATION.cff) and the site's Cite page. Version v0.1.0 is archived on Zenodo: [doi:10.5281/zenodo.24461535](https://doi.org/10.5281/zenodo.24461535) (all versions: [doi:10.5281/zenodo.24461534](https://doi.org/10.5281/zenodo.24461534)). The archive holds the code and documentation, not the data files.
 
 ## Licence
 

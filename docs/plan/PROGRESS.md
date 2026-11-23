@@ -5,7 +5,7 @@
 - **Last merged session:** P1-11 (PR #19): the topic map with semantic zoom (D-104)
 - **In progress:** P1-12 done, in its PR (branch `s/P1-12-launch-pilot`): suggest-a-change (six issue forms, `SuggestButton`), release banner, About, Methods, Sources, Cite, `CITATION.cff`, favicon and social image, README (D-105). **The pilot ships the bagged learned fusion; the decision model and propagation are off (D-100)**
 - **Next:** Guilherme's launch steps (`docs/runbooks/publish-site.md` §5: merge, publish the `site-data-v2026.11.0` release, set `SITE_DATA_TAG`, look at the live site, tag `v0.1.0`); then the G1 gate review (Opus, `GATE.md`); Guilherme still opens `reports/eval-p1-08-tagger-3-084b04920e.html` and picks five works for `flatatlas tag --explain` (the Methods page has a marked placeholder for a worked example)
-- **Live site:** https://gmcmduarte.github.io/flat-atlas/ (**fixture data until `SITE_DATA_TAG` is set**; redeploys on every push to `main`)
+- **Live site:** https://gmcmduarte.github.io/flat-atlas/ (**shows the pilot release v2026.11.0** since 2026-11-23; redeploys on every push to `main`; code archived on Zenodo, doi:10.5281/zenodo.24461535, D-106)
 - **Latest release:** `v2026.11.0` (local, `data/releases/`; 2,333 works, 20 files, 1.5 MB; not published)
 - **Known problems:** Semantic Scholar throttles our key far below the documented 1 request/s (HTTP 429 on 15 to 25 % of calls or more); a full title-match pass takes about 2 hours (D-72, `docs/notes/sources.md`). The DBLP API is behind a bot challenge (HTTP 202, Anubis); DBLP data comes from the dump Guilherme downloads by hand (D-49). Refreshing it is manual. After a new dump, run `venues scan-dump` and then `parse dblp` again.
 - **Waiting on Guilherme:** open the P1-08 report; five works for `flatatlas tag --explain`; the rest of P0-00 (branch protection, secret scanning, tmux, pre-commit install; S2 key is set in `.env`); reading the P1-04 report (a "done when" line of P1-04)
@@ -404,4 +404,5 @@
 - `year_from` and `year_to` on lateral edges (first and last year of the works behind an edge) are null; fill them if the time slider needs edge ages.
 - A richer citation graph (Semantic Scholar influential flags, the reference lists of works outside the corpus) would make `builds-on` denser than 51 edges; the thresholds are in `config/aggregate.yaml`.
 - The 137 low-confidence and 70 untagged works are 8.9 % of the pilot: a second look with a lower fallback or the decision model on just these works is the cheapest way to cut that share.
+- (P1-12 follow-up) A Zenodo record for the data release (the existing DOI covers the code only, D-106).
 - (P1-12) Per-page `og:title` and description for link previews (the share tags are the same on every page); a worked example on Methods; moving the prose pages' wording out of Svelte files if edits become frequent; letting the Pages workflow find the latest site-data release by itself.
