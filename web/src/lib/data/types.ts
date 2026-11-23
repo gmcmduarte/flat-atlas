@@ -84,6 +84,9 @@ export interface TopicPaper {
 	title: string;
 	year: number;
 	venue_acronym: string;
+	/** Names of the first authors (at most 3). */
+	authors: string[];
+	n_authors: number;
 	confidence: number;
 	cited_by_count: number;
 	low_confidence: boolean;
@@ -131,6 +134,28 @@ export interface WorkLinks {
 	open_access: string | null;
 }
 
+/** A work as listed on another page (references, citers, an author's or venue's papers). */
+export interface WorkSummary {
+	work_id: string;
+	title: string;
+	year: number;
+	venue_acronym: string;
+	/** Names of the first authors (at most 3). */
+	authors: string[];
+	n_authors: number;
+	cited_by_count: number;
+}
+
+/** One published version of a work (a conference paper and its journal version, say). */
+export interface WorkVersion {
+	venue_acronym: string;
+	year: number;
+	volume: string | null;
+	pages: string | null;
+	doi: string | null;
+	url: string | null;
+}
+
 /** One entry of a `works/<shard>.json` file. */
 export interface Work {
 	work_id: string;
@@ -144,12 +169,25 @@ export interface Work {
 	cited_by_count: number;
 	tag_status: 'tagged' | 'low_confidence' | 'untagged';
 	tags: Tag[];
+	/** All versions; the first is the primary one. */
+	versions: WorkVersion[];
+	/** Works in the corpus that this work cites. */
+	references: WorkSummary[];
+	/** Works in the corpus that cite this work. */
+	cited_by: WorkSummary[];
 	fixture?: boolean;
 }
 
 export interface AuthorTopic {
 	topic_id: string;
 	score: number;
+}
+
+export interface Coauthor {
+	author_id: string;
+	name: string;
+	/** Papers written together. */
+	n_papers: number;
 }
 
 /** One entry of an `authors/<shard>.json` file. */
@@ -161,7 +199,22 @@ export interface Author {
 	orcid: string | null;
 	topics: AuthorTopic[];
 	work_ids: string[];
+	/** Newest first. */
+	papers: WorkSummary[];
+	/** The 20 most frequent. */
+	coauthors: Coauthor[];
 	fixture?: boolean;
+}
+
+export interface VenueTopic {
+	topic_id: string;
+	name: string;
+	papers: number;
+}
+
+export interface VenueYear {
+	year: number;
+	papers: number;
 }
 
 /** `venue/<id>.json`. */
@@ -175,6 +228,12 @@ export interface Venue {
 	last_year: number | null;
 	successor_of: string[];
 	homepage: string | null;
+	n_works: number;
+	year_series: VenueYear[];
+	/** Level-0 topics with most papers, at most 10. */
+	top_topics: VenueTopic[];
+	/** The 30 most cited works. */
+	top_papers: WorkSummary[];
 	fixture?: boolean;
 }
 

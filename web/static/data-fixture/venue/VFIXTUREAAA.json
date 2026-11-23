@@ -8,5 +8,204 @@
 	"last_year": 2023,
 	"successor_of": [],
 	"homepage": null,
-	"fixture": true
+	"fixture": true,
+	"n_works": 12,
+	"year_series": [
+		{
+			"year": 2003,
+			"papers": 1
+		},
+		{
+			"year": 2005,
+			"papers": 1
+		},
+		{
+			"year": 2007,
+			"papers": 1
+		},
+		{
+			"year": 2009,
+			"papers": 1
+		},
+		{
+			"year": 2011,
+			"papers": 1
+		},
+		{
+			"year": 2013,
+			"papers": 1
+		},
+		{
+			"year": 2015,
+			"papers": 2
+		},
+		{
+			"year": 2018,
+			"papers": 2
+		},
+		{
+			"year": 2020,
+			"papers": 1
+		},
+		{
+			"year": 2023,
+			"papers": 1
+		}
+	],
+	"top_topics": [
+		{
+			"topic_id": "formal-languages",
+			"name": "Formal languages",
+			"papers": 3
+		},
+		{
+			"topic_id": "automata-theory",
+			"name": "Automata theory",
+			"papers": 2
+		}
+	],
+	"top_papers": [
+		{
+			"work_id": "WFIXTUREAAJ",
+			"title": "Fixture paper 10: operations on words, revisited for the fixture",
+			"year": 2023,
+			"venue_acronym": "FIXCONF",
+			"authors": [
+				"Eun-ji Test",
+				"Bo Placeholder"
+			],
+			"n_authors": 2,
+			"cited_by_count": 30
+		},
+		{
+			"work_id": "WFIXTUREAAI",
+			"title": "Fixture paper 9: regular languages and a toy decision problem",
+			"year": 2020,
+			"venue_acronym": "FIXCONF",
+			"authors": [
+				"Dmitri Sample",
+				"Ada Fixture"
+			],
+			"n_authors": 2,
+			"cited_by_count": 27
+		},
+		{
+			"work_id": "WFIXTUREAAH",
+			"title": "Fixture paper 8: descriptional measures, an example survey",
+			"year": 2018,
+			"venue_acronym": "FIXCONF",
+			"authors": [
+				"Chandra Example",
+				"Eun-ji Test"
+			],
+			"n_authors": 2,
+			"cited_by_count": 24
+		},
+		{
+			"work_id": "WFIXTUREAAG",
+			"title": "Fixture paper 7: automata over a toy alphabet",
+			"year": 2015,
+			"venue_acronym": "FIXCONF",
+			"authors": [
+				"Bo Placeholder",
+				"Dmitri Sample"
+			],
+			"n_authors": 2,
+			"cited_by_count": 21
+		},
+		{
+			"work_id": "WFIXTUREAAF",
+			"title": "Fixture paper 6: a regular-language characterisation, sketched",
+			"year": 2013,
+			"venue_acronym": "FIXCONF",
+			"authors": [
+				"Ada Fixture",
+				"Chandra Example"
+			],
+			"n_authors": 2,
+			"cited_by_count": 18
+		},
+		{
+			"work_id": "WFIXTUREAAE",
+			"title": "Fixture paper 5: minimal automata for a toy family",
+			"year": 2011,
+			"venue_acronym": "FIXCONF",
+			"authors": [
+				"Eun-ji Test",
+				"Bo Placeholder"
+			],
+			"n_authors": 2,
+			"cited_by_count": 15
+		},
+		{
+			"work_id": "WFIXTUREAAD",
+			"title": "Fixture paper 4: words, languages and an example theorem",
+			"year": 2009,
+			"venue_acronym": "FIXCONF",
+			"authors": [
+				"Dmitri Sample",
+				"Ada Fixture"
+			],
+			"n_authors": 2,
+			"cited_by_count": 12
+		},
+		{
+			"work_id": "WFIXTUREAAC",
+			"title": "Fixture paper 3: nondeterminism and succinctness, an illustration",
+			"year": 2007,
+			"venue_acronym": "FIXCONF",
+			"authors": [
+				"Chandra Example",
+				"Eun-ji Test"
+			],
+			"n_authors": 2,
+			"cited_by_count": 9
+		},
+		{
+			"work_id": "WFIXTUREAAB",
+			"title": "Fixture paper 2: a state-complexity bound for a toy operation",
+			"year": 2005,
+			"venue_acronym": "FIXCONF",
+			"authors": [
+				"Bo Placeholder",
+				"Dmitri Sample"
+			],
+			"n_authors": 2,
+			"cited_by_count": 6
+		},
+		{
+			"work_id": "WFIXTUREAAA",
+			"title": "Fixture paper 1: closure of regular languages under a toy operation",
+			"year": 2003,
+			"venue_acronym": "FIXCONF",
+			"authors": [
+				"Ada Fixture",
+				"Chandra Example"
+			],
+			"n_authors": 2,
+			"cited_by_count": 3
+		},
+		{
+			"work_id": "WFIXTUREAAL",
+			"title": "Fixture paper 12: a paper the tagger could not place",
+			"year": 2018,
+			"venue_acronym": "FIXCONF",
+			"authors": [
+				"Eun-ji Test"
+			],
+			"n_authors": 1,
+			"cited_by_count": 0
+		},
+		{
+			"work_id": "WFIXTUREAAK",
+			"title": "Fixture paper 11: a note that only weakly matches a topic",
+			"year": 2015,
+			"venue_acronym": "FIXCONF",
+			"authors": [
+				"Bo Placeholder"
+			],
+			"n_authors": 1,
+			"cited_by_count": 0
+		}
+	]
 }

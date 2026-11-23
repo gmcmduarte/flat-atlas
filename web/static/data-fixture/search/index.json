@@ -1,0 +1,120 @@
+{
+	"topics": [
+		{
+			"topic_id": "formal-languages",
+			"name": "Formal languages",
+			"aliases": []
+		},
+		{
+			"topic_id": "automata-theory",
+			"name": "Automata theory",
+			"aliases": []
+		},
+		{
+			"topic_id": "regular-languages",
+			"name": "Regular languages",
+			"aliases": []
+		},
+		{
+			"topic_id": "finite-automata",
+			"name": "Finite automata",
+			"aliases": []
+		},
+		{
+			"topic_id": "descriptional-complexity",
+			"name": "Descriptional complexity",
+			"aliases": []
+		}
+	],
+	"authors": [
+		{
+			"author_id": "AFIXTUREAAD",
+			"name": "Dmitri Sample"
+		},
+		{
+			"author_id": "AFIXTUREAAA",
+			"name": "Ada Fixture"
+		},
+		{
+			"author_id": "AFIXTUREAAE",
+			"name": "Eun-ji Test"
+		},
+		{
+			"author_id": "AFIXTUREAAB",
+			"name": "Bo Placeholder"
+		},
+		{
+			"author_id": "AFIXTUREAAC",
+			"name": "Chandra Example"
+		}
+	],
+	"venues": [
+		{
+			"venue_id": "VFIXTUREAAA",
+			"name": "Fixture Conference on Formal Languages (not a real venue)",
+			"acronym": "FIXCONF"
+		}
+	],
+	"works": [
+		{
+			"work_id": "WFIXTUREAAG",
+			"title": "Fixture paper 7: automata over a toy alphabet",
+			"year": 2015
+		},
+		{
+			"work_id": "WFIXTUREAAI",
+			"title": "Fixture paper 9: regular languages and a toy decision problem",
+			"year": 2020
+		},
+		{
+			"work_id": "WFIXTUREAAE",
+			"title": "Fixture paper 5: minimal automata for a toy family",
+			"year": 2011
+		},
+		{
+			"work_id": "WFIXTUREAAJ",
+			"title": "Fixture paper 10: operations on words, revisited for the fixture",
+			"year": 2023
+		},
+		{
+			"work_id": "WFIXTUREAAA",
+			"title": "Fixture paper 1: closure of regular languages under a toy operation",
+			"year": 2003
+		},
+		{
+			"work_id": "WFIXTUREAAF",
+			"title": "Fixture paper 6: a regular-language characterisation, sketched",
+			"year": 2013
+		},
+		{
+			"work_id": "WFIXTUREAAB",
+			"title": "Fixture paper 2: a state-complexity bound for a toy operation",
+			"year": 2005
+		},
+		{
+			"work_id": "WFIXTUREAAC",
+			"title": "Fixture paper 3: nondeterminism and succinctness, an illustration",
+			"year": 2007
+		},
+		{
+			"work_id": "WFIXTUREAAH",
+			"title": "Fixture paper 8: descriptional measures, an example survey",
+			"year": 2018
+		},
+		{
+			"work_id": "WFIXTUREAAD",
+			"title": "Fixture paper 4: words, languages and an example theorem",
+			"year": 2009
+		},
+		{
+			"work_id": "WFIXTUREAAK",
+			"title": "Fixture paper 11: a note that only weakly matches a topic",
+			"year": 2015
+		},
+		{
+			"work_id": "WFIXTUREAAL",
+			"title": "Fixture paper 12: a paper the tagger could not place",
+			"year": 2018
+		}
+	]
+}

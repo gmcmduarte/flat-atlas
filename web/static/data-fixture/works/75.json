@@ -1,0 +1,42 @@
+{
+	"WFIXTUREAAL": {
+		"work_id": "WFIXTUREAAL",
+		"title": "Fixture paper 12: a paper the tagger could not place",
+		"year": 2018,
+		"work_type": "proceedings-paper",
+		"venue": {
+			"venue_id": "VFIXTUREAAA",
+			"acronym": "FIXCONF"
+		},
+		"authors": [
+			{
+				"author_id": "AFIXTUREAAE",
+				"name": "Eun-ji Test",
+				"position": 1
+			}
+		],
+		"doi": null,
+		"links": {
+			"dblp": null,
+			"openalex": null,
+			"doi": null,
+			"open_access": null
+		},
+		"cited_by_count": 0,
+		"fixture": true,
+		"tag_status": "untagged",
+		"tags": [],
+		"versions": [
+			{
+				"venue_acronym": "FIXCONF",
+				"year": 2018,
+				"volume": null,
+				"pages": null,
+				"doi": null,
+				"url": null
+			}
+		],
+		"references": [],
+		"cited_by": []
+	}
+}

@@ -28,11 +28,73 @@
 			}
 		],
 		"work_ids": [
-			"WFIXTUREAAB",
-			"WFIXTUREAAD",
+			"WFIXTUREAAI",
 			"WFIXTUREAAG",
-			"WFIXTUREAAI"
+			"WFIXTUREAAD",
+			"WFIXTUREAAB"
 		],
-		"fixture": true
+		"fixture": true,
+		"papers": [
+			{
+				"work_id": "WFIXTUREAAI",
+				"title": "Fixture paper 9: regular languages and a toy decision problem",
+				"year": 2020,
+				"venue_acronym": "FIXCONF",
+				"authors": [
+					"Dmitri Sample",
+					"Ada Fixture"
+				],
+				"n_authors": 2,
+				"cited_by_count": 27
+			},
+			{
+				"work_id": "WFIXTUREAAG",
+				"title": "Fixture paper 7: automata over a toy alphabet",
+				"year": 2015,
+				"venue_acronym": "FIXCONF",
+				"authors": [
+					"Bo Placeholder",
+					"Dmitri Sample"
+				],
+				"n_authors": 2,
+				"cited_by_count": 21
+			},
+			{
+				"work_id": "WFIXTUREAAD",
+				"title": "Fixture paper 4: words, languages and an example theorem",
+				"year": 2009,
+				"venue_acronym": "FIXCONF",
+				"authors": [
+					"Dmitri Sample",
+					"Ada Fixture"
+				],
+				"n_authors": 2,
+				"cited_by_count": 12
+			},
+			{
+				"work_id": "WFIXTUREAAB",
+				"title": "Fixture paper 2: a state-complexity bound for a toy operation",
+				"year": 2005,
+				"venue_acronym": "FIXCONF",
+				"authors": [
+					"Bo Placeholder",
+					"Dmitri Sample"
+				],
+				"n_authors": 2,
+				"cited_by_count": 6
+			}
+		],
+		"coauthors": [
+			{
+				"author_id": "AFIXTUREAAA",
+				"name": "Ada Fixture",
+				"n_papers": 2
+			},
+			{
+				"author_id": "AFIXTUREAAB",
+				"name": "Bo Placeholder",
+				"n_papers": 2
+			}
+		]
 	}
 }

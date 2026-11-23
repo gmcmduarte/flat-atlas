@@ -95,6 +95,8 @@ class TopicPaper(_Model):
     title: str
     year: int
     venue_acronym: str
+    authors: list[str] = Field(description="Names of the first authors (at most 3).")
+    n_authors: int
     confidence: float
     cited_by_count: int
     low_confidence: bool
@@ -143,6 +145,29 @@ class WorkLinks(_Model):
     open_access: str | None
 
 
+class WorkSummary(_Model):
+    """A work as listed on another page (references, citers, an author's or venue's papers)."""
+
+    work_id: str
+    title: str
+    year: int
+    venue_acronym: str
+    authors: list[str] = Field(description="Names of the first authors (at most 3).")
+    n_authors: int
+    cited_by_count: int
+
+
+class WorkVersion(_Model):
+    """One published version of a work (a conference paper and its journal version, say)."""
+
+    venue_acronym: str
+    year: int
+    volume: str | None
+    pages: str | None
+    doi: str | None
+    url: str | None
+
+
 class Work(_Model):
     """One entry of a ``works/<shard>.json`` file."""
 
@@ -157,12 +182,21 @@ class Work(_Model):
     cited_by_count: int
     tag_status: TagStatus
     tags: list[Tag]
+    versions: list[WorkVersion] = Field(description="All versions; the first is the primary one.")
+    references: list[WorkSummary] = Field(description="Works in the corpus that this work cites.")
+    cited_by: list[WorkSummary] = Field(description="Works in the corpus that cite this work.")
     fixture: bool | None = None
 
 
 class AuthorTopic(_Model):
     topic_id: str
     score: float
+
+
+class Coauthor(_Model):
+    author_id: str
+    name: str
+    n_papers: int = Field(description="Papers written together.")
 
 
 class Author(_Model):
@@ -175,7 +209,20 @@ class Author(_Model):
     orcid: str | None
     topics: list[AuthorTopic]
     work_ids: list[str]
+    papers: list[WorkSummary] = Field(description="Newest first.")
+    coauthors: list[Coauthor] = Field(description="The 20 most frequent.")
     fixture: bool | None = None
+
+
+class VenueTopic(_Model):
+    topic_id: str
+    name: str
+    papers: int
+
+
+class VenueYear(_Model):
+    year: int
+    papers: int
 
 
 class Venue(_Model):
@@ -190,6 +237,10 @@ class Venue(_Model):
     last_year: int | None
     successor_of: list[str]
     homepage: str | None
+    n_works: int
+    year_series: list[VenueYear]
+    top_topics: list[VenueTopic] = Field(description="Level-0 topics with most papers, at most 10.")
+    top_papers: list[WorkSummary] = Field(description="The 30 most cited works.")
     fixture: bool | None = None
 
 
@@ -291,9 +342,14 @@ TYPE_MODELS: list[type[BaseModel]] = [
     WorkVenue,
     WorkAuthor,
     WorkLinks,
+    WorkSummary,
+    WorkVersion,
     Work,
     AuthorTopic,
+    Coauthor,
     Author,
+    VenueTopic,
+    VenueYear,
     Venue,
     MapNode,
     MapLayout,

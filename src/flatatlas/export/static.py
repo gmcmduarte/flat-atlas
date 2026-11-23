@@ -28,6 +28,11 @@ TOP_PAPERS = 50
 KEY_AUTHORS = 20
 EDGES_PER_TYPE = 10
 AUTHOR_TOPICS = 15
+COAUTHORS = 20
+VENUE_TOPICS = 10
+VENUE_TOP_PAPERS = 30
+CARD_AUTHORS = 3  # author names shown on a paper card
+RELATED_WORKS = 100  # references or citers listed on a paper page, at most
 SIGNAL_DECIMALS = 3
 MAX_BYTES = 30 * 1024 * 1024  # PLAN §11.2: pilot data under 30 MB
 
@@ -94,6 +99,40 @@ def _rows(con: duckdb.DuckDBPyConnection, sql: str, *params: Any) -> list[dict[s
     return [dict(zip(names, row, strict=True)) for row in cur.fetchall()]
 
 
+# -- work cards ---------------------------------------------------------------------------------
+
+
+def build_cards(con: duckdb.DuckDBPyConnection) -> dict[str, m.WorkSummary]:
+    """One short card per work, used wherever a work is listed (topic, author, venue, citations)."""
+    names: dict[str, list[str]] = defaultdict(list)
+    for r in _rows(
+        con,
+        "SELECT w.work_id, au.display_name FROM works w "
+        "JOIN authorships a ON a.version_id = w.primary_version_id "
+        "JOIN authors au ON au.author_id = a.author_id ORDER BY w.work_id, a.position",
+    ):
+        names[r["work_id"]].append(r["display_name"])
+    cards: dict[str, m.WorkSummary] = {}
+    for r in _rows(
+        con,
+        "SELECT w.work_id, w.title, w.year, COALESCE(w.cited_by_count, 0) AS cited, "
+        "COALESCE(ve.acronym, '') AS acronym FROM works w "
+        "LEFT JOIN versions v ON v.version_id = w.primary_version_id "
+        "LEFT JOIN venues ve ON ve.venue_id = v.venue_id ORDER BY w.work_id",
+    ):
+        who = names[r["work_id"]]
+        cards[r["work_id"]] = m.WorkSummary(
+            work_id=r["work_id"],
+            title=r["title"],
+            year=int(r["year"]),
+            venue_acronym=r["acronym"],
+            authors=who[:CARD_AUTHORS],
+            n_authors=len(who),
+            cited_by_count=int(r["cited"]),
+        )
+    return cards
+
+
 # -- topics -------------------------------------------------------------------------------------
 
 
@@ -136,7 +175,9 @@ def build_topics(con: duckdb.DuckDBPyConnection) -> list[m.Topic]:
     return out
 
 
-def build_topic_pages(con: duckdb.DuckDBPyConnection, topics: list[m.Topic]) -> list[m.TopicPage]:
+def build_topic_pages(
+    con: duckdb.DuckDBPyConnection, topics: list[m.Topic], cards: dict[str, m.WorkSummary]
+) -> list[m.TopicPage]:
     by_id = {t.topic_id: t for t in topics}
     edges: dict[str, dict[str, list[m.TopicEdge]]] = {t: {k: [] for k in LATERAL} for t in by_id}
     for r in _rows(
@@ -163,21 +204,20 @@ def build_topic_pages(con: duckdb.DuckDBPyConnection, topics: list[m.Topic]) -> 
     papers: dict[str, list[m.TopicPaper]] = defaultdict(list)
     for r in _rows(
         con,
-        "SELECT a.topic_id, a.work_id, w.title, w.year, COALESCE(w.cited_by_count, 0) AS cited, "
-        "COALESCE(ve.acronym, '') AS venue, a.confidence, a.low_confidence "
-        "FROM agg_topic_work a JOIN works w ON w.work_id = a.work_id "
-        "LEFT JOIN versions v ON v.version_id = w.primary_version_id "
-        "LEFT JOIN venues ve ON ve.venue_id = v.venue_id "
-        f"WHERE a.rank <= {TOP_PAPERS} ORDER BY a.topic_id, a.rank",
+        "SELECT topic_id, work_id, confidence, low_confidence FROM agg_topic_work "
+        f"WHERE rank <= {TOP_PAPERS} ORDER BY topic_id, rank",
     ):
+        c = cards[r["work_id"]]
         papers[r["topic_id"]].append(
             m.TopicPaper(
-                work_id=r["work_id"],
-                title=r["title"],
-                year=int(r["year"]),
-                venue_acronym=r["venue"],
+                work_id=c.work_id,
+                title=c.title,
+                year=c.year,
+                venue_acronym=c.venue_acronym,
+                authors=c.authors,
+                n_authors=c.n_authors,
                 confidence=round(float(r["confidence"]), 4),
-                cited_by_count=int(r["cited"]),
+                cited_by_count=c.cited_by_count,
                 low_confidence=bool(r["low_confidence"]),
             )
         )
@@ -246,8 +286,39 @@ def _links(r: dict[str, Any]) -> m.WorkLinks:
     )
 
 
-def build_works(con: duckdb.DuckDBPyConnection, topics: list[m.Topic]) -> list[m.Work]:
+def build_works(
+    con: duckdb.DuckDBPyConnection, topics: list[m.Topic], cards: dict[str, m.WorkSummary]
+) -> list[m.Work]:
     names = {t.topic_id: t.name for t in topics}
+    references: dict[str, list[m.WorkSummary]] = defaultdict(list)
+    cited_by: dict[str, list[m.WorkSummary]] = defaultdict(list)
+    for r in _rows(con, "SELECT DISTINCT citing_work_id, cited_work_id FROM citations"):
+        if r["citing_work_id"] in cards and r["cited_work_id"] in cards:
+            references[r["citing_work_id"]].append(cards[r["cited_work_id"]])
+            cited_by[r["cited_work_id"]].append(cards[r["citing_work_id"]])
+
+    def ranked(items: list[m.WorkSummary]) -> list[m.WorkSummary]:
+        items = sorted(items, key=lambda c: (-c.cited_by_count, -c.year, c.work_id))
+        return items[:RELATED_WORKS]
+
+    versions: dict[str, list[m.WorkVersion]] = defaultdict(list)
+    for r in _rows(
+        con,
+        "SELECT w.work_id, COALESCE(ve.acronym, '') AS acronym, COALESCE(v.year, w.year) AS year, "
+        "v.volume, v.pages, v.doi, v.url_landing FROM works w "
+        "JOIN versions v ON v.work_id = w.work_id LEFT JOIN venues ve ON ve.venue_id = v.venue_id "
+        "ORDER BY w.work_id, (v.version_id = w.primary_version_id) DESC, v.year, v.version_id",
+    ):
+        versions[r["work_id"]].append(
+            m.WorkVersion(
+                venue_acronym=r["acronym"],
+                year=int(r["year"]),
+                volume=r["volume"],
+                pages=r["pages"],
+                doi=r["doi"],
+                url=r["url_landing"] or (f"https://doi.org/{r['doi']}" if r["doi"] else None),
+            )
+        )
     tags: dict[str, list[m.Tag]] = defaultdict(list)
     for r in _rows(
         con,
@@ -309,12 +380,17 @@ def build_works(con: duckdb.DuckDBPyConnection, topics: list[m.Topic]) -> list[m
                 cited_by_count=int(r["cited"]),
                 tag_status=r["tag_status"],
                 tags=tags[r["work_id"]],
+                versions=versions[r["work_id"]],
+                references=ranked(references[r["work_id"]]),
+                cited_by=ranked(cited_by[r["work_id"]]),
             )
         )
     return out
 
 
-def build_authors(con: duckdb.DuckDBPyConnection) -> list[m.Author]:
+def build_authors(
+    con: duckdb.DuckDBPyConnection, cards: dict[str, m.WorkSummary]
+) -> list[m.Author]:
     topics: dict[str, list[m.AuthorTopic]] = defaultdict(list)
     for r in _rows(
         con,
@@ -333,6 +409,21 @@ def build_authors(con: duckdb.DuckDBPyConnection) -> list[m.Author]:
         "ORDER BY a.author_id, w.year DESC, v.work_id",
     ):
         work_ids[r["author_id"]].append(r["work_id"])
+    coauthors: dict[str, list[m.Coauthor]] = defaultdict(list)
+    for r in _rows(
+        con,
+        "WITH aw AS (SELECT DISTINCT a.author_id, v.work_id FROM authorships a "
+        "JOIN versions v ON v.version_id = a.version_id) "
+        "SELECT * FROM (SELECT x.author_id, y.author_id AS co, au.display_name AS name, "
+        "count(*) AS n, row_number() OVER (PARTITION BY x.author_id "
+        "ORDER BY count(*) DESC, au.display_name, y.author_id) AS k "
+        "FROM aw x JOIN aw y ON y.work_id = x.work_id AND y.author_id <> x.author_id "
+        "JOIN authors au ON au.author_id = y.author_id GROUP BY x.author_id, y.author_id, "
+        f"au.display_name) WHERE k <= {COAUTHORS} ORDER BY author_id, k",
+    ):
+        coauthors[r["author_id"]].append(
+            m.Coauthor(author_id=r["co"], name=r["name"], n_papers=int(r["n"]))
+        )
     return [
         m.Author(
             author_id=r["author_id"],
@@ -342,6 +433,8 @@ def build_authors(con: duckdb.DuckDBPyConnection) -> list[m.Author]:
             orcid=r["orcid"],
             topics=topics[r["author_id"]],
             work_ids=work_ids[r["author_id"]],
+            papers=[cards[w] for w in work_ids[r["author_id"]] if w in cards],
+            coauthors=coauthors[r["author_id"]],
         )
         for r in _rows(
             con,
@@ -351,7 +444,33 @@ def build_authors(con: duckdb.DuckDBPyConnection) -> list[m.Author]:
     ]
 
 
-def build_venues(con: duckdb.DuckDBPyConnection) -> list[m.Venue]:
+def build_venues(con: duckdb.DuckDBPyConnection, cards: dict[str, m.WorkSummary]) -> list[m.Venue]:
+    years: dict[str, list[m.VenueYear]] = defaultdict(list)
+    n_works: dict[str, int] = defaultdict(int)
+    by_venue: dict[str, list[m.WorkSummary]] = defaultdict(list)
+    for r in _rows(
+        con,
+        "SELECT v.venue_id, w.work_id, w.year FROM works w "
+        "JOIN versions v ON v.version_id = w.primary_version_id WHERE v.venue_id IS NOT NULL",
+    ):
+        n_works[r["venue_id"]] += 1
+        by_venue[r["venue_id"]].append(cards[r["work_id"]])
+    for venue_id, items in by_venue.items():
+        counts: dict[int, int] = defaultdict(int)
+        for c in items:
+            counts[c.year] += 1
+        years[venue_id] = [m.VenueYear(year=y, papers=n) for y, n in sorted(counts.items())]
+    topics: dict[str, list[m.VenueTopic]] = defaultdict(list)
+    for r in _rows(
+        con,
+        "SELECT * FROM (SELECT a.venue_id, a.topic_id, t.name, a.papers, row_number() OVER "
+        "(PARTITION BY a.venue_id ORDER BY a.papers DESC, a.topic_id) AS n "
+        "FROM agg_topic_venue a JOIN topics t ON t.topic_id = a.topic_id "
+        f"WHERE t.level = 0 AND a.papers > 0) WHERE n <= {VENUE_TOPICS} ORDER BY venue_id, n",
+    ):
+        topics[r["venue_id"]].append(
+            m.VenueTopic(topic_id=r["topic_id"], name=r["name"], papers=int(r["papers"]))
+        )
     return [
         m.Venue(
             venue_id=r["venue_id"],
@@ -363,6 +482,12 @@ def build_venues(con: duckdb.DuckDBPyConnection) -> list[m.Venue]:
             last_year=None if r["last_year"] is None else int(r["last_year"]),
             successor_of=list(r["successor_of"] or []),
             homepage=r["homepage"],
+            n_works=n_works[r["venue_id"]],
+            year_series=years[r["venue_id"]],
+            top_topics=topics[r["venue_id"]],
+            top_papers=sorted(
+                by_venue[r["venue_id"]], key=lambda c: (-c.cited_by_count, -c.year, c.work_id)
+            )[:VENUE_TOP_PAPERS],
         )
         for r in _rows(
             con,
@@ -422,10 +547,11 @@ def export_static(release: Path, out: Path) -> ExportResult:
     con = _open(release)
     try:
         topics = build_topics(con)
-        pages = build_topic_pages(con, topics)
-        works = build_works(con, topics)
-        authors = build_authors(con)
-        venues = build_venues(con)
+        cards = build_cards(con)
+        pages = build_topic_pages(con, topics, cards)
+        works = build_works(con, topics, cards)
+        authors = build_authors(con, cards)
+        venues = build_venues(con, cards)
         layout = build_map(con)
         search = build_search(con, authors, venues, works)
     finally:

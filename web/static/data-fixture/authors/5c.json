@@ -28,11 +28,73 @@
 			}
 		],
 		"work_ids": [
-			"WFIXTUREAAA",
-			"WFIXTUREAAC",
+			"WFIXTUREAAH",
 			"WFIXTUREAAF",
-			"WFIXTUREAAH"
+			"WFIXTUREAAC",
+			"WFIXTUREAAA"
 		],
-		"fixture": true
+		"fixture": true,
+		"papers": [
+			{
+				"work_id": "WFIXTUREAAH",
+				"title": "Fixture paper 8: descriptional measures, an example survey",
+				"year": 2018,
+				"venue_acronym": "FIXCONF",
+				"authors": [
+					"Chandra Example",
+					"Eun-ji Test"
+				],
+				"n_authors": 2,
+				"cited_by_count": 24
+			},
+			{
+				"work_id": "WFIXTUREAAF",
+				"title": "Fixture paper 6: a regular-language characterisation, sketched",
+				"year": 2013,
+				"venue_acronym": "FIXCONF",
+				"authors": [
+					"Ada Fixture",
+					"Chandra Example"
+				],
+				"n_authors": 2,
+				"cited_by_count": 18
+			},
+			{
+				"work_id": "WFIXTUREAAC",
+				"title": "Fixture paper 3: nondeterminism and succinctness, an illustration",
+				"year": 2007,
+				"venue_acronym": "FIXCONF",
+				"authors": [
+					"Chandra Example",
+					"Eun-ji Test"
+				],
+				"n_authors": 2,
+				"cited_by_count": 9
+			},
+			{
+				"work_id": "WFIXTUREAAA",
+				"title": "Fixture paper 1: closure of regular languages under a toy operation",
+				"year": 2003,
+				"venue_acronym": "FIXCONF",
+				"authors": [
+					"Ada Fixture",
+					"Chandra Example"
+				],
+				"n_authors": 2,
+				"cited_by_count": 3
+			}
+		],
+		"coauthors": [
+			{
+				"author_id": "AFIXTUREAAA",
+				"name": "Ada Fixture",
+				"n_papers": 2
+			},
+			{
+				"author_id": "AFIXTUREAAE",
+				"name": "Eun-ji Test",
+				"n_papers": 2
+			}
+		]
 	}
 }

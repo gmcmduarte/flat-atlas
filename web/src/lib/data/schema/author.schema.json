@@ -18,6 +18,80 @@
       ],
       "title": "AuthorTopic",
       "type": "object"
+    },
+    "Coauthor": {
+      "additionalProperties": false,
+      "properties": {
+        "author_id": {
+          "title": "Author Id",
+          "type": "string"
+        },
+        "n_papers": {
+          "description": "Papers written together.",
+          "title": "N Papers",
+          "type": "integer"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "author_id",
+        "name",
+        "n_papers"
+      ],
+      "title": "Coauthor",
+      "type": "object"
+    },
+    "WorkSummary": {
+      "additionalProperties": false,
+      "description": "A work as listed on another page (references, citers, an author's or venue's papers).",
+      "properties": {
+        "authors": {
+          "description": "Names of the first authors (at most 3).",
+          "items": {
+            "type": "string"
+          },
+          "title": "Authors",
+          "type": "array"
+        },
+        "cited_by_count": {
+          "title": "Cited By Count",
+          "type": "integer"
+        },
+        "n_authors": {
+          "title": "N Authors",
+          "type": "integer"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "venue_acronym": {
+          "title": "Venue Acronym",
+          "type": "string"
+        },
+        "work_id": {
+          "title": "Work Id",
+          "type": "string"
+        },
+        "year": {
+          "title": "Year",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "work_id",
+        "title",
+        "year",
+        "venue_acronym",
+        "authors",
+        "n_authors",
+        "cited_by_count"
+      ],
+      "title": "WorkSummary",
+      "type": "object"
     }
   },
   "additionalProperties": false,
@@ -26,6 +100,14 @@
     "author_id": {
       "title": "Author Id",
       "type": "string"
+    },
+    "coauthors": {
+      "description": "The 20 most frequent.",
+      "items": {
+        "$ref": "#/$defs/Coauthor"
+      },
+      "title": "Coauthors",
+      "type": "array"
     },
     "dblp_pid": {
       "anyOf": [
@@ -72,6 +154,14 @@
       ],
       "title": "Orcid"
     },
+    "papers": {
+      "description": "Newest first.",
+      "items": {
+        "$ref": "#/$defs/WorkSummary"
+      },
+      "title": "Papers",
+      "type": "array"
+    },
     "topics": {
       "items": {
         "$ref": "#/$defs/AuthorTopic"
@@ -94,7 +184,9 @@
     "dblp_pid",
     "orcid",
     "topics",
-    "work_ids"
+    "work_ids",
+    "papers",
+    "coauthors"
   ],
   "title": "Author",
   "type": "object"
