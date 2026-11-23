@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: How the tags are made and where they can be wrong
+    url: https://gmcmduarte.github.io/flat-atlas/methods
+    about: Read this first if a tag or a link looks wrong. It lists the known limits.

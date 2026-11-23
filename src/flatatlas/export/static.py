@@ -565,6 +565,17 @@ def export_static(release: Path, out: Path) -> ExportResult:
         works=len(works),
         works_by_tag_status={k: int(v) for k, v in manifest["works_by_tag_status"].items()},
         topics=len(topics),
+        venues=[
+            m.DataVenue(
+                venue_id=v.venue_id,
+                acronym=v.acronym,
+                name=v.name,
+                first_year=v.first_year,
+                last_year=v.last_year,
+                successor_of=v.successor_of,
+            )
+            for v in venues
+        ],
         source_fetch_dates=manifest["source_fetch_dates"],
     )
 

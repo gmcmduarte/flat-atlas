@@ -299,8 +299,19 @@ class SearchResults(_Model):
     works: list[SearchWork]
 
 
+class DataVenue(_Model):
+    """One venue of the release, as ``meta.json`` lists it (the release banner names them)."""
+
+    venue_id: str
+    acronym: str
+    name: str
+    first_year: int
+    last_year: int | None
+    successor_of: list[str] = Field(description="Venue IDs this venue continues (a rename).")
+
+
 class DataInfo(_Model):
-    """``meta.json``: which release the site data comes from (for the About page)."""
+    """``meta.json``: which release the site data comes from (banner, footer, About, Cite)."""
 
     release: str
     date: str
@@ -310,6 +321,7 @@ class DataInfo(_Model):
     works: int
     works_by_tag_status: dict[str, int]
     topics: int
+    venues: list[DataVenue]
     source_fetch_dates: dict[str, str]
     fixture: bool | None = None
 
@@ -359,5 +371,6 @@ TYPE_MODELS: list[type[BaseModel]] = [
     SearchWork,
     SearchIndex,
     SearchResults,
+    DataVenue,
     DataInfo,
 ]

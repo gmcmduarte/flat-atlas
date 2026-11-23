@@ -3,6 +3,23 @@
 Dated observations from live use. `config/sources.yaml` holds the settings; this file holds the
 evidence. Newest first within each source.
 
+## Licences as published on the site (P1-12, 2026-11-23)
+
+What the site's Sources page says, and where each line comes from. **Copied from PLAN §3 and D-15
+(checked 2026-11-15); the licence pages were not re-read in P1-12.** Re-read them before the first
+dataset release (Zenodo).
+
+| Source | Licence stated on the site | Basis |
+|---|---|---|
+| DBLP | CC0 1.0 | PLAN §3 |
+| OpenAlex | CC0 | PLAN §3 |
+| Crossref | bibliographic metadata, no copyright claimed by Crossref; abstracts are not used on the site | PLAN §3 ("treated as facts") |
+| Semantic Scholar | data ODC-BY 1.0, embeddings Apache 2.0; "Semantic Scholar" named; Kinney et al. 2023 cited (arXiv:2301.10140, number from memory, not re-checked) | PLAN §3, §10 |
+| ACM CCS | ACM keeps the copyright; free for educational and research purposes; seed only, nothing redistributed | this file, "ACM CCS download" |
+| SPECTER2 | no licence stated: "see the model card" (the licence of `allenai/specter2` is not recorded here) | gap |
+| Qwen3-8B (decision model) | not mentioned on the site: the step is off (D-100) and no output of it is shipped | D-100 |
+| Atlas code / data | MIT / CC BY 4.0 (data release intended, not yet published) | D-15 |
+
 ## DBLP
 
 - **2026-11-15 (P0-03): bot challenge on the API.** `dblp.org`, `dblp.uni-trier.de` and

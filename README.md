@@ -9,13 +9,27 @@ The Atlas links topics, papers, authors and venues so that researchers and stude
 - see the whole field as a map;
 - compare venues with transparent, side-by-side metrics.
 
-**Status:** Phase 0 (foundations) in progress: the project scaffold, CLI and CI exist; no data or site yet. See [`docs/plan/PROGRESS.md`](docs/plan/PROGRESS.md).
+**Live site:** <https://gmcmduarte.github.io/flat-atlas/> (a **pilot**: 2,333 papers from three conference series, DLT, CIAA and DCFS, with their predecessors WIA and DCAGRS; topic assignments are automatic and can be wrong, see the site's [Methods](https://gmcmduarte.github.io/flat-atlas/methods) page).
+
+![The topic map and the pilot banner](docs/screenshots/p1-12/home-light.png)
+
+**Status:** the pilot pipeline and site exist; see [`docs/plan/PROGRESS.md`](docs/plan/PROGRESS.md) for where the project is.
 
 ## How it works
 
 - Metadata comes from open sources: [DBLP](https://dblp.org), [OpenAlex](https://openalex.org), [Semantic Scholar](https://www.semanticscholar.org) and [Crossref](https://www.crossref.org). The Atlas stores metadata and links only, never full texts.
 - The topic map and all topic tags are produced automatically, with a confidence score and the method that produced them.
 - Everything is free to use and costs nothing to run.
+
+## How the data is produced
+
+1. **Harvest** metadata from DBLP (its XML dump), OpenAlex, Crossref and Semantic Scholar into a local cache, politely and resumably (`flatatlas harvest`).
+2. **Resolve**: match the records of one paper across sources and merge conference and journal versions; identify authors and venues (`flatatlas resolve`).
+3. **Tag**: a topic list reviewed by hand, then a program that scores every paper against every plausible topic from title words, similarity to example papers, OpenAlex hints and the titles of cited works, combined by a learned model and calibrated (`flatatlas tag`). Every tag stores a confidence and its provenance. Abstracts are read locally and never published.
+4. **Aggregate and release**: topic sizes, links between topics (related, builds-on, shared-community) and the map layout (`flatatlas aggregate`), then a versioned, checked release folder (`flatatlas release build`).
+5. **Export** the release as static JSON for the site (`flatatlas export static`); the site in `web/` is a static SvelteKit app. Publishing the real data to Pages is described in [`docs/runbooks/publish-site.md`](docs/runbooks/publish-site.md).
+
+The method, its measured quality and its known limits are on the site's Methods page; the decisions behind them are in [`docs/plan/DECISIONS.md`](docs/plan/DECISIONS.md).
 
 ## Documentation
 
@@ -46,7 +60,11 @@ API keys go in `.env` (git-ignored); copy `.env.example` and fill it in. Never c
 
 ## Corrections
 
-Found a wrong tag, a missing paper or a duplicated author? Please open an issue.
+Found a wrong tag, a missing paper or a duplicated author? Every topic, paper, author and venue page on the site ends with a *Suggest a change* link that opens a pre-filled [issue form](.github/ISSUE_TEMPLATE/) here, or [open an issue](https://github.com/gmcmduarte/flat-atlas/issues/new/choose) directly. Issues are public.
+
+## Citing
+
+See [`CITATION.cff`](CITATION.cff) and the site's Cite page. A DOI will be added when the first data release is archived on Zenodo.
 
 ## Licence
 

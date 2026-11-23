@@ -1,0 +1,57 @@
+name: "Venue fact"
+description: "A fact about a venue, such as its acceptance rate, with a source."
+title: "Venue fact: "
+labels: [suggestion, venue]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you. Issues on this repository are **public**, so please do not include private
+        information. The first fields were filled in from the page you came from; check them and
+        change them if they are wrong.
+  - type: input
+    id: entity_id
+    attributes:
+      label: Atlas venue ID
+      description: The ID of the venue page (starts with V).
+    validations:
+      required: true
+  - type: input
+    id: entity_name
+    attributes:
+      label: Name
+      description: The title or name shown on the page.
+  - type: input
+    id: page_url
+    attributes:
+      label: Page
+      description: The address of the page on the site.
+  - type: dropdown
+    id: fact
+    attributes:
+      label: Kind of fact
+      options:
+        - Acceptance rate
+        - First or last year, or a rename
+        - Publisher or website
+        - Something else
+    validations:
+      required: true
+  - type: input
+    id: current_value
+    attributes:
+      label: What the site shows now
+  - type: input
+    id: value
+    attributes:
+      label: The value you suggest
+      description: For an acceptance rate, give the year and the numbers (accepted and submitted).
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Source
+      description: A link to the proceedings preface, the conference site or a similar public source.
+    validations:
+      required: true

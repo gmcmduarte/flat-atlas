@@ -718,7 +718,7 @@ Per topic: **Foundations** (earliest works whose in-topic citation count is in t
 - A short notice explains limits (name ambiguity, missing affiliations) and that the tool only suggests.
 
 ### 15.6 Community suggestions
-Pilot: `SuggestButton` builds a URL to `github.com/<owner>/flat-atlas/issues/new?template=<type>.yml&…` with the entity ID, current value and page URL pre-filled; issue forms for *wrong tag*, *missing paper*, *merge/split authors*, *new topic*, *venue fact (acceptance rate with source)*. Server stage: §12.
+Pilot (P1-12, D-105): `SuggestButton` (a "Suggest a change" section at the end of topic, paper, author and venue pages; not on the map) builds a URL to `github.com/<owner>/flat-atlas/issues/new?template=<type>.yml&…` with the entity ID, name, a short current value and the public page URL pre-filled (nothing private, no labels in the URL); issue forms for *wrong tag*, *missing paper*, *merge/split authors*, *new topic*, *venue fact (acceptance rate with source)* and *other*. Forms offered: topic → wrong tag, new topic, other; paper → wrong tag, missing paper, other; author → merge/split, other; venue → venue fact, missing paper, other. Server stage: §12.
 
 ### 15.7 Citable dataset
 §10. One release per quarter once the mass import runs; each with a changelog generated from manifests (counts added/changed).

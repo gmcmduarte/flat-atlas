@@ -1,0 +1,45 @@
+name: "Missing paper"
+description: "A paper that belongs in the atlas is not there."
+title: "Missing paper: "
+labels: [suggestion, missing-paper]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you. Issues on this repository are **public**, so please do not include private
+        information. The first fields were filled in from the page you came from; check them and
+        change them if they are wrong.
+  - type: input
+    id: entity_id
+    attributes:
+      label: Atlas ID of the page you came from (optional)
+      description: A topic, venue or author ID, if you came from one.
+    validations:
+      required: false
+  - type: input
+    id: entity_name
+    attributes:
+      label: Name
+      description: The title or name shown on the page.
+  - type: input
+    id: page_url
+    attributes:
+      label: Page
+      description: The address of the page on the site.
+  - type: input
+    id: paper_link
+    attributes:
+      label: The missing paper
+      description: A DOI, DBLP or OpenAlex link, or the title, authors, venue and year.
+    validations:
+      required: true
+  - type: textarea
+    id: current_value
+    attributes:
+      label: Where you looked
+      description: For example the topic or venue page where you expected it.
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Why it belongs (optional)
+      description: The atlas covers formal languages and automata theory; say how this paper fits.

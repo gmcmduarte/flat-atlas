@@ -8,7 +8,7 @@ test('search a topic, open a child, a paper and an author', async ({ page }) => 
 	page.on('pageerror', (e) => errors.push(e.message));
 
 	// from a page without the map: on the home page the same choice focuses the map (map.spec.ts)
-	await page.goto('/about');
+	await page.goto('/about', { waitUntil: 'networkidle' }); // typed text before hydration is never searched
 	await page.getByRole('combobox', { name: /search/i }).fill('formal languages');
 	await page.getByRole('option', { name: 'Formal languages', exact: true }).click();
 

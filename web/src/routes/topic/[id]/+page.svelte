@@ -1,6 +1,7 @@
 <script lang="ts">
 	import ConfidenceBadge from '#lib/components/ConfidenceBadge.svelte';
 	import PaperList from '#lib/components/PaperList.svelte';
+	import SuggestButton from '#lib/components/SuggestButton.svelte';
 	import TopicChips from '#lib/components/TopicChips.svelte';
 	import YearSparkline from '#lib/components/YearSparkline.svelte';
 	import { ancestorPaths } from '#lib/topics.js';
@@ -168,6 +169,11 @@
 
 <h2>Activity</h2>
 <YearSparkline points={page.year_series.map((y) => ({ year: y.year, value: y.papers }))} />
+
+<SuggestButton
+	entity={{ type: 'topic', id: topic.topic_id, name: topic.name }}
+	currentValue="{topic.name}: {topic.paper_count} papers with a tag at or below this topic"
+/>
 
 <style>
 	.crumbs {

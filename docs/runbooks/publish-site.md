@@ -36,6 +36,24 @@ tag (for example `site-data-v2026.11.0`). The next run of the Pages workflow (a 
 "Run workflow") downloads the archive into `web/static/`, builds with `PUBLIC_DATA_DIR=data` and
 deploys. To go back to the fixture, delete the variable.
 
+## 5. The launch order (P1-12)
+These are the steps that are yours; none of them is done by a coding session.
+1. Merge the P1-12 pull request. Pages redeploys from `main` on the fixture (the issue forms in
+   `.github/ISSUE_TEMPLATE/` only work once they are on `main`).
+2. From the repository root, on `main`: `uv run flatatlas export static` (reads the existing verified
+   release; `meta.json` now lists the venues, so an export made before P1-12 is out of date), then
+   steps 2 and 3 above. Check the archive: `tar -tzf site-data.tar.gz | grep data/meta.json`.
+3. Set the variable `SITE_DATA_TAG` (step 4) and run the Pages workflow.
+4. Look at the live site: the banner names release, date and venues; open a topic, a paper, an author
+   and a venue; click one "Suggest a change" link and check that the GitHub form opens with the entity
+   filled in.
+5. Tag the code: `git checkout main && git pull && git tag -a v0.1.0 -m "Pilot release v0.1.0" && git push origin v0.1.0`.
+   `v0.1.0` is the version of the code and site (`CITATION.cff`); `v2026.11.0` is the data release and
+   `site-data-v2026.11.0` the release that carries its export. They are three different tags.
+6. Optional: create the labels `suggestion`, `wrong-tag`, `missing-paper`, `author`, `new-topic`,
+   `venue` (issue forms ignore labels that do not exist); upload the repository social preview
+   (`web/static/og.png`) in Settings; link the repository to Zenodo for a DOI.
+
 ## Notes
 - The release is public: do not attach anything that is not in `web/static/data/`.
 - Updating the site means a new release asset and a new tag in the variable; the workflow does not
