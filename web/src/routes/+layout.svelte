@@ -1,6 +1,7 @@
 <script lang="ts">
 	import favicon from '#lib/assets/favicon.svg';
 	import SearchBox from '#lib/components/SearchBox.svelte';
+	import { focusMapOn } from '#lib/map/focusHandler.js';
 	import { navigating } from '$app/state';
 	import { resolve } from '$app/paths';
 	import type { LayoutProps } from './$types';
@@ -31,7 +32,7 @@
 			<a href={resolve('/')}>Topics</a>
 			<a href={resolve('/about')}>About</a>
 		</nav>
-		<SearchBox />
+		<SearchBox onTopic={focusMapOn} />
 	</header>
 
 	<main id="main" tabindex="-1">

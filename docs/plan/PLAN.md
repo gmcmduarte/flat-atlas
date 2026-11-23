@@ -629,10 +629,10 @@ web/
 
 ### 11.4 Topic map
 - **Layout is precomputed in the pipeline** (stage 9), deterministic and seeded: level-0 topics by ForceAtlas2 on a graph of the three lateral edge types; children placed inside the parent's disc by a local force layout with collision. A topic with several parents is drawn in its primary parent (largest shared volume) with "ghost" links to the others.
-- **Semantic zoom:** start with the 15–25 level-0 bubbles. Click or zoom on a bubble: it expands in place into its children (the parent becomes a faint hull); siblings shrink but stay. At most about 150 nodes are drawn at once. Edges are aggregated to the visible level, and only the strongest *k* per node are shown; an edge-type toggle shows one type at a time by default.
+- **Semantic zoom:** start with the 15–25 level-0 bubbles. Click or zoom on a bubble: it expands in place into its children (the parent becomes a faint hull) and the camera zooms onto it; siblings keep their places. At most about 150 nodes are drawn at once. Edges are aggregated to the visible level, and only the strongest *k* per node are shown; an edge-type toggle shows one type at a time by default.
 - **Size** = confidence-weighted volume (square-root scale). **Colour** = level-0 ancestor.
 - **Renderer:** Sigma.js v3 (WebGL) with graphology. With precomputed positions Sigma only renders, so interaction stays smooth, and the same component drives the time slider by swapping node sizes per year. At this node count a Canvas/D3 renderer would also work; the map sits behind one component (`TopicMap.svelte`) so it can be replaced.
-- Accessibility: every map view has an equivalent list view; keyboard navigation between bubbles.
+- Accessibility: every map view has an equivalent list view; keyboard navigation between bubbles. Implemented in P1-11 as an ARIA tree that mirrors the drawn topics (D-104); edges are aggregated in the browser from the topic pages of the drawn bubbles.
 
 ---
 
