@@ -1,6 +1,59 @@
 {
+  "$defs": {
+    "DataVenue": {
+      "additionalProperties": false,
+      "description": "One venue of the release, as ``meta.json`` lists it (the release banner names them).",
+      "properties": {
+        "acronym": {
+          "title": "Acronym",
+          "type": "string"
+        },
+        "first_year": {
+          "title": "First Year",
+          "type": "integer"
+        },
+        "last_year": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Last Year"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "successor_of": {
+          "description": "Venue IDs this venue continues (a rename).",
+          "items": {
+            "type": "string"
+          },
+          "title": "Successor Of",
+          "type": "array"
+        },
+        "venue_id": {
+          "title": "Venue Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "venue_id",
+        "acronym",
+        "name",
+        "first_year",
+        "last_year",
+        "successor_of"
+      ],
+      "title": "DataVenue",
+      "type": "object"
+    }
+  },
   "additionalProperties": false,
-  "description": "``meta.json``: which release the site data comes from (for the About page).",
+  "description": "``meta.json``: which release the site data comes from (banner, footer, About, Cite).",
   "properties": {
     "aggregate_version": {
       "title": "Aggregate Version",
@@ -45,6 +98,13 @@
       "title": "Topics",
       "type": "integer"
     },
+    "venues": {
+      "items": {
+        "$ref": "#/$defs/DataVenue"
+      },
+      "title": "Venues",
+      "type": "array"
+    },
     "works": {
       "title": "Works",
       "type": "integer"
@@ -66,6 +126,7 @@
     "works",
     "works_by_tag_status",
     "topics",
+    "venues",
     "source_fetch_dates"
   ],
   "title": "DataInfo",

@@ -155,6 +155,13 @@ def test_map_search_and_meta(exported):
     meta = read(out, "meta.json")
     assert meta["release"] == release.version == "v2026.11.0"
     assert meta["works_by_tag_status"] == {"low_confidence": 1, "tagged": 1, "untagged": 1}
+    venues = {v["venue_id"]: v for v in meta["venues"]}
+    venue_files = {p.stem for p in (out / "venue").glob("*.json")}
+    assert set(venues) == venue_files
+    assert all(
+        set(v) == {"venue_id", "acronym", "name", "first_year", "last_year", "successor_of"}
+        for v in venues.values()
+    )
 
 
 def test_every_file_validates_against_its_model(exported):

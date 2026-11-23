@@ -11,6 +11,16 @@
 		"untagged": 1
 	},
 	"topics": 5,
+	"venues": [
+		{
+			"venue_id": "VFIXTUREAAA",
+			"acronym": "FIXCONF",
+			"name": "Fixture Conference on Formal Languages (not a real venue)",
+			"first_year": 2001,
+			"last_year": 2023,
+			"successor_of": []
+		}
+	],
 	"source_fetch_dates": {},
 	"fixture": true
 }

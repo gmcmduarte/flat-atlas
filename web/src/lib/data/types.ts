@@ -290,7 +290,18 @@ export interface SearchResults {
 	works: SearchWork[];
 }
 
-/** `meta.json`: which release the site data comes from (for the About page). */
+/** One venue of the release, as `meta.json` lists it (the release banner names them). */
+export interface DataVenue {
+	venue_id: string;
+	acronym: string;
+	name: string;
+	first_year: number;
+	last_year: number | null;
+	/** Venue IDs this venue continues (a rename). */
+	successor_of: string[];
+}
+
+/** `meta.json`: which release the site data comes from (banner, footer, About, Cite). */
 export interface DataInfo {
 	release: string;
 	date: string;
@@ -300,6 +311,7 @@ export interface DataInfo {
 	works: number;
 	works_by_tag_status: Record<string, number>;
 	topics: number;
+	venues: DataVenue[];
 	source_fetch_dates: Record<string, string>;
 	fixture?: boolean;
 }
