@@ -42,7 +42,9 @@ jobs:
           SITE_DATA_TAG: ${{ vars.SITE_DATA_TAG }}
         run: |
           gh release download "$SITE_DATA_TAG" --repo "$GITHUB_REPOSITORY" --pattern site-data.tar.gz
-          tar -xzf site-data.tar.gz -C static
+          # `._*` are the AppleDouble files that a macOS tar adds; they are not data
+          tar -xzf site-data.tar.gz --exclude='._*' -C static
+          find static/data -name '._*' -delete
           test -f static/data/meta.json
       - name: Build (served under /<repository name>/)
         run: npm run build

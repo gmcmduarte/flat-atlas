@@ -23,11 +23,11 @@ release and its date.
 
 ## 3. Pack it and attach it to a GitHub release
 ```bash
-tar -czf site-data.tar.gz -C web/static data
+COPYFILE_DISABLE=1 tar -czf site-data.tar.gz -C web/static data
 gh release create site-data-v2026.11.0 site-data.tar.gz \
   --title "Site data v2026.11.0" --notes "Static export of release v2026.11.0 (metadata only)."
 ```
-The archive must hold a top-level `data/` folder (the workflow checks for `data/meta.json`). Use one
+The archive must hold a top-level `data/` folder (the workflow checks for `data/meta.json`). On macOS `COPYFILE_DISABLE=1` keeps `._*` files out of it (macOS `tar` hides them when listing, so check with `python3 -c "import tarfile; print([n for n in tarfile.open('site-data.tar.gz').getnames() if '/._' in n])"`, which must print `[]`); the workflow and the venue page entries also ignore them. Use one
 release tag per export; an existing tag is updated with `gh release upload <tag> site-data.tar.gz --clobber`.
 
 ## 4. Tell the Pages workflow to use it
