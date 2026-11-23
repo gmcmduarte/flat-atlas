@@ -34,7 +34,7 @@
 			"x": 1.4,
 			"y": -0.9,
 			"r": 0.6,
-			"ghost_parents": []
+			"ghost_parents": ["formal-languages"]
 		},
 		{
 			"topic_id": "descriptional-complexity",

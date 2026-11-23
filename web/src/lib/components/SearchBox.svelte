@@ -6,6 +6,13 @@
 
 	/** The header search: a combobox with the best few results per group (PLAN §11.3). */
 
+	/**
+	 * `onTopic` lets a page take over the choice of a topic (the home page focuses its map on it
+	 * instead of leaving). It returns true when it handled the choice; otherwise the search
+	 * navigates to the topic page as everywhere else.
+	 */
+	let { onTopic }: { onTopic?: (topicId: string) => boolean } = $props();
+
 	const PER_GROUP = 4;
 	const listId = $props.id();
 
@@ -15,6 +22,8 @@
 		text: string;
 		detail: string;
 		href: string;
+		/** Set on topic options. */
+		topicId?: string;
 	}
 
 	let query = $state('');
@@ -36,7 +45,8 @@
 				group: 'Topics',
 				text: t.name,
 				detail: '',
-				href: resolve('/topic/[id]', { id: t.topic_id })
+				href: resolve('/topic/[id]', { id: t.topic_id }),
+				topicId: t.topic_id
 			});
 		}
 		for (const a of results.authors) {
@@ -117,11 +127,12 @@
 		}
 	}
 
-	function go(href: string) {
+	function go(href: string, topicId?: string) {
 		open = false;
 		query = '';
 		results = null;
 		active = -1;
+		if (topicId && onTopic?.(topicId)) return;
 		// `href` is always the result of `resolve()` (the options and `allHref`).
 		// eslint-disable-next-line svelte/no-navigation-without-resolve
 		void goto(href);
@@ -138,7 +149,7 @@
 			if (rows > 0) active = (active - 1 + rows) % rows;
 		} else if (e.key === 'Enter') {
 			e.preventDefault();
-			if (active >= 0 && active < ordered.length) go(ordered[active].href);
+			if (active >= 0 && active < ordered.length) go(ordered[active].href, ordered[active].topicId);
 			else if (trimmed.length >= MIN_QUERY) go(allHref);
 		} else if (e.key === 'Escape') {
 			if (open) {
@@ -196,7 +207,7 @@
 						class="option"
 						class:active={ordered[active]?.id === option.id}
 						onmousedown={(e) => e.preventDefault()}
-						onclick={() => go(option.href)}
+						onclick={() => go(option.href, option.topicId)}
 					>
 						<span>{option.text}</span>
 						{#if option.detail}<span class="muted">{option.detail}</span>{/if}

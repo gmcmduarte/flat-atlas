@@ -7,7 +7,8 @@ test('search a topic, open a child, a paper and an author', async ({ page }) => 
 	page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
 	page.on('pageerror', (e) => errors.push(e.message));
 
-	await page.goto('/');
+	// from a page without the map: on the home page the same choice focuses the map (map.spec.ts)
+	await page.goto('/about');
 	await page.getByRole('combobox', { name: /search/i }).fill('formal languages');
 	await page.getByRole('option', { name: 'Formal languages', exact: true }).click();
 
