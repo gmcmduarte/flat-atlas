@@ -1,6 +1,7 @@
 <script lang="ts">
 	import ConfidenceBadge from '#lib/components/ConfidenceBadge.svelte';
 	import PaperList from '#lib/components/PaperList.svelte';
+	import SuggestButton from '#lib/components/SuggestButton.svelte';
 	import { resolve } from '$app/paths';
 	import type { PageProps } from './$types';
 
@@ -132,6 +133,13 @@
 	initialSort="cited"
 	emptyText="No paper in the atlas is known to cite this one."
 	label="Cited by"
+/>
+
+<SuggestButton
+	entity={{ type: 'paper', id: work.work_id, name: work.title }}
+	currentValue={work.tag_status === 'untagged'
+		? 'Not classified yet'
+		: direct.map((t) => `${t.topic_name} (${Math.round(t.confidence * 100)}%)`).join('; ')}
 />
 
 <style>

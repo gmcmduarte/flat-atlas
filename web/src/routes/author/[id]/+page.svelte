@@ -1,5 +1,6 @@
 <script lang="ts">
 	import PaperList from '#lib/components/PaperList.svelte';
+	import SuggestButton from '#lib/components/SuggestButton.svelte';
 	import YearSparkline from '#lib/components/YearSparkline.svelte';
 	import { resolve } from '$app/paths';
 	import { SvelteMap } from 'svelte/reactivity';
@@ -97,6 +98,13 @@
 	initialSort="newest"
 	emptyText="No papers."
 	label="Papers by {author.display_name}"
+/>
+
+<SuggestButton
+	entity={{ type: 'author', id: author.author_id, name: author.display_name }}
+	currentValue="{author.display_name}, {author.papers.length} papers{author.name_variants.length > 0
+		? `; also written: ${author.name_variants.join(', ')}`
+		: ''}"
 />
 
 <style>

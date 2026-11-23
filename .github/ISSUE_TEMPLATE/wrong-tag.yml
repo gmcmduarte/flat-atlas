@@ -1,0 +1,45 @@
+name: "Wrong tag"
+description: "A paper has a topic it should not have, or lacks one it should have."
+title: "Wrong tag: "
+labels: [suggestion, wrong-tag]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you. Issues on this repository are **public**, so please do not include private
+        information. The first fields were filled in from the page you came from; check them and
+        change them if they are wrong.
+  - type: input
+    id: entity_id
+    attributes:
+      label: Atlas ID
+      description: The ID of the paper or topic (starts with W for a paper).
+    validations:
+      required: true
+  - type: input
+    id: entity_name
+    attributes:
+      label: Name
+      description: The title or name shown on the page.
+  - type: input
+    id: page_url
+    attributes:
+      label: Page
+      description: The address of the page on the site.
+  - type: textarea
+    id: current_value
+    attributes:
+      label: What the site shows now
+      description: For example the topic and its confidence.
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: What it should be
+      description: Name the topic(s) you think are right, and why. A short reason is enough.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence (optional)
+      description: A link to the paper's page at the publisher, DBLP or DOI, or a sentence from it.

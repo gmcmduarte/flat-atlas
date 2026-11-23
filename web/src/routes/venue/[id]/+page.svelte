@@ -1,5 +1,6 @@
 <script lang="ts">
 	import PaperList from '#lib/components/PaperList.svelte';
+	import SuggestButton from '#lib/components/SuggestButton.svelte';
 	import YearSparkline from '#lib/components/YearSparkline.svelte';
 	import { resolve } from '$app/paths';
 	import type { PageProps } from './$types';
@@ -53,4 +54,10 @@
 	initialSort="cited"
 	emptyText="No papers yet."
 	label="Most cited papers at {venue.acronym}"
+/>
+
+<SuggestButton
+	entity={{ type: 'venue', id: venue.venue_id, name: `${venue.acronym}: ${venue.name}` }}
+	currentValue="{venue.acronym}, {venue.first_year} to {venue.last_year ??
+		'today'}, {venue.n_works} papers"
 />

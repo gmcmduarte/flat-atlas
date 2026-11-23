@@ -1,0 +1,39 @@
+name: "Something else"
+description: "Anything else about the atlas: an error, an idea, a question."
+title: "Suggestion: "
+labels: [suggestion]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you. Issues on this repository are **public**, so please do not include private
+        information. The first fields were filled in from the page you came from; check them and
+        change them if they are wrong.
+  - type: input
+    id: entity_id
+    attributes:
+      label: Atlas ID of the page you came from (optional)
+      description: The ID in the page address, if any.
+    validations:
+      required: false
+  - type: input
+    id: entity_name
+    attributes:
+      label: Name
+      description: The title or name shown on the page.
+  - type: input
+    id: page_url
+    attributes:
+      label: Page
+      description: The address of the page on the site.
+  - type: textarea
+    id: current_value
+    attributes:
+      label: What the site shows now (optional)
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Your suggestion
+      description: What is wrong or missing, and what you would like instead.
+    validations:
+      required: true

@@ -1,0 +1,51 @@
+name: "New topic"
+description: "Propose a topic the list does not have, or a change to an existing topic."
+title: "New topic: "
+labels: [suggestion, new-topic]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you. Issues on this repository are **public**, so please do not include private
+        information. The first fields were filled in from the page you came from; check them and
+        change them if they are wrong.
+  - type: input
+    id: entity_id
+    attributes:
+      label: Atlas ID of the page you came from (optional)
+      description: A topic ID, if you came from a topic page.
+    validations:
+      required: false
+  - type: input
+    id: entity_name
+    attributes:
+      label: Name
+      description: The title or name shown on the page.
+  - type: input
+    id: page_url
+    attributes:
+      label: Page
+      description: The address of the page on the site.
+  - type: input
+    id: topic_name
+    attributes:
+      label: Proposed topic name
+    validations:
+      required: true
+  - type: textarea
+    id: current_value
+    attributes:
+      label: Where it would sit
+      description: The parent topic(s), and the topics it is close to.
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: What it covers
+      description: A sentence or two, and the words that papers on it use in their titles.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Example papers (optional)
+      description: Three to five papers that are clearly about it (DOI or title).

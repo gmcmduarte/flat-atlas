@@ -1,0 +1,50 @@
+name: "Merge or split authors"
+description: "Two author pages are one person, or one page mixes two people."
+title: "Authors: "
+labels: [suggestion, author]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you. Issues on this repository are **public**, so please do not include private
+        information. The first fields were filled in from the page you came from; check them and
+        change them if they are wrong.
+  - type: input
+    id: entity_id
+    attributes:
+      label: Atlas author ID
+      description: The ID of the author page (starts with A).
+    validations:
+      required: true
+  - type: input
+    id: entity_name
+    attributes:
+      label: Name
+      description: The title or name shown on the page.
+  - type: input
+    id: page_url
+    attributes:
+      label: Page
+      description: The address of the page on the site.
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What is wrong
+      options:
+        - Two pages are the same person (merge)
+        - One page mixes different people (split)
+        - Something else about this author
+    validations:
+      required: true
+  - type: textarea
+    id: current_value
+    attributes:
+      label: The other page(s) or the papers involved
+      description: IDs or links of the other author page(s), or the papers that belong to someone else.
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: How you know
+      description: For example a DBLP profile, ORCID or a shared affiliation. Only use public information.
+    validations:
+      required: true
