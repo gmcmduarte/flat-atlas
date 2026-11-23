@@ -6,5 +6,8 @@ import type { EntryGenerator } from './$types';
 // (No `load` here, so in the browser the page loads through `+page.ts`.)
 export const entries: EntryGenerator = async () => {
 	const files = await readdir(`static/${PUBLIC_DATA_DIR}/venue`);
-	return files.filter((f) => f.endsWith('.json')).map((f) => ({ id: f.slice(0, -'.json'.length) }));
+	// Not the hidden files a macOS `tar` adds (`._<name>`): they are not venues.
+	return files
+		.filter((f) => f.endsWith('.json') && !f.startsWith('.'))
+		.map((f) => ({ id: f.slice(0, -'.json'.length) }));
 };
