@@ -606,6 +606,7 @@ Steps 1, 2 and 4 are negligible. Electricity is negligible. Model weights are op
 web/
   src/lib/data/        DataSource.ts (interface), StaticDataSource.ts, ApiDataSource.ts, types.ts (generated from the schema)
   src/lib/map/         TopicMap.svelte, layout helpers, zoom logic
+  src/lib/search/      engine.ts (MiniSearch, built in the browser on first use)
   src/lib/components/  PaperList, TopicChips, ConfidenceBadge, YearSparkline, SuggestButton, SearchBox
   src/routes/          / (map + search) · /topic/[id] · /paper/[id] · /author/[id] · /venue/[id]
                        /venues (compare) · /search · /about · /sources · /cite · /methods
@@ -615,13 +616,13 @@ web/
 ### 11.2 Static data layout (pilot)
 - `topics.json` (all topics: names, parents, sizes), `topic/<id>.json` (full topic page payload: edges by type, top papers, key authors, year series).
 - `works/<shard>.json`: works sharded by the first 2 hex characters of a hash of the ID (256 shards); a paper page fetches one shard.
-- `authors/<shard>.json`, `venue/<id>.json`, `map.json` (layout), `search/index.json` (the raw documents of topics with aliases, authors, venues and paper titles, for the client to index while < about 30,000 papers; the pilot ships documents, not a prebuilt MiniSearch index), `meta.json` (which release the data comes from). Written by `flatatlas export static` from a verified release folder, never from the warehouse; file shapes are the pydantic models of `src/flatatlas/export/models.py`, from which `flatatlas export types` generates `web/src/lib/data/schema/*.schema.json` and `types.ts` (a test fails when they are out of date). The pilot export measures 6.7 MB for 2,333 works.
+- `authors/<shard>.json`, `venue/<id>.json`, `map.json` (layout), `search/index.json` (the raw documents of topics with aliases, authors, venues and paper titles, for the client to index while < about 30,000 papers; the pilot ships documents, not a prebuilt MiniSearch index), `meta.json` (which release the data comes from). Written by `flatatlas export static` from a verified release folder, never from the warehouse; file shapes are the pydantic models of `src/flatatlas/export/models.py`, from which `flatatlas export types` generates `web/src/lib/data/schema/*.schema.json` and `types.ts` (a test fails when they are out of date). The pilot export measures 9.9 MB for 2,333 works (P1-10 added references, citers, versions, author papers and co-authors, and a venue profile; D-103).
 - Routes are client-rendered with a `404.html` fallback (SPA mode), so no per-paper HTML is generated. Topic and venue pages are prerendered for link previews and search engines.
 - Size budget on GitHub Pages: site ≤ 1 GB, soft 100 GB/month bandwidth. Pilot data is expected under 30 MB.
 
 ### 11.3 Pages
-- **Topic:** name, description, breadcrumbs for *each* parent path; children; three separate edge panels (`related`, `builds-on` in both directions, `shared-community`); papers with a sort switch (relevance = tag confidence × log citations; most cited; newest; foundational); key authors; activity sparkline; "Suggest a change".
-- **Paper:** title, authors, venue/year, all versions, topics with confidence badge and provenance tooltip ("matched phrase 'shuffle product' in title; embedding 0.71"), links (DOI, DBLP, OpenAlex, open-access copy), in-corpus references and citers.
+- **Topic:** name, description, breadcrumbs for *each* parent path; children; three separate edge panels (`related`, `builds-on` in both directions, `shared-community`); papers with a sort switch (relevance = tag confidence × log citations; most cited; newest; oldest first; weak matches always after the normal ones); key authors; activity sparkline; "Suggest a change".
+- **Paper:** title, authors, venue/year, all versions, topics with confidence badge and a provenance sentence built from the signal scores ("Based on topic words in the title (100%); similarity to the topic description (95%)"; no matched phrases, since no text is exported), links (DOI, DBLP, OpenAlex, open-access copy), in-corpus references and citers. An untagged work says "not classified yet"; a low-confidence one is a "weak match".
 - **Author:** topic profile, timeline, co-authors, papers, external links (DBLP, ORCID).
 - **Venue:** §15.1.
 - **Search:** one box; results grouped as topics, authors, venues, papers.

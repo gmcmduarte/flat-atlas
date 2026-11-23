@@ -70,8 +70,9 @@
 <h1>{topic.name}</h1>
 <p>{topic.description}</p>
 <p class="muted">
-	{topic.paper_count} papers{#if topic.n_low_confidence > 0}
-		and {topic.n_low_confidence} weak match{topic.n_low_confidence === 1 ? '' : 'es'}{/if}
+	{topic.paper_count} papers{topic.n_low_confidence > 0
+		? ` and ${topic.n_low_confidence} weak match${topic.n_low_confidence === 1 ? '' : 'es'}`
+		: ''}
 	· topic tags are assigned automatically and each carries a confidence.
 </p>
 
